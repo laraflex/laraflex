@@ -1,0 +1,24 @@
+<?php
+namespace App\ViewPresenters;
+
+use laraflex\Contracts\Presenter;
+
+class PresenterClone extends Presenter
+{
+
+    public function toArray($data = NULL)
+    {
+
+        $var = [
+            'component' => 'NameComponent',
+            'type' => 'content',
+            'title' => 'General Title of Component',
+        ];
+        return $var;
+    }
+
+    public static function create()
+    {
+        return new PresenterClone();
+    }
+}

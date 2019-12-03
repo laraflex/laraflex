@@ -1,0 +1,32 @@
+<?php
+namespace App\ModelMediators;
+
+use laraflex\Contracts\ModelMediator;
+
+class ModelMediatorClone extends ModelMediator
+{
+    public function toArray ($data)
+    {
+        if (!empty($data)){
+        $var = [
+            'id' => $data->id,
+            'title' => $data->title,
+            'image' => $data->imagem,
+            'active' => $data->active,
+            'content' => $data->content,
+            'update' => date("y/m/Y", strtotime($data->updated_at)),
+            'date' => date("y/m/Y", strtotime($data->created_at)),
+        ];
+        return $var;
+
+        }else{
+            return NULL;
+        }
+    }
+
+    public static function create()
+    {
+        return new ModelMediatorClone();
+    }
+
+}

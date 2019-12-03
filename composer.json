@@ -1,0 +1,39 @@
+{
+    "name": "laraflex/laraflex",
+    "description": "View Components view and patterns for Laravel",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dimas Vidal",
+            "email": "laraflex@gmail.com"
+        }
+    ],
+    "minimum-stability": "RC",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "laraflex\\": "src/"
+        },
+
+        "autoload-dev": {
+             "laraflex\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "laraflex\\LaraflexServiceProvider",
+                "laraflex\\ComposerServiceProvider"
+            ]
+        }
+    }
+}
+
+
+
+
+
+
+
+
