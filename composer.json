@@ -1,6 +1,6 @@
 {
     "name": "laraflex/laraflex",
-    "description": "View Components view and patterns for Laravel",
+    "description": "Components view and patterns for Laravel",
     "type": "project",
     "license": "MIT",
     "authors": [
