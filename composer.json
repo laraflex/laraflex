@@ -16,12 +16,11 @@
     "autoload": {
         "psr-4": {
             "laraflex\\": "src/"
-        },
-
-        "autoload-dev": {
-            "psr-4": {
-             "laraflex\\": "src/"
-            }
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+         "laraflex\\": "src/"
         }
     },
     "extra": {
