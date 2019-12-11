@@ -15,8 +15,8 @@ if(!empty($objectConfig)){
 {{-- Início do bloco lógico -------------------------------}}
 @foreach ($objetoConfig->components as $object)
 @if (strtolower($object->type) == 'content')
-@if(!empty($object->pathContent))
-@include($object->pathContent . '.' . $object->component)
+@if(!empty($object->pathComponents))
+@include($object->pathComponents . '.' . $object->component)
 @else
 @include('laraflex::' . $object->component)
 @endif
