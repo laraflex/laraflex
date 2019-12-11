@@ -93,7 +93,7 @@ throw new Exception("A propriedade LABEL de ítem de menu não foi definida em [
 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 {{ __($itemMenu->label) }}
 </a>
-<div class="dropdown-menu pb-3 shadow-lg" aria-labelledby="navbarDropdownMenuLink" style="width:300px;">
+<div class="dropdown-menu pb-3 shadow-lg" aria-labelledby="navbarDropdownMenuLink" style="min-width:300px;">
 @php
 // ==========================================================================================================
 $submenu = $itemMenu->subItems;
