@@ -35,7 +35,7 @@
     <p class="mb-1 card-text"><strong>{{$data->categoryName}}</strong></p>
     @endif
     @if (in_array('image', $contentbox->showItems) && !empty($data->image))
-    <img src="{{$util->toImage($contentbox->imagePath, $data->image)}}" class="mt-2 mb-3" alt="..." style="width:40%;align:left" id="imageBox">
+    <img src="{{$util->toImage($contentbox->imagePath, $data->image)}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
     @endif
     {{--Bloco de conteúdo -----------------------------------------------}}
     @if (in_array('content', $contentbox->showItems) && !empty($data->content))
