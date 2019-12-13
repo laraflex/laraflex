@@ -43,11 +43,11 @@
         @if(!empty($contentbox->contentType) && $contentbox->contentType == 'code')
             <p class="d-none d-sm-block ">{!!$data->content!!}</p>
         @else
-        <p class="d-none d-sm-block text-justify">{{$data->content}} </p>
+        <p class="d-none d-sm-block text-justify">{!!$data->content!!} </p>
         @endif
         {{-- controle de apresentação para mobile--}}
         <p class="d-block d-sm-none text-justify" style="line-height: 1.1";><small class="text-muted">
-            {{$data->content}}
+            {!!$data->content!!}
         </small></p>
         </div>
     @endif
