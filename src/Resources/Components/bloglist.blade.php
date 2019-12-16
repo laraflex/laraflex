@@ -1,4 +1,3 @@
-
 @if(!empty($objeto))
     @php
         $bloglist = $objeto;
@@ -69,13 +68,13 @@
     <div class="card-text"><small class="text-muted">{{$item->date}}</small></div>
     @endif
     {{--Bloco de conteúdo -----------------------------------------------}}
-    @if (in_array('content', $bloglist->showItems) && !empty($item->content))
-    <p class="d-none d-xl-block text-justify">@php echo substr($item->content, 0, 430) @endphp...</p>
-    <p class="d-none d-lg-block d-xl-none text-justify">@php echo substr($item->content, 0, 300) @endphp...</p>
-    <p class="d-none d-md-block d-lg-none text-justify">@php echo substr($item->content, 0, 180) @endphp...</p>
+    @if (in_array('abstract', $bloglist->showItems) && !empty($item->abstract))
+    <p class="d-none d-xl-block text-justify">{{substr($item->abstract, 0, 430)}}...</p>
+    <p class="d-none d-lg-block d-xl-none text-justify">{{substr($item->abstract, 0, 300)}}...</p>
+    <p class="d-none d-md-block d-lg-none text-justify">{{substr($item->abstract, 0, 180)}}...</p>
     {{-- controle de apresentação para mobile--}}
     <p class="d-block d-md-none text-justify" style="line-height: 1.1";><small class="text-muted">
-    @php echo substr($item->content, 0, 150) @endphp...
+    {{substr($item->abstract, 0, 150)}}...
     </small></p>
     @endif
         @php
@@ -137,7 +136,7 @@
     <h5 class="pn-3 mb-1 text-dark" ><strong>{{$item->title}}</strong></h5>
     </div>
     @endif
-    @if (!empty($item->content))
+    @if (!empty($item->abstract))
         @php
         $numerChar = strlen($item->title);
             if ($numerChar > 35){
@@ -145,7 +144,7 @@
             }else{
                 $num = 65;
             }
-            $str = substr("$item->content", 0, $num);
+            $str = substr("$item->abstract", 0, $num);
         @endphp
     <p style="line-height: 1.0" class="text-dark"><small>{{$str}} ...</small></p>
     @endif

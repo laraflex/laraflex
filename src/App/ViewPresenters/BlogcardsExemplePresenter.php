@@ -57,7 +57,7 @@ class BlogcardsExemplePresenter extends Presenter
             'component' => 'blogcards',
                 'type' => 'content',
                 'title' => 'Últimas postagens no blog',
-                'showItems' => ['image', 'title', 'date', 'content'],
+                'showItems' => ['image', 'title', 'date', 'abstract'],
                 //'route' =>'artigo/show',
                 //'readMore' => ['label' => 'Acesse todas as postagens do blog', 'route' => '#'],
                 'imagePath' => 'images/posts',
