@@ -10,7 +10,7 @@
 
 <section id="storageManager">
 
-<div class="p-2 mt-3 mb-3 {{$border}}">
+<div class="m-0 p-2 mt-4 mb-4 {{$border}}">
 
 @if (!empty($storageManager))
 <div id="headerSection" class="pt-3 pb-3 hiflex">
@@ -18,15 +18,15 @@
        <h3 class="text-center font-weight-normal">{{$storageManager->title}}</h3>
     @endif
     {{----------------------------------------}}
-    @if(!empty($storagemanagerMessage))
-        <h6 class="pb-3 text-center">{{$storagemanagerMessage}}</h6>
+    @if(!empty($storageManagerMessage))
+        <h6 class="pb-3 text-center">{{$storageManagerMessage}}</h6>
     @endif
-    @if(!empty($storagemanagerAlert))
+    @if(!empty($storageManagerAlert))
     @php
     $alertColor = 'alert-primary';
     $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($storagemanagerAlert, ':')){
-    $storagemanagerAlert =  str_replace($colorTmp, '', $storagemanagerAlert);
+    if($colorTmp = stristr($storageManagerAlert, ':')){
+    $storageManagerAlert =  str_replace($colorTmp, '', $storageManagerAlert);
     $colorTmp = str_replace(':', '', $colorTmp);
     if(in_array($colorTmp, $color)){
         $alertColor = 'alert-' . $colorTmp;
@@ -34,7 +34,7 @@
     }
     @endphp
     <div class="alert {{$alertColor}}" role="alert">
-    {{$storagemanagerAlert}}
+    {{$storageManagerAlert}}
     </div>
     @endif
     {{-------------------------------------------}}
@@ -50,11 +50,11 @@
         $arrayPath = explode('/', $storageManager->path);
 
         if (count($arrayPath) <= 1){
-            $route = $util->toRoute('liststorage');
+            $route = $util->toRoute($storageManager->route);
         }else{
             $tmp = array_pop($arrayPath);
             $pathTmp = implode(':', $arrayPath);
-            $route = $util->toRoute('liststorage', $pathTmp);
+            $route = $util->toRoute($storageManager->route, $pathTmp);
         }
         @endphp
     <a href="{{$route}}">
@@ -63,10 +63,36 @@
     <div class="text-center pb-1">{{$storageManager->path}}</div>
     </div>
     @endif
+    @php 
+        $controlDir = true;
+        $countDir = 0;
+    @endphp
+
     @if (!empty($storageManager->items))
     {{------------------------------------------------------------------------}}
     @foreach ($storageManager->items as $item)
-    @if (!empty($item) && !in_array($item->fileName, $storageManager->hiddenFolder))
+    {{--Bloco de controle de diretórios que podem ser mostrados ou ocultos--}}
+    @php
+        $openDir = false;
+        if(!empty($storageManager->visibleFolders)){
+            if(!empty($item) && in_array($item->fileName, $storageManager->visibleFolders) && $item->type == 'dir'){
+                $openDir = true;
+                $countDir ++;
+            }
+        }elseif(!empty($storageManager->hiddenFolder)){
+            if (!empty($item) && !in_array($item->fileName, $storageManager->hiddenFolder) && $item->type == 'dir'){
+                $openDir = true;
+                $countDir ++;
+            }
+        }
+        if($item->type == 'file'){
+            $openDir = true;
+            $countDir ++;
+        }
+    @endphp
+
+    @if($openDir === true)
+    {{--Fim do bloco de controle---------------------------------------------}}
     <div class="col-6 col-sm-2 border">
     @if ($item->type == 'dir')
         @php
@@ -80,7 +106,7 @@
             if ($pathTmp != '')
                 $pathTmp .= '/';
                 $pathTmp = str_replace('/', ':',$pathTmp);
-                $route = $util->toRoute('liststorage/'. $pathTmp . $item->fileName);
+                $route = $util->toRoute($storageManager->route .'/'. $pathTmp . $item->fileName);
         @endphp
         <a href="{{$route}}">
         <img src="{{$imageDir}}" class="card-img pt-2 pb-1">
@@ -88,10 +114,15 @@
         <div class="text-center pb-1">{{$item->fileName}}</div>
         @elseif($item->type == 'file' && in_array(strtolower($item->extension), $imageArray))
         @php
-            $pathFile = url('storage/' . $item->dirName . '/' . $item->fileName);
+            $pathFile = url($item->dirName . '/' . $item->fileName);
             $pathTmp = $item->dirName . '/'. $item->fileName;
             $pathTmp = str_replace('/', ':',$pathTmp);
+            if(!empty($storageManager->routeImage)){
             $route = $util->toRoute($storageManager->routeImage, $pathTmp);
+            }else{
+                $route = "#";
+            }
+            
         @endphp
     <a href="{{$route}}">
     <img src="{{$pathFile}}" class="card-img pt-2 pb-1">
@@ -99,14 +130,22 @@
     <div class="text-center pb-1">{{$item->fileName}}</div>
     @else
         @php
-            $pathFile = url('storage/' . $item->dirName . '/' . $item->fileName);
+            $pathFile = url($item->dirName . '/' . $item->fileName);
             $pathTmp = $item->dirName . '/'. $item->fileName;
             $pathTmp = str_replace('/', ':',$pathTmp);
+            if(!empty($storageManager->routeFile)){
             $route = $util->toRoute($storageManager->routeFile, $pathTmp);
+            }else{
+            $route = "#";
+                   
+            }
+            
             $icon = url('images/icons/' . $item->extension . '.png');
         @endphp
-    @if (!empty($storageManager->openFileNewTarget) && $storageManager->openFileNewTarget === true)
-    <a href="{{$route}}" target="_blank">
+   
+    @if (!empty($storageManager->openFileNewTarget) && in_array($item->extension, $storageManager->openFileNewTarget))
+
+    <a href="{{$util->toRoute($item->dirName, $item->fileName)}}" target="_blank">
     @else
     <a href="{{$route}}">
     @endif
@@ -117,6 +156,11 @@
     </div>
     @endif
     @endforeach
+    @if($countDir == 0)
+    <div class="col-sm-10 text-center pt-4">
+    <h5>{{ __('There are no folders or files in this directory.') }}.</h5>
+    </div>
+    @endif
     @else
     <div class="col-sm-10 text-center pt-4">
     <h5>{{ __('There are no folders or files in this directory.') }}.</h5>
@@ -168,8 +212,6 @@ Inserir arquivo
 <!-- End Modal ------------------->
 @endif
 </section>
-
-
 
 
 

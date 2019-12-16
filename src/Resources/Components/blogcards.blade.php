@@ -70,23 +70,26 @@
     <img class="card-img mt-2 mb-2" src="{{$image}}" alt="" />
     @endif
     @endif
-    @if (in_array('content', $blogcards->showItems))
-    @if (!empty($item->content))
+    @if (in_array('abstract', $blogcards->showItems))
+    @if (!empty($item->abstract))
             @php
-                $numerChar = strlen($item->title);
-                    if($numerChar > 30){
+                $numChar = strlen($item->title);
+                    if($numChar > 72){
+                        $num1 = 200;
+                        $num2 = 68;
+                    }elseif($numChar > 30){
                         $num1 = 280;
                         $num2 = 105;
                     }else{
                         $num1 = 315;
                         $num2 = 120;
                     }
-                $str1 = substr("$item->content", 0, $num1);
-                $str2 = substr("$item->content", 0, $num2);
+                $str1 = substr("$item->abstract", 0, $num1);
+                $str2 = substr("$item->abstract", 0, $num2);
             @endphp
     <p class="d-none d-sm-none d-md-block text-justify mt-2 mb-2">{{$str1}}...</p>
     {{-- controle de apresentação para mobile--}}
-    <p class="d-block d-sm-block d-md-none text-justify mt-2 mb-2">{{$str2}}...</p>
+    <p class="d-none d-sm-block d-md-none text-justify mt-2 mb-2">{{$str2}}...</p>
     @endif
     @endif
     @if (!empty($blogcards->route))
@@ -145,34 +148,42 @@
         @php
             if(!empty($blogcards->route)){
                 $link = $util->toRoute($blogcards->route, $item->id);
+            }elseif(!empty($item->link)){
+                $link = $item->link;
             }else{
                 $link = '#';
             }
 
         @endphp
     <a href="{{$link}}">
-    <li class="media pt-1 pb-1 pl-1 pr-2 mb-1 {{$border}}">
+    <li class="media pt-1 pb-0 pl-1 pr-2 mb-1 {{$border}}">
     @if (!empty($item->image))
-    <img src="{{$util->toImage($blogcards->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded" alt="..." style="width: 80px; height: 80px">
+    <img src="{{$util->toImage($blogcards->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded mb-1 mt-1" alt="..." style="width: 80px; height: 80px">
     @endif
-    <div class="media-body stretched-link">
+    <div class="media-body">
     @if (!empty($item->title))
     <div style="line-height: 1.1" class="pt-1 mb-0">
     <h5 class="pn-3 mb-1 text-dark" ><strong>{{$item->title}}</strong></h5>
 
     </div>
     @endif
-    @if (!empty($item->content))
+    @if (!empty($item->abstract))
             @php
-                $numerChar = strlen($item->title);
-                    if ($numerChar > 35){
-                        $num = 45;
+                $numChar = strlen($item->title);
+                    if ($numChar > 35){
+                        if($numChar > 72){
+                            $num = 0;
+                        }else{
+                            $num = 40;                          
+                        }                     
                     }else{
-                        $num = 65;
+                        $num = 60;
                     }
-                $str = substr("$item->content", 0, $num);
+                $str = substr("$item->abstract", 0, $num);
             @endphp
-    <p style="line-height: 1.0" class="text-dark"><small>{{$str}} ...</small></p>
+    @if($num != 0)
+    <p style="line-height: 1.0" class="text-dark"><smallx>{{$str}} ...</smallx></p>
+    @endif
     @endif
     </div>
     </li>
@@ -198,4 +209,3 @@
 <h5>{{ __('There are no items to display.') }}</h5>
 </div>
 @endif
-

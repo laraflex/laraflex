@@ -13,7 +13,7 @@
     @php
     $data = $contentbox->data;
     @endphp
-<div class="p-4 hiflex {{$border}} m-0 mt-4 mb-4">
+<div class="p-4 p-lg-5 {{$border}} m-0 mt-4 mb-4">
     @if (in_array('title', $contentbox->showItems) && !empty($data->title))
     <h3 class="d-none d-lg-block font-weight-normal">{{$data->title}}</h2>
     <h4 class="d-block d-lg-none font-weight-normal">{{$data->title}}</h5>
@@ -37,18 +37,26 @@
     @if (in_array('image', $contentbox->showItems) && !empty($data->image))
     <img src="{{$util->toImage($contentbox->imagePath, $data->image)}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
     @endif
+    {{--Bloco Abstract------------}}
+    @if (in_array('abstract', $contentbox->showItems) && !empty($data->abstract))
+    <div class="pb-3"><b>{{strtoupper(__('Abstract'))}}</b></div>
+    <div class="text-justify pb-4">{{$data->abstract}}
+    @if (in_array('keywords', $contentbox->showItems) && !empty($data->keywords))
+    <div class="pt-3 pb-2"><b>{{strtoupper(__('Keywords'))}}</b>: {{$data->keywords}}</div>
+    @endif
+    <hr>
+    </div>
+    @endif
+    {{----------------------------}}
     {{--Bloco de conteúdo -----------------------------------------------}}
     @if (in_array('content', $contentbox->showItems) && !empty($data->content))
         <div>
         @if(!empty($contentbox->contentType) && $contentbox->contentType == 'code')
-            <p class="d-none d-sm-block ">{!!$data->content!!}</p>
+            <p class="">{!!$data->content!!}</p>
         @else
-        <p class="d-none d-sm-block text-justify">{!!$data->content!!} </p>
+        <p class="text-justify">{!!$data->content!!} </p>
         @endif
-        {{-- controle de apresentação para mobile--}}
-        <p class="d-block d-sm-none text-justify" style="line-height: 1.1";><small class="text-muted">
-            {!!$data->content!!}
-        </small></p>
+
         </div>
     @endif
 
@@ -60,7 +68,7 @@
     @endif
     <div class="p-2">
     @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)
-    <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3" data-toggle="modal" data-target="#addResponseModal" data-whatever="NULL">
+    <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3 mt-3" data-toggle="modal" data-target="#addResponseModal" data-whatever="NULL">
     {{__('Make a comment')}}
     </button>
     @elseif(!empty($contentbox->message))
