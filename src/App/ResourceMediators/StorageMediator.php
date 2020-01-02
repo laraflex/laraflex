@@ -37,12 +37,11 @@ class StorageMediator extends ResourceMediator
             'date' => date("y/m/Y", strtotime($data['timestamp'])),
             'type' => $data['type'],
             'fileName' => $data['basename'],
-            'filePath' => 'storage/' . $data['dirname'],
+            'filePath' => $data['dirname'],
         ];
-        if ($data['type'] == 'file'){
-            $dataExtension = strtolower($data['extension']);
-            //foreach($extensions as $ext)
-                //echo $ext;
+        if ($data['type'] == 'file' && !empty($data['extension'])){
+            $dataExtension = $data['extension'];
+
 
             if (in_array($dataExtension, $extensions)) {
                 $var['extension'] = $data['extension'];

@@ -63,7 +63,7 @@
     <div class="text-center pb-1">{{$storageManager->path}}</div>
     </div>
     @endif
-    @php 
+    @php
         $controlDir = true;
         $countDir = 0;
     @endphp
@@ -112,7 +112,11 @@
         <img src="{{$imageDir}}" class="card-img pt-2 pb-1">
         </a>
         <div class="text-center pb-1">{{$item->fileName}}</div>
-        @elseif($item->type == 'file' && in_array(strtolower($item->extension), $imageArray))
+
+
+    @elseif($item->type == 'file' && !empty($item->extension))
+
+    @if(in_array(strtolower($item->extension), $imageArray))
         @php
             $pathFile = url($item->dirName . '/' . $item->fileName);
             $pathTmp = $item->dirName . '/'. $item->fileName;
@@ -122,7 +126,7 @@
             }else{
                 $route = "#";
             }
-            
+
         @endphp
     <a href="{{$route}}">
     <img src="{{$pathFile}}" class="card-img pt-2 pb-1">
@@ -137,22 +141,24 @@
             $route = $util->toRoute($storageManager->routeFile, $pathTmp);
             }else{
             $route = "#";
-                   
+
             }
-            
+
             $icon = url('images/icons/' . $item->extension . '.png');
         @endphp
-   
-    @if (!empty($storageManager->openFileNewTarget) && in_array($item->extension, $storageManager->openFileNewTarget))
 
-    <a href="{{$util->toRoute($item->dirName, $item->fileName)}}" target="_blank">
-    @else
-    <a href="{{$route}}">
-    @endif
+        @if (!empty($storageManager->openFileNewTarget) && in_array($item->extension, $storageManager->openFileNewTarget))
+        <a href="{{$util->toRoute($item->dirName, $item->fileName)}}" target="_blank">
+        @else
+        <a href="{{$route}}">
+        @endif
     <img src="{{$icon}}" class="card-img pt-2 pb-1">
     </a>
     <div class="text-center pb-1">{{$item->fileName}}</div>
+
     @endif
+    @endif
+    {{--Fim do bloco de Diretórios e arquivos--}}
     </div>
     @endif
     @endforeach
@@ -212,6 +218,7 @@ Inserir arquivo
 <!-- End Modal ------------------->
 @endif
 </section>
+
 
 
 

@@ -15,10 +15,14 @@ if(!empty($objectConfig)){
 {{-- Início do bloco lógico -------------------------------}}
 @foreach ($objetoConfig->components as $object)
 @if (strtolower($object->type) == 'content')
+
+@php
+$component = strtolower($object->component);
+@endphp
 @if(!empty($object->pathComponents))
-@include($object->pathComponents . '.' . $object->component)
+@include($object->pathComponents . '.' . $component)
 @else
-@include('laraflex::' . $object->component)
+@include('laraflex::' . $component)
 @endif
 
 @endif

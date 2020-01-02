@@ -97,15 +97,6 @@ throw new Exception("A propriedade LABEL de ítem de menu não foi definida em [
 @php
 // ==========================================================================================================
 $submenu = $itemMenu->subItems;
-//teste de atributos de submenu
-foreach ( $submenu as $K => $item ){
-if (empty($item->route)){
-throw new Exception("A propriedade ROUTE de submenu não foi definida em [NavbarViewComposer]");
-}
-if (empty($item->label)){
-throw new Exception("A propriedade LABEL de submenu não foi definida em [NavbarViewComposer]");
-}
-}
 // =========================================================================================================
 @endphp
 @foreach ( $submenu as $K => $item )
@@ -124,42 +115,7 @@ throw new Exception("A propriedade LABEL de submenu não foi definida em [Navbar
 </li>
 @endif
 </ul>
-@if(!empty($navBar->showLogin) && $navBar->showLogin === true)
-{{-----------}}
-        <ul class="d-block d-lg-none navbar navbar-nav p-0 pl-2">
-        <!-- Authentication Links -->
-        @guest
-        <li class="nav-item active">
-        <a class="nav-link" href="{{ route('login') }}" >{{ __('Login') }}</a>
-        </li>
-        {{--Controle de show Register--}}
-        @if(!empty($navBar->showRegister) && $navBar->showRegister === true)
-        <li class="nav-item active">
-        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-        </li>
-        @endif
-        {{--Fim de controle de register--}}
-        @else
-        <li class="nav-item dropdown active">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-        {{ Auth::user()->name }} <span class="caret"></span>
-        </a>
-        <div class="dropdown-menu w-50" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('logout') }}"
-        onclick="event.preventDefault();
-        document.getElementById('logout-form').submit();">
-        {{ __('Logout') }}
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-        </form>
-        </div>
-        </li>
-        @endguest
-        </div>
-        </ul>
-{{-----------}}
-@endif
+
 </div>
 
 @if(!empty($navBar->showLogin) && $navBar->showLogin === true)

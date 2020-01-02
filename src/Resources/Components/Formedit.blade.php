@@ -196,8 +196,15 @@
     {{--Bloco de adição de botões ------------------------}}
     <div class="d-none d-sm-block">
     @foreach ($item->items as $btn)
+    @php
+    if (!empty($btn->disabled) && $btn->disabled === true){
+        $active = 'disabled';
+    }else{
+        $active = '';
+    }
+    @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
-    <button type="{{$btn->subType}}" class="btn btn-{{$btnColor}} {{$btnBorder}}">{{$btn->label}}</button>
+    <button type="{{$btn->subType}}" class="btn btn-{{$btnColor}} {{$btnBorder}}" {{$active}}>{{$btn->label}}</button>
     @elseif($btn->subType == 'btn' OR $btn->subType == 'button')
     @php
         $btnColor = $btnColorTmp;
@@ -222,8 +229,15 @@
     {{--*************************************************--}}
     <div class="d-block d-sm-none">
     @foreach ($item->items as $btn)
+    @php
+    if (!empty($btn->disabled) && $btn->disabled === true){
+        $active = 'disabled';
+    }else{
+        $active = '';
+    }
+    @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
-    <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}}">{{__($btn->label)}}</button>
+    <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}}" {{$active}}>{{__($btn->label)}}</button>
     @elseif($btn->subType == 'btn' OR $btn->subType == 'button')
     @php
     $btnColor = $btnColorTmp;
@@ -305,4 +319,3 @@
 <h5>{{ __('There are no form items to display.') }}.</h5>
 </div>
 @endif
-
