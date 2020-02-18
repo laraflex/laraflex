@@ -16,27 +16,7 @@
     @if(!empty($lightbox->title))
     <h3 class="text-center pt-2 pb-3">{{$lightbox->title}}</h3>
     @endif
-    {{----------------------------------------}}
-    @if(!empty($lightboxMessage))
-    <h6 class="pb-3 text-center ml-3 mr-3">{{$lightboxMessage}}</h6>
-    @endif
-    @if(!empty($lightboxAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($lightboxAlert, ':')){
-    $lightboxAlert =  str_replace($colorTmp, '', $lightboxAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert ml-3 mr-3 {{$alertColor}}" role="alert">
-    {{$lightboxAlert}}
-    </div>
-    @endif
-    {{-------------------------------------------}}
+
     <div class="ml-3 mr-3">
     <div class="row w-100 ml-0 p-1">
     {{--Add items ------------------------------------------------}}

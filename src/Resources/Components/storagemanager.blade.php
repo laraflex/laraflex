@@ -17,27 +17,7 @@
     @if (!empty($storageManager->title))
        <h3 class="text-center font-weight-normal">{{$storageManager->title}}</h3>
     @endif
-    {{----------------------------------------}}
-    @if(!empty($storageManagerMessage))
-        <h6 class="pb-3 text-center">{{$storageManagerMessage}}</h6>
-    @endif
-    @if(!empty($storageManagerAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($storageManagerAlert, ':')){
-    $storageManagerAlert =  str_replace($colorTmp, '', $storageManagerAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$storageManagerAlert}}
-    </div>
-    @endif
-    {{-------------------------------------------}}
+
 </div>
     @php
         $imageArray = array('jpg', 'png', 'svg', 'jpeg', 'tif', 'gif', 'BMP', 'exif', 'webp');

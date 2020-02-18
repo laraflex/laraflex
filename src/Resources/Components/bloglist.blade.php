@@ -19,27 +19,7 @@
     <h3 class="d-block d-sm-block d-md-none text-center font-weight-normal">{{$bloglist->title}}</h3>
     @endif
     </div>
-    {{---------------------------------------------}}
-    @if(!empty($bloglistMessage))
-    <h6 class="pb-3 text-center">{{$bloglistMessage}}</h6>
-    @endif
-    @if(!empty($bloglistAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($bloglistAlert, ':')){
-    $bloglistAlert =  str_replace($colorTmp, '', $bloglistAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$bloglistAlert}}
-    </div>
-    @endif
-    {{-----------------------------------------------}}
+
     <div class="{{$border}} pt-3 pb-3 mb-3">
     @foreach ($bloglist->items as $item)
     <div class="row w-100 p-3 mb-3 ml-0 hiflex">

@@ -19,28 +19,7 @@
     @if (!empty($contentEditor->legend))
         <div><small style="color:gray">{{$contentEditor->legend}}</small></div>
     @endif
-    {{----------------------------------------}}
-    @if(!empty($contentEditorMessage))
-    <h6 class="pb-3 text-center mt-3">{{$contentEditorMessage}}</h6>
-    @endif
-    @if(!empty($contentEditorAlert))
-        @php
-        $alertColor = 'alert-primary';
-        $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-        if($colorTmp = stristr($contentEditorAlert, ':')){
-            $contentEditorAlert =  str_replace($colorTmp, '', $contentEditorAlert);
-            $colorTmp = str_replace(':', '', $colorTmp);
-            if(in_array($colorTmp, $color)){
-                $alertColor = 'alert-' . $colorTmp;
-            }
-        }
 
-        @endphp
-        <div class="alert mt-2 {{$alertColor}}" role="alert">
-        {{$formAlert}}
-        </div>
-    @endif
-    {{--------------------------------------------}}
 </div>
 @php
     $route = $util->toRoute($contentEditor->action);

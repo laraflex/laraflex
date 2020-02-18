@@ -18,27 +18,7 @@
     <h3 class="d-block d-sm-block d-md-none text-center font-weight-normal">{{$blogcards->title}}</h3>
      @endif
     </div>
-    {{-----------------------------------------}}
-    @if(!empty($blogcardsMessage))
-    <h6 class="pb-3 text-center">{{$blogcardsMessage}}</h6>
-    @endif
-    @if(!empty($blogcardsAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($blogcardsAlert, ':')){
-    $blogcardsAlert =  str_replace($colorTmp, '', $blogcardsAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$blogcardsAlert}}
-    </div>
-    @endif
-    {{-------------------------------------------}}
+
     <div class="row p-2">
         {{--Início linha linha ==== --}}
     @foreach ($blogcards->items as $item)
@@ -174,8 +154,8 @@
                         if($numChar > 72){
                             $num = 0;
                         }else{
-                            $num = 40;                          
-                        }                     
+                            $num = 40;
+                        }
                     }else{
                         $num = 60;
                     }

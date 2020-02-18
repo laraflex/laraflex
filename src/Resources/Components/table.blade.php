@@ -37,27 +37,6 @@
     <div class="text-center">
         <h3 class="mb-3">{{$table->title}}</h3>
     </div>
-    {{----------------------------------------}}
-    @if(!empty($tableMessage))
-    <h6 class="pb-3 text-center">{{$tableMessage}}</h6>
-    @endif
-    @if(!empty($tableAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($tableAlert, ':')){
-    $tableAlert =  str_replace($colorTmp, '', $tableAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-    $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$tableAlert}}
-    </div>
-    @endif
-    {{-------------------------------------------}}
 
     <table class="table table-sm table-bordered table-responsive-sm">
     @if (!empty($paginate))

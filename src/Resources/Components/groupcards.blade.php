@@ -17,30 +17,7 @@
     <h3 class="d-none d-sm-block mt-1 font-weight-normal text-center pt-2 pb-3">{{$groupCards->title}}</h3>
     <h4 class="d-block d-sm-none mt-1 font-weight-normal text-center pt-2 pb-2">{{$groupCards->title}}</h4>
     @endif
-    {{----------------------------------------}}
-    @if(!empty($groupcardsMessage))
-        <h6 class="pb-3 text-center">{{$groupcardsMessage}}</h6>
-    @endif
-    @if(!empty($groupcardsAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($groupcardsAlert, ':')){
-    $groupcardsAlert =  str_replace($colorTmp, '', $groupcardsAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$groupcardsAlert}}
-    </div>
-    @endif
 
-
-
-    {{-------------------------------------------}}
     <div class="row">
     @foreach ($groupCards->items as $key =>$item)
      {{--Início das colunas do componente--}}

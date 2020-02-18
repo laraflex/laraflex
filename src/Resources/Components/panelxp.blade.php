@@ -18,27 +18,7 @@
     <h3 class="d-none d-sm-block mt-1 font-weight-normal text-center pt-2 pb-3">{{$panel->title}}</h3>
     <h4 class="d-block d-sm-none mt-1 font-weight-normal text-center pt-2 pb-2">{{$panel->title}}</h4>
     @endif
-    {{-----------------------------------------}}
-    @if(!empty($panelMessage))
-    <h6 class="pb-3 text-center">{{$panelMessage}}</h6>
-    @endif
-    @if(!empty($panelAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($panelAlert, ':')){
-        $panelAlert =  str_replace($colorTmp, '', $panelAlert);
-        $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$panelAlert}}
-    </div>
-    @endif
-    {{-------------------------------------------}}
+
     @if(!empty($panel->bgColor))
     <div class="row w-100 p-0 m-0 pt-0 pb-2 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
     @else

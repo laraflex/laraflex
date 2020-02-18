@@ -18,28 +18,7 @@
 <h3 class="d-none d-sm-block mt-1 font-weight-normal text-center pt-2 pb-3">{{$dataBox->title}}</h3>
 <h4 class="d-block d-sm-none mt-1 font-weight-normal text-center pt-2 pb-2">{{$dataBox->title}}</h4>
 @endif
-{{----------------------------------------}}
-@if(!empty($databoxMessage))
-<h6 class="pb-3 text-center">{{$databoxMessage}}</h6>
-@endif
-{{--Component alert--}}
-@if(!empty($databoxAlert))
-@php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($databoxAlert, ':')){
-       $databoxAlert =  str_replace($colorTmp, '', $databoxAlert);
-       $colorTmp = str_replace(':', '', $colorTmp);
-       if(in_array($colorTmp, $color)){
-           $alertColor = 'alert-' . $colorTmp;
-       }
-    }
-@endphp
-<div class="alert {{$alertColor}}" role="alert">
-{{$databoxAlert}}
-</div>
-@endif
-{{-------------------------------------------}}
+
 {{--component items--}}
 <div class="row ml-0 mr-0">
 @foreach($dataBox->items as $item)

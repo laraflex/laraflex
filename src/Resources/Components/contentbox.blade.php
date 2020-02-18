@@ -52,9 +52,9 @@
     @if (in_array('content', $contentbox->showItems) && !empty($data->content))
         <div>
         @if(!empty($contentbox->contentType) && $contentbox->contentType == 'code')
-            <p class="">{!!$data->content!!}</p>
+            <div class="">{!!$data->content!!}</div>
         @else
-        <p class="text-justify">{!!$data->content!!} </p>
+        <div class="text-justify">{!!$data->content!!} </div>
         @endif
 
         </div>

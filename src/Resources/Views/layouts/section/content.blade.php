@@ -12,6 +12,26 @@ if(!empty($objectConfig)){
 @if (!empty($objetoConfig->components))
 <main id="content">
 <div class="container">
+{{-- Bloco de mensagem e alerta--------------------------}}
+@if(session('alert'))
+    <div class="alert alert-danger hiflex">
+       <strong>{{__('Alert')}}</strong>: {{ session('alert') }}
+    </div>
+@elseif(session('message'))
+    <div class="alert alert-primary">
+        {{__('Message')}}: {{ session('message') }}
+    </div>
+@elseif(!empty($alert))
+    <div class="alert alert-danger" role="alert">
+        <strong>{{__('Alert')}}</strong>: {{$alert}}
+    </div>
+@elseif(!empty($message))
+    <div class="alert alert-success" role="alert">
+        {{__('Message')}}: {{ $message }}
+    </div>
+@endif
+{{--Fim bloco de mensagem e alerta--------------------------}}
+
 {{-- Início do bloco lógico -------------------------------}}
 @foreach ($objetoConfig->components as $object)
 @if (strtolower($object->type) == 'content')

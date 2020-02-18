@@ -45,27 +45,7 @@
     @if (!empty($form->legend))
         <div><small style="color:gray">{{$form->legend}}</small></div>
     @endif
-    {{----------------------------------------}}
-    @if(!empty($formMessage))
-    <h6 class="pb-3 text-center mt-3">{{$formMessage}}</h6>
-    @endif
-    @if(!empty($formAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($formAlert, ':')){
-    $formAlert =  str_replace($colorTmp, '', $formAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert mt-2 {{$alertColor}}" role="alert">
-    {{$formAlert}}
-    </div>
-    @endif
-    {{--------------------------------------------}}
+
     </div>
 
     @php
