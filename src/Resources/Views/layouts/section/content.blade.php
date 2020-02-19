@@ -14,20 +14,30 @@ if(!empty($objectConfig)){
 <div class="container">
 {{-- Bloco de mensagem e alerta--------------------------}}
 @if(session('alert'))
-    <div class="alert alert-danger hiflex">
-       <strong>{{__('Alert')}}</strong>: {{ session('alert') }}
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alert-heading">{{__('Alert')}}!</h4>
+        <div class="mb-2">{{ session('alert') }}</div>
     </div>
 @elseif(session('message'))
-    <div class="alert alert-primary">
-        {{__('Message')}}: {{ session('message') }}
+    <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">{{__('Message')}}!</h4>
+        <div class="mb-2">{{ session('message') }}</div>
     </div>
 @elseif(!empty($alert))
     <div class="alert alert-danger" role="alert">
-        <strong>{{__('Alert')}}</strong>: {{$alert}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alert-heading">{{__('Alert')}}!</h4>
+        <div class="mb-2">{{$alert}}</div>
     </div>
 @elseif(!empty($message))
     <div class="alert alert-success" role="alert">
-        {{__('Message')}}: {{ $message }}
+        <h4 class="alert-heading">{{__('Message')}}!</h4>
+        <div class="mb-2">{{ $message }}</div>
     </div>
 @endif
 {{--Fim bloco de mensagem e alerta--------------------------}}
