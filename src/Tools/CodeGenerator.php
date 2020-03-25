@@ -3,7 +3,7 @@ namespace laraflex\Tools;
 
 class CodeGenerator{
 
-    function randomCode($tamanho = 5, $maiusculas = true, $numeros = true, $simbolos = true)
+    static public function randomCode($tamanho = 5, $maiusculas = true, $numeros = true, $simbolos = true)
     {
         //$lmin = 'abcdefghijklmnopqrstuvwxyz';
         $lmai = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
@@ -21,5 +21,23 @@ class CodeGenerator{
             $retorno .= $caracteres[$rand - 1];
         }
         return $retorno;
+    }
+
+    static public function create()
+    {
+        return new CodeGenerator();
+    }
+
+    static public function codeEAN($digitos = 13){
+
+        $num = '1234567890';
+        $code = '';
+        $caracteres = '';
+        $len = strlen($num);
+        for ($n = 1; $n <= $digitos; $n++) {
+            $rand = mt_rand(1, $len);
+            $code .= $caracteres[$rand - 1];
+        }
+        return $code;
     }
 }

@@ -9,7 +9,6 @@ if(!empty($objectConfig)){
         $border = NULL;
     }
 @endphp
-@if (!empty($objetoConfig->components))
 <main id="content">
 <div class="container">
 {{-- Bloco de mensagem e alerta--------------------------}}
@@ -26,6 +25,27 @@ if(!empty($objectConfig)){
         <h4 class="alert-heading">{{__('Message')}}!</h4>
         <div class="mb-2">{{ session('message') }}</div>
     </div>
+{{--Session Errors ------------------------------------------------}}
+@elseif(session('errors'))
+    @php
+    $errorsArray = json_decode(session('errors'));
+    $message = '';
+    foreach ($errorsArray as $key => $messages){
+        foreach ($messages as $error){
+            $message .= $error . '<br/>';
+        }
+    }
+    @endphp
+
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alert-heading">{{__('Alert')}}!</h4>
+        <hr>
+        <div class="mb-2">{!! $message !!}</div>
+    </div>
+{{--End Session Errors ---------------------------------------------}}
 @elseif(!empty($alert))
     <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -37,11 +57,11 @@ if(!empty($objectConfig)){
 @elseif(!empty($message))
     <div class="alert alert-success" role="alert">
         <h4 class="alert-heading">{{__('Message')}}!</h4>
-        <div class="mb-2">{{ $message }}</div>
+        <div class="mb-2">{!! $message !!}</div>
     </div>
 @endif
 {{--Fim bloco de mensagem e alerta--------------------------}}
-
+@if (!empty($objetoConfig->components))
 {{-- Início do bloco lógico -------------------------------}}
 @foreach ($objetoConfig->components as $object)
 @if (strtolower($object->type) == 'content')

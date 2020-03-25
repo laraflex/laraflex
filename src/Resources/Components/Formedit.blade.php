@@ -43,7 +43,7 @@
     </div>
     @php
         $enctype = '';
-        $route = url($form->action . '/' . $form->updateId);
+        $route = url($form->action);
         foreach ($form->items as $item){
             if ($item->type == 'file'){
                 $enctype = 'multipart/form-data';
@@ -56,6 +56,9 @@
         @csrf
         @endif
     @endif
+    {{--Campo hidden code id-----------}}
+    <input type="hidden" class="updateId" id="updateId" name="updateId" value="{{$form->updateId}}">
+    {{--End Campo hidden---------------}}
     @foreach ($formConfig as $key => $item)
     @if ($item->type == 'fieldset')
     <fieldset class="form-group">

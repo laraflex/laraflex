@@ -2,9 +2,12 @@
 namespace App\ViewPresenters;
 
 use laraflex\Contracts\Presenter;
+use laraflex\ViewHelpers\AccessControl;
+use laraflex\ViewHelpers\ModelPaginate;
 
 class PresenterClone extends Presenter
 {
+    use AccessControl, ModelPaginate;
 
     public function toArray($data = NULL)
     {
@@ -14,6 +17,8 @@ class PresenterClone extends Presenter
             'type' => 'content',
             'title' => 'General Title of Component',
         ];
+
+        //$var = $this->checkAllPermissions($var);
         return $var;
     }
 

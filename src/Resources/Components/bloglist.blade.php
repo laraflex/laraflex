@@ -38,7 +38,7 @@
     @if (in_array('subTitle', $bloglist->showItems) && !empty($item->subTitle))
     <h6 class="d-none d-md-block ">{{$item->subtitle}}</h6>
     @endif
-    @if (in_array('categoryName', $bloglist->showItems) && !empty($item->icategoryName))
+    @if (in_array('categoryName', $bloglist->showItems) && !empty($item->categoryName))
     <p class="d-none d-md-block"><strong>{{$item->categoryName}}</strong></p>
     @endif
     @if (in_array('authorName', $bloglist->showItems) && !empty($item->authorName))
@@ -57,10 +57,14 @@
     {{substr($item->abstract, 0, 150)}}...
     </small></p>
     @endif
+    {{--Button------------------------------------}}
+    @if(!empty($bloglist->route))
         @php
         $link = $util->toRoute($bloglist->route, $item->id);
         @endphp
     <a class="btn btn-sm btn-outline-secondary" href="{{$link}}" role="button">{{__('Read more')}}</a>
+    @endif
+    {{--End button------------------------------------}}
     </div>
     </div>
     @endforeach
@@ -71,76 +75,78 @@
          {!!$bloglist->paginate->links()!!}
     @endif
     </div>
-    </div>
+    
 </div>
 </div>
 {{--8888888888888888888888888888888888888888888888888988888888888--}}
 
 <div class="d-block d-sm-none mb-3 bg-white">
-    <div class="hiflex pr-3 pl-3 pt-0">
     <div id="headerSection" class="pt-3 pb-2">
-    <h4 class="text-center font-weight-normal">{{$bloglist->title}}</h4>
+        <h4 class="text-center font-weight-normal">{{$bloglist->title}}</h4>
     </div>
-    {{---------------------------------------------}}
-    @if(!empty($bloglistMessage))
-    <h6 class="pb-2 text-center">{{$bloglistMessage}}</h6>
-    @endif
-    @if(!empty($bloglistAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($bloglistAlert, ':')){
-    $bloglistAlert =  str_replace($colorTmp, '', $bloglistAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$bloglistAlert}}
-    </div>
-    @endif
-    {{-----------------------------------------------}}
+    
     <ul class="list-unstyled hiflex">
     @foreach ($bloglist->items as $key => $item)
-    <a href="{{$util->toRoute($bloglist->route, $item->id)}}">
-    <li class="media pt-1 pb-1 pl-1 pr-2 mb-1 {{$border}}">
-    @if (!empty($item->image))
-    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded" alt="..." style="width: 80px; height: 80px">
+        @php
+            if(!empty($bloglist->route)){
+                $link = $util->toRoute($bloglist->route, $item->id);
+            }elseif(!empty($item->link)){
+                $link = $item->link;
+            }else{
+                $link = '#';
+            }
 
+        @endphp
+    <a href="{{$link}}">
+    <li class="media pt-1 pb-0 pl-1 pr-2 mb-1 {{$border}}">
+    @if (!empty($item->image))
+    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded mb-1 mt-1" alt="..." style="width: 80px; height: 80px">
     @endif
-    <div class="media-body">
+    <div class="media-body pl-1">
     @if (!empty($item->title))
     <div style="line-height: 1.1" class="pt-1 mb-0">
     <h5 class="pn-3 mb-1 text-dark" ><strong>{{$item->title}}</strong></h5>
+
     </div>
     @endif
     @if (!empty($item->abstract))
-        @php
-        $numerChar = strlen($item->title);
-            if ($numerChar > 35){
-                $num = 45;
-            }else{
-                $num = 65;
-            }
-            $str = substr("$item->abstract", 0, $num);
-        @endphp
-    <p style="line-height: 1.0" class="text-dark"><small>{{$str}} ...</small></p>
+            @php
+                $numChar = strlen($item->title);
+                    if ($numChar > 35){
+                        if($numChar > 72){
+                            $num = 0;
+                        }else{
+                            $num = 40;
+                        }
+                    }else{
+                        $num = 60;
+                    }
+                $str = substr("$item->abstract", 0, $num);
+            @endphp
+    @if($num != 0)
+    <p style="line-height: 1.0" class="text-dark"><smallx>{{$str}} ...</smallx></p>
+    @endif
     @endif
     </div>
     </li>
     </a>
     @endforeach
     </ul>
-    {{--$paginate--------------------------------------}}
-    @if (!empty($bloglist->paginate))
-    <div class="text-center nav justify-content-center pt-2">
-         {!!$bloglist->paginate->links()!!}
-    @endif
-    </div>
-    </div>
+
+{{--$paginate--------------------------------------}}
+@if (!empty($bloglist->paginate))
+<div class="text-center nav justify-content-center">
+    {!!$bloglist->paginate->links()!!}
 </div>
+{{--button read more-------------------------------}}
+@elseif (!empty($bloglist->readMore->label) && !empty($bloglist->readMore->route))
+<div class="text-center">
+    <a class="btn btn-outline-secondary mb-4" href="{{$util->toRoute($bloglist->readMore->route)}}" role="button">{{$bloglist->readMore->label}}</a>
+</div>
+@endif
+</div>
+
+
 </section>
 @else
     <div class="text-center p-4 mt-3 mb-3 {{$border}}">
@@ -148,3 +154,4 @@
     </div>
 @endif
 
+{{--27-02-2020--}}

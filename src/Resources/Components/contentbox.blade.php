@@ -68,11 +68,11 @@
     @endif
     <div class="p-2">
     @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)
-    <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3 mt-3" data-toggle="modal" data-target="#addResponseModal" data-whatever="NULL">
+    <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3 mt-3" data-toggle="modal" data-target="#comentModal" data-id="0">
     {{__('Make a comment')}}
     </button>
     @elseif(!empty($contentbox->message))
-    <div class="pb-3"><i>{{__($contentbox->message)}}</i></div>
+    <div class="pb-0 pt-3"><i>{{__($contentbox->message)}}</i></div>
     @endif
     </div>
 </div>

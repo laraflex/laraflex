@@ -40,5 +40,6 @@ class LaraflexServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/public/images/posts' => base_path('public/images/posts'),]);
         $this->publishes([__DIR__.'/public/images/slides' => base_path('public/images/slides'),]);
         $this->publishes([__DIR__.'/public/images/users' => base_path('public/images/users'),]);
+        $this->publishes([__DIR__.'/App/Http/Controllers' => base_path('App/Http/Controllers'),]);
     }
 }

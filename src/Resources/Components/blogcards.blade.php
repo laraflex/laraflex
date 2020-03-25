@@ -72,12 +72,14 @@
     <p class="d-none d-sm-block d-md-none text-justify mt-2 mb-2">{{$str2}}...</p>
     @endif
     @endif
+    {{--Button --------------------}}
     @if (!empty($blogcards->route))
         @php
            $link = $util->toRoute($blogcards->route, $item->id);
         @endphp
     <a class="btn btn-sm btn-outline-secondary mt-2" href="{{$link}}" role="button">Leia mais</a>
     @endif
+    {{--End button ----------------}}
     </header>
     </article>
     </div>
@@ -98,31 +100,12 @@
 
 {{--8888888888888888888888888888888888888888888888888888888888--}}
 
+
 <div class="d-block d-sm-none mb-3 bg-white">
     <div id="headerSection" class="pt-3 pb-2">
         <h4 class="text-center font-weight-normal">{{$blogcards->title}}</h4>
     </div>
-    {{-----------------------------------------}}
-    @if(!empty($blogcardsMessage))
-    <h6 class="pb-2 text-center">{{$blogcardsMessage}}</h6>
-    @endif
-    @if(!empty($blogcardsAlert))
-    @php
-    $alertColor = 'alert-primary';
-    $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-    if($colorTmp = stristr($blogcardsAlert, ':')){
-    $blogcardsAlert =  str_replace($colorTmp, '', $blogcardsAlert);
-    $colorTmp = str_replace(':', '', $colorTmp);
-    if(in_array($colorTmp, $color)){
-        $alertColor = 'alert-' . $colorTmp;
-    }
-    }
-    @endphp
-    <div class="alert {{$alertColor}}" role="alert">
-    {{$blogcardsAlert}}
-    </div>
-    @endif
-    {{-------------------------------------------}}
+    
     <ul class="list-unstyled hiflex">
     @foreach ($blogcards->items as $key => $item)
         @php
@@ -140,7 +123,7 @@
     @if (!empty($item->image))
     <img src="{{$util->toImage($blogcards->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded mb-1 mt-1" alt="..." style="width: 80px; height: 80px">
     @endif
-    <div class="media-body">
+    <div class="media-body pl-1">
     @if (!empty($item->title))
     <div style="line-height: 1.1" class="pt-1 mb-0">
     <h5 class="pn-3 mb-1 text-dark" ><strong>{{$item->title}}</strong></h5>
@@ -183,6 +166,8 @@
 </div>
 @endif
 </div>
+
+
 </section>
 @else
 <div class="text-center p-4 mt-3 mb-3 {{$border}}">

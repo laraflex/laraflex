@@ -1,6 +1,8 @@
 {
     "Logout": "Sair",
     "Login": "Entrar",
+    "Alert": "Alerta",
+    "Message": "Mensagem",
     "Forgot Your Password": "Esqueceu sua senha?",
     "Remember Me" : "Lembre me",
     "E-Mail Address": "Endereço de e-mail",

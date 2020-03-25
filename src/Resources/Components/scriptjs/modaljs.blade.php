@@ -1,10 +1,12 @@
 @if ($objetojs->component == 'modaljs')
 <script>
-$('#addResponseModal').on('show.bs.modal', function (event) {
-var button = $(event.relatedTarget
-var recipient = button.data('whatever')
+$('#comentModal').on('show.bs.modal', function (e) {
+var button = $(e.relatedTarget)
+var recipient = button.data('id')
 var modal = $(this)
-modal.find('#recipient').val(recipient)
+modal.find('.modal-body #recipient').val(recipient)
 })
 </script>
 @endif
+
+
