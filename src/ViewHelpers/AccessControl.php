@@ -5,14 +5,17 @@ use Illuminate\Support\Facades\Auth;
 
 Trait AccessControl {
 
-
     /**
-     * Metodos que irão substituir os anteriores
+     * Métodos que irão substituir os anteriores.
      */
 
     public function verify($policy, $parameter)
     {
-        return Auth::check() && Auth::user()->can($policy, $parameter);
+        if (Auth::check() && Auth::user()->can($policy, $parameter)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function checkAllPermissions($arrayTmp)
@@ -38,11 +41,27 @@ Trait AccessControl {
         return $arrayTmp;
     }
 
+    public function getAccessArray($policy, $data){
+        $dataTmp = array();
+        foreach ($data as $key => $item){
+            if (Auth()->check() && Auth()->user()->can($policy, $item)){
+               $dataTmp[] = $item;
+            }
+        }
+        return $dataTmp;
+    }
+
+    public function getAccessObjects($policy, $data){
+            $jsonTmp = json_encode($this->getAccessArray($policy, $data));
+            $object = json_decode($jsonTmp);
+            return $object;
+    }
+
     /**
-     * Métodos que serão depreciados
+     * Métodos que serão depreciados.
      */
 
-    public function getPermission($policy, $parameter = Null)
+    public function getPermission($policy, $parameter)
     {
         if (Auth::check() && Auth::user()->can($policy, $parameter)){
             return true;
@@ -50,7 +69,6 @@ Trait AccessControl {
             return false;
         }
     }
-
 
     public function checkPermissions($arrayTmp)
     {
@@ -74,20 +92,4 @@ Trait AccessControl {
         }
         return $arrayTmp;
     }
-    /*
-    public function getAccessArray($policy, $data){
-        $dataTmp = array();
-        foreach ($data as $key => $items){
-            if (Auth()->check() && Auth()->user()->can($policy, $items)){
-               $dataTmp[] = $items;
-            }
-        }
-        return $dataTmp;
-    }
-
-    public function getAccessObjects($policy, $data){
-            $jsonTmp = json_encode($this->getAccessArray($policy, $data));
-            return json_decode($jsonTmp);
-    }
-    */
 }

@@ -13,58 +13,79 @@
     @php
     $data = $contentbox->data;
     @endphp
-<div class="p-4 p-lg-5 {{$border}} m-0 mt-4 mb-4">
+<div class="p-3 p-sm-4 p-lg-5 {{$border}} m-0 mt-4 mb-4">
+
+    @php
+        if (!empty($contentbox->fontFamily->title)){
+            $font_family_title = 'font-family:'.$contentbox->fontFamily->title;
+        }else{
+            $font_family_title = '';
+        }
+        if (!empty($contentbox->fontFamily->shared)){
+            $font_family = 'font-family:'.$contentbox->fontFamily->shared;
+        }else{
+            $font_family = '';
+        }
+    @endphp
+
     @if (in_array('title', $contentbox->showItems) && !empty($data->title))
-    <h3 class="d-none d-lg-block font-weight-normal">{{$data->title}}</h2>
-    <h4 class="d-block d-lg-none font-weight-normal">{{$data->title}}</h5>
+    <div class="contentbox-title mb-3" style="font-size:calc(0.9em + 1.0vw);line-height:calc(16px + 1.5vw);{{$font_family_title}}">{{$data->title}}</div>
+
     @endif
     @if (in_array('subTitle', $contentbox->showItems) && !empty($data->subTitle))
-    <h6 class="d-none d-md-block font-weight-normal">{{$data->subtitle}}</h6>
+    <h6 class="contentbox-subtitle font-weight-normal" style="font-size:calc(0.9em + 0.5vw);{{$font_family_title}}">{{$data->subTitle}}</h6>
     @endif
     @if (in_array('date', $contentbox->showItems))
-    {{--Controle de configuração--}}
 
-    {{----------------------------}}
-    <div class="card-text"><small class="text-muted">{{$data->date}}</small></div>
+    <div class="contentbox-date card-text mb-2"><small class="text-muted">{{$data->date}}</small></div>
     @endif
 
-    @if (in_array('categoryName', $contentbox->showItems) && !empty($data->categoryName))
-    {{--Controle de configuração--}}
-
-    {{----------------------------}}
-    <p class="mb-1 card-text"><strong>{{$data->categoryName}}</strong></p>
-    @endif
     @if (in_array('image', $contentbox->showItems) && !empty($data->image))
     <img src="{{$util->toImage($contentbox->imagePath, $data->image)}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
     @endif
-    {{--Bloco Abstract------------}}
+
+    {{--Bloco Abstract -------------------------------}}
     @if (in_array('abstract', $contentbox->showItems) && !empty($data->abstract))
-    <div class="pb-3"><b>{{strtoupper(__('Abstract'))}}</b></div>
-    <div class="text-justify pb-4">{{$data->abstract}}
-    @if (in_array('keywords', $contentbox->showItems) && !empty($data->keywords))
-    <div class="pt-3 pb-2"><b>{{strtoupper(__('Keywords'))}}</b>: {{$data->keywords}}</div>
+    {{--Resumo visíveis em mobiles ou não--}}
+    @if (!empty($contentbox->allVisible) && $contentbox->allVisible === true)
+    <div class="">
+    @else
+    <div class="d-none d-sm-block">
     @endif
-    <hr>
+    <div class="pb-3 mt-3" style="line-height: calc(1.1em + 0.6vw); font-size:calc(0.86em + 0.18vw);{{$font_family}}"><b>{{__('Abstract')}}</b></div>
+    <div class="contentbox-shared text-justify pb-2" style="line-height: calc(1.1em + 0.6vw); font-size:calc(0.86em + 0.18vw);{{$font_family}}">
+    {{$data->abstract}}
     </div>
+    @if (in_array('keywords', $contentbox->showItems) && !empty($data->keywords))
+    <div class="contentbox-shared pt-3 pb-2" style="line-height: calc(1.1em + 0.6vw); font-size:calc(0.86em + 0.18vw);{{$font_family}}">
+    <b>{{__('Keywords')}}</b>: {{$data->keywords}}</div>
     @endif
-    {{----------------------------}}
+    </div>
+    <hr>
+    @endif
+    {{--Fim do bloco abstract--------------------------}}
     {{--Bloco de conteúdo -----------------------------------------------}}
     @if (in_array('content', $contentbox->showItems) && !empty($data->content))
-        <div>
-        @if(!empty($contentbox->contentType) && $contentbox->contentType == 'code')
-            <div class="">{!!$data->content!!}</div>
-        @else
-        <div class="text-justify">{!!$data->content!!} </div>
-        @endif
-
+        <div class="contentbox-shared text-justify" style="line-height: calc(1.1em + 0.6vw); font-size:calc(0.86em + 0.18vw);{{$font_family}}">
+            {!!$data->content!!}
         </div>
     @endif
 
-    @if (in_array('authorName', $contentbox->showItems) && !empty($data->authorName))
-    {{--Controle de configuração--}}
+    @if (in_array('author', $contentbox->showItems) && !empty($data->author))
 
-    {{----------------------------}}
-    <p class="card-text">{{$data->authorName}}</p>
+    <div class="text-left mt-3" style="width: calc(200px + 10vw);">
+    @php
+        if (!empty($contentbox->photoPath)){
+            $photoPath = $contentbox->photoPath;
+        }else{
+            $photoPath = "images/users";
+        }
+    @endphp
+    @if (!empty($data->photo))
+    <img src="{{$util->toImage($photoPath,$data->photo)}}" class="img-thumbnail mb-2 mt-2" style="width:30%">
+    @endif
+    <p class=" contentbox-shared card-text" style="line-height: calc(1.1em + 0.6vw);font-size:calc(0.8em + 0.18vw);{{$font_family}}">Autor: prof. Dimas Ferreira Vidal{{--$data->author--}}</p>
+    </div>
     @endif
     <div class="p-2">
     @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)

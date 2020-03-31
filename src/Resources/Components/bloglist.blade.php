@@ -9,60 +9,84 @@
 @endif
 
 @if (!empty($bloglist) && !empty($bloglist->items))
+    @php
+        if (!empty($bloglist->fontFamily->title)){
+            $font_family_title = 'font-family:'.$bloglist->fontFamily->title;
+        }else{
+            $font_family_title = '';
+        }
+        if (!empty($bloglist->fontFamily->shared)){
+            $font_family = 'font-family:'.$bloglist->fontFamily->shared;
+        }else{
+            $font_family = '';
+        }
+    @endphp
 
 <section id="bloglist">
 <div id="bloglist" class="d-none d-sm-block">
-    <div class="mt-4 mb-0 pr-0 pl-0 pt-1 pb-2 hiflex">
+    <div class="mt-4 mb-0 pr-0 pl-0 pt-1 pb-2">
     <div id="headerSection" class="pb-3">
     @if (!empty($bloglist->title))
-    <h3 class="d-none d-sm-none d-md-block text-center font-weight-normal">{{$bloglist->title}}</h3>
-    <h3 class="d-block d-sm-block d-md-none text-center font-weight-normal">{{$bloglist->title}}</h3>
+    <div class="bloglist-title text-center" style="font-size:calc(0.85em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">{{$bloglist->title}}</div>
+
     @endif
     </div>
 
-    <div class="{{$border}} pt-3 pb-3 mb-3">
+    <div class="{{$border}} pt-3 pt-xl-4 pb-3 mb-3">
     @foreach ($bloglist->items as $item)
-    <div class="row w-100 p-3 mb-3 ml-0 hiflex">
+    <div class="row w-100 p-3 pl-lg-4 pr-lg-4 pl-xl-5 pr-xl-5 mb-3 ml-0 ">
     @if (in_array('image', $bloglist->showItems) && !empty($item->image))
-    <div class="col-sm-5 col-md-4 pl-2">
-    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="mt-2 mb-2" alt="..." style="width:100%;" id="imageBox">
+    <div class="col-4 colx-lg-5 ml-0" style="background-image: url('{{$util->toImage($bloglist->imagePath, $item->image)}}');background-size:cover">
+
     </div>
-    <div class="col-sm-7 col-md-8 pl-3 pr-3">
+    <div class="col-8 colx-lg-7 pl-3 pr-0 pl-lg-4 pl-xl-5">
     @else
-    <div class="pr-3 pl-3">
+    <div class="pl-3 pr-0 ">
     @endif
+
     @if (in_array('title', $bloglist->showItems) && !empty($item->title))
-    <h4 class="d-none d-lg-block font-weight-normal pt-2">{{$item->title}}</h4>
-    <h4 class="d-block d-lg-none font-weight-normal pt-2">{{$item->title}}</h4>
+    <div class="bloglist-item-title pt-0 mb-2" style="font-size:calc(0.9em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+    {{$item->title}}</div>
+
     @endif
-    @if (in_array('subTitle', $bloglist->showItems) && !empty($item->subTitle))
-    <h6 class="d-none d-md-block ">{{$item->subtitle}}</h6>
+    @php
+        $num_char = 400;
+    @endphp
+
+    @if (in_array('author', $bloglist->showItems) && !empty($item->author))
+    @php
+        $num_char = 274;
+    @endphp
+    <div class="bloglist-item-shared card-text" style="font-size:calc(0.8em + 0.15vw);{{$font_family}}"><b>{{$item->author}}</b>
+        @if (in_array('date', $bloglist->showItems)&& !empty($item->date))
+        <span class="card-text" style="font-size:calc(0.59em + 0.12vw);{{$font_family}}">{{$item->date}}</span>
     @endif
-    @if (in_array('categoryName', $bloglist->showItems) && !empty($item->categoryName))
-    <p class="d-none d-md-block"><strong>{{$item->categoryName}}</strong></p>
+    </div>
     @endif
-    @if (in_array('authorName', $bloglist->showItems) && !empty($item->authorName))
-    <p class="d-none d-md-block card-text">{{$item->authorName}}</p>
-    @endif
-    @if (in_array('date', $bloglist->showItems)&& !empty($item->date))
-    <div class="card-text"><small class="text-muted">{{$item->date}}</small></div>
-    @endif
+
     {{--Bloco de conteúdo -----------------------------------------------}}
     @if (in_array('abstract', $bloglist->showItems) && !empty($item->abstract))
-    <p class="d-none d-xl-block text-justify">{{substr($item->abstract, 0, 430)}}...</p>
-    <p class="d-none d-lg-block d-xl-none text-justify">{{substr($item->abstract, 0, 300)}}...</p>
-    <p class="d-none d-md-block d-lg-none text-justify">{{substr($item->abstract, 0, 180)}}...</p>
-    {{-- controle de apresentação para mobile--}}
-    <p class="d-block d-md-none text-justify" style="line-height: 1.1";><small class="text-muted">
-    {{substr($item->abstract, 0, 150)}}...
-    </small></p>
+    <p class="bloglist-item-shared d-none d-sm-block text-justify" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.17vw);{{$font_family}}">
+    @if (strlen($item->abstract) > $num_char)
+    {!!substr($item->abstract, 0, $num_char)!!}...</p>
+    @else
+    {!!$item->abstract!!}</p>
+    @endif
+
     @endif
     {{--Button------------------------------------}}
     @if(!empty($bloglist->route))
         @php
         $link = $util->toRoute($bloglist->route, $item->id);
         @endphp
+    {{----}}
+    @if (!empty($bloglist->button))
+        <a class="btn btn-sm btn-outline-secondary" href="{{$link}}" role="button">{{$bloglist->button}}</a>
+    @else
     <a class="btn btn-sm btn-outline-secondary" href="{{$link}}" role="button">{{__('Read more')}}</a>
+    @endif
+    {{----}}
+
     @endif
     {{--End button------------------------------------}}
     </div>
@@ -75,17 +99,16 @@
          {!!$bloglist->paginate->links()!!}
     @endif
     </div>
-    
+
 </div>
 </div>
 {{--8888888888888888888888888888888888888888888888888988888888888--}}
 
 <div class="d-block d-sm-none mb-3 bg-white">
     <div id="headerSection" class="pt-3 pb-2">
-        <h4 class="text-center font-weight-normal">{{$bloglist->title}}</h4>
+        <h6 class="text-center font-weight-normal">{{$bloglist->title}}</h6>
     </div>
-    
-    <ul class="list-unstyled hiflex">
+    <ul class="list-unstyled">
     @foreach ($bloglist->items as $key => $item)
         @php
             if(!empty($bloglist->route)){
@@ -95,38 +118,38 @@
             }else{
                 $link = '#';
             }
-
         @endphp
     <a href="{{$link}}">
     <li class="media pt-1 pb-0 pl-1 pr-2 mb-1 {{$border}}">
     @if (!empty($item->image))
-    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded mb-1 mt-1" alt="..." style="width: 80px; height: 80px">
+    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="mr-2 ml-1 align-self-centerx rounded mb-1 mt-2" alt="..." style="width: 76px; height: 76px">
     @endif
-    <div class="media-body pl-1">
+    <div class="media-body pl-1 my-auto">
     @if (!empty($item->title))
-    <div style="line-height: 1.1" class="pt-1 mb-0">
-    <h5 class="pn-3 mb-1 text-dark" ><strong>{{$item->title}}</strong></h5>
+    <div  class="mb-0 p-0 ">
+    <h6 class="mb-1 text-dark" style="line-height: 1.1">{{$item->title}}</h6>
 
-    </div>
-    @endif
     @if (!empty($item->abstract))
             @php
                 $numChar = strlen($item->title);
                     if ($numChar > 35){
                         if($numChar > 72){
-                            $num = 0;
+                            $num = 30;
                         }else{
-                            $num = 40;
+                            $num = 65;
                         }
                     }else{
-                        $num = 60;
+                        $num = 90;
                     }
                 $str = substr("$item->abstract", 0, $num);
             @endphp
     @if($num != 0)
-    <p style="line-height: 1.0" class="text-dark"><smallx>{{$str}} ...</smallx></p>
+    <p style="line-height: 1.0" class="text-dark pb-0 mb-0"><small>{!!$str!!} ...</small></p>
     @endif
     @endif
+</div>
+@endif
+
     </div>
     </li>
     </a>
@@ -146,12 +169,9 @@
 @endif
 </div>
 
-
 </section>
 @else
     <div class="text-center p-4 mt-3 mb-3 {{$border}}">
     <h5>{{ __('There are no items to display.') }}</h5>
     </div>
 @endif
-
-{{--27-02-2020--}}

@@ -55,11 +55,13 @@
 @if (!empty($navBar->logo))
 @if(!empty($navBar->route))
 <a class="navbar-brand " href="{{$util->toRoute($navBar->route)}}">
-<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40">
-</a>
-@else
-<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40">
-@endif
+    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40" class="d-none d-sm-block">
+    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="136" height="32" class="d-block d-sm-none">
+    </a>
+    @else
+    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40" class="d-none d-sm-block">
+    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="136" height="32" class="d-block d-sm-none">
+    @endif
 @elseif(!empty($navBar->label))
 <a class="navbar-brand" href="#">{{$navBar->label}}</a>
 @endif

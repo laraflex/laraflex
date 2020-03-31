@@ -10,99 +10,139 @@
 
 @if (!empty($panel))
 @php
+    if (!empty($panel->fontFamily->title)){
+        $font_family_title = 'font-family:'.$panel->fontFamily->title .';';
+    }else{
+        $font_family_title = '';
+    }
+    if (!empty($panel->fontFamily->shared)){
+        $font_family = 'font-family:'.$panel->fontFamily->shared .';';
+    }else{
+        $font_family = '';
+    }
+        $stylePanel = $border;
+
     $stylePanel = $border;
 @endphp
 
 <section id="panel">
-<div class="mt-4 mb-4 hiflex">
+<div class="mt-4 mb-4">
         @if(!empty($panel->title))
-        <h3 class="d-none d-sm-block mt-1 font-weight-normal text-center pt-2 pb-3">{{$panel->title}}</h3>
-        <h4 class="d-block d-sm-none mt-1 font-weight-normal text-center pt-2 pb-2">{{$panel->title}}</h4>
+        <div class="mt-1 text-center pt-0 pb-3" style="font-size:calc(1.0em + 0.75vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+        {{$panel->title}}</div>
         @endif
-
         @if(!empty($panel->bgColor))
-        <div class="row w-100 p-0 m-0 pt-3 pb-3 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
+        <div class="row w-100 p-0 m-0 py-2 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
         @else
-        <div class="row w-100 p-0 m-0 pt-3 pb-3 {{$stylePanel}}">
+        <div class="row w-100 p-0 m-0 py-2 {{$stylePanel}}">
         @endif
         @if(!empty($panel->data->image))
             @php
             $bgImage = $util->toImage($panel->imagePath, $panel->data->image);
             @endphp
-        <div class="d-block col-sm-5 bg-white" style="background-image: url('{{$bgImage}}');background-size:contain; background-position:center center;background-repeat:no-repeat;min-width:230px;min-height:230px">
+        <div class="col-12 col-sm-5 col-md-4 bg-white my-auto w-100 px-0">
+        <div class="w-100" style="background-image: url('{{$bgImage}}');background-size:contain; background-position:center center;background-repeat:no-repeat;min-widthx:230px;min-height:calc(180px + 8vw);">
+        <img src="{{url('images/icons/lupa.png')}}" class="mt-2 ml-2" style="width: 15px; height:15px;">
         @if(!empty($panel->lightbox)  && $panel->lightbox == true && !empty($panel->images))
         @foreach($panel->images as $key => $image)
         @if($key == 0)
-        <a href="{{$util->toImage($panel->imagePath, $image->fileName)}}" class="stretched-link w-100" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
-        <img src="{{url('images/icons/lupa.png')}}" class="mt-2" style="width: 20px; height:20px;">
+        <a href="{{$util->toImage($panel->imagePath, $image->name)}}" class="stretched-link w-100" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
         </a>
         @else
-        <div data-toggle="lightbox" data-gallery="gallery" data-remote="{{$util->toImage($panel->imagePath, $image->fileName)}}"></div>
+        <div data-toggle="lightbox" data-gallery="gallery" data-remote="{{$util->toImage($panel->imagePath, $image->name)}}"></div>
         @endif
         @endforeach
         @endif
         </div>
-        <div class="col-sm-7 contents pt-5 pb-sm-5 pb-4 pl-sm-5 pl-4 pr-4 hiflex">
+        </div>
+        <div class="col-12 col-sm-7 col-md-8 contents pt-4 pb-4 pb-sm-5 px-3 px-sm-4">
         @else
-        <div class="col-12 contents pt-5 pb-sm-5 pb-4 pl-sm-5 pl-4 pr-3 hiflex">
+        <div class="col-12 contents pt-5pb-sm-5 pb-4 pl-sm-5 pl-4 pr-3">
         @endif
         @foreach($panel->showItems as $item)
-        @if (strpos($item, ':'))
+        {{-----------------------------------------}}
         @php
-        $arrayTmp = explode(':', $item);
-        @endphp
-        @if(!empty($arrayTmp[2]))
-            @php
-                $color = $arrayTmp[2];
-            @endphp
-        <div style="color:{{$color}}">
-        @else
-        <div>
-        @endif
-            @php
-                $item = $arrayTmp[0];
-                $config = $arrayTmp[1];
-            @endphp
-        @if (!empty($panel->data->$item))
-        @if ($config == 'HTN')
-        <h3 class="m-0 pb-2">{{$panel->data->$item}}</h3>
-        @elseif($config == 'HTS')
-        <h3 class="m-0 pb-2"><strong>{{$panel->data->$item}}</strong></h3>
-        @else
-        <p class="m-0 p-0">{{$panel->data->$item}}</p>
-        @endif
-        @endif
-        </div>
-        @elseif(!empty($panel->data->$item))
-        <p class="m-0 p-0">{{$panel->data->$item}}</p>
-        @endif
+        //-> Separa as propriedades de fonte do atributo de showItems
+        if (strpos($item, '->>')){
+            $arrayTmp = explode('->>', $item);
+            $item = $arrayTmp[0];
+            $fontOptions = $arrayTmp[1];
+        }else{
+            $fontOptions ="";
+        }
+        //-> Fim ------------------------------------------
+    @endphp
+    {{--Algoritmo de codificaçãode de fonte -----------------------------------------}}
+    @php
+        $style_font = 'font-size:calc(0.8em + 0.25vw);line-height:calc(1.1em + 0.28vw);';
+        $optionsStyle = ['italic','normal','strong'];
+        $styleFont = "";
+        $endStyleFont = "";
+        $font_color = "";
+        if ($fontOptions != ""){
+            $arrayOptions = explode('|', $fontOptions);
+
+            if (!empty($arrayOptions[0]) && in_array(strtolower($arrayOptions[0]), $optionsStyle)){
+                if($arrayOptions[0] == 'italic'){
+                    $styleFont = '<i>';
+                    $endStyleFont = '</i>';
+                }else{
+                    $styleFont = '<' .$arrayOptions[0] . '>';
+                    $endStyleFont = '</' . $arrayOptions[0] . '>';
+                }
+                if(!empty($arrayOptions[1])){
+                    if (strtolower($arrayOptions[1]) == 'large'){
+                        $style_font = 'font-size:calc(0.8em + 0.9vw);line-height:calc(1.1em + 0.28vw);';
+                    }elseif (strtolower($arrayOptions[1]) == 'x-large'){
+                        $style_font = 'font-size:calc(0.9em + 1vw);line-height:calc(1.1em + 0.28vw);';
+                    }if (strtolower($arrayOptions[1]) == 'normal'){
+                        $style_font = 'font-size:calc(0.8em + 0.25vw);line-height:calc(1.1em + 0.28vw);';
+                    }
+                    if(!empty($arrayOptions[2])){
+                        $font_color = 'color:' . $arrayOptions[2] . ';';
+                    }
+                }
+            }
+        }
+    @endphp
+    {{--End de codificaçãode de fonte -----------------------------------------}}
+
+    <p class="m-0 p-0 mb-1 mb-sm-2" style="{{$style_font}}{{$font_color}}{{$font_family}}">
+        {!!$styleFont!!} {{--Potions: italic, normal, strong--}}
+        {{$panel->data->$item}}
+        {!!$endStyleFont!!}
+    </p>
+        {{----------------------------------}}
         @endforeach
         @if (!empty($panel->button))
         @php
         $route = $util->toRoute($panel->route, $panel->data->id);
         @endphp
-        <a href="{{$route}}" class="btn btn-light btn-outline-secondary mt-3" tabindex="-1" role="button" aria-disabled="true">{{$panel->button}}</a>
+        <a href="{{$route}}" class="btn btn-light btn-outline-secondary mt-3" tabindex="-1" role="button" aria-disabled="true"
+        style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
+        {{$panel->button}}</a>
         @endif
         </div>
         </div>
 </div>
 
 @if(!empty($panel->showAddons))
-<div class="w-100 p-3 p-sm-4 p-lg-5 mb-4 mt-3 pt-4 text-justify hiflex {{$stylePanel}}">
-    @if(!empty($panel->subTitle))
-    <h6>{{$panel->subTitle}}</h6>
+@php
+    $style_font_title = 'font-size:calc(0.96em + 0.25vw);line-height:calc(1.3em + 0.3vw);';
+    $style_font = 'font-size:calc(0.8em + 0.28vw);line-height:calc(1.3em + 0.35vw);';
+@endphp
+<div class="w-100 p-3 p-sm-4 p-lg-5 mb-4 mt-3 text-justify {{$stylePanel}}">
+    @if(!empty($panel->addionTitle))
+    <div style="{{$style_font_title}}{{$font_family_title}}">{{$panel->addionTitle}}</div>
     @endif
     @foreach($panel->showAddons as $item)
-    <p>{{$panel->data->$item}}</p>
+    <p class="mt-2 mt-sm-3" style="{{$style_font}}{{$font_family}}">{{$panel->data->$item}}</p>
     @endforeach
 </div>
 @endif
-
 </section>
 @else
     <div class="text-center p-4 mt-3 mb-3 {{$border}}">
         <h5>{{ __('There are no items to display.') }}</h5>
     </div>
 @endif
-
-

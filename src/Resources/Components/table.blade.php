@@ -10,6 +10,19 @@
 
 @if (!empty($table))
     @php
+        /* Definição de fontes a serem usadas */
+
+        if (!empty($table->fontFamily->title)){
+            $font_family_title = 'font-family:'.$table->fontFamily->title;
+        }else{
+            $font_family_title = '';
+        }
+        if (!empty($table->fontFamily->shared)){
+            $font_family = 'font-family:'.$table->fontFamily->shared;
+        }else{
+            $font_family = '';
+        }
+
         /**
          * Retifica valores de Caption para a tabela
          * */
@@ -18,7 +31,7 @@
         {
             foreach ($table->showItems as $key => $item)
             {
-                if (!array_key_exists($item, $table->caption))
+                if (!property_exists($table->caption, $item))
                 {
                     $caption[$key] = ucfirst($item);
                 }else{
@@ -30,15 +43,16 @@
                 $caption[$key] = ucfirst($item);
             }
         }
+        $td_height = 'py-1';
     @endphp
 
 <section id="table" class="mt-4">
-    <div class="d-none d-sm-block p-2 p-3 mb-4 mt-3 {{$border}} hiflex">
+    <div class="d-none d-sm-block p-2 p-3 mb-4 mt-3 {{$border}}">
     <div class="text-center">
-        <h3 class="mb-3">{{$table->title}}</h3>
+        <div class="mb-3" style="font-size:calc(0.85em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">{{$table->title}}</div>
     </div>
 
-    <table class="table table-sm table-bordered table-responsive-sm">
+    <table class="table table-sm table-bordered table-responsive-sm" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.17vw);">
     @if (!empty($paginate))
     @if ($paginate->lastPage() > 1)
     <caption>Página {{$paginate->currentPage()}} de um total de {{$paginate->lastPage()}} páginas</caption>
@@ -49,16 +63,19 @@
     <thead>
     <tr class="bg-light">
     @foreach ($table->showItems as $key => $item)
-    <th scope="col">{{$caption[$key]}}</th>
+    <th class="p-1 px-2" scope="col">{{$caption[$key]}}</th>
     @endforeach
     {{--Adição de coluna na tablea para ações do tipo [editar, deletar]--}}
     @if (!empty($table->action))
-    <th scope="col" class="text-center">{{ucfirst($table->action)}}</th>
+    @php
+    $td_height = 'py-2';
+    @endphp
+    <th class="p-1 px-2" scope="col" class="text-center">{{ucfirst($table->action)}}</th>
     @endif
     {{-------------------------------------------------------------------}}
     </tr>
     </thead>
-    <tbody>
+    <tbody style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.82em + 0.10vw);">
     {{--Definição de [ítens da tabela--}}
     @if (!empty($table->items))
     @foreach ($table->items as $index => $item)
@@ -66,37 +83,47 @@
      @foreach ($item as $key => $fieldValue)
     @if (in_array($key, $table->showItems))
     @if ($key == $table->link)
-    <td><a href="{{$util->toRoute($table->route, $item->id)}}">{{$fieldValue}}</a></td>
+    <td class="{{$td_height}} px-2 "><a href="{{$util->toRoute($table->route, $item->id)}}" style="font-family:verdana;color:#0040FF">{{$fieldValue}}</a></td>
     @else
-    <td>{{$fieldValue}}</td>
+    <td class="{{$td_height}} px-2 ">{{$fieldValue}}</td>
     @endif
     @endif
     @endforeach
-    {{--O atributo permission retorna um conjunto de itens que o usuário tem permissão--}}
-    {{-- Com controle de acesso --}}
+
+    {{-- Com controle de acesso ---------------------------------}}
+    {{--O atributo itemsPermission retorna um conjunto de itens que o usuário tem permissão--}}
     @if (!empty($table->action))
-    @if (!empty($table->permission))
-    @php
-    $access = false;
-    $itemsAccess = $table->permission;
-    foreach($itemsAccess as $key => $itemModel){
-        if ($item->id == $itemModel->id){
-            $access = true;
+
+        @if (property_exists($table, 'itemsPermission'))
+        @php
+            if (!empty($table->optionalId)){
+                $id = $table->optionalId;
+            }else{
+                $id = 'id';
+            }
+        $arrayPosts = array();
+        foreach($table->itemsPermission as $itemModel){
+                $arrayPosts[] = $itemModel->$id;
         }
-    }
-    @endphp
-    @if ($access === true)
-    <td><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
-    <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block" style="width:30px;height:30px;">
-    </a></td>
-    @else
-    <td></td>
+
+        @endphp
+            @if (in_array($item->id, $arrayPosts))
+            <td><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+            <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block" style="width:calc(22px + 0.6vw);height:calc(22px + 0.5vw);">
+            </a></td>
+            @else
+            <td></td>
+            @endif
+        @else
+        <td><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+        <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block" style="width:calc(22px + 0.6vw);height:calc(22px + 0.5vw);">
+        </a></td>
+        {{--
+        <td></td>
+        --}}
+        @endif
     @endif
-    @else
-    <td></td>
-    @endif
-    @endif
-    {{--Fim de rotina -----------------------}}
+    {{--Fim de rotina de controle de acesso -----------------------}}
     </tr>
     @endforeach
     @endif
@@ -112,64 +139,82 @@
 </section>
 {{--8888888888888888888888888888888888888888888888888888888888--}}
 <section>
-    <div class="d-block d-sm-none hiflex">
+    <div class="d-block d-sm-none">
     <div class="text-center">
-    <h4 class="mb-3">{{$table->title}}</h4>
+    <h6 class="mb-3">{{$table->title}}</h6>
     </div>
-     {{----------------------------------------}}
-     @if(!empty($tableMessage))
-     <h6 class="pb-2 text-center">{{$tableMessage}}</h6>
-     @endif
-     @if(!empty($tableAlert))
-     @php
-     $alertColor = 'alert-primary';
-     $color = array('primary', 'secundary', 'success', 'danger', 'warning', 'info', 'light', 'dark');
-     if($colorTmp = stristr($tableAlert, ':')){
-     $tableAlert =  str_replace($colorTmp, '', $tableAlert);
-     $colorTmp = str_replace(':', '', $colorTmp);
-     if(in_array($colorTmp, $color)){
-     $alertColor = 'alert-' . $colorTmp;
-     }
-     }
-     @endphp
-     <div class="alert {{$alertColor}}" role="alert">
-     {{$tableAlert}}
-     </div>
-     @endif
-     {{-------------------------------------------}}
+
     @foreach ($table->items as $item)
     <div class="p-2 mb-1 {{$border}}">
     @foreach ($item as $key => $value)
     @if (in_array($key, $table->showItems))
     @if ($table->link == $key)
-    <div class="ml-1"><strong><a href="{{$util->toRoute($table->route, $item->id)}}">{{$value}}</a></strong></div>
+    <div class="ml-1" style="font-size:90%;line-height:1.3"><strong><a href="{{$util->toRoute($table->route, $item->id)}}">{{$value}}</a></strong></div>
     @else
-    <div class="ml-1" style="font-size:90%">{{$value}}</div>
+    <div class="ml-1" style="font-size:80%;line-height:1.2">{{$value}}</div>
        @endif
        @endif
     @endforeach
-    {{--O atributo permission retorna um conjunto de itens que o usuário tem permissão--}}
-    {{-- Com controle de acesso --}}
+    {{-- Com controle de acesso ---------------------------------}}
+    {{--O atributo itemsPermission retorna um conjunto de itens que o usuário tem permissão--}}
     @if (!empty($table->action))
-    @if (!empty($table->permission))
-    @php
-        $access = false;
-        $itemsAccess = $table->permission;
-        foreach($itemsAccess as $key => $itemModel){
-            if ($item->id == $itemModel->id){
-                $access = true;
+
+        @if (property_exists($table, 'itemsPermission'))
+        @php
+            if (!empty($table->optionalId)){
+                $id = $table->optionalId;
+            }else{
+                $id = 'id';
             }
+        $arrayPosts = array();
+        foreach($table->itemsPermission as $itemModel){
+                $arrayPosts[] = $itemModel->$id;
         }
-        $route = $table->route . '/' . strtolower($table->action) . '/';
-    @endphp
-    @if ($access === true)
-    <td><a href="{{$util->toRoute($route, $item->id)}}">{{ucfirst($table->action)}}</a></td>
-    @else
-    <td></td>
+
+        @endphp
+            @if (in_array($item->id, $arrayPosts))
+            <div class="text-left pt-2 pl-2"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+                <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="float-left d-block pb-1" style="width:calc(28px + 0.6vw);height:calc(28px + 0.5vw);">
+                <span class="ml-2" style="font-size:90%;line-height:1.3"><strong>{{ucfirst($table->action)}}</strong></span>
+            </a></div>
+            @endif
+        @else
+        <div class="text-left pt-2 pl-2"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+            <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="float-left d-block pb-1" style="width:calc(28px + 0.6vw);height:calc(28px + 0.5vw);">
+            <span class="ml-2" style="font-size:90%;line-height:1.3"><strong>{{ucfirst($table->action)}}</strong></span>
+        </a></div>
+        {{--
+        <td></td>
+        --}}
+        @endif
     @endif
-    @else
-    <td></td>
-    @endif
+    {{--Fim de rotina de controle de acesso -----------------------}}
+    {{--O atributo itemsPermission retorna um conjunto de itens que o usuário tem permissão--}}
+    {{-- Com controle de acesso
+    @if (!empty($table->action))
+        @if (!empty($table->itemsPermission))
+        @php
+            $access = false;
+            $itemsAccess = $table->itemsPermission;
+            foreach($itemsAccess as $key => $itemModel){
+                if ($item->id == $itemModel->id){
+                    $access = true;
+                }
+            }
+            $route = $table->route . '/' . strtolower($table->action) . '/';
+        @endphp
+            @if ($access === true)
+            <div class="text-left pt-2 pl-2"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+                <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="float-left d-block pb-1" style="width:calc(28px + 0.6vw);height:calc(28px + 0.5vw);">
+                <span class="ml-2" style="font-size:90%;line-height:1.3"><strong>{{ucfirst($table->action)}}</strong></span>
+            </a></div>
+            @endif
+        @else
+        <div class="text-left pt-2 pl-2"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+            <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="float-left d-block pb-1" style="width:calc(28px + 0.6vw);height:calc(28px + 0.5vw);">
+            <span class="ml-2" style="font-size:90%;line-height:1.3"><strong>{{ucfirst($table->action)}}</strong></span>
+        </a></div>
+        @endif
     @endif
     {{---------------------------------------}}
     {{--Fim de rotina -----------------------}}

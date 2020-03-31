@@ -7,7 +7,7 @@ use laraflex\ViewHelpers\ModelPaginate;
 
 class PresenterClone extends Presenter
 {
-    use AccessControl, ModelPaginate;
+    use ModelPaginate, AccessControl;
 
     public function toArray($data = NULL)
     {

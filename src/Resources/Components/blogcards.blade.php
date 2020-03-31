@@ -9,39 +9,45 @@
 @endif
 
 @if (!empty($blogcards) && !empty($blogcards->items))
+    @php
+        if (!empty($blogcards->fontFamily->title)){
+            $font_family_title = 'font-family:'.$blogcards->fontFamily->title;
+        }else{
+            $font_family_title = '';
+        }
+        if (!empty($blogcards->fontFamily->shared)){
+            $font_family = 'font-family:'.$blogcards->fontFamily->shared;
+        }else{
+            $font_family = '';
+        }
+    @endphp
 
 <section id="blogcards">
-<div class="d-none d-sm-block mb-2 hiflex">
+<div class="d-none d-sm-block mb-2">
     <div id="headerSection" class="pt-3 pb-3">
     @if (!empty($blogcards->title))
-    <h3 class="d-none d-sm-none d-md-block text-center font-weight-normal">{{$blogcards->title}}</h3>
-    <h3 class="d-block d-sm-block d-md-none text-center font-weight-normal">{{$blogcards->title}}</h3>
+    <div class="blogcards-title text-center" style="font-size:calc(0.85em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">{{$blogcards->title}}</div>
+
      @endif
     </div>
 
     <div class="row p-2">
         {{--Início linha linha ==== --}}
     @foreach ($blogcards->items as $item)
-    <div class="col-sm-6 col-md-4 p-0 ">
-    <article class= "mb-4 ml-2 mr-2 {{$border}} hiflex">
+    <div class="col-sm-6 col-md-6 col-lg-4 p-0 ">
+    <article class= "mb-4 ml-2 mr-2 {{$border}}">
     <header class="p-3">
-    @if (in_array('title', $blogcards->showItems))
-    @if (!empty($item->title))
-    <h5 class="font-weight-normal">{{$item->title}}</h5>
+    @if (in_array('title', $blogcards->showItems) && !empty($item->title))
+    <div class="blogcards-item-title" style="font-size:calc(0.9em + 0.4vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">{{$item->title}}</div>
     @endif
+    @if (in_array('author', $blogcards->showItems) && !empty($item->author))
+    <div class="blogcards-item-shared pt-1" style="font-size:calc(0.8em + 0.15vw);{{$font_family}}"><strong>{{$item->author}}</strong>
+    @if (in_array('date', $blogcards->showItems) && !empty($item->date))
+    <span><small>  {{$item->date}}</small></span>
     @endif
-    @if (in_array('authorName', $blogcards->showItems))
-    @if (!empty($item->authorName))
-    <p><strong>{{$item->authorName}}</p></strong>
-    @endif
-    @endif
-    @if (in_array('date', $blogcards->showItems))
-    @if (!empty($item->date))
-    <div id="time">
-    <time datetime="{{$item->date}}"><small>{{$item->date}}</small></time>
     </div>
     @endif
-    @endif
+
     @if (in_array('image', $blogcards->showItems))
     @if (!empty($item->image))
         @php
@@ -54,22 +60,18 @@
     @if (!empty($item->abstract))
             @php
                 $numChar = strlen($item->title);
-                    if($numChar > 72){
-                        $num1 = 200;
-                        $num2 = 68;
-                    }elseif($numChar > 30){
-                        $num1 = 280;
-                        $num2 = 105;
-                    }else{
+                    if ($numChar < 30){
                         $num1 = 315;
-                        $num2 = 120;
+                    }elseif($numChar > 31 && $numChar < 64){
+                        $num1 = 280;
+                    }else{
+                        $num1 = 200;
                     }
+
                 $str1 = substr("$item->abstract", 0, $num1);
-                $str2 = substr("$item->abstract", 0, $num2);
             @endphp
-    <p class="d-none d-sm-none d-md-block text-justify mt-2 mb-2">{{$str1}}...</p>
-    {{-- controle de apresentação para mobile--}}
-    <p class="d-none d-sm-block d-md-none text-justify mt-2 mb-2">{{$str2}}...</p>
+    <div class="blogcards-item-shared text-justify mt-2 mb-2" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.17vw);{{$font_family}}">{!!$str1!!}...</div>
+
     @endif
     @endif
     {{--Button --------------------}}
@@ -103,10 +105,10 @@
 
 <div class="d-block d-sm-none mb-3 bg-white">
     <div id="headerSection" class="pt-3 pb-2">
-        <h4 class="text-center font-weight-normal">{{$blogcards->title}}</h4>
+        <h6 class="text-center font-weight-normal">{{$blogcards->title}}</h6>
     </div>
-    
-    <ul class="list-unstyled hiflex">
+
+    <ul class="list-unstyled">
     @foreach ($blogcards->items as $key => $item)
         @php
             if(!empty($blogcards->route)){
@@ -121,33 +123,34 @@
     <a href="{{$link}}">
     <li class="media pt-1 pb-0 pl-1 pr-2 mb-1 {{$border}}">
     @if (!empty($item->image))
-    <img src="{{$util->toImage($blogcards->imagePath, $item->image)}}" class="mr-2 align-self-centerx rounded mb-1 mt-1" alt="..." style="width: 80px; height: 80px">
+    <img src="{{$util->toImage($blogcards->imagePath, $item->image)}}" class="mr-2 rounded mb-1 mt-1" alt="..." style="width: 80px; height: 80px">
     @endif
-    <div class="media-body pl-1">
+    <div class="media-body pl-1 my-auto">
     @if (!empty($item->title))
-    <div style="line-height: 1.1" class="pt-1 mb-0">
-    <h5 class="pn-3 mb-1 text-dark" ><strong>{{$item->title}}</strong></h5>
+    <div class="pb-0 mb-0 p-0">
+    <h6 class=" mb-1 text-dark" style="font-family:arial; line-height: 1.1">{{$item->title}}</h6>
 
-    </div>
-    @endif
     @if (!empty($item->abstract))
             @php
                 $numChar = strlen($item->title);
                     if ($numChar > 35){
                         if($numChar > 72){
-                            $num = 0;
+                            $num = 30;
                         }else{
-                            $num = 40;
+                            $num = 65;
                         }
                     }else{
-                        $num = 60;
+                        $num = 90;
                     }
                 $str = substr("$item->abstract", 0, $num);
             @endphp
     @if($num != 0)
-    <p style="line-height: 1.0" class="text-dark"><smallx>{{$str}} ...</smallx></p>
+    <p style="line-height: 1.0; font-family:arial;" class="text-dark pb-0 mb-0"><small>{!!$str!!} ...</small></p>
     @endif
     @endif
+</div>
+@endif
+
     </div>
     </li>
     </a>

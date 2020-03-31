@@ -1,0 +1,45 @@
+/*Variáveis de componentes*/
+.content-message{
+    font-size:1.4em;
+}
+/* Componente ContentBox */
+
+.contentbox-title{font-size:1.4em;}
+
+.contentbox-subtitle{font-size:1.2em;}
+
+.content-shared{font-size: 1em;}
+
+/* Componente Coment */
+
+.coment-shared{font-size: 1em;}
+
+/* Componente Bloglist */
+
+.bloglist-title{font-size:1.5em;}
+
+.bloglist-item-title{font-size:1.4em;}
+
+.bloglist-item-subtitle{font-size:1.2em;}
+
+.bloglist-item-shared{font-size:1em;}
+
+/* Componente Blogcards */
+
+.blogcards-title{font-size:1.5em;}
+
+.blogcards-item-title{font-size:1.3em;}
+
+.blogcards-item-shared{font-size: 1em;}
+
+/* Componente ImageBar */
+
+.imagebar-title{font-size:1.5em;}
+
+.imagebar-title{font-size:1em;}
+
+/* Componente ImagePanel */
+
+.imagepanel-title{font-size:1.6em;}
+
+.imagepanel-title{font-size:1.3em;}
