@@ -8,7 +8,7 @@ if(!empty($objectConfig)){
 @php
     $classContainer = "";
     if (!empty($objetoConfig->headerClass) && $objetoConfig->headerClass == 'container'){
-        $classContainer = $objetoConfig->headerClass . ' px-2 px-lg-3';
+        $classContainer = $objetoConfig->headerClass . '-xl px-2 px-lg-3';
     }else{
         $classContainer = '';
     }
@@ -29,11 +29,11 @@ if(!empty($objectConfig)){
     }else{
         $styleColor = 'black';
     }
-    
+
     $navControl = false;
     foreach ($objetoConfig->headerComponents as $headerItem){
        if(!empty($headerItem->component == 'navbar')){
-            
+
             $navControl = true;
         }
     }
@@ -55,7 +55,7 @@ $classContainer = "";
 @endphp
 <div class="w-100 mb-0" style="height:65px;background-color:{{$styleColor}}">
 </div>
-@elseif(!empty($objetoConfig->fixedmenu) && $objetoConfig->fixedmenu == true && $integratedImage == true) 
+@elseif(!empty($objetoConfig->fixedmenu) && $objetoConfig->fixedmenu == true && $integratedImage == true)
 @php
 $classContainer = "";
 @endphp
@@ -72,7 +72,7 @@ $classContainer = "";
 @endforeach
 @if($headerColor == 'bordeaux')
 <div class="mb-3" style="min-height:10px;">
-@else 
+@else
 <div class="mb-3" style="background-color:{{$styleColor}}; min-height:10px;">
 @endif
 

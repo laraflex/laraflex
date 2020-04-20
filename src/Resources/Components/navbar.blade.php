@@ -50,18 +50,19 @@
 @endphp
 
 <nav class="navbar navbar-expand-lg mb-0 {{$styleNav}} {{$fixed}}" style="background-color: {{$styleColor}}; border-bottom: 1px solid #ccc;">
-<div class="container">
+<div class="container-xl">
 <!-- Logotipo ----------------------->
 @if (!empty($navBar->logo))
 @if(!empty($navBar->route))
 <a class="navbar-brand " href="{{$util->toRoute($navBar->route)}}">
-    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40" class="d-none d-sm-block">
-    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="136" height="32" class="d-block d-sm-none">
-    </a>
-    @else
-    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40" class="d-none d-sm-block">
-    <img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="136" height="32" class="d-block d-sm-none">
-    @endif
+<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40" class="d-none d-sm-block">
+<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="136" height="32" class="d-block d-sm-none">
+</a>
+@else
+<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="40" class="d-none d-sm-block">
+<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="136" height="32" class="d-block d-sm-none">
+@endif
+
 @elseif(!empty($navBar->label))
 <a class="navbar-brand" href="#">{{$navBar->label}}</a>
 @endif
@@ -122,8 +123,11 @@ $submenu = $itemMenu->subItems;
 
 @if(!empty($navBar->showLogin) && $navBar->showLogin === true)
 {{--*******************************************************--}}
+{{--
 <div class="d-none d-lg-block col-lg-3 p-0">
-<ul class="navbar navbar-nav p-0 float-right">
+--}}
+<div class="col-lg-3 p-0">
+<ul class="pr-3 navbar navbar-nav p-0 float-right">
 <!-- Authentication Links -->
 @guest
 <li class="nav-item active">

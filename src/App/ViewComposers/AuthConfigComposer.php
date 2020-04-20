@@ -3,6 +3,7 @@ namespace App\ViewComposers;
 
 use Illuminate\View\View;
 use laraflex\ViewHelpers\Util;
+use laraflex\Resources\ObjectBootstrap;
 use App\ViewPresenters\ImageBarPresenter;
 use App\ViewPresenters\FooterPresenter;
 use App\ViewPresenters\ImagebarBannerPresenter;
@@ -13,11 +14,13 @@ class AuthConfigComposer
 {
     protected $util;
     protected $secure;
+    protected $bootstrap;
 
     public function __construct()
     {
         $this->secure = false;
         $this->util = new Util($this->secure);
+        $this->bootstrap = ObjectBootstrap::create()->items();
     }
 
     protected function toArray()
@@ -53,9 +56,9 @@ class AuthConfigComposer
         $objeto = json_decode($jsonTmp);
         if(Auth::check()){
             $user = Auth::user();
-            $view->with('objectConfig', $objeto)->with('util', $this->util)->with('user', $user);
+            $view->with('objectConfig', $objeto)->with('util', $this->util)->with('user', $user)->with('bootstrap', $this->bootstrap);
         }else{
-            $view->with('objectConfig', $objeto)->with('util', $this->util);
+            $view->with('objectConfig', $objeto)->with('util', $this->util)->with('bootstrap', $this->bootstrap);
         }
     }
 }

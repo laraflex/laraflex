@@ -173,7 +173,11 @@
 
 </section>
 @else
-<div class="text-center p-4 mt-3 mb-3 {{$border}}">
-<h5>{{ __('There are no items to display.') }}</h5>
-</div>
+@if (!empty($blogcards->nullable) && $blogcards->nullable === true)
+    <div class="text-center mt-2 mb-2"></div>
+@else
+    <div class="text-center p-4 mt-3 mb-3 {{$border}}">
+    <h5>{{ __('There are no items to display.') }}</h5>
+    </div>
+@endif
 @endif

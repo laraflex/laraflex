@@ -10,7 +10,11 @@ if(!empty($objectConfig)){
     }
 @endphp
 <main id="content">
-<div class="container">
+@if (!empty($objetoConfig->contentClass) && $objetoConfig->contentClass = 'container-fluid')
+<div class="ml-2 mr-2 ml-lg-3 mr-lg-3">
+@else
+<div class="container-xl">
+@endif
 {{-- Bloco de mensagem e alerta--------------------------}}
 @if(session('alert'))
     <div class="alert alert-danger" role="alert">

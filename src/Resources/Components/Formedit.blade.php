@@ -11,33 +11,59 @@
 @if (!empty($form) && !empty($form->items))
 
 @php
-   if (!empty($form->textAlign)){
-       if ($form->textAlign == 'left'){
-           $textAlign = 'text-left';
-       }
-       elseif ($form->textAlign == 'right') {
-           $textAlign = 'text-right';
-       }else{
+
+    if (!empty($form->textAlign)){
+        if ($form->textAlign == 'left'){
             $textAlign = 'text-left';
-       }
-   }else{
-       $textAlign = 'text-left';
-   }
+        }
+        elseif ($form->textAlign == 'right') {
+           $textAlign = 'text-left text-md-right';
+        }else{
+            $textAlign = 'text-left';
+        }
+    }else{
+        $textAlign = 'text-left';
+    }
+
+    if (!empty($form->fontFamily->title)){
+        $font_family_title = 'font-family:'.$form->fontFamily->title .';';
+    }else{
+        $font_family_title = '';
+    }
+    if (!empty($form->fontFamily->shared)){
+        $font_family = 'font-family:'.$form->fontFamily->shared .';';
+    }else{
+        $font_family = '';
+    }
 
 @endphp
 <!--Section formulário ------------------------------------------------------->
 <section id="form">
-<div class="pb-4 p-3 mb-4 mt-4 {{$border}} hiflex">
+<div class="pb-4 p-3 mb-4 mt-4 {{$border}}">
     @php
         if (!empty($form)){
             $formConfig = $form->items;
         }
+
+        // Controle de edição de dados inválidos
+        $font_color = 'text-secondary';
+        if (empty($form->updateId) OR $form->updateId === false){
+        $form->updateId = 0;
+        $form->legend = "**You must pass a valid item to be edited";
+        $font_color = 'text-danger h5';
+        }
     @endphp
     <div class="pt-2 pb-3 text-center">
-    <h3 class="d-none d-sm-block font-weight-normal"> {{$form->title}}</h3>
-    <h4 class="d-block d-sm-none font-weight-normal"> {{$form->title}}</h4>
+
+    @if (!empty($form->title))
+    <div class="form-title text-center pt-1 pb-0" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+    {{$form->title}}</div>
+
+    @endif
     @if (!empty($form->legend))
-        <div><small style="color:gray">{{$form->legend}}</small></div>
+    <div class="form-item-shared text-center pt-1 " style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+    <span class="{{$font_color}}">{{__($form->legend)}}</span></div>
+
     @endif
 
     </div>
@@ -56,17 +82,18 @@
         @csrf
         @endif
     @endif
-    {{--Campo hidden code id-----------}}
+    {{-------------}}
     <input type="hidden" class="updateId" id="updateId" name="updateId" value="{{$form->updateId}}">
-    {{--End Campo hidden---------------}}
+    {{-------------}}
     @foreach ($formConfig as $key => $item)
+
     @if ($item->type == 'fieldset')
     <fieldset class="form-group">
     <div class="row">
     <div class="col-md-3">
     @if (!empty($item->label) && !empty($item->name))
-    <legend class="d-none d-md-block col-form-label pt-0 {{$textAlign}}" for="{{$item->name}}">{{$item->label}}:</legend>
-    <legend class="d-block d-md-none col-form-label pt-0" for="{{$item->name}}" style="font-size:90%">{{$item->label}}:</legend>
+    <legend for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</legend>
+
     @endif
     </div>
     <div class="col-md-9">
@@ -111,8 +138,8 @@
     <div class="row">
     <div class="col-md-3">
     @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->name}}"  class="d-none d-md-block col-form-label {{$textAlign}}">{{$item->label}}:</label>
-    <label for="{{$item->name}}"  class="d-block d-md-none col-form-label" style="font-size:90%">{{$item->label}}:</label>
+    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
+
     @endif
     </div>
     <div class="col-md-9">
@@ -139,8 +166,8 @@
     <div class="row">
     <div class="col-md-3">
     @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->id}}"  class="d-none d-md-block col-form-label {{$textAlign}}">{{$item->label}}:</label>
-    <label for="{{$item->id}}"  class="d-block d-md-none col-form-label" style="font-size:90%">{{$item->label}}:</label>
+    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
+
     @endif
     </div>
     <div class="col-md-9">
@@ -184,6 +211,10 @@
         $active = 'disabled';
     }else{
         $active = '';
+    }
+    if (empty($form->updateId)){
+        $active = 'disabled';
+
     }
     @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
@@ -249,8 +280,8 @@
     <div class="form-group row">
     <div class="col-md-3">
     @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->id}}" class="d-none d-md-block col-form-label {{$textAlign}}">{{$item->label}}:</label>
-    <label for="{{$item->id}}" class="d-block d-md-none col-form-label" style="font-size:90%">{{$item->label}}:</label>
+    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
+
     @endif
     </div>
     <div class="col-md-9">
@@ -273,8 +304,8 @@
     <div class="form-group row">
     <div class="col-md-3">
     @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->id}}" class="d-none d-md-block col-form-label {{$textAlign}}">{{$item->label}}:</label>
-    <label for="{{$item->id}}" class="d-block d-md-none col-form-label" style="font-size:90%">{{$item->label}}:</label>
+    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
+
     @endif
     </div>
     <div class="col-md-9">

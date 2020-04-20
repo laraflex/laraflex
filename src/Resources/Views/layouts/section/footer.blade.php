@@ -15,7 +15,7 @@ if($headerColor == 'light'){
     $fontColor = 'color:#1C1C1C;';
 }elseif($headerColor == 'white'){
     $bgColor = 'background-color:#FFFFFF;';
-    $fontColor = 'color:#1C1C1C;';   
+    $fontColor = 'color:#1C1C1C;';
 }elseif($headerColor == 'dark'){
     $bgColor = 'background-color:#1C1C1C;';
     $fontColor = 'color:#A4A4A4;';
@@ -41,7 +41,7 @@ if($headerColor == 'light'){
 <section id="footer">
 @php
 if ($objetoConfig->headerClass == 'container'){
-$footerClass = 'container px-2 px-lg-3';
+$footerClass = 'container-xl px-2 px-lg-3';
 }else{
 $footerClass = '';
 }
