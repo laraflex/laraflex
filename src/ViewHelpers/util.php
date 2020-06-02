@@ -58,11 +58,24 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         return $this->toMedia($path,$file);
     }
 
+    function textEncode($str, $limit = 30){
+        $arrayTmp = explode(" ", $str);
+        $count = 0;
+        $strTmp = "";
+        foreach ($arrayTmp as $key => $value) {
+            $count += strlen($value);
+            if ($count <= $limit){
+               $strTmp .= " " . $value;
+            }
+        }
+        return ltrim($strTmp) . " ...";
+    }
+
     public function toStyleBorder($border)
     {
         $style = '';
         if ($border == 'shadow') {
-            $style .= 'border rounded shadow bg-white';
+            $style .= 'border rounded shadow';
         } elseif ($border == 'rounded') {
             $style .= 'border rounded';
         } elseif ($border == 'border') {
@@ -74,6 +87,71 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
 
     public function slug($str, $parameter){
         return Str::slug($str, $parameter);
+    }
+
+    public function socialNetworkUrl($socialNetework, $url){
+        if (strtolower($socialNetework) == 'facebook'){
+            if (stripos($url, 'https://www.facebook.com/') === false){
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return 'https://www.facebook.com/' . $url;
+            }else{
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return $url;
+            }
+        }elseif (strtolower($socialNetework) == 'instagram'){
+            if (stripos($url, 'https://www.instagram.com/') === false){
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return 'https://www.instagram.com/' . $url;
+            }else{
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return $url;
+            }
+        }elseif (strtolower($socialNetework) == 'twitter'){
+            if (stripos($url, 'https://twitter.com/') === false){
+
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+
+                return 'https://twitter.com/' . $url;
+            }else{
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return $url;
+            }
+
+        }elseif (strtolower($socialNetework) == 'pinterest'){
+            if (stripos($url, 'https://br.pinterest.com/') === false){
+
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+
+                return 'https://br.pinterest.com/' . $url;
+            }else{
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return $url;
+            }
+        }elseif (strtolower($socialNetework) == 'youtube'){
+            if (stripos($url, 'https://www.youtube.com/') === false){
+
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+
+                return 'https://www.youtube.com/' . $url;
+            }else{
+                $url = str_replace('#', '', $url);
+                $url = str_replace('@', '', $url);
+                return $url;
+            }
+
+        }else{
+            return '';
+        }
+
     }
 
     /**
@@ -88,6 +166,7 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
      *
      * @return string A senha gerada
      */
+
     function toCode($tamanho = 5, $maiusculas = true, $numeros = true, $simbolos = false)
     {
         //$lmin = 'abcdefghijklmnopqrstuvwxyz';

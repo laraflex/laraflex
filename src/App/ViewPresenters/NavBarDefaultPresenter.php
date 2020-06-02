@@ -13,11 +13,16 @@ class NavBarDefaultPresenter extends Presenter
             'component' => 'navbar',
             'type' => 'header',
             'logo' => 'logo-option1.png',
-            'imagePath' => 'images/app/',
+            'imagePath' => 'images/app/',          
             'label' => 'LaraFlex',
             'route' => 'home',
             'showLogin' => true,
-            'showRegister' => true,
+            'showRegister' => true,           
+            'bgColor' => 'black', //'black', //'bordeaux', //'white', //'navyBlue',
+            //'fixedmenu' => true,
+            //'transparent' => true,
+            'fadeTransparency' => true,
+            //'menuEffect' => true,
             'items' => [
                 [
                     'label' => 'home',

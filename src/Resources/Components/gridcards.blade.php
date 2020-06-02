@@ -7,7 +7,6 @@
     $gridcards = $object;
 @endphp
 @endif
-
 @if (!empty($gridcards) && !empty($gridcards->items))
 
 @php
@@ -23,60 +22,132 @@
     }
 @endphp
 
-
-<section id="gridcards" class="mb-2 mt-3">
-
-@if(!empty($gridcards->title))
-<div class="gridcards-title text-center pt-1 pb-0" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-{{$gridcards->title}}</div>
-@endif
-@if (!empty($gridcards->legend))
-    <div class="gridcards-shared text-center" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-    <span style="color:gray">{{$gridcards->legend}}</span></div>
+@if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
+    <section id="gridcards" class="m-0 p-0 mx-0 pb-3 pb-lg-4 pt-1 pt-sm-2">
+@else
+    <section id="gridcards" class="m-0 p-0 mx-0 pb-3 pb-sm-3 pt-1 pt-sm-3">
 @endif
 
-    @if (!empty($gridcards->border) && $gridcards->border === true)
-    <div class="border rounded mt-3">
+<div class="container-xl px-0">
+<div class="mx-0 mb-0 px-2 px-lg-3 px-xl-0">
+    @if (!empty($gridcards->seeMore))
+    <div class="row m-0 p-0">
+        <div class="col-12 col-sm-9 p-0">
+            @if(!empty($gridcards->title))
+            <div class="gridcards-title text-left pt-3 pb-2 pl-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+            {{$gridcards->title}}</div>
+            @if (!empty($gridcards->legend))
+                <div class="gridcards-shared text-left pb-3 pl-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+                <span>{{$gridcards->legend}}</span></div>
+            @endif
+            @endif
+        </div>
+        <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block align-text-bottomx" style="width: 100%;">
+            @if(!empty($gridcards->legend) && !empty($gridcards->title))
+            <div class="py-2 mb-sm-1 py-xl-2"></div>
+            <div class="pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
+            <a href="{{$util->toRoute($gridcards->seeMore)}}" class="btn btn-dark m-0">
+            {{__('See more')}}
+            </a>
+            </div>
+            @else
+            <div class="pb-sm-3 pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
+            <a href="{{$util->toRoute($gridcards->seeMore)}}" class="btn btn-dark m-0">
+            {{__('See more')}}
+            </a>
+            </div>
+            @endif
+        </div>
+    </div>
     @else
-    <div class="mt-3">
+        @if(!empty($gridcards->title))
+        <div class="gridcards-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+        {{$gridcards->title}}</div>
+        @if (!empty($gridcards->legend))
+            <div class="gridcards-shared text-center pb-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+            <span>{{$gridcards->legend}}</span></div>
+        @else
+            <div class="pt-2"></div>
+        @endif
+        @endif
     @endif
-
-
-
-    <div class="row w-100 m-0 p-0">
+    <div class="mt-0">
+    {{--<div class="row w-100 m-0 p-0">--}}
     {{--Add items ------------------------------------------------}}
     @if(!empty($gridcards->items))
-    @foreach($gridcards->items as $item)
+    @php
+    //--Backgrond effect e margin--//
+    if (!empty($gridcards->styles->margin) && $gridcards->styles->margin === true){
+        $margin = 'm-2';
+        $paddingText = 'pt-1 pb-3';
+    }else{
+        $margin = '';
+        $paddingText = 'pt-3 pb-3';
+    }
+    $visibility = ['d-block', 'd-block', 'd-block', 'd-block', 'd-none d-sm-block d-lg-none', 'd-none d-sm-block d-lg-none'];
+    $num_limit = 6;
+    $showLimit = false;
 
+    if (!empty($gridcards->seeMore)){
+        $showLimit = true;
+    }else{
+        $showLimit = false;
+    }
+    if (!empty($gridcards->extendedGrid) && $gridcards->extendedGrid === true){
+        $column = 'col-4 col-sm-3 col-lg-2';
+        if (!empty($gridcards->seeMore)){
+            $visibility = ['d-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-none d-sm-block d-lg-none', 'd-none d-sm-block d-lg-none'];
+            $num_limit = 8;
+        }
+    }else{
+        $column = 'col-6 col-sm-4 col-lg-3';
+    }
 
+    @endphp
 
-    <div class="col-6 col-sm-4 col-lg-3 p-0 m-0">
-        <div class="p-2 p-md-3 m-1 mb-2 mb-md-3 {{$border}}">
+    <div class="row w-100 m-0 p-0">
+    {{--Bloco de renderização de items de componente--}}
+    @foreach($gridcards->items as $key => $item)
 
+    @php
+    $margen_bottom = 'mb-3';
 
+    if ($showLimit === true){
+        if (!empty($num_limit) && $key >= $num_limit){
+        break;
+        }
+        if ($num_limit == 6){
+            if ($key < 2){
+                $margen_bottom = 'mb-2 mb-sm-3 mb-lg-0';
+            }elseif($key == 2){
+                $margen_bottom = 'mb-0 mb-sm-3 mb-lg-0';
+            }else{
+                $margen_bottom = 'mb-0';
+            }
+        }elseif($num_limit == 8){
+            if ($key < 3){
+                $margen_bottom = 'mb-2 mb-sm-3 mb-lg-0';
+            }elseif($key == 3){
+                $margen_bottom = 'mb-0 mb-sm-3 mb-lg-0';
+            }else{
+                $margen_bottom = 'mb-0';
+            }
+        }
+    }
+    @endphp
 
-
-    {{--Bloco de imagem ------------------------------------------------}}
-    @if (!empty($gridcards->imagePath) && !empty($item->image))
-    {{--<div style="height:calc(10vw); background-image: url('{{$util->toImage($gridcards->imagePath, $item->image)}}');background-size:cover"></div>--}}
-    <img src="{{$util->toImage($gridcards->imagePath, $item->image)}}" class="img-fluid" ">
+    <div class="{{$column}} p-0  {{$margen_bottom}}">
+    @if ($showLimit === true)
+    <div class="mx-1 h-100 {{--p-2x p-md-3x m-1 mb-2 mb-md-3--}} {{$border}} {{$visibility[$key]}}">
     @else
-    <img src="{{$util->toImage('images/app', 'image-laracast.jpg')}}" class="img-fluid">
+    <div class="mx-1 h-100   {{--p-2 p-md-3 m-1 mb-2 mb-md-3--}} {{$border}}">
     @endif
-    {{--End Bloco de imagem ------------------------------------------------}}
-
-    @if(!empty($item->title))
-    <div class="gridcards-item-shared text-left text-dark mt-2 ml-1" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-    {{$item->title}}</div>
+    @if (!empty($gridcards->styles->bgEffect) && $gridcards->styles->bgEffect === true)
+    <div class="gridcards-item {{$margin}}" style="background-color: #000000;">
+    @else
+    <div class="{{$margin}}">
     @endif
-
-
-    @if(!empty($item->label))
-    <div class="gridcards-item-shared text-dark ml-1 mt-1" style="font-size:calc(0.70em + 0.3vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-    <small>{{$item->label}}</small></div>
-    @endif
-
-
+    {{--End Backgrond effect--}}
     {{--Button --------------------}}
     @if (!empty($gridcards->route))
         @php
@@ -86,33 +157,95 @@
                $target = '';
            }
         @endphp
-    <a class="btn btn-sm btn-outline-secondary mt-2" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>{{__('Read more')}}</a>
+    <a class="" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>
+
+    {{--Bloco de imagem ------------------------------------------------}}
+    @if (!empty($gridcards->imagePath) && !empty($item->image))
+    <img src="{{$util->toImage($gridcards->imagePath, $item->image)}}" class="img-fluid">
+    @else
+    <img src="{{$util->toImage('images/app', 'image-laracast.jpg')}}" class="img-fluid">
+    @endif
+    {{--End Bloco de imagem ------------------------------------------------}}
+    </a>
     @endif
     {{--End button ----------------}}
+    </div>
+        @if(!empty($item->title) && in_array('title', $gridcards->showItems))
+        <div class="px-3 {{$paddingText}}">
+            <div class="gridcards-item-shared text-left text-dark" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+            {{$item->title}}
+            </div>
+            @if(!empty($item->label) && in_array('label', $gridcards->showItems))
+            <div class="gridcards-item-shared text-dark pb-1" style="font-size:calc(0.70em + 0.3vw);line-height:1.3;{{$font_family}}">
+            <small>{{$item->label}}</small>
+            </div>
+            @endif
 
+            @if(!empty($item->specialLabel) && in_array('specialLabel', $gridcards->showItems))
+            <div class="gridcards-item-shared pb-1" style="color: blue; font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
+            {{$item->specialLabel}}
+            </div>
+            @endif
+            {{--Adicionando rating --------------------------------------------------}}
+            @if(!empty($item->rating) && in_array('rating', $gridcards->showItems))
+                <div class="" style="font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
+                {{$item->rating}}
+                @for ($i = 1; $i <= intval($item->rating); $i++)
+                <img src="{{$util->toImage('images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+                @endfor
+                @if ($item->rating != intval($item->rating))
+                <img src="{{$util->toImage('images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+                @endif
+                </div>
+            @endif
+            {{--Fim de rating --------------------------------------------------------}}
+        </div>
+        @endif
     </div>
     </div>
     @endforeach
     @endif
     {{--End items ------------------------------------}}
     </div>
-
-    {{--button read more-------------------------------}}
-    @if (!empty($gridcards->readMore->label) && !empty($gridcards->readMore->route))
-    <div class="text-center mt-3">
-    <a class="btn btn-sm btn-outline-secondary mb-4 px-5" href="{{$util->toRoute($gridcards->readMore->route)}}" role="button">{{$gridcards->readMore->label}}</a>
+    </div>
+    {{--Bloco de see more ---------------------------}}
+    @if (!empty($gridcards->seeMore))
+    <div class="pl-3 pl-lg-4 mt-3 d-block d-sm-none">
+        <a href="{{$util->toRoute($gridcards->seeMore)}}" class="btn btn-sm btn-dark m-0">
+        <span class="px-2">{{__('See more')}}</span>
+        </a>
+    </div>
+    {{--pagination--------------------------------------}}
+    @elseif (!empty($gridcards->paginate))
+    <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
+    {!!$gridcards->paginate->links()!!}
     </div>
     @endif
-    {{--End button read more --------------------------}}
+    {{--End Pagination----------------------------------}}
 
     </div>
+    </div>
+{{--Icon de retorno ao topo da página--}}
+@if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
+<div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
+    <a href="#top">
+    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+    </a>
+    </div>
+@endif
+{{--End Icon de retorno ao topo da página--}}
+</div>
 </section>
 @else
 @if (!empty($gridcards->nullable) && $gridcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>
 @else
-    <div class="text-center p-4 mt-3 mb-3 {{$border}}">
-    <h5>{{ __('There are no items to display.') }}</h5>
+<div class="container-xl px-3 mt-4 pb-2" translation="no">
+    <div class="alert alert-primary {{$border}}" role="alert">
+    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
+    <hr class="d-none d-sm-block">
+    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
     </div>
+</div>
 @endif
 @endif

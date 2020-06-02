@@ -1,15 +1,8 @@
-@php
-    if (!empty($objetoConfig->bgStyle->border)){
-        $border = $util->toStyleBorder($objetoConfig->bgStyle->border);
-    }else{
-        $border = '';
-    }
-@endphp
 
 @section('content')
 <div class="container mt-4 mb-4">
-<div class="row justify-content-center mr-0 ml-0 pt-5 pb-5 {{$border}}">
-        <div class="col-md-8">
+<div class="row justify-content-center mr-0 ml-0 pt-5 pb-5 border rounded">
+        <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
@@ -69,7 +62,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-light btn-outline-secondary">
+                                <button type="submit" class="btn btn-light btn-outline-secondary px-4">
                                     {{ __('Register') }}
                                 </button>
                                 <button type="reset" class="btn btn-light btn-outline-secondary ml-2">

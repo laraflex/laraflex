@@ -1,5 +1,9 @@
 @if (!empty($coments->items))
-<div class="p-4 mb-4 hiflexxxx {{$border}}">
+<section id="coments" class="m-0 p-0 mx-0 pb-3 pt-2 pb-md-3">
+<div class="container-xl px-0">
+<div class="mx-0 mb-0 mt-1 px-0">
+
+<div class="p-4 {{$border}}">
 <ul class="list-unstyled pt-3 pl-1 pr-2 pr-sm-3 pr-lg-4">
 
     @foreach($coments->items as $key => $item)
@@ -23,7 +27,7 @@
     <div class="col-0 col-sm-1 m-0">
     <img src="{{$photo}}" class="m-0 img-fluid mx-auto d-none d-sm-block" alt="..." style="max-width:50px; max-height:50px;">
     </div>
-    <div class="media-bodyx col-12 col-sm-11 m-0 p-0 pl-sm-3 pl-lg-0 prxx-2">
+    <div class="media-bodyx col-12 col-sm-11 m-0 p-0 pl-sm-3 pl-lg-0">
 
     {{---------------------------------------------}}
     <img src="{{$photo}}" class="m-0 img-fluid m-2 d-block d-sm-none float-left" alt="..." style="max-width:40px; max-height:40px;">
@@ -88,7 +92,8 @@
     @endif
     </div>
     {{---------------------------------------------}}
-    <div class="coment-shared text-justify pr-0 prxx-xl-3" style="line-height: 1.3; font-size:calc(0.85em + 0.15vw);{{$font_family}}">{!!$item->coment!!}</div>
+    <div class="coment-shared text-justify pr-0 prxx-xl-3" style="line-height: 1.3; font-size:calc(0.85em + 0.15vw);{{$font_family}}">
+    {!!$item->coment!!}</div>
     </div>
     </div>
     </li>
@@ -97,4 +102,8 @@
     @endforeach
 </ul>
 </div>
+
+</div>
+</div>
+<section>
 @endif

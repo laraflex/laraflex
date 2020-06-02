@@ -1,0 +1,33 @@
+<?php
+namespace laraflex\ViewHelpers\Dependencies;
+
+use laraflex\Contracts\Dependencies;
+
+class SidebarDependencies extends Dependencies
+{
+    public function toArray()
+    {
+        $var = [
+            [
+                'component' => 'NULL',
+                'type' => 'link',
+                'link' => 'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+            ],
+            [
+                'component' => 'NULL',
+                'type' => 'local',
+                'link' => 'css/stylelight.css',
+            ],
+            [
+                'component' => 'sidebarjs',
+                'type' => 'scriptjs',
+            ],
+
+        ];
+        return $var;
+    }
+
+    static public function create(){
+        return new SidebarDependencies();
+    }
+}

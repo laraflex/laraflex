@@ -1,0 +1,30 @@
+<?php
+namespace App\ViewPresenters\Dependencies;
+
+use laraflex\Contracts\Dependencies;
+
+class DependenciesClone extends Dependencies
+{
+    public function toArray()
+    {
+        $var = [
+            [
+                'component' => 'NULL',
+                'type' => 'local',
+                'link' => '',
+            ],
+            [
+                'component' => 'componentjs',
+                'type' => 'scriptjs',
+                //'lib' => '',
+                //'items' => '',
+            ],
+
+        ];
+        return $var;
+    }
+
+    static public function create(){
+        return new DependenciesClone();
+    }
+}

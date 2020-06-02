@@ -3,19 +3,41 @@ if(!empty($objectConfig)){
    $objetoConfig = $objectConfig;
 }
 
+if (!empty($objectHeader)){
+    $itemHeader = $objectHeader;
+    $objetoConfig->headerComponents[] = $itemHeader;
+}
+
+if (!empty($arrayObjectsHeader)){
+    foreach ($arrayObjectsHeader as $objectHeader){
+        $itemHeader = $objectHeader;
+        $objetoConfig->headerComponents[] = $itemHeader;
+    }
+}
+
+if(!empty($objetoConfig->headerComponents)){
+    foreach($objetoConfig->headerComponents as $headerItem){
+        if (property_exists($headerItem, "dependencies") && !empty($headerItem->dependencies)){
+            foreach($headerItem->dependencies as $value){
+                $objetoConfig->dependencies[] = $value;
+            }
+        }
+    }
+}
+
 if(!empty($arrayObjetos)){
     $arrayItems = $arrayObjetos;
 }elseif(!empty($arrayObjects)){
     $arrayItems = $arrayObjects;
 }
+
+/**
+ * Adicionando componentes na página
+ */
 if(!empty($arrayItems)){
+
     foreach($arrayItems as $item){
         $objetoConfig->components[] = $item;
-        if (property_exists($item, "dependencies") && !empty($item->dependencies)){
-            foreach($item->dependencies as $value){
-                $objetoConfig->dependencies[] = $value;
-            }
-        }
     }
 }else{
     if(!empty($objeto)){
@@ -25,8 +47,41 @@ if(!empty($arrayItems)){
     }
     if (!empty($item)){
         $objetoConfig->components[] = $item;
-        if (property_exists($item, "dependencies") && !empty($item->dependencies)){
+    }
+}
 
+/**
+ * Adicionando dependencias a componentes de cabeçalho
+ */
+ if (!empty($objetoConfig->headerComponents)){
+    if (!empty($arrayListeners = $objectListener->dependencies($objetoConfig->headerComponents))){
+
+        foreach ($arrayListeners as $itemListener){
+            foreach($itemListener as $item){
+                $objetoConfig->dependencies[] = $item;
+            }
+        }
+
+
+    }
+ }
+
+/**
+ * Adicionando dependencias de componentes
+ */
+if (!empty($objetoConfig->components)){
+
+    if (!empty($arrayListeners = $objectListener->dependencies($objetoConfig->components))){
+        foreach ($arrayListeners as $itemListener){
+            foreach($itemListener as $item){
+                $objetoConfig->dependencies[] = $item;
+            }
+        }
+
+    }
+
+    foreach ($objetoConfig->components as $item){
+        if (property_exists($item, "dependencies") && !empty($item->dependencies)){
             foreach($item->dependencies as $value){
                 $objetoConfig->dependencies[] = $value;
             }
@@ -54,7 +109,12 @@ $arrayLinks[] = $item->link;
 @endphp
 @endif
 @endif
+
+@if ($item->type == 'local')
+    <link rel="stylesheet" href="{{$util->toRoute($item->link)}}">
+@endif
 @endforeach
+
 {{-- *********************************************************** --}}
 @foreach ($objetoConfig->dependencies as $item)
 @if ($item->type == 'style')

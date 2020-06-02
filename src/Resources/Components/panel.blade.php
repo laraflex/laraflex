@@ -25,8 +25,12 @@
     $stylePanel = $border;
 @endphp
 
-<section id="panel">
-<div class="mt-4 mb-4">
+    <section id="panel" class="pb-1 pt-3 pt-md-4">
+        <div class="container-xl px-0">
+        <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
+
+
+{{--<div class="mt-4 mb-4">--}}
         @if(!empty($panel->title))
         <div class="mt-1 text-center pt-0 pb-3" style="font-size:calc(1.0em + 0.75vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
         {{$panel->title}}</div>
@@ -140,9 +144,16 @@
     @endforeach
 </div>
 @endif
+</div>
 </section>
 @else
-    <div class="text-center p-4 mt-3 mb-3 {{$border}}">
-        <h5>{{ __('There are no items to display.') }}</h5>
+<div class="container-xl px-3 mt-4 pb-2" translation="no">
+    <div class="alert alert-primary {{$border}}" role="alert">
+    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
+    <hr class="d-none d-sm-block">
+    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
     </div>
+</div>
 @endif
+
+

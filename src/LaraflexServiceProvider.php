@@ -48,14 +48,7 @@ class LaraflexServiceProvider extends ServiceProvider
                 __DIR__.'/public/images/users' => base_path('public/images/users'),
                 //publishes controllers
                 __DIR__.'/App/Http/Controllers' => base_path('App/Http/Controllers'),
-                ],'install');
-
-        $this->publishes([
-                __DIR__.'/Update-Beta1/public/css' => base_path('public/css'),
-                __DIR__.'/Update-Beta1/Resources/Views/layouts' => base_path('resources/views/layouts'),
-                __DIR__.'/Update-Beta1/App/Console/Commands/Stubs' => base_path('App/Console/Commands/Stubs'),
-
-                ],'update-beta1');
+                ]);
 
     }
 }

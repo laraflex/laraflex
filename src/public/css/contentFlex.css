@@ -1,7 +1,11 @@
-/*Variáveis de componentes*/
+/* Estilos específicos /*
+
+/*Variáveis de componentes */
+
 .content-message{
     font-size:1.4em;
 }
+
 /* Componente ContentBox */
 
 .contentbox-title{font-size:1.4em;}
@@ -44,8 +48,154 @@
 
 .imagepanel-title{font-size:1.3em;}
 
-/* Componente Blogcards */
+/* Componente Groupcards */
 
-.lightbox-title{font-size:1.5em;}
+.groupcards-title{font-size:1.4em;}
 
-.lightbox-item-shared{font-size: 1em;}
+
+
+.icon_play_mediacards{
+    background-color: transparent;
+    position: absolute;
+    top: 40%;
+    left:42%;
+    width:30px;
+    height:30px;
+    background-color:rgb(255,255,255,0.5);
+}
+
+.mediacards-panel{
+    visibility:hidden;
+    position: absolute;
+    top:0px;
+    left:0px;
+    margin-bottom: 20%;
+    width: 97%;
+    height: 80%;
+    z-index: 1020;
+    background-color: rgb(0,0,0,0.2);
+}
+
+.mediacards-item:hover .mediacards-panel{
+
+    visibility:visible;
+}
+
+.groupcards-panel a:hover img{
+    opacity:0.8;
+}
+
+.gridcards-item a:hover img{
+    opacity: 0.6;
+}
+
+.lightboxPanel a:hover img{
+    opacity: 0.6;
+}
+
+#imagebutton{
+    background-color: rgba(0,0,0,0.2);
+}
+
+#imagebutton:hover{
+    color:#FFFFFF;
+    background-color: rgba(0,0,0,0.5);
+    /*
+    background-color: rgb(255,255,255,0.5);
+    */
+
+}
+
+#imagebutton-dark{
+    color:#000000;
+    background-color: rgba(255,255,255,0.2);
+}
+
+#imagebutton-dark:hover{
+    color: #FFFFFF;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#social-network a:hover img{
+    opacity: 0.6;
+}
+
+a.tooltip-dx {
+    position: relative ;
+  }
+  a.tooltip-dx:hover::after {
+    content: attr(data-tooltip);
+    position: absolute ;
+    top:-35px;
+    left: -5px;
+    line-height: 1.4;
+    width: 100px;
+    border: 1px #ccc solid;
+    border-radius:5px;
+    padding: 8px;
+    font-size: 0.8em;
+    color: black;
+    background-color: rgb(255,255,255,0.95);
+    z-index: 1050;
+    white-space: pre-line;
+  }
+
+  #mediacards-box a:hover img{
+      opacity: 0.6;
+  }
+
+  .icon_play_mediacards{
+    top: 40%;
+    left:42%;
+    width:25px;
+    height:25px;
+    opacity: 0.6;
+   }
+
+    a:hover .icon_play_mediacards{
+        opacity: 0.98;
+    }
+
+#default-paginator ul li a{
+    color: #1C1C1C;
+}
+
+#default-paginator ul li.active span{
+    background-color:#F2F2F2;
+    Border: 1px solid #CCCCCC;
+    color: #848484;
+}
+
+@media screen and (min-width: 576px ) {
+    .icon_play_mediacards{
+    top: 40%;
+    left:42%;
+    width:30px;
+    height:30px;
+    }
+}
+
+@media screen and (min-width: 768px ) {
+
+    .icon_play_mediacards{
+        /*
+        visibility:hidden;
+        */
+        top: 40%;
+        width:35px;
+        height:35px;
+    }
+
+
+}
+
+@media screen and (min-width: 992px ) {
+
+
+
+}
+
+@media screen and (min-width: 1200px ) {
+
+
+}

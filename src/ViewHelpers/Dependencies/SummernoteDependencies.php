@@ -1,9 +1,11 @@
 <?php
 namespace laraflex\ViewHelpers\Dependencies;
 
-trait SummernoteDependencies
+use laraflex\Contracts\Dependencies;
+
+class SummernoteDependencies extends Dependencies
 {
-    public function dependencies()
+    public function toArray()
     {
         $var = [
             [
@@ -20,5 +22,9 @@ trait SummernoteDependencies
 
         ];
         return $var;
+    }
+
+    static public function create(){
+        return new SummernoteDependencies();
     }
 }

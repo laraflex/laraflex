@@ -1,0 +1,287 @@
+/*
+*,
+*:before,
+*:after {
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+}
+*/
+.slider {
+    position: relative;
+    width:100%;
+    margin: 0 auto 40px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.frame,
+.events_log {
+    position: relative;
+    width:100%;
+    margin: 0 auto;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.frame li {
+    position: relative;
+    display: inline-block;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+    font-size: 15px;
+    line-height: 30px;
+    background: #2E435A;
+    color: #fff;
+}
+
+.slides {
+    display: inline-block;
+}
+
+.simple > .frame li,
+.rewind > .frame li,
+.events > .frame li {
+    width:100%;
+    margin-right: 10px;
+}
+
+.percentage .slides {
+    display: block;
+}
+
+.percentage .frame {
+    
+    width:100%;
+}
+
+.percentage li {
+    width: 100%;
+}
+
+.variablewidth li {
+    
+    width:calc(45vw); 
+    
+    /*
+    width: 157px; 
+    */     
+    height:calc(0.67 * 50vw); 
+    margin-right: 10px;
+}
+
+.variablewidth li a{
+    
+	color:#FFFFFF;
+}
+
+.variablewidth li a:hover{
+	color:#FFFFFF;
+	text-decoration: none;
+}
+/*
+.multipleelements li, .multislides li, .ease li {
+    width: 60px;
+    margin-right: 10px;
+}
+*/
+.simple > .frame li:last-child,
+.rewind > .frame li:last-child,
+.events > .frame li:last-child,
+.variablewidth li:last-child,
+.multipleelements li:last-child,
+.multislides li:last-child,
+.ease li:last-child {
+    margin-right: 0;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 55%;
+    margin-top: -25px;
+    display: block;
+    cursor: pointer;
+}
+
+.next {
+    right: 0;
+}
+
+.prev {
+    left: 0;
+}
+
+.next.disabled,
+.prev.disabled {
+    opacity: .3;
+    pointer-events: none;
+}
+
+.next svg, .prev svg {
+    width: 20px;
+    
+    transition: .4s;
+}
+
+.next svg:hover, .prev svg:hover {
+    transform: scale(1.1);
+}
+
+.icon_play{
+    background-color: transparent;
+    position: absolute;
+    top: 43%;
+    left:39%;
+    width:30px;
+    height:30px;
+    background-color: rgb(255,255,255,0.5);
+   
+}
+
+a:hover.js_slide{        
+    opacity:0.5     
+}
+
+.text_bar{
+    white-space: pre-line;
+}
+
+.js_slide .slideItem{
+    text-align:left;
+    line-height: 1.5;
+}
+
+.js_slide a:hover .slideItem{
+    opacity:0.8;
+}
+
+
+.js_slide a:hover .slide-bgcolor{
+    background-color: rgb(0,0,0,0.5);
+}
+
+.slidebar-btn-flex a:hover{
+     background-color: rgb(0,0,0,0.7);
+}
+
+
+@media screen and (min-width: 576px ) {
+
+    .examplecode, .frame, .events_log {
+
+        width:100%;
+    }
+
+    .slider {
+        width:100%;
+        margin: 0 auto 20px;
+    }
+
+    .simple > .frame li,
+    .rewind > .frame li,
+    .events > .frame li {
+        width:100%;
+    }
+    
+    
+    /*
+     .next svg, .prev svg {
+        width: 25px;
+        transition: .4s;
+    }
+    */
+    
+     .variablewidth li{
+        
+        width:calc(0.9 * (35vw));
+        /*
+        width: 266px;
+         */
+        height:calc(0.75 * (100px + 15vw));
+        margin-right: 10px;
+    }
+    
+}
+
+@media screen and (min-width: 768px ) {
+
+    .examplecode, .frame, .events_log {
+
+        width:100%;
+    }
+
+    .slider {
+        width:100%;
+        margin: 0 auto 20px;
+    }
+
+    .simple > .frame li,
+    .rewind > .frame li,
+    .events > .frame li {
+        width:100%;
+    }
+
+    .variablewidth li{
+        width: calc(0.97 * (24vw));
+        height:calc(0.7 * (23px + 23vw));
+        margin-right: 10px;
+    }
+
+}
+
+@media screen and (min-width: 992px ) {
+
+    .examplecode, .frame, .events_log {
+
+        width:100%;
+    }
+
+    .slider {
+        width:100%;
+        margin: 0 auto 20px;
+    }
+
+    .simple > .frame li,
+    .rewind > .frame li,
+    .events > .frame li {
+        width:100%;
+    }
+
+    .variablewidth li{
+        width: calc(0.967 * (24vw));
+        height: calc(0.67 * (18px + 23vw));
+        margin-right: 10px;
+    }
+}
+
+
+@media screen and (min-width: 1200px ) {
+
+    .examplecode, .frame, .events_log {
+
+        width:100%;
+    }
+
+    .slider {
+        width:100%;
+        margin: 0 auto 20px;
+    }
+
+    .simple > .frame li,
+    .rewind > .frame li,
+    .events > .frame li {
+        width:100%;
+    }
+
+    .variablewidth li{
+        width:277px;
+        height:calc(0.67 * 300px);
+        margin-right: 10px;
+    }
+
+}

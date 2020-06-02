@@ -10,6 +10,13 @@ class FooterPresenter extends Presenter
         $var = [
             'component' => 'footer',
             'type' => 'footer',
+            'image' => 'logo-option4.png',
+            'imagePath' => 'images/app',
+            //'label' => 'Fale conosco',
+            'route' => '#top',
+            'bgColor' => 'marine',
+            //'bgImage' => 'imagepanel17.jpg',
+            'bgImagePath' => 'images/components',
             'items' => [
                 'Laraflex' => [
                     [
@@ -63,6 +70,16 @@ class FooterPresenter extends Presenter
                         'route' => '#',
                     ],
                 ],
+
+            ],
+
+            'socialNetworks' => [
+                'iconColor' => 'white',
+                'facebook' => 'https://www.facebook.com/dimas.f.vidal',
+                'twitter' => 'https://twitter.com/@dimasvidal1',
+                'instagram' => 'https://www.instagram.com/dimasfvidal/',
+                'pinterest'  => 'https://br.pinterest.com/dimas0808/',
+                'youtube' => 'https://www.youtube.com/channel/UCR2L1nIch00QW6PQFkUlcTQ?view_as=public',
             ],
         ];
         return $var;

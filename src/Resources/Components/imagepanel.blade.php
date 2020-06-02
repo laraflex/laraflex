@@ -3,7 +3,7 @@ if (!empty($objectHeader)){
     $imagePanel = $objectHeader;
 }
 if(!empty($imagePanel->imageClass) && $imagePanel->imageClass == "container"){
-    $imageClass = "container";
+    $imageClass = "container-xl";
 }else{
     $imageClass = "";
 }
@@ -12,7 +12,6 @@ if(!empty($imagePanel->textAlign)){
 }else{
     $textAlign = 'text-left';
 }
-
 @endphp
 
 @if(!empty($imagePanel))
@@ -30,23 +29,30 @@ if(!empty($imagePanel->textAlign)){
         }
 @endphp
 {{-------------------------------}}
-<div id="ImagePanel" class="d-none d-sm-block" data-ride="carousel" style="border-bottom:1px solid #cccccc;background-image:url('{{$util->toImage($imagePanel->imagePath, $imagePanel->image)}}');background-repeat:round">
-<div class="carousel-inner pl-0 pr-0 {{$imageClass}}">
+
+<div id="ImagePanel" class="{{$imageClass}} px-0 shadow" data-ride="carousel" style="border-bottom:1px solid #cccccc;">
+<div class="carousel-inner pl-0 pr-0 ">
 <div class="carousel-item active">
     <img src="{{$util->toImage($imagePanel->imagePath, $imagePanel->image)}}" class="img-fluid w-100">
-    <div class="container">
+    <div class="container-xl">
         @php
-            if(!empty($imagePanel->fontColor) && $imagePanel->fontColor != 'white'){
-                $fontColor = 'color:' . $imagePanel->fontColor;
-                $btnColor = 'btn-outline-secondary';
-            }else{
-                $fontColor = 'color:white';
+            if(!empty($imagePanel->fontColor) && strtoupper($imagePanel->fontColor) == "#FFFFFF"){
+                $fontColor = 'color:white; text-shadow: 2px 2px 3px #6E6E6E;';
                 $btnColor = 'btn-outline-light';
+                $imagebutton = 'imagebutton';
+            }elseif(!empty($imagePanel->fontColor) && $imagePanel->fontColor != 'white'){
+                $fontColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 3px #FFFFFF;';
+                $btnColor = 'btn-outline-dark';
+                $imagebutton = 'imagebutton-dark';
+            }else{
+                $fontColor = 'color:white; text-shadow: 2px 2px 3px #6E6E6E;';
+                $btnColor = 'btn-outline-light';
+                $imagebutton = 'imagebutton';
             }
         @endphp
         <div class="carousel-caption {{$textAlign}} pxx-0 pxx-lg-2  px-xl-5 pb-2 pb-lg-3 pb-xl-5">
             @if(!empty($imagePanel->title))
-            <div style="text-shadow: 2px 2px 2px #6E6E6E;{{$fontColor}}; font-size:calc(1.1em + 1.3vw);{{$font_family_title}}">{{$imagePanel->title}}</div>
+        <div style="{{$fontColor}} font-size:calc(1.1em + 1.3vw);{{$font_family_title}}"><span translate="no">{{$imagePanel->title}}</span></div>
             @endif
             @if(!empty($imagePanel->text))
             @php
@@ -54,12 +60,11 @@ if(!empty($imagePanel->textAlign)){
                 if ($num_char > 110){
                     $imagePanel->text = substr($imagePanel->text, 0, 115) . "...";
                 }
-
             @endphp
-            <div class="imagepanel-title mb-1 mb-md-2 mb-xl-3 " style="{{$fontColor}};line-height:calc(0.96em + 0.9vw); font-size:calc(0.85em + 0.4vw);{{$font_family}}">{{$imagePanel->text}}</div>
+            <div class="d-none d-sm-block imagepanel-shared mb-1 mb-md-2 mb-xl-3 mt-0 mt-sm-1 mt-md-2 mt-lg-3" style="{{$fontColor}};line-height:calc(0.96em + 0.9vw); font-size:calc(0.85em + 0.4vw);{{$font_family}}"><span spantranslate="no">{{$imagePanel->text}}</span></div>
             @endif
             @if($imagePanel->btnLabel)
-            <p><a class="imagepanel-shared btn mt-2 {{$btnColor}}" href="{{$util->toRoute($imagePanel->route)}}" role="button">{{$imagePanel->btnLabel}}</a></p>
+            <p><a class="imagepanel-shared btn mt-2 px-3 mt-0 mt-sm-2 mt-md-3 mt-lg-4 {{$btnColor}}" href="{{$util->toRoute($imagePanel->route)}}" id="{{$imagebutton}}" role="button">{{$imagePanel->btnLabel}}</a></p>
             @endif
         </div>
     </div>
