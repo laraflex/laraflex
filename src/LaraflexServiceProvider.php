@@ -1,4 +1,8 @@
 <?php
+/**
+ * Class Name: LaraflexServiceProvider
+ * @author: Dimas Vidal
+ */
 
 namespace laraflex;
 
