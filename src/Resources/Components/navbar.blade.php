@@ -158,12 +158,21 @@
 <div class="container-xl px-2 px-xl-3 ">
 <!-- Logotipo ----------------------->
 @if (!empty($navBar->logo))
+@php 
+if (!empty($navBar->imagePath)){
+    $logo = $util->toImage($navBar->imagePath, $navBar->logo);
+}else{
+    $logo = $util->toImage($navBar->logo);
+}
+@endphp
+
+
 @if(!empty($navBar->route))
 <a class="navbar-brand " href="{{$util->toRoute($navBar->route)}}">
-<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="42">
+<img src="{{$logo}}" width="170" height="42">
 </a>
 @else
-<img src="{{$util->toImage($navBar->imagePath, $navBar->logo)}}" width="170" height="42">
+<img src="{{$logo}}" width="170" height="42">
 @endif
 @elseif(!empty($navBar->label))
 <a class="navbar-brand" href="#">{{$navBar->label}}</a>

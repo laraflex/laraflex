@@ -20,13 +20,7 @@
     }else{
         $font_family = '';
     }
-
     @endphp
-{{--
-<section id="table" class="pb-1 pt-0 mt-3 pb-3 mb-2">
-<div class="container-xl px-0">
-<div class="mx-0 pb-0 mt-1 px-2 px-lg-3 px-xl-0">
---}}
 
 @if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
     <section id="slidebar" class="m-0 p-0 mx-0 pb-2 pb-sm-3 pt-1 pt-sm-2">
@@ -101,7 +95,17 @@
         <a>
         @endif
 
-    <div class="slideItem h-100 " style="background-image: url('{{$util->toImage($slidebar->imagePath, $item->image)}}');background-size:cover;">
+    @php 
+    if (!empty($slidebar->imagePath)){
+        $image = $util->toImage($slidebar->imagePath, $item->image);
+    }elseif(!empty($item->image)){
+        $image = $util->toImage($item->image);
+    }else{
+        $image = $util->toImage('images/app/foto01.jpg');
+    }
+    @endphp    
+
+    <div class="slideItem h-100 " style="background-image: url('{{$image}}');background-size:cover;">
     <div class="slide-bgcolor h-100">
     <div class="p-2 w-100 m-0" style="white-spacex: pre-line; background-color: rgb(0,0,0,0.4); font-size: calc(0.8em + 0.3vw); line-height: 1.3;">
     <span style="white-space: pre-line;"">{{$item->title}}</span>

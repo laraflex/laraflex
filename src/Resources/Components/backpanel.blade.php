@@ -7,10 +7,10 @@ if (!empty($objectHeader)){
 @if(!empty($backpanel))
 @php
     if (!empty($backpanel->bgImagePath) && !empty($backpanel->bgImage)){
-        $bgImagePath = $backpanel->bgImagePath;
-        $bgImage = $backpanel->bgImage;
+        $bgImage = $util->toImage($backpanel->bgImagePath, $backpanel->bgImage);
+    }elseif(!empty($backpanel->bgImage)){
+        $bgImage = $util->toImage($backpanel->bgImage);
     }else{
-        $bgImagePath = '';
         $bgImage = '';
     }
 @endphp
@@ -18,13 +18,13 @@ if (!empty($objectHeader)){
 <section id="backpanel">
 
     @if (!empty($backpanel->fadeImage) && $backpanel->fadeImage === true)
-        <div class="backpanel jumbotron mb-0 p-0 shadow" style="background-image: url({{$util->toImage($bgImagePath, $bgImage)}}); background-size:contain; padding-left:calc(1vw);padding-right:calc(1vw);">
+        <div class="backpanel jumbotron mb-0 p-0 shadow" style="background-image: url({{$bgImage}}); background-size:contain; padding-left:calc(1vw);padding-right:calc(1vw);">
         <div style="background-color: rgb(0,0,0,0.4)">
-        <div class="container-xl px-0 text-center shadow" style="background-image: url({{$util->toImage($bgImagePath, $bgImage)}}); background-size:cover; color:#fff; font-size:calc(0.8em + 1.3vw); line-height: 1.4; font-family: arial;height:100%;">
+        <div class="container-xl px-0 text-center shadow" style="background-image: url({{$bgImage}}); background-size:cover; color:#fff; font-size:calc(0.8em + 1.3vw); line-height: 1.4; font-family: arial;height:100%;">
         <div class="py-2 py-sm-3 pt-md-4 px-2" style="background-color: rgb(0,0,0,0.4)">
     @else
-        <div class="backpanel jumbotron mb-0 p-0 shadow" style="background-image: url({{$util->toImage($bgImagePath, $bgImage)}}); background-size:contain; padding-left:calc(1vw);padding-right:calc(1vw);">
-        <div class="container-xl py-2 py-sm-3 pt-md-4 text-center shadow" style="background-image: url({{$util->toImage($bgImagePath, $bgImage)}}); background-size:cover; color:#fff; font-size:calc(0.8em + 1.3vw); line-height: 1.4; font-family: arial;height:100%;">
+        <div class="backpanel jumbotron mb-0 p-0 shadow" style="background-image: url({{$bgImage}}); background-size:contain; padding-left:calc(1vw);padding-right:calc(1vw);">
+        <div class="container-xl py-2 py-sm-3 pt-md-4 text-center shadow" style="background-image: url({{$bgImage}}); background-size:cover; color:#fff; font-size:calc(0.8em + 1.3vw); line-height: 1.4; font-family: arial;height:100%;">
     @endif
 
         @if (!empty($backpanel->expanded) && $backpanel->expanded === true)
@@ -34,16 +34,25 @@ if (!empty($objectHeader)){
 
           {{--Bloco de imagem ------------}}
           @if (!empty($backpanel->logo))
-          @if (!empty($backpanel->logo->imagePath) && !empty($backpanel->logo->image))
+          @php
+            if (!empty($backpanel->logo->imagePath) && !empty($backpanel->logo->image)){
+                $image = $util->toImage($backpanel->logo->imagePath, $backpanel->logo->image);
+            }elseif(!empty($backpanel->logo->image)){
+                $image = $util->toImage($backpanel->logo->image);
+            }else{
+                $image = NULL;
+            }
+          @endphp
+          @if (!empty($image))
               @if (!empty($backpanel->logo->route))
               <a href="{{$util->toRoute($backpanel->logo->route)}}">
               <div class="py-2 pt-lg-3 pb-lg-2">
-              <img src="{{$util->toImage($backpanel->logo->imagePath, $backpanel->logo->image)}}" style="width:calc(170px + 3.5vw); height:calc(40px + 0.7vw);"/>
+              <img src="{{$image}}" style="width:calc(170px + 3.5vw); height:calc(40px + 0.7vw);"/>
               </div>
               </a>
               @else
               <div class="py-2 pt-lg-3 pb-lg-2">
-              <img src="{{$util->toImage($backpanel->logo->imagePath, $backpanel->logo->image)}}" style="width:calc(170px + 3.5vw); height:calc(40px + 0.7vw);"/>
+              <img src="{{$image}}" style="width:calc(170px + 3.5vw); height:calc(40px + 0.7vw);"/>
               </div>
               @endif
             @else

@@ -94,7 +94,7 @@
         $showLimit = false;
     }
     if (!empty($gridcards->extendedGrid) && $gridcards->extendedGrid === true){
-        $column = 'col-4 col-sm-3 col-lg-2';
+        $column = 'col-6 col-sm-3 col-lg-2';
         if (!empty($gridcards->seeMore)){
             $visibility = ['d-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-none d-sm-block d-lg-none', 'd-none d-sm-block d-lg-none'];
             $num_limit = 8;
@@ -160,8 +160,16 @@
     <a class="" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>
 
     {{--Bloco de imagem ------------------------------------------------}}
-    @if (!empty($gridcards->imagePath) && !empty($item->image))
-    <img src="{{$util->toImage($gridcards->imagePath, $item->image)}}" class="img-fluid">
+    @if (!empty($item->image))
+    @php 
+    if (!empty($gridcards->imagePath)){
+        $image = $util->toImage($gridcards->imagePath, $item->image);
+    }else{
+        $image = $util->toImage($item->image);
+    }
+    @endphp
+
+    <img src="{{$image}}" class="img-fluid">
     @else
     <img src="{{$util->toImage('images/app', 'image-laracast.jpg')}}" class="img-fluid">
     @endif

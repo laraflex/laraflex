@@ -16,6 +16,8 @@
 
         if (!empty($item->photo) &&  !empty($coments->userPath)){
             $photo = $util->toImage($coments->userPath, $item->photo);
+        }elseif(!empty($item->photo)){
+            $photo = $util->toImage($item->photo);
         }elseif($sexo == 'F'){
             $photo = $util->toImage('images/users', 'perfil2.png');
         }else{
@@ -67,6 +69,8 @@
             }
             if (!empty($item->photo)){
                 $photo = $util->toImage('storage/images/users/perfil', $item->photo);
+            }elseif(!empty($item->photo)){
+                $photo = $util->toImage($item->photo);
             }elseif($sexo == 'F'){
                 $photo = $util->toImage('images/users', 'perfil2.png');
             }else{

@@ -99,8 +99,15 @@
         @else
         <div class="sidebar-header">
         <div class="user-pic">
-            @if (!empty($sidebar->perfil->imagePath) && $sidebar->perfil->photo)
-            <img class="img-fluid" src="{{$util->toImage($sidebar->perfil->imagePath, $sidebar->perfil->photo)}}" alt="User picture">
+            @if (!empty($sidebar->perfil->photo))
+            @php
+            if (!empty($sidebar->perfil->imagePath)){
+                $photo = $util->toImage($sidebar->perfil->imagePath, $sidebar->perfil->photo);
+            }else{
+                $photo = $util->toImage($sidebar->perfil->photo);
+            }
+            @endphp
+            <img class="img-fluid" src="{{$photo}}" alt="User picture">
             @else
             <img class="img-fluid" src="{{$util->toImage('images/users','perfil1.png')}}" alt="User picture">
             @endif

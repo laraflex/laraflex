@@ -8,49 +8,73 @@
     @endphp
 @endif
 
-<section id="storageManager">
-
-<div class="m-0 p-2 mt-4 mb-4 {{$border}}">
-
 @if (!empty($storageManager))
-<div id="headerSection" class="pt-3 pb-3 hiflex">
+<section id="storageManager">
+<div class="container-xl px-0">
+<div class="m-0 p-0 mt-4 mb-4 pb-4 mx-2 mx-lg-2 mx-xl-0 {{$border}}">
+    <div id="headerSection" class="pt-3 pb-3">
     @if (!empty($storageManager->title))
-       <h3 class="text-center font-weight-normal">{{$storageManager->title}}</h3>
+    <div class="text-center font-weight-normal" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw)">
+    {{$storageManager->title}}
+    </div>
     @endif
-
-</div>
+    </div>
     @php
         $imageArray = array('jpg', 'png', 'svg', 'jpeg', 'tif', 'gif', 'BMP', 'exif', 'webp');
+        $font = 'font-size:calc(12px + 0.20vw);line-height:calc(14px + 0.3vw);overflow-wrap: anywhere;';
+        $borderx = '';
+        if (!empty($storageManager->iconSize) && $storageManager->iconSize == 'small'){
+            $column = 'col-4 col-sm-2 col-lg-1 p-0 m-0';
+            $font = 'font-size:calc(12px + 0.05vw);line-height:calc(14px + 0.3vw);overflow-wrap: anywhere;';
+        }else{
+            $column = 'col-4 col-sm-2 p-0 m-0';
+        }
+        if(!empty($storageManager->routeFile)){
+            $route = $util->toRoute($storageManager->routeFile);
+        }else{
+            $route = $util->toRoute('file/show');
+        }
+        if (!empty($storageManager->routeFileDelete)){
+            $route2 = $util->toRoute($storageManager->routeFileDelete);
+        }else{
+            $route2 = $util->toRoute('file/delete');
+        }  
     @endphp
-    <div class="row p-2">
+<div class="row p-0 m-0">
     @if ($storageManager->path != '')
-    <div class=" col-6 col-sm-2 border">
-        @php
-        $imageDir = url('images/icons/back.png');
+    <div class="{{$column}}">
+    <div class="m-1 p-2" style="height:95%;">
+    @php
+        $imageNav = url('images/icons/backp.png');
         $arrayPath = explode('/', $storageManager->path);
-
-        if (count($arrayPath) <= 1){
-            $route = $util->toRoute($storageManager->route);
+        if (count($arrayPath) == 0){
+            $pathTmp = $storageManager->path;
         }else{
             $tmp = array_pop($arrayPath);
-            $pathTmp = implode(':', $arrayPath);
-            $route = $util->toRoute($storageManager->route, $pathTmp);
+            $pathTmp = implode('/', $arrayPath);
         }
-        @endphp
-    <a href="{{$route}}">
-    <img src="{{$imageDir}}" class="card-img pt-2 pb-1">
-    </a>
-    <div class="text-center pb-1">{{$storageManager->path}}</div>
+        $route = $util->toRoute($storageManager->route);
+    @endphp
+    {{--Formulário de solicitação de imagem ------------------------------}}
+    <form method="post" action="{{$route}}" id="storage-nav">
+        @csrf
+        <input type="hidden" id="path" name="path" value="{{$pathTmp}}">
+        <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
+        <input type="image" src="{{$imageNav}}" class="card-img">
+    </form>
+    {{--Fimde formulário de solicitação de imagem ------------------------------}}   
+    <div class="text-center pb-1" style="{{$font}}">{{$storageManager->path}}</div>
+    </div>
     </div>
     @endif
     @php
         $controlDir = true;
-        $countDir = 0;
+        $countDir = 0;                    
     @endphp
-
-    @if (!empty($storageManager->items))
+@if (!empty($storageManager->items))
     {{------------------------------------------------------------------------}}
-    @foreach ($storageManager->items as $item)
+@foreach ($storageManager->items as $item)
+
     {{--Bloco de controle de diretórios que podem ser mostrados ou ocultos--}}
     @php
         $openDir = false;
@@ -70,10 +94,10 @@
             $countDir ++;
         }
     @endphp
-
     @if($openDir === true)
     {{--Fim do bloco de controle---------------------------------------------}}
-    <div class="col-6 col-sm-2 border">
+    <div class="{{$column}}">
+    <div class="m-1 p-2" style="width:95%;">
     @if ($item->type == 'dir')
         @php
         $arrayIcons = array('images', 'projects', 'users', 'perfil', 'products', 'app');
@@ -83,122 +107,170 @@
                 $imageDir = url('images/icons/folder.png');
             }
             $pathTmp = $storageManager->path;
-            if ($pathTmp != '')
-                $pathTmp .= '/';
-                $pathTmp = str_replace('/', ':',$pathTmp);
-                $route = $util->toRoute($storageManager->route .'/'. $pathTmp . $item->fileName);
+
+            if ($pathTmp == ''){
+                $pathDir = $item->fileName;
+            }else{
+                $pathDir = $pathTmp .'/'. $item->fileName;
+            }
+            $route = $util->toRoute($storageManager->route);
         @endphp
-        <a href="{{$route}}">
-        <img src="{{$imageDir}}" class="card-img pt-2 pb-1">
-        </a>
-        <div class="text-center pb-1">{{$item->fileName}}</div>
 
-
+        {{--Formulário de solicitação de imagem ------------------------------}}
+        <form method="post" action="{{$route}}" id="storage-dir">
+        @csrf
+        <input type="hidden" id="path" name="path" value="{{$pathDir}}">
+        <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
+        <input type="hidden" id="folder" name="folder" value="{{$item->fileName}}">
+        <input type="hidden" id="directory" name="directory" value="{{$item->dirName}}">
+        <input type="image" src="{{$imageDir}}" class="card-img">
+        </form>
+        {{--Fimde formulário de solicitação de imagem ------------------------------}}
+        <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @elseif($item->type == 'file' && !empty($item->extension))
 
     @if(in_array(strtolower($item->extension), $imageArray))
         @php
-            $pathFile = url($item->dirName . '/' . $item->fileName);
+            $pathFile = $storageManager->filesystem->storagePath . $item->dirName . '/'. $item->fileName;
             $pathTmp = $item->dirName . '/'. $item->fileName;
-            $pathTmp = str_replace('/', ':',$pathTmp);
-            if(!empty($storageManager->routeImage)){
-            $route = $util->toRoute($storageManager->routeImage, $pathTmp);
+            
+            if (!empty($storageManager->showImage) && $storageManager->showImage === true){
+                $imagePath = $pathFile;
             }else{
-                $route = "#";
+                $imagePath = $util->toImage('images/icons/' . $item->extension . '.png');
             }
-
-        @endphp
-    <a href="{{$route}}">
-    <img src="{{$pathFile}}" class="card-img pt-2 pb-1">
+        @endphp   
+    {{--Formulário de solicitação de imagem ------------------------------}}
+    <form method="post" id="storage-image">
+    @csrf
+    <input type="hidden" id="path" name="path" value="{{$pathTmp}}">
+    <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
+    <input type="hidden" id="name" name="name" value="{{$item->fileName}}">
+    <input type="hidden" id="dir" name="dir" value="{{$item->dirName}}">
+    <input type="hidden" id="extension" name="extension" value="{{$item->extension}}">
+    <input type="hidden" id="size" name="size" value="{{$item->size}}">
+    {{--Controle de permissão de função para deletar item-----}}
+    @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
+        <div class="dropdown">
+        <a class="btn p-0 m-0" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img class="card-img" src="{{$imagePath}}" >
+        </a>
+    <div class="dropdown-menu {{$border}}" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href={{$pathFile}} data-width="1280" data-toggle="lightbox" data-gallery="gallery">{{__('Show image')}}</a>
+        <div class="dropdown-divider"></div>
+        <input type="submit" class="dropdown-item" onclick="action='{{$route}}';" value="{{__('Open file')}}">
+        <div class="dropdown-divider"></div>
+        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteModal" onclick="setaDadosModal('{{$imagePath}}','{{$item->fileName}}','{{$pathTmp}}','{{$storageManager->filesystem->disk}}')">
+        {{__('Delete file')}}
+        </button>
+        </div>
+        </div>
+    @else     
+    <a href={{$pathFile}} data-width="1280" data-toggle="lightbox" data-gallery="gallery">
+    <img src="{{$imagePath}}" class="card-img">
     </a>
-    <div class="text-center pb-1">{{$item->fileName}}</div>
+    @endif
+            {{--Fim de controle ---------------------------------------}}
+    </form>
+    {{--Fimde formulário de solicitação de imagem ------------------------------}}
+    <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @else
         @php
-            $pathFile = url($item->dirName . '/' . $item->fileName);
             $pathTmp = $item->dirName . '/'. $item->fileName;
-            $pathTmp = str_replace('/', ':',$pathTmp);
-            if(!empty($storageManager->routeFile)){
-            $route = $util->toRoute($storageManager->routeFile, $pathTmp);
-            }else{
-            $route = "#";
+             $imagePath = $util->toImage('images/icons/' . $item->extension . '.png');
 
-            }
-
-            $icon = url('images/icons/' . $item->extension . '.png');
         @endphp
-
-        @if (!empty($storageManager->openFileNewTarget) && in_array($item->extension, $storageManager->openFileNewTarget))
-        <a href="{{$util->toRoute($item->dirName, $item->fileName)}}" target="_blank">
-        @else
-        <a href="{{$route}}">
+    {{--Formulário de solicitação de arquivo ------------------------------}}
+    @if (!empty($storageManager->openFileNewTarget) && $storageManager->openFileNewTarget === true)
+    <form method="post" id="storage-file" target="_blank" rel="noopener noreferrer">
+    @else
+    <form method="post" id="storage-file">
+    @endif
+        @csrf
+        <input type="hidden" id="path" name="path" value="{{$pathTmp}}">
+        <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
+        <input type="hidden" id="name" name="name" value="{{$item->fileName}}">
+        <input type="hidden" id="dir" name="dir" value="{{$item->dirName}}">
+        <input type="hidden" id="extension" name="extension" value="{{$item->extension}}">
+        <input type="hidden" id="size" name="size" value="{{$item->size}}">
+        {{--Controle de permissão de função para deletar item-----}}
+        @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
+        <div class="dropdown">
+        <a class="btn p-0 m-0" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img class="card-img" src="{{$imagePath}}" >
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <input type="submit" class="dropdown-item" onclick="action='{{$route}}';" value="{{__('Open file')}}">
+            <div class="dropdown-divider"></div>
+            {{--<input type="submit" class="dropdown-item" onclick="action='{{$route2}}'; target='_self'" value="Deletar arquivo">--}}
+            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteModal" onclick="setaDadosModal('{{$imagePath}}','{{$item->fileName}}','{{$pathTmp}}','{{$storageManager->filesystem->disk}}')">
+            {{__('Delete file')}}
+            </button>
+        </div>
+        </div>
+        @else   
+        <input type="image" src="{{$imagePath}}" class="card-img" onclick="action='{{$route}}';" />
         @endif
-    <img src="{{$icon}}" class="card-img pt-2 pb-1">
-    </a>
-    <div class="text-center pb-1">{{$item->fileName}}</div>
-
+        {{--Fim de controle ---------------------------------------}}
+        </form>
+    {{--Fim de Formulário de solicitação de arquivo ------------------------------}}
+    <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @endif
     @endif
     {{--Fim do bloco de Diretórios e arquivos--}}
     </div>
-    @endif
-    @endforeach
+    </div>
+@endif
+@endforeach
     @if($countDir == 0)
     <div class="col-sm-10 text-center pt-4">
     <h5>{{ __('There are no folders or files in this directory.') }}.</h5>
     </div>
     @endif
-    @else
-    <div class="col-sm-10 text-center pt-4">
-    <h5>{{ __('There are no folders or files in this directory.') }}.</h5>
-    </div>
-    @endif
-    </div>
-@endif
+@endif   
 </div>
-@if(!empty($storageManager->inputFile) && $storageManager->inputFile == true)
-<div class="p-3" if="inputFile">
-
+</div>
+@if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
+@include('laraflex::include.formconfirm')
+@endif
+<div class="p-3" if="inputFileAndFolder">
+@if (!empty($storageManager->addFile) && $storageManager->addFile === true)
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-light btn-outline-secondary mb-2" data-toggle="modal" data-target="#addFileModal">
-Inserir arquivo
+<button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-2" data-toggle="modal" data-target="#addFileModal">
+{{__('Insert file')}}
 </button>
+@endif
+@if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-2" data-toggle="modal" data-target="#addFolderModal">
+{{__('Insert folder')}}
+</button>
+@endif
+</div>
+{{--Adiciona modais de formulários -----------------------}}
+@if (!empty($storageManager->addFile) && $storageManager->addFile === true)
+@include('laraflex::include.formaddfile')
+@endif
 
-<!-- Modal ------------------>
-<div class="modal fade" id="addFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ __('messages.label1') }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-        <div class="p-3" if="inputFile">
-        <form action="{{$util->toRoute('addfile')}}" method="post" enctype="multipart/form-data" id="addfile">
-        @csrf
-        <div class="">
-        <div class="p-2">
-        <input class="form-control" type="text" placeholder="Nome do arquivo" name="filename" id="fileName" required>
-        </div>
-        <div class="p-2">
-        <input type="file" class="form-control-file" id="file" class="file" name="file" required>
-        </div>
-        <input type="hidden" class="path" id="path" name="path" value="{{$storageManager->path}}">
-        <div class="p-2">
-        <button type="submit" class="btn btn-light btn-outline-secondary mt-3">{{ __('messages.label2') }}</button>
-        </a>
-        </div>
-        </form>
-        </div>
-        </div>
-    </div>
+@if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
+@include('laraflex::include.formaddfolder')   
+@endif
+{{--------------------------------------------------------}}
+</div>
+</section>
+@else
+@if (!empty($storageManager->nullable) && $storageManager->nullable === true)
+    <div class="text-center mt-2 mb-2"></div>
+@else
+<div class="container-xl px-2 mt-4 pb-2" translation="no">
+    <div class="alert alert-primary {{$border}}" role="alert">
+    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
+    <hr class="d-block"></hr>
+    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
     </div>
 </div>
-<!-- End Modal ------------------->
 @endif
-</section>
-
+@endif
 
 
 

@@ -136,9 +136,19 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
     <div class="mx-1 h-100 pb-3 {{$border}}">
     @endif
         {{--Bloco de imagem ------------------------------------------------}}
-        @if (!empty($mediacards->imagePath) && !empty($item->image) && in_array('image', $mediacards->showItems))
+
+
+        @if (!empty($item->image) && in_array('image', $mediacards->showItems))
+        @php 
+        if (!empty($mediacards->imagePath)){
+            $image = $util->toImage($mediacards->imagePath, $item->image);
+        }else{
+            $image = $util->toImage($item->image);
+        }
+        @endphp
+
         <div class="{{$imageMargin}}" style="background-color:#000000;">
-        <img src="{{$util->toImage($mediacards->imagePath, $item->image)}}" class="mediacards-img img-fluid">
+        <img src="{{$image}}" class="mediacards-img img-fluid">
         <img class="icon_play_mediacards rounded-circle" src="{{$util->toImage('images/icons','black_white_play.png')}}" style="top:26%;"/>
         </div>
         @else

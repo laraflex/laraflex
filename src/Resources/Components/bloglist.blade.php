@@ -46,8 +46,18 @@
     <div class="row w-100 p-3 p-md-3 px-md-4 px-lg-5  mb-3 ml-0">
     @if (in_array('image', $bloglist->showItems) && !empty($item->image))
     {{--Colunas de painel----}}
+    @php
+    if (!empty($bloglist->imagePath) && !empty($item->image)){
+        $image = $util->toImage($bloglist->imagePath, $item->image);
+    }elseif(!empty($item->image)){
+        $image = $util->toImage($item->image);
+    }
+    @endphp
+
+
+
     <div class="col-sm-4 col-md-5 m-0 p-0">
-    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="image-fluidx mx-auto d-block" style="width:100%;">
+    <img src="{{$image}}" class="image-fluidx mx-auto d-block" style="width:100%;">
     </div>
     <div class="col-sm-8 col-md-7 pl-3 pl-lg-4 pl-xl-5 pr-0">
     <div class="" style="margin: 0; position: absolute; top: 50%; transform: translate(0, -50%)">
@@ -161,7 +171,15 @@
     <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded" style="background-color: #F2F2F2;">
     @if (in_array('image', $bloglist->showItems) && !empty($item->image))
 
-    <img src="{{$util->toImage($bloglist->imagePath, $item->image)}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px; width: 76px; height: 76px">
+    @php
+    if (!empty($bloglist->imagePath) && !empty($item->image)){
+        $image = $util->toImage($bloglist->imagePath, $item->image);
+    }elseif(!empty($item->image)){
+        $image = $util->toImage($item->image);
+    }
+    @endphp
+
+    <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px; width: 76px; height: 76px">
     <div class="media-body pl-1 my-auto">
     @else
     @php

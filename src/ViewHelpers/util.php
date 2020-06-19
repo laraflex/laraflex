@@ -35,11 +35,11 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         }
     }
 
-    public function toImage($path,$image){
+    public function toImage($path,$image = NULL){
         return $this->toMedia($path,$image);
     }
 
-    public function toMovie($path,$movie){
+    public function toMovie($path,$movie = NULL){
         return $this->toMedia($path,$movie);
     }
 
@@ -51,10 +51,17 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         if ($char == '/') {
             $path = substr($path, 0, $x);
         }
-        return url($path . '/' . $media);
+        if (!empty($media)){
+            $path = $path . '/' . $media;
+        }
+        if ($this->secure){
+            return secure_url($path);
+        }else{
+            return url($path);
+        }
     }
 
-    public function toPath($path,$file){
+    public function toPath($path,$file = NUll){
         return $this->toMedia($path,$file);
     }
 

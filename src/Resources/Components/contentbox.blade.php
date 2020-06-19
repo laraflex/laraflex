@@ -40,7 +40,17 @@ $data = $contentbox->data;
     <div class="contentbox-date card-text mb-2"><small class="text-muted">{{$data->date}}</small></div>
     @endif
     @if (in_array('image', $contentbox->showItems) && !empty($data->image))
-    <img src="{{$util->toImage($contentbox->imagePath, $data->image)}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
+    @php
+    if (!empty($contentbox->imagePath) && !empty($data->image)){
+        $image = $util->toImage($contentbox->imagePath, $data->image);
+    }else{
+        $image = $util->toImage($data->image);
+    }
+    @endphp
+
+
+
+    <img src="{{$image}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
     @endif
     {{--Bloco Abstract -------------------------------}}
     @if (in_array('abstract', $contentbox->showItems) && !empty($data->abstract))
@@ -71,16 +81,16 @@ $data = $contentbox->data;
     @if (in_array('author', $contentbox->showItems) && !empty($data->author))
     <div class="text-left mt-3" style="width: calc(200px + 10vw);">
     @php
-        if (!empty($contentbox->photoPath)){
-            $photoPath = $contentbox->photoPath;
-        }else{
-            $photoPath = "images/users";
+        if (!empty($contentbox->photoPath) && !empty($data->photo)){
+            $photo = $util->toImage($contentbox->photoPath, $data->photo);
+        }elseif(!empty($data->photo)){
+            $photo = $util->toImage($data->photo);
         }
     @endphp
     @if (!empty($data->photo))
-    <img src="{{$util->toImage($photoPath,$data->photo)}}" class="img-thumbnail mb-2 mt-2" style="width:30%">
+    <img src="{{$photo}}" class="img-thumbnail mb-2 mt-2" style="width:30%">
     @endif
-    <p class=" contentbox-shared card-text" style="line-height: calc(1.1em + 0.6vw);font-size:calc(0.8em + 0.18vw);{{$font_family}}">Autor: prof. Dimas Ferreira Vidal{{--$data->author--}}</p>
+    <p class=" contentbox-shared card-text" style="line-height: calc(1.1em + 0.6vw);font-size:calc(0.8em + 0.18vw);{{$font_family}}">Autor: {{$data->author}}</p>
     </div>
     @endif
     <div class="p-2">
@@ -114,3 +124,5 @@ $data = $contentbox->data;
     </div>
 </div>
 @endif
+
+

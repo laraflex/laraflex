@@ -41,7 +41,6 @@
     <div class="col-12 col-sm-5 col-md-4 bg-white p-0 m-0 my-auto">
     <!-- Carousel ================================================== -->
     <div id="CarouselItems" class="carousel slide" data-ride="carousel">
-    {{--<img src="{{url('images/icons/lupa.png')}}" class="ml-2 " style="width: 15px; height:15px;">--}}
     <ol class="carousel-indicators mb-0">
     @foreach($panel->images as $key => $image)
         @if($key == 0)
@@ -59,7 +58,11 @@
         <div class="carousel-item" >
         @endif
     @php
-    $image = $util->toImage($panel->imagePath, $image->name);
+    if (!empty($panel->imagePath)){
+        $image = $util->toImage($panel->imagePath, $image->name);
+    }else{
+        $image = $util->toImage($image->name);
+    }
     @endphp
     @if(!empty($panel->lightbox)  && $panel->lightbox == true)
     <a href="{{$image}}" class="stretched-link" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in">
@@ -144,13 +147,42 @@
         {!!$endStyleFont!!}
     </p>
     @endforeach
-    @if (!empty($panel->button))
-    @php
-        $route = $util->toRoute($panel->route, $panel->data->id);
+    @if (!empty($panel->form))
+    {{--Formulário de componente ---------------------------------}}
+    @php 
+        $route = $util->toRoute($panel->form->action);
+        if (!empty($panel->form->method)){
+            $method = $panel->form->method;
+        }else{
+            $method = 'post';
+        }
     @endphp
-    <a href="{{$route}}" class="btn btn-light btn-outline-secondary mt-3" tabindex="-1" role="button" aria-disabled="true"
-    style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
-    {{$panel->button}}</a>
+        <form class="form-inline mt-2 mt-md-3" method="{{$method}}" action="{{$route}}" id="{{$panel->form->id}}">
+        @csrf
+        <input type="hidden" id="id" name="id" value="{{$panel->data->id}}">
+        @if (!empty($panel->form->items))
+        @foreach ($panel->form->items as $item)
+        <div class="form-groupx mb-2 mr-2">
+        <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
+        <option value="" style="font-sizex:calc(0.76em + 0.25vw); line-height: 1.5;">{{$item->label}}...</option>
+        @if (!empty($item->options))
+        @foreach ($item->options as $option)
+        <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;">
+        <span class="border">
+        {{$option->label}}
+        </span>
+        </option>
+        @endforeach
+        @endif
+        </select>
+        </div>
+        @endforeach
+        @endif    
+    <button type="submit" class="btn btn-light btn-outline-secondary mb-2"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
+    {{$panel->form->button}}</button>   
+    </form>
+    {{--End formúlário -------------------------------------------}}
+   
     @endif
     </div>
     </div>

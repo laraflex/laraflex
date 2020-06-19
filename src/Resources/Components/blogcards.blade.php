@@ -61,12 +61,19 @@
     <span><small>  {{$item->date}}</small></span>
     </div>
     @endif
+
+
     @if (in_array('image', $blogcards->showItems) && !empty($item->image))
         @php
-        $image = $util->toImage($blogcards->imagePath, $item->image);
+        if (!empty($blogcards->imagePath) && !empty($item->image)){
+            $image = $util->toImage($blogcards->imagePath, $item->image);
+        }else{
+            $image = $util->toImage($item->image);
+        }
         @endphp
     <img class="card-img mt-2 mb-2" src="{{$image}}" alt="" />
     @endif
+
     @if (in_array('abstract', $blogcards->showItems))
     @if (!empty($item->abstract))
             @php
@@ -170,8 +177,16 @@
     <a href="{{$link}}">
     <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded bg-light">
     @if (in_array('image', $blogcards->showItems) && !empty($item->image))
-    <img src="{{$util->toImage($blogcards->imagePath, $item->image)}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px;width: 80px; height: 80px">
+    @php
+        if (!empty($blogcards->imagePath) && !empty($item->image)){
+            $image = $util->toImage($blogcards->imagePath, $item->image);
+        }else{
+            $image = $util->toImage($item->image);
+        }
+        @endphp
+    <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px;width: 80px; height: 80px">
     <div class="media-body pl-1 my-auto">
+
     @else
     <div class="media-body pl-1 my-auto py-2">
     @endif

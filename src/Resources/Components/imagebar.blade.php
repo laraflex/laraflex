@@ -10,10 +10,14 @@ if (empty($imageBar)){
     return NULL;
 }
 @endphp
-@if(!empty($imageBar->imagePath) && !empty($imageBar->image))
+@if(!empty($imageBar->image))
 
 @php
-$image = $util->toImage($imageBar->imagePath, $imageBar->image);
+    if (!empty($imageBar->imagePath)){
+        $image = $util->toImage($imageBar->imagePath, $imageBar->image);
+    }else{
+        $image = $util->toImage($imageBar->image);
+    }
 //-> Controle de fonte de texto---}}
 
         if (!empty($imageBar->fontFamily->title)){

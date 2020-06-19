@@ -42,18 +42,30 @@
         @endif
         @if(!empty($panel->data->image))
             @php
-            $bgImage = $util->toImage($panel->imagePath, $panel->data->image);
+            if (!empty($panel->imagePath)){
+                $bgImage = $util->toImage($panel->imagePath, $panel->data->image);
+            }else{
+                $bgImage = $util->toImage($panel->data->image);
+            }
             @endphp
         <div class="col-12 col-sm-5 col-md-4 bg-white my-auto w-100 px-0">
         <div class="w-100" style="background-image: url('{{$bgImage}}');background-size:contain; background-position:center center;background-repeat:no-repeat;min-widthx:230px;min-height:calc(180px + 8vw);">
         <img src="{{url('images/icons/lupa.png')}}" class="mt-2 ml-2" style="width: 15px; height:15px;">
         @if(!empty($panel->lightbox)  && $panel->lightbox == true && !empty($panel->images))
-        @foreach($panel->images as $key => $image)
+
+        @foreach($panel->images as $key => $imageName)
+        @php 
+        if (!empty($panel->imagePath)){
+            $image = $util->toImage($panel->imagePath, $imageName->name);
+        }else{
+            $image = $util->toImage($imageName->name);
+        }
+        @endphp
         @if($key == 0)
-        <a href="{{$util->toImage($panel->imagePath, $image->name)}}" class="stretched-link w-100" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
+        <a href="{{$image}}" class="stretched-link w-100" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
         </a>
         @else
-        <div data-toggle="lightbox" data-gallery="gallery" data-remote="{{$util->toImage($panel->imagePath, $image->name)}}"></div>
+        <div data-toggle="lightbox" data-gallery="gallery" data-remote="{{$image}}"></div>
         @endif
         @endforeach
         @endif
@@ -117,17 +129,53 @@
         {!!$endStyleFont!!}
     </p>
         {{----------------------------------}}
+    @endforeach
+
+    @if (!empty($panel->form))
+    {{--Formulário de componente ---------------------------------}}
+    @php 
+        $route = $util->toRoute($panel->form->action);
+        if (!empty($panel->form->method)){
+            $method = $panel->form->method;
+        }else{
+            $method = 'post';
+        }       
+    @endphp
+        <form class="form-inline mt-2 mt-md-3" method="{{$method}}" action="{{$route}}" id="{{$panel->form->id}}">
+        @csrf
+        <input type="hidden" id="id" name="id" value="{{$panel->data->id}}">
+        @if (!empty($panel->form->items))
+        @foreach ($panel->form->items as $i => $item)
+        
+        <div class="form-groupx mb-2 mr-2">
+        <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
+        <option value="" style="font-sizex:calc(0.76em + 0.25vw); line-height: 1.5;">{{$item->label}}...</option>
+        @if (!empty($item->options))
+        @foreach ($item->options as $option)
+        <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;">
+        <span class="border">
+        {{$option->label}}
+        </span>
+        </option>
         @endforeach
-        @if (!empty($panel->button))
-        @php
-        $route = $util->toRoute($panel->route, $panel->data->id);
-        @endphp
-        <a href="{{$route}}" class="btn btn-light btn-outline-secondary mt-3" tabindex="-1" role="button" aria-disabled="true"
-        style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
-        {{$panel->button}}</a>
         @endif
+        </select>
         </div>
-        </div>
+        @php 
+        if ($i == 1){
+        break;
+        }
+        @endphp
+        
+        @endforeach
+        @endif    
+    <button type="submit" class="btn btn-light btn-outline-secondary mb-2"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
+    {{$panel->form->button}}</button>   
+    </form>
+    {{--End formúlário -------------------------------------------}}
+    @endif
+    </div>
+    </div>
 </div>
 
 @if(!empty($panel->showAddons))

@@ -26,7 +26,11 @@
     <div class="carousel-item">
     @endif
         @php
-        $image = $util->toImage($carousel->imagePath, $image);
+        if (!empty($carousel->imagePath)){
+            $image = $util->toImage($carousel->imagePath, $image);
+        }else{
+            $image = $util->toImage($image);
+        }
         @endphp
     <img class="img-fluid w-100"src="{{$image}}" alt="">
     <div class="carousel-caption pb-4 pb-lg-5 mb-lg-3 mb-xl-5 text-center" style="color:#FFF; text-shadow: 1px 1px 2px gray;">

@@ -40,8 +40,6 @@ if (!empty($footer->bgColor)){
     }elseif($footerColor == 'blue'){
         $bgColor = 'background-color:#354F76;';
         $fontColor = 'color:#FAFAFA;';
-
-
     }else{
         $bgColor = 'background-color:black;';
         $fontColor = 'color:#FAFAFA;';
@@ -53,19 +51,27 @@ if (!empty($footer->bgColor)){
 $arrayAlign = 'text-left';
 @endphp
 
-<footer id="footer" class="">
-<div class="px-0 pt-3 mb-0" style="border-top: 1px solid #ccc; {{$bgColor}} {{$fontColor}}">
+<footer id="footer" class="footer mt-auto">
+
+<div class="px-0 pt-3 mb-0 d-none d-sm-block" style="border-top: 1px solid #ccc; {{$bgColor}} {{$fontColor}}">
+
 <div class="container-xl pt-2 pb-4">
 <div class="row w-100 m-0 p-0">
     <div class="col-5 col-md-3 pl-0">
-    @if (!empty($footer->image) && !empty($footer->imagePath))
+    @if (!empty($footer->image))
+    @php 
+    if (!empty($footer->imagePath)){
+        $image = $util->toImage($footer->imagePath, $footer->image);
+    }else{
+        $image = $util->toImage($footer->image);
+    }
+    @endphp
     <a href="{{$util->toRoute('home')}}">
-    <img src="{{$util->toImage($footer->imagePath, $footer->image)}}" width="170px" height="42px" class="d-none d-lg-block">
-    <img src="{{$util->toImage($footer->imagePath, $footer->image)}}" width="130px" height="32px" class="d-block d-lg-none">
+    <img src="{{$image}}" width="170px" height="42px" class="d-none d-lg-block">
+    <img src="{{$image}}" width="130px" height="32px" class="d-block d-lg-none">
     </a>
     @endif
     </div>
-
     <div class="col-md-6 text-center d-none d-md-block p-2">
     @if (!empty($footer->label))
     <span style="{{$fontColor}} font-size:calc(14px + 0.10vw);"><small>{{$footer->label}}</small></span>
@@ -130,6 +136,79 @@ $arrayAlign = 'text-left';
 </div>
 </div>
 </div>
+
+{{--########################################################-------}}
+
+<div class="d-block d-sm-none" style="height:68px;"></div>
+<div class="navbar fixed-bottom px-0 pt-1 mb-0 d-block d-sm-none" style="border-top: 1px solid #ccc; {{$bgColor}} {{$fontColor}}">
+
+<div class="container-xl pt-2 pb-1">
+<div class="row w-100 m-0 p-0">
+    <div class="col-5 col-md-3 pl-0">
+    @if (!empty($footer->image) && !empty($footer->imagePath))
+    <a href="{{$util->toRoute('home')}}">
+    <img src="{{$util->toImage($footer->imagePath, $footer->image)}}" width="130px" height="32px" class="d-block d-sm-none mt-1x">
+    </a>
+    @endif
+    </div>
+
+    <div id="social-network" class="col-7 col-md-3 pt-0 pt-2x text-right">
+    <div class="social-network">
+    @if (!empty($footer->socialNetworks))
+    @php
+    $attributes = 'width="25px" height="25px"';
+
+    if (!empty($footer->socialNetworks->iconColor)){
+        if ($footer->socialNetworks->iconColor == 'white'){
+            $icon = ['facebookwhite.jpg', 'instagramwhite.jpg', 'twitterwhite.jpg', 'pinterestwhite.jpg', 'youtubewhite.jpg'];
+        }elseif($footer->socialNetworks->iconColor == 'black'){
+            $icon = ['facebookblack.jpg', 'instagramblack.jpg', 'twitterblack.jpg', 'pinterestblack.jpg', 'youtubeblack.jpg'];
+        }else{
+            $icon = ['facebook.jpg', 'instagram.jpg', 'twitter.jpg', 'pinterest.jpg', 'youtube.jpg'];
+            // $icon = ['facebookicon.jpg', 'instagramicon.jpg', 'twittericon.jpg', 'pinteresticon.jpg', 'youtubeicon.jpg'];
+        }
+    }else{
+        $icon = ['facebook.jpg', 'instagram.jpg', 'twitter.jpg', 'pinterest.jpg', 'youtube.jpg'];
+        // $icon = ['facebookicon.jpg', 'instagramicon.jpg', 'twittericon.jpg', 'pinteresticon.jpg', 'youtubeicon.jpg'];
+    }
+    @endphp
+
+    @if (!empty($footer->socialNetworks->facebook))
+    <a href="{{$util->socialNetworkUrl('facebook', $footer->socialNetworks->facebook)}}" target="_blank" rel="noopener noreferrer">
+    <img src="{{$util->toImage('images/icons', $icon[0])}}" {!!$attributes!!} class="rounded-circle shadow">
+    </a>
+    @endif
+    @if (!empty($footer->socialNetworks->instagram))
+    <a href="{{$util->socialNetworkUrl('instagram', $footer->socialNetworks->instagram)}}" target="_blank" rel="noopener noreferrer">
+    <img src="{{$util->toImage('images/icons', $icon[1])}}" {!!$attributes!!} class="rounded-circle shadow">
+    </a>
+    @endif
+
+    @if (!empty($footer->socialNetworks->twitter))
+    <a href="{{$util->socialNetworkUrl('twitter', $footer->socialNetworks->twitter)}}" target="_blank" rel="noopener noreferrer">
+    <img src="{{$util->toImage('images/icons', $icon[2])}}" {!!$attributes!!} class="rounded-circle shadow">
+    </a>
+    @endif
+
+    @if (!empty($footer->socialNetworks->pinterest))
+    <a href="{{$util->socialNetworkUrl('pinterest', $footer->socialNetworks->pinterest)}}" target="_blank" rel="noopener noreferrer">
+    <img src="{{$util->toImage('images/icons', $icon[3])}}" {!!$attributes!!} class="rounded-circle shadow">
+    </a>
+    @endif
+    @if (!empty($footer->socialNetworks->youtube))
+    <a href="{{$util->socialNetworkUrl('youtube', $footer->socialNetworks->youtube)}}" target="_blank" rel="noopener noreferrer">
+    <img src="{{$util->toImage('images/icons', $icon[4])}}" {!!$attributes!!} class="rounded-circle shadow">
+    </a>
+    @endif
+
+    @endif
+    </div>
+    </div>
+
+</div>
+</div>
+</div>
+
 </footer>
 
 @endif

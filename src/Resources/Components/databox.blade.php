@@ -37,11 +37,19 @@
 
 
 @elseif(!empty($item->type) && $item->type == 'image')
-    @if (!empty($item->image) && !empty($item->imagePath))
+    @php 
+        if (!empty($item->image) && !empty($item->imagePath)){
+            $image = $util->toImage($item->imagePath, $item->image);
+        }elseif(!empty($item->image)){
+            $image = $util->toImage($item->image);
+        }
+    @endphp
+
+    @if (!empty($item->image))
     <div class="col-sm-12 p-1 pt-2">
     <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
     <div class="p-0" style="max-width: 250px;">
-    <img src="{{$util->toImage($item->imagePath, $item->image)}}" class="image-fluid img-thumbnail" style="max-width: 250px;">
+    <img src="{{$image}}" class="image-fluid img-thumbnail" style="max-width: 250px;">
     </div>
     </div>
     @endif
@@ -63,15 +71,28 @@
     $column = ['d-block', 'd-block', 'd-none d-sm-block', 'd-none d-lg-block']
     @endphp
 
-    @if (!empty($item->items))
+    @if (!empty($item->images))
     <div class="col-12 pt-2">
         <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
     </div>
-    @foreach ($item->items as $key => $image)
-        @if (!empty($image->name) && !empty($item->imagePath))
+    
+    @foreach ($item->images as $key => $imageItem)
+    
+
+        @php 
+            if (!empty($imageItem->imageName) && !empty($item->imagePath)){
+                $image = $util->toImage($item->imagePath, $imageItem->imageName);
+            }elseif(!empty($imageItem->imageName)){
+                $image = $util->toImage($imageItem->imageName);
+            }
+        @endphp
+        
+       
+
+        @if (!empty($imageItem->imageName))
         <div class="col-6 col-sm-4 col-lg-3 p-1 pt-2 {{$column[$key]}}">
         <div class="p-0" style="">
-        <img src="{{$util->toImage($item->imagePath, $image->name)}}" class="image-fluid img-thumbnail" style="">
+        <img src="{{$image}}" class="image-fluid img-thumbnail" style="">
         </div>
         </div>
         @endif
@@ -84,6 +105,7 @@
     @endif
 </div>
 @endif
+
 
 
 @endforeach

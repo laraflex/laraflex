@@ -13,7 +13,7 @@ class DependenciesListener extends AbstractListener{
         'panelxp' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
         'panel' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
         'mediacards' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
-
+        'storagemanager' => 'laraflex\ViewHelpers\Dependencies\StorageDependencies',
         ];
         return $var;
     }

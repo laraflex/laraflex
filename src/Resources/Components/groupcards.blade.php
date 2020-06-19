@@ -125,10 +125,13 @@
     @endif
 
     {{--Controle para adicionar imagem--}}
-    @if (in_array('image', $groupCards->showItems))
-    @if (!empty($groupCards->imagePath) && !empty($item->image))
+    @if (in_array('image', $groupCards->showItems) && !empty($item->image))
         @php
-        $image = $util->toImage($groupCards->imagePath, $item->image);
+        if (!empty($groupCards->imagePath)){
+            $image = $util->toImage($groupCards->imagePath, $item->image);
+        }else{
+            $image = $util->toImage($item->image);
+        }
         @endphp
 
     @if (!empty($groupCards->bgEffect) && $groupCards->bgEffect === true)
@@ -140,7 +143,7 @@
     <img src="{{$image}}" class="img-fluid mx-auto " alt="...">
     </a>
     </div>
-    @endif
+    
     @endif
 
     {{--Fim Controle para adicionar imagem--}}

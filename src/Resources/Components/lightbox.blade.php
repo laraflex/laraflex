@@ -164,11 +164,20 @@
     @else
     <div class="{{$margin}}">
     @endif
+
+
     @if (!empty($lightbox->imagePath) && !empty($item->image))
     <a href="{{$util->toPath($lightbox->imagePath, $item->image)}}" data-width="1280" data-toggle="lightbox" data-gallery="gallery">
     <img src="{{$util->toImage($lightbox->imagePath, $item->image)}}" class="img-fluid" />
     </a>
+
+    @elseif(!empty($item->image))
+    <a href="{{$util->toPath($item->image)}}" data-width="1280" data-toggle="lightbox" data-gallery="gallery">
+    <img src="{{$util->toImage($item->image)}}" class="img-fluid" />
+    </a>
     @endif
+
+
 
     </div>
     {{--End Bloco de imagem ------------------------------------------------}}

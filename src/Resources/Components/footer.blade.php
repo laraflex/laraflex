@@ -60,15 +60,19 @@ $num_items = 0;
 
 <!-- Section footer -------------------------------------------->
 <footer id="footer" class="d-none d-sm-block">
-    @if (!empty($footer->bgImage) && !empty($footer->bgImagePath))
+    @if (!empty($footer->bgImage))
     @php
+        if (!empty($footer->bgImagePath)){
+            $image = $util->toImage($footer->bgImagePath, $footer->bgImage);
+        }else{
+            $image = $util->toImage($footer->bgImage);
+        }
         $bgColor = '';
         $fontColor = 'color:#FFFFFF;text-shadow: #000000 2px 1px 2px;';
-        $image = $util->toImage($footer->bgImagePath, $footer->bgImage);
-        //$background1 = 'background-image:url(' . $image . '); background-repeat:round;';
         $background1 = 'background-image:url(' . $image . '); background-size:contain;';
         $background2 = 'background-image:url(' . $image . '); background-size:cover;';
     @endphp
+
     <div class="px-0 mt-2 mb-0" style="border-top: 1px solid #000000; {{$bgColor}} {{$fontColor}} {{$background1}};">
     <div style="background-color: rgb(0,0,0,0.6)">
     <div class="container-xl px-0 " style="{{$background2}}">
