@@ -112,6 +112,7 @@ $data = $contentbox->data;
 @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)
 @include('laraflex::include.formcoments')
 @endif
+
 </div>
 </div>
 </section>

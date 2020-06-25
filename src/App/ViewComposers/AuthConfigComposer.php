@@ -30,9 +30,7 @@ class AuthConfigComposer
             //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'dependencies' => NULL,
-            'components' => [
-                ImagebarBannerPresenter::create()->toArray(),
-            ],
+            'components' => NULL,
 
              'headerComponents' => [
                 NavBarDefaultPresenter::create()->toArray(),

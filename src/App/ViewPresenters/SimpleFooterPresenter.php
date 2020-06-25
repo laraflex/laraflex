@@ -15,7 +15,7 @@ class SimpleFooterPresenter extends Presenter
         $var = [
             'component' => 'simplefooter',
             'type' => 'footer',
-            'image' => 'logo-option4.png',
+            'image' => 'logo-option1.png',
             'imagePath' => 'images/app',
             'bgColor' => 'black',
 

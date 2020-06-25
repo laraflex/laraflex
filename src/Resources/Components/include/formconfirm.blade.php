@@ -25,12 +25,12 @@
     </div>
     </div>
     <form method="post" id="delete-file">
-    @csrf    
+    @csrf
     <input type="hidden" id="path-modal" name="path">
-    <input type="hidden" id="disk-modal" name="disk">    
+    <input type="hidden" id="disk-modal" name="disk">
     <div class="p-0">
     <button type="button" class="btn btn-sm btn-secondary mt-3" data-dismiss="modal">{{__('Cancel')}}</button>
-    <button type="submit" class="btn btn-sm px-4 btn-light btn-outline-secondary mt-3" onclick="action='{{$route2}}';">
+    <button type="submit" class="btn btn-sm px-4 btn-light btn-outline-secondary mt-3" onclick="action='{{$routeDelete}}';">
     {{ __('Confirm') }}
     </button>
     </div>

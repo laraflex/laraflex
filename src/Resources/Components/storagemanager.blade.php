@@ -29,16 +29,21 @@
         }else{
             $column = 'col-4 col-sm-2 p-0 m-0';
         }
-        if(!empty($storageManager->routeFile)){
-            $route = $util->toRoute($storageManager->routeFile);
+        if (!empty($storageManager->routeImage)){
+            $routeImage = $storageManager->routeImage;
         }else{
-            $route = $util->toRoute('file/show');
+            $routeImage = 'image/show';
+        }
+        if(!empty($storageManager->routeFile)){
+            $routeFile = $util->toRoute($storageManager->routeFile);
+        }else{
+            $routeFile = $util->toRoute('file/show');
         }
         if (!empty($storageManager->routeFileDelete)){
-            $route2 = $util->toRoute($storageManager->routeFileDelete);
+            $routeDelete = $util->toRoute($storageManager->routeFileDelete);
         }else{
-            $route2 = $util->toRoute('file/delete');
-        }  
+            $routeDelete = $util->toRoute('file/delete');
+        }
     @endphp
 <div class="row p-0 m-0">
     @if ($storageManager->path != '')
@@ -53,23 +58,20 @@
             $tmp = array_pop($arrayPath);
             $pathTmp = implode('/', $arrayPath);
         }
-        $route = $util->toRoute($storageManager->route);
+        $route = route('liststorage', ['path' => $pathTmp]);
+
     @endphp
-    {{--Formulário de solicitação de imagem ------------------------------}}
-    <form method="post" action="{{$route}}" id="storage-nav">
-        @csrf
-        <input type="hidden" id="path" name="path" value="{{$pathTmp}}">
-        <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
-        <input type="image" src="{{$imageNav}}" class="card-img">
-    </form>
-    {{--Fimde formulário de solicitação de imagem ------------------------------}}   
+    <a href="{{$route}}">
+    <img src="{{$imageNav}}" class="card-img">
+    </a>
+
     <div class="text-center pb-1" style="{{$font}}">{{$storageManager->path}}</div>
     </div>
     </div>
     @endif
     @php
         $controlDir = true;
-        $countDir = 0;                    
+        $countDir = 0;
     @endphp
 @if (!empty($storageManager->items))
     {{------------------------------------------------------------------------}}
@@ -113,19 +115,14 @@
             }else{
                 $pathDir = $pathTmp .'/'. $item->fileName;
             }
-            $route = $util->toRoute($storageManager->route);
+            $route = route('liststorage', ['path' => $pathDir]);
+
         @endphp
 
-        {{--Formulário de solicitação de imagem ------------------------------}}
-        <form method="post" action="{{$route}}" id="storage-dir">
-        @csrf
-        <input type="hidden" id="path" name="path" value="{{$pathDir}}">
-        <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
-        <input type="hidden" id="folder" name="folder" value="{{$item->fileName}}">
-        <input type="hidden" id="directory" name="directory" value="{{$item->dirName}}">
-        <input type="image" src="{{$imageDir}}" class="card-img">
-        </form>
-        {{--Fimde formulário de solicitação de imagem ------------------------------}}
+        <a href="{{$route}}">
+        <img src="{{$imageDir}}" class="card-img">
+        </a>
+
         <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @elseif($item->type == 'file' && !empty($item->extension))
 
@@ -133,13 +130,13 @@
         @php
             $pathFile = $storageManager->filesystem->storagePath . $item->dirName . '/'. $item->fileName;
             $pathTmp = $item->dirName . '/'. $item->fileName;
-            
+
             if (!empty($storageManager->showImage) && $storageManager->showImage === true){
                 $imagePath = $pathFile;
             }else{
                 $imagePath = $util->toImage('images/icons/' . $item->extension . '.png');
             }
-        @endphp   
+        @endphp
     {{--Formulário de solicitação de imagem ------------------------------}}
     <form method="post" id="storage-image">
     @csrf
@@ -158,21 +155,21 @@
     <div class="dropdown-menu {{$border}}" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href={{$pathFile}} data-width="1280" data-toggle="lightbox" data-gallery="gallery">{{__('Show image')}}</a>
         <div class="dropdown-divider"></div>
-        <input type="submit" class="dropdown-item" onclick="action='{{$route}}';" value="{{__('Open file')}}">
+        <input type="submit" class="dropdown-item" onclick="action='{{$routeImage}}';" value="{{__('Open file')}}">
         <div class="dropdown-divider"></div>
         <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteModal" onclick="setaDadosModal('{{$imagePath}}','{{$item->fileName}}','{{$pathTmp}}','{{$storageManager->filesystem->disk}}')">
         {{__('Delete file')}}
         </button>
         </div>
         </div>
-    @else     
+    @else
     <a href={{$pathFile}} data-width="1280" data-toggle="lightbox" data-gallery="gallery">
     <img src="{{$imagePath}}" class="card-img">
     </a>
     @endif
             {{--Fim de controle ---------------------------------------}}
     </form>
-    {{--Fimde formulário de solicitação de imagem ------------------------------}}
+    {{--Fim de formulário de solicitação de imagem ------------------------------}}
     <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @else
         @php
@@ -200,15 +197,14 @@
         <img class="card-img" src="{{$imagePath}}" >
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <input type="submit" class="dropdown-item" onclick="action='{{$route}}';" value="{{__('Open file')}}">
+        <input type="submit" class="dropdown-item" onclick="action='{{$routeFile}}';" value="{{__('Open file')}}">
             <div class="dropdown-divider"></div>
-            {{--<input type="submit" class="dropdown-item" onclick="action='{{$route2}}'; target='_self'" value="Deletar arquivo">--}}
             <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteModal" onclick="setaDadosModal('{{$imagePath}}','{{$item->fileName}}','{{$pathTmp}}','{{$storageManager->filesystem->disk}}')">
             {{__('Delete file')}}
             </button>
         </div>
         </div>
-        @else   
+        @else
         <input type="image" src="{{$imagePath}}" class="card-img" onclick="action='{{$route}}';" />
         @endif
         {{--Fim de controle ---------------------------------------}}
@@ -227,7 +223,7 @@
     <h5>{{ __('There are no folders or files in this directory.') }}.</h5>
     </div>
     @endif
-@endif   
+@endif
 </div>
 </div>
 @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
@@ -253,7 +249,7 @@
 @endif
 
 @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
-@include('laraflex::include.formaddfolder')   
+@include('laraflex::include.formaddfolder')
 @endif
 {{--------------------------------------------------------}}
 </div>

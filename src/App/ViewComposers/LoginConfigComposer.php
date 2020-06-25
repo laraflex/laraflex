@@ -28,9 +28,7 @@ class LoginConfigComposer
             //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'dependencies' => NULL,
-            'components' => [
-                LoginPresenter::create()->toArray(),
-            ],
+            'components' => NULL,
             'headerComponents' => [
                 NavBarDefaultPresenter::create()->toArray(),
                 ImageBarPresenter::create()->toArray(),

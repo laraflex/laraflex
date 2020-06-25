@@ -35,9 +35,7 @@ class PublicConfigComposer
                 ['name' => 'author', 'content' => 'Dimas Vidal'],
             ],
             'dependencies' => NULL,
-            'components' => [
-                ImageBannerPresenter::create()->toArray(),
-            ],
+            'components' => NULL,
             'headerComponents' => [
                 NavBarDefaultPresenter::create()->toArray(),
                 ImageBarPresenter::create()->toArray(),
