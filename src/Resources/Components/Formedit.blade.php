@@ -74,7 +74,9 @@
         $row_column2 = "col-md-9 col-lg-8";
     @endphp
     <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif>
-        @if (empty($form->token) OR $form->token === true)
+        @if (!empty($form->token) && $form->token === false)
+        {{--Caso falso--}}
+        @else
         @csrf
         @endif
     {{-------------}}

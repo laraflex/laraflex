@@ -72,9 +72,12 @@
         }
     @endphp
     <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif>
-    @if (empty($form->token) OR $form->token === true)
+    @if (!empty($form->token) && $form->token === false)
+    {{--Caso falso--}}
+    @else
     @csrf
     @endif
+
     @foreach ($formItems as $key => $item)
     @if ($item->type == 'fieldset')
     <fieldset class="form-group">
