@@ -11,8 +11,8 @@
 @if (!empty($storageManager))
 <section id="storageManager">
 <div class="container-xl px-0">
-<div class="m-0 p-0 mt-4 mb-4 pb-4 mx-2 mx-lg-2 mx-xl-0 {{$border}}">
-    <div id="headerSection" class="pt-3 pb-3">
+<div class="m-0 p-0 mt-4 mb-2 pb-4 mx-2 mx-lg-2 mx-xl-0 {{$border}}">
+<div id="headerSection" class="pt-3 pb-3">
     @if (!empty($storageManager->title))
     <div class="text-center font-weight-normal" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw)">
     {{$storageManager->title}}
@@ -32,23 +32,28 @@
         if (!empty($storageManager->routeImage)){
             $routeImage = $storageManager->routeImage;
         }else{
-            $routeImage = 'image/show';
+            $routeImage = 'storage/showimage';
         }
         if(!empty($storageManager->routeFile)){
             $routeFile = $util->toRoute($storageManager->routeFile);
         }else{
-            $routeFile = $util->toRoute('file/show');
+            $routeFile = $util->toRoute('storage/showfile');
         }
-        if (!empty($storageManager->routeFileDelete)){
-            $routeDelete = $util->toRoute($storageManager->routeFileDelete);
+        if (!empty($storageManager->routeDeleteFile)){
+            $routeDelete = $util->toRoute($storageManager->routeDeleteFile);
         }else{
-            $routeDelete = $util->toRoute('file/delete');
+            $routeDelete = $util->toRoute('storage/deletefile');
+        }
+        if (!empty($storageManager->routeAddFile)){
+            $routeAddFile = $util->toRoute($storageManager->routeAddFile);
+        }else{
+            $routeAddFile = $util->toRoute('storage/addfile');
         }
     @endphp
 <div class="row p-0 m-0">
     @if ($storageManager->path != '')
     <div class="{{$column}}">
-    <div class="m-1 p-2" style="height:95%;">
+    <div class="m-1 p-2" >
     @php
         $imageNav = url('images/icons/backp.png');
         $arrayPath = explode('/', $storageManager->path);
@@ -58,11 +63,11 @@
             $tmp = array_pop($arrayPath);
             $pathTmp = implode('/', $arrayPath);
         }
-        $route = route('liststorage', ['path' => $pathTmp]);
+        $route = route($storageManager->route, ['path' => $pathTmp]);
 
     @endphp
     <a href="{{$route}}">
-    <img src="{{$imageNav}}" class="card-img">
+    <img src="{{$imageNav}}" class="card-img mx-auto d-block" style="heightx:80%;">
     </a>
 
     <div class="text-center pb-1" style="{{$font}}">{{$storageManager->path}}</div>
@@ -98,8 +103,8 @@
     @endphp
     @if($openDir === true)
     {{--Fim do bloco de controle---------------------------------------------}}
-    <div class="{{$column}}">
-    <div class="m-1 p-2" style="width:95%;">
+    <div class="{{$column}}" >
+    <div class="m-1 p-1">
     @if ($item->type == 'dir')
         @php
         $arrayIcons = array('images', 'projects', 'users', 'perfil', 'products', 'app');
@@ -115,20 +120,25 @@
             }else{
                 $pathDir = $pathTmp .'/'. $item->fileName;
             }
-            $route = route('liststorage', ['path' => $pathDir]);
+            $route = route($storageManager->route, ['path' => $pathDir]);
 
         @endphp
 
         <a href="{{$route}}">
-        <img src="{{$imageDir}}" class="card-img">
+        <img src="{{$imageDir}}" class="card-img mx-auto d-block" style="width:80%;">
         </a>
 
         <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @elseif($item->type == 'file' && !empty($item->extension))
 
     @if(in_array(strtolower($item->extension), $imageArray))
+
         @php
+        if ($item->dirName == ""){
+            $pathFile = $storageManager->filesystem->storagePath . $item->fileName;
+        }else{
             $pathFile = $storageManager->filesystem->storagePath . $item->dirName . '/'. $item->fileName;
+        }
             $pathTmp = $item->dirName . '/'. $item->fileName;
 
             if (!empty($storageManager->showImage) && $storageManager->showImage === true){
@@ -194,7 +204,7 @@
         @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
         <div class="dropdown">
         <a class="btn p-0 m-0" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img class="card-img" src="{{$imagePath}}" >
+        <img class="card-img mx-auto d-block" src="{{$imagePath}}" style="width:85%;">
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <input type="submit" class="dropdown-item" onclick="action='{{$routeFile}}';" value="{{__('Open file')}}">
@@ -205,7 +215,7 @@
         </div>
         </div>
         @else
-        <input type="image" src="{{$imagePath}}" class="card-img" onclick="action='{{$route}}';" />
+        <input type="image" src="{{$imagePath}}" class="card-img mx-auto d-block" onclick="action='{{$routeFile}}';" style="width:85%;"/>
         @endif
         {{--Fim de controle ---------------------------------------}}
         </form>

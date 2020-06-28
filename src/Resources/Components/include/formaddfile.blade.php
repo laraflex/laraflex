@@ -10,7 +10,7 @@
             </div>
         <div class="modal-body">
         <div class="p-3" if="inputFile">
-        <form action="{{$util->toRoute('file/add')}}" method="post" enctype="multipart/form-data" id="addfile">
+        <form action="{{$util->toRoute($routeAddFile)}}" method="post" enctype="multipart/form-data" id="addfile">
         @csrf
             <div class="p-2">
             <input class="form-control" type="text" placeholder="{{__('File Name')}}" name="filename" id="fileName">
@@ -26,8 +26,8 @@
             <input type="hidden" class="dir" id="dir" name="dir" value="{{$storageManager->filesystem->privateDir}}">
             @endif
             <div class="p-2">
+            <button type="submit" class="btn btn-sm px-4 btn-light btn-outline-secondary mt-3">{{ __('Submit') }}</button>
             <button type="button" class="btn btn-sm btn-secondary mt-3" data-dismiss="modal">{{__('Cancel')}}</button>
-            <button type="submit" class="btn btn-sm px-4 btn-light btn-outline-secondary mt-3">{{ __('Submit') }}</button>        
             </div>
         </form>
         </div>

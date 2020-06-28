@@ -11,16 +11,14 @@ if(!empty($objectConfig)){
 @endphp
 
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
-<main id="content" class="pt-3 pt-sm-4">
+<main id="content" class="pt-3 pt-sm-4" style="min-height:calc(66vh);">
 @else
-<main id="content" class="pt-3 pt-sm-2">
+<main id="content" class="pt-3 pt-sm-2" style="min-height:calc(66vh);">
 @endif
-
 @if (!empty($objetoConfig->contentClass) && $objetoConfig->contentClass != 'container')
-
-<div class="w-100">
+<div class="w-100" style="min-height:calc(55vh);">
 @else
-<div class="container-xl px-0">
+<div class="container-xl px-0" style="min-height:calc(55vh);">
 @endif
 {{-- Bloco de mensagem e alerta--------------------------}}
 @if(session('alert'))
