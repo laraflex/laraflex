@@ -10,13 +10,12 @@ class FooterPresenter extends Presenter
         $var = [
             'component' => 'footer',
             'type' => 'footer',
-            'image' => 'logo-option1.png',
-            'imagePath' => 'images/app',
+            //'image' => 'logo-option1.png',
+            'imagePath' => 'images/app/logo-option1.png',
             //'label' => 'Fale conosco',
             'route' => '#top',
             'bgColor' => 'marine',
-            //'bgImage' => 'imagepanel17.jpg',
-            'bgImagePath' => 'images/components',
+            'bgImagePath' => 'images/components/imagepanel17.jpg',
             'items' => [
                 'Laraflex' => [
                     [
