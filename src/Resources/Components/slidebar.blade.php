@@ -95,15 +95,20 @@
         <a>
         @endif
 
-    @php 
-    if (!empty($slidebar->imagePath)){
-        $image = $util->toImage($slidebar->imagePath, $item->image);
-    }elseif(!empty($item->image)){
+    @php
+    if (!empty($item->imageStorage)){
+        $image = $item->imageStorage;
+    }
+    elseif (!empty($item->imagePath)){
+        $image = $util->toImage($item->imagePath);
+    }
+    elseif(!empty($item->image)){
         $image = $util->toImage($item->image);
-    }else{
+    }
+    else{
         $image = $util->toImage('images/app/foto01.jpg');
     }
-    @endphp    
+    @endphp
 
     <div class="slideItem h-100 " style="background-image: url('{{$image}}');background-size:cover;">
     <div class="slide-bgcolor h-100">

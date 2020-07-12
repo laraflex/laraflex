@@ -39,17 +39,18 @@ $data = $contentbox->data;
     @if (in_array('date', $contentbox->showItems))
     <div class="contentbox-date card-text mb-2"><small class="text-muted">{{$data->date}}</small></div>
     @endif
-    @if (in_array('image', $contentbox->showItems) && !empty($data->image))
+    @if (in_array('image', $contentbox->showItems))
     @php
-    if (!empty($contentbox->imagePath) && !empty($data->image)){
-        $image = $util->toImage($contentbox->imagePath, $data->image);
-    }else{
+    if (!empty($data->imageStorage)){
+        $image = $data->imageStorage;
+    }
+    elseif(!empty($data->imagePath)){
+        $image = $util->toImage($data->imagePath);
+    }
+    elseif(!empty($data->image)){
         $image = $util->toImage($data->image);
     }
     @endphp
-
-
-
     <img src="{{$image}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
     @endif
     {{--Bloco Abstract -------------------------------}}
@@ -81,16 +82,20 @@ $data = $contentbox->data;
     @if (in_array('author', $contentbox->showItems) && !empty($data->author))
     <div class="text-left mt-3" style="width: calc(200px + 10vw);">
     @php
-        if (!empty($contentbox->photoPath) && !empty($data->photo)){
-            $photo = $util->toImage($contentbox->photoPath, $data->photo);
-        }elseif(!empty($data->photo)){
-            $photo = $util->toImage($data->photo);
+        if (!empty($data->author->photoStorage)){
+            $photo = $data->author->photoStorage;
+        }
+        elseif(!empty($data->author->photoPath)){
+            $photo = $util->toImage($data->author->photoPath);
+        }
+        elseif(!empty($data->author->photo)){
+            $photo = $util->toImage($data->author->photo);
         }
     @endphp
-    @if (!empty($data->photo))
+    @if (!empty($photo))
     <img src="{{$photo}}" class="img-thumbnail mb-2 mt-2" style="width:30%">
     @endif
-    <p class=" contentbox-shared card-text" style="line-height: calc(1.1em + 0.6vw);font-size:calc(0.8em + 0.18vw);{{$font_family}}">Autor: {{$data->author}}</p>
+    <p class=" contentbox-shared card-text" style="line-height: calc(1.1em + 0.6vw);font-size:calc(0.8em + 0.18vw);{{$font_family}}">Autor: {{$data->author->name}}</p>
     </div>
     @endif
     <div class="p-2">

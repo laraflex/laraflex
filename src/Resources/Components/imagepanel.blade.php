@@ -14,7 +14,6 @@ if(!empty($imagePanel->textAlign)){
 }
 @endphp
 
-@if(!empty($imagePanel) && !empty($imagePanel->image))
 {{--> Controle de fonte de texto---}}
 @php
         if (!empty($imagePanel->fontFamily->title)){
@@ -27,21 +26,28 @@ if(!empty($imagePanel->textAlign)){
         }else{
             $font_family = '';
         }
+        if (!empty($imagePanel->imageStorage)){
+            $image = $imagePanel->imageStorage;
+        }
+        elseif (!empty($imagePanel->imagePath)){
+            $image = $util->toImage($imagePanel->imagePath);
+        }
+        elseif (!empty($imagePanel->image)){
+            $image = $util->toImage($imagePanel->image);
+        }
+        else{
+            $image = NULL;
+        }
 @endphp
 {{-------------------------------}}
+@if(!empty($imagePanel) && !empty($image))
 
 <div id="ImagePanel" class="{{$imageClass}} px-0 shadow" data-ride="carousel" style="border-bottom:1px solid #cccccc;">
 <div class="carousel-inner pl-0 pr-0 ">
 <div class="carousel-item active">
-    @php 
-    if (!empty($imagePanel->imagePath)){
-        $image = $util->toImage($imagePanel->imagePath, $imagePanel->image);
-    }else{
-        $image = $util->toImage($imagePanel->image);
-    }
-    @endphp
 
     <img src="{{$image}}" class="img-fluid w-100">
+
     <div class="container-xl">
         @php
             if(!empty($imagePanel->fontColor) && strtoupper($imagePanel->fontColor) == "#FFFFFF"){

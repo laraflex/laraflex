@@ -16,7 +16,7 @@
                 <div class="p-2">
                 <input class="form-control" type="text" placeholder="{{__('Folder name')}}" name="filename" id="fileName" required>
                 </div>
-                <input type="hidden" class="path" id="path" name="path" value="{{$storageManager->path}}">
+                <input type="hidden" class="path" id="path" name="path" value="{{$storageManager->filesystem->path}}">
                 @if (!empty($storageManager->filesystem->disk))
                 <input type="hidden" class="disk" id="disk" name="disk" value="{{$storageManager->filesystem->disk}}">
                 @endif

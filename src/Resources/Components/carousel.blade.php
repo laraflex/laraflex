@@ -3,6 +3,7 @@
         $carousel = $objectHeader;
     @endphp
 @endif
+
 @if (!empty($carousel->images))
 
 <section id="carousel">
@@ -10,6 +11,7 @@
 <div id="carrocel ">
 <div id="carouselMaster" class="carousel slide carousel-fade mt-0 mb-0 border-bottom shadow" data-ride="carousel">
     <ol class="carousel-indicators mb-4 mb-lg-5">
+
     @foreach($carousel->images as $key => $image)
     @if($key == 0)
     <li data-target="#carouselMaster" data-slide-to="{{$key}}" class="active"></li>
@@ -19,20 +21,27 @@
     @endforeach
     </ol>
     <div class="carousel-inner" style="min-height: 80px; background:#ccc">
+
     @foreach($carousel->images as $key => $image)
+
+    @php
+    if (!empty($carousel->imageStorage) && $carousel->imageStorage === true){
+        //
+    }
+    else{
+        $image = $util->toImage($image);
+    }
+    @endphp
+
     @if ($key == 0)
     <div class="carousel-item active" >
     @else
     <div class="carousel-item">
     @endif
-        @php
-        if (!empty($carousel->imagePath)){
-            $image = $util->toImage($carousel->imagePath, $image);
-        }else{
-            $image = $util->toImage($image);
-        }
-        @endphp
-    <img class="img-fluid w-100"src="{{$image}}" alt="">
+
+    @if (!empty($image))
+    <img class="img-fluid w-100" src="{{$image}}" alt="">
+    @endif
     <div class="carousel-caption pb-4 pb-lg-5 mb-lg-3 mb-xl-5 text-center" style="color:#FFF; text-shadow: 1px 1px 2px gray;">
     @if(!empty($carousel->titles[$key]))
     @if(!empty($carousel->routes[$key]))

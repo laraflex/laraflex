@@ -39,15 +39,28 @@
         @endphp
     @elseif (!empty($sidebar->showBar) && $sidebar->showBar === true)
         <div class="w-100 text-center py-2 mb-0" style="min-height:65px;border-bottom:1px solid #848484;{{$background}}">
-        @if (!empty($sidebar->logo) && !empty($sidebar->imagePath))
+        @php
+        if (!empty($sidebar->logoStorage)){
+            $logo = $sidebar->logoStorage;
+        }
+        elseif (!empty($sidebar->logoPath)){
+            $logo = $util->toImage($sidebar->logoPath);
+        }
+        elseif (!empty($sidebar->logo)){
+            $logo = $util->toImage($sidebar->logo);
+        }
+        @endphp
+
+        @if (!empty($logo))
         @if (!empty($sidebar->route))
         <a href="{{$util->toRoute($sidebar->route)}}">
-        <img src="{{$util->toImage($sidebar->imagePath, $sidebar->logo)}}" class="mt-1 mt-md-0 mb-0 mb-md-1" style="width:calc(160px + 3.5vw); height:calc(35px + 0.7vw); "/>
-        </a>
         @else
-        <img src="{{$util->toImage($sidebar->imagePath, $sidebar->logo)}}" class="mt-1 mt-md-0 mb-0 mb-md-1" style="width:calc(160px + 3.5vw); height:calc(35px + 0.7vw); "/>
+        <a href="{{$util->toRoute('home')}}">
         @endif
+        <img src="{{$logo}}" class="mt-1 mt-md-0 mb-0 mb-md-1" style="width:calc(160px + 3.5vw); height:calc(35px + 0.7vw); "/>
+        </a>
         @endif
+
         </div>
         @php
             $btnStyle = '';
@@ -62,11 +75,6 @@
             $show_style = 'show-sidebar-light-out';
         }
         @endphp
-
-
-
-
-
     @endif
 
 @if (!empty($sidebar->showSidebar) && $sidebar->showSidebar === true)
@@ -99,17 +107,23 @@
         @else
         <div class="sidebar-header">
         <div class="user-pic">
-            @if (!empty($sidebar->perfil->photo))
+
             @php
-            if (!empty($sidebar->perfil->imagePath)){
-                $photo = $util->toImage($sidebar->perfil->imagePath, $sidebar->perfil->photo);
-            }else{
+            if (!empty($sidebar->perfil->photoStorage)){
+                $photo = $sidebar->perfil->photoStorage;
+            }
+            elseif (!empty($sidebar->perfil->photoPath)){
+                $photo = $util->toImage($sidebar->perfil->photoPath);
+            }
+            elseif(!empty($sidebar->perfil->photo)){
                 $photo = $util->toImage($sidebar->perfil->photo);
             }
+
             @endphp
+            @if (!empty($photo))
             <img class="img-fluid" src="{{$photo}}" alt="User picture">
             @else
-            <img class="img-fluid" src="{{$util->toImage('images/users','perfil1.png')}}" alt="User picture">
+            <img class="img-fluid" src="{{$util->toImage('images/users/perfil.png')}}" alt="User picture">
             @endif
         </div>
         <div class="user-info text-center">

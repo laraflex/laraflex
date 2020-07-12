@@ -37,15 +37,20 @@
 
 
 @elseif(!empty($item->type) && $item->type == 'image')
-    @php 
-        if (!empty($item->image) && !empty($item->imagePath)){
-            $image = $util->toImage($item->imagePath, $item->image);
-        }elseif(!empty($item->image)){
-            $image = $util->toImage($item->image);
-        }
-    @endphp
 
-    @if (!empty($item->image))
+    @php
+    if (!empty($item->imageStorage)){
+        $image = $item->imageStorage;
+    }
+    elseif (!empty($item->imagePath)){
+        $image = $util->toImage($item->imagePath);
+    }
+    elseif(!empty($item->image)){
+        $image = $util->toImage($item->image);
+    }
+
+    @endphp
+    @if (!empty($image))
     <div class="col-sm-12 p-1 pt-2">
     <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
     <div class="p-0" style="max-width: 250px;">
@@ -75,21 +80,23 @@
     <div class="col-12 pt-2">
         <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
     </div>
-    
-    @foreach ($item->images as $key => $imageItem)
-    
 
-        @php 
-            if (!empty($imageItem->imageName) && !empty($item->imagePath)){
-                $image = $util->toImage($item->imagePath, $imageItem->imageName);
-            }elseif(!empty($imageItem->imageName)){
-                $image = $util->toImage($imageItem->imageName);
+    @foreach ($item->images as $key => $imageItem)
+
+        @php
+            if (!empty($imageItem->imageStorage)){
+                $image = $imageItem->imageStorage;
+            }
+            elseif (!empty($imageItem->imagePath)){
+                $image = $util->toImage($imageItem->imagePath);
+            }elseif(!empty($imageItem->image)){
+                $image = $util->toImage($imageItem->image);
             }
         @endphp
-        
-       
 
-        @if (!empty($imageItem->imageName))
+
+
+        @if (!empty($image))
         <div class="col-6 col-sm-4 col-lg-3 p-1 pt-2 {{$column[$key]}}">
         <div class="p-0" style="">
         <img src="{{$image}}" class="image-fluid img-thumbnail" style="">

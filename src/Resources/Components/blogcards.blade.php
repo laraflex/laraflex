@@ -62,16 +62,22 @@
     </div>
     @endif
 
-
-    @if (in_array('image', $blogcards->showItems) && !empty($item->image))
+    @if (in_array('image', $blogcards->showItems))
         @php
-        if (!empty($blogcards->imagePath) && !empty($item->image)){
-            $image = $util->toImage($blogcards->imagePath, $item->image);
-        }else{
+        if (!empty($item->imageStorage)){
+            $image = $item->imageStorage;
+        }
+        elseif (!empty($item->imagePath)){
+            $image = $util->toImage($item->imagePath);
+        }
+        elseif(!empty($item->image)){
             $image = $util->toImage($item->image);
         }
         @endphp
+
+    @if (!empty($image))
     <img class="card-img mt-2 mb-2" src="{{$image}}" alt="" />
+    @endif
     @endif
 
     @if (in_array('abstract', $blogcards->showItems))
@@ -176,14 +182,19 @@
         @endphp
     <a href="{{$link}}">
     <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded bg-light">
-    @if (in_array('image', $blogcards->showItems) && !empty($item->image))
     @php
-        if (!empty($blogcards->imagePath) && !empty($item->image)){
-            $image = $util->toImage($blogcards->imagePath, $item->image);
-        }else{
-            $image = $util->toImage($item->image);
-        }
-        @endphp
+    if (!empty($item->imageStorage)){
+        $image = $item->imageStorage;
+    }
+    elseif (!empty($item->imagePath)){
+        $image = $util->toImage($item->imagePath);
+    }
+    elseif(!empty($item->image)){
+        $image = $util->toImage($item->image);
+    }
+    @endphp
+    @if (in_array('image', $blogcards->showItems) && !empty($image))
+
     <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px;width: 80px; height: 80px">
     <div class="media-body pl-1 my-auto">
 

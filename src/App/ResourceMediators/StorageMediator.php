@@ -2,60 +2,35 @@
 namespace App\ResourceMediators;
 
 use laraflex\Contracts\ResourceMediator;
+class StorageMediator extends ResourceMediator{
 
-class StorageMediator extends ResourceMediator
-{
     protected $image = array('jpg', 'png', 'svg', 'jpeg','tif', 'gif','bmp', 'BMP', 'exif', 'webp');
     protected $doc = array('pdf', 'doc', 'docx', 'xls', 'xslx', 'ppt', 'pptx', 'pps');
     protected $media = array('mp3', 'mp4', 'wav', 'mkv', 'avi', 'divix','mov', 'xvid');
-    protected $compactor = array('rar', 'zip', 'tar.zg');
-    protected $fileType = array('image', 'doc', 'media');
+    protected $compacted = array('rar', 'zip', 'tar.zg');
 
-    public function toArray ($data, $type = NULL)
+    public function toArray ($data)
     {
-
-        if ($type == NULL){
-            $extensions = array_merge($this->image, $this->doc, $this->media, $this->compactor);
-        }else{
-            $type = strtoupper($type);
-            if ($type == 'IMAGE' OR $type == 'IMAGEM'){
-                $extensions = $this->image;
-            }elseif($type == 'DOC' OR   $type == 'DOCUMENTO'){
-                $extensions = $this->doc;
-            }elseif($type == 'MEDIA' OR $type == 'MIDIA'){
-                $extensions = $this->media;
-            }else{
-                $extensions = array();
-            }
-        }
+        $extensions = array_merge($this->image, $this->doc, $this->media, $this->compacted);
 
         $var = [
             'file' => $data['filename'],
             'baseName' => $data['basename'],
             'dirName' => $data['dirname'],
             'path' => $data['path'],
-            'date' => date("y/m/Y", strtotime($data['timestamp'])),
             'type' => $data['type'],
             'fileName' => $data['basename'],
             'filePath' => $data['dirname'],
         ];
         if ($data['type'] == 'file' && !empty($data['extension'])){
             $dataExtension = $data['extension'];
-
-
             if (in_array($dataExtension, $extensions)) {
                 $var['extension'] = $data['extension'];
                 $var['size'] = $data['size'];
-
             }else{
                 return NULL;
             }
-        }else{
-            if($type != NULL && $data['type'] == 'dir'){
-                return NULL;
-            }
         }
-
 
         return $var;
     }
@@ -65,20 +40,19 @@ class StorageMediator extends ResourceMediator
         return new StorageMediator();
     }
 
-
-    public function collection($collection, $type = NULL)
+    public function collection($collection)
     {
             $collectionDir = array();
             $collectionFile = array();
             if (!empty($collection)){
                 foreach($collection as $item){
                     if ($item['type'] == 'dir'){
-                        $itemTmp = $this->toArray($item, $type);
+                        $itemTmp = $this->toArray($item);
                         if (!empty($itemTmp)){
                             $collectionDir[] = $itemTmp;
                         }
                     }elseif($item['type'] == 'file'){
-                        $itemTmp = $this->toArray($item, $type);
+                        $itemTmp = $this->toArray($item);
                         if (!empty($itemTmp)){
                             $collectionFile[] = $itemTmp;
                         }
@@ -91,14 +65,13 @@ class StorageMediator extends ResourceMediator
             }else{
                 return NULL;
             }
-
     }
     /**
      * Return Json collection
      */
-    public function jsonCollection($collection, $type = NULL)
+    public function jsonCollection($collection)
     {
-        $collectionTmp = $this->collection($collection, $type);
+        $collectionTmp = $this->collection($collection);
         if ($collectionTmp != NULL){
             return json_encode($collectionTmp);
         }else{
@@ -108,9 +81,9 @@ class StorageMediator extends ResourceMediator
     /**
      * Return collection object Json
      */
-    public function objectCollection($collection, $type = NULL)
+    public function objectCollection($collection)
     {
-        $collectionTmp = $this->jsonCollection($collection, $type);
+        $collectionTmp = $this->jsonCollection($collection);
         return json_decode($collectionTmp);
     }
 }

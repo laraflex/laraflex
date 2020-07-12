@@ -51,25 +51,29 @@
     @endforeach
     </ol>
     <div class="carousel-inner">
-    @foreach($panel->images as $key => $image)
+    @foreach($panel->images as $key => $imageItem)
         @if ($key == 0)
         <div class="carousel-item active" >
         @else
         <div class="carousel-item" >
         @endif
     @php
-    if (!empty($panel->imagePath)){
-        $image = $util->toImage($panel->imagePath, $image->name);
-    }else{
-        $image = $util->toImage($image->name);
+    if (!empty($imageItem->imageStorage)){
+        $image = $imageItem->imageStorage;
+    }
+    elseif (!empty($imageItem->imagePath)){
+        $image = $util->toImage($imageItem->imagePath);
+    }
+    elseif (!empty($imageItem->image)){
+        $image = $util->toImage($imageItem->image);
     }
     @endphp
-    @if(!empty($panel->lightbox)  && $panel->lightbox == true)
+    @if(!empty($panel->lightbox)  && $panel->lightbox == true && !empty($image))
     <a href="{{$image}}" class="stretched-link" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in">
     <img class="d-none d-sm-block mx-auto img-fluid p-0 pb-0"src="{{$image}}" alt="" style="max-height:350px; width:80%">
     <img class="d-block d-sm-none mx-auto img-fluid p-0 pb-0"src="{{$image}}" alt="" style="max-height:320px; width:60%">
     </a>
-    @else
+    @elseif(!empty($image))
     <img class="d-none d-sm-block mx-auto img-fluid p-0 pb-0"src="{{$image}}" alt="" style="max-height:350px; width:80%">
     <img class="d-block d-sm-none mx-auto img-fluid p-0 pb-0"src="{{$image}}" alt="" style="max-height:320px; width:60%">
     @endif
@@ -149,7 +153,7 @@
     @endforeach
     @if (!empty($panel->form))
     {{--Formulário de componente ---------------------------------}}
-    @php 
+    @php
         $route = $util->toRoute($panel->form->action);
         if (!empty($panel->form->method)){
             $method = $panel->form->method;
@@ -162,12 +166,18 @@
         <input type="hidden" id="id" name="id" value="{{$panel->data->id}}">
         @if (!empty($panel->form->items))
         @foreach ($panel->form->items as $item)
+
         <div class="form-groupx mb-2 mr-2">
+        <div class="pl-2" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
         <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
-        <option value="" style="font-sizex:calc(0.76em + 0.25vw); line-height: 1.5;">{{$item->label}}...</option>
+        <option value="">{{$item->label}}.</option>
         @if (!empty($item->options))
-        @foreach ($item->options as $option)
+        @foreach ($item->options as $key => $option)
+        @if ($key == 0)
+        <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;"  selected="selected">
+        @else
         <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;">
+        @endif
         <span class="border">
         {{$option->label}}
         </span>
@@ -177,12 +187,23 @@
         </select>
         </div>
         @endforeach
-        @endif    
-    <button type="submit" class="btn btn-light btn-outline-secondary mb-2"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
-    {{$panel->form->button}}</button>   
+        @endif
+        @php
+            if (!empty($panel->form->items)){
+                $marginTop = 'mt-3';
+            }else{
+                $marginTop = '';
+            }
+
+        @endphp
+
+        <div class="p-1">
+        <button type="submit" class="btn btn-light btn-outline-secondary mb-2 {{$marginTop}}"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
+        {{$panel->form->button}}</button>
+        </div>
     </form>
     {{--End formúlário -------------------------------------------}}
-   
+
     @endif
     </div>
     </div>

@@ -4,16 +4,19 @@ if (!empty($objectHeader)){
 }
 @endphp
 
-@if(!empty($backpanel))
 @php
-    if (!empty($backpanel->bgImagePath) && !empty($backpanel->bgImage)){
-        $bgImage = $util->toImage($backpanel->bgImagePath, $backpanel->bgImage);
-    }elseif(!empty($backpanel->bgImage)){
-        $bgImage = $util->toImage($backpanel->bgImage);
-    }else{
-        $bgImage = '';
+    if (!empty($backpanel->bgImageStorage)){
+        $bgImage = $backpanel->bgImageStorage;
     }
+    elseif (!empty($backpanel->bgImagePath)){
+        $bgImage = $util->toImage($backpanel->bgImagePath);
+    }
+    elseif(!empty($backpanel->bgImage)){
+        $bgImage = $util->toImage($backpanel->bgImage);
+    }
+
 @endphp
+@if(!empty($backpanel) && !empty($bgImage))
 
 <section id="backpanel">
 
@@ -35,8 +38,11 @@ if (!empty($objectHeader)){
           {{--Bloco de imagem ------------}}
           @if (!empty($backpanel->logo))
           @php
-            if (!empty($backpanel->logo->imagePath) && !empty($backpanel->logo->image)){
-                $image = $util->toImage($backpanel->logo->imagePath, $backpanel->logo->image);
+            if (!empty($backpanel->logo->imageStorage)){
+                $image = $backpanel->logo->imageStorage;
+            }
+            elseif (!empty($backpanel->logo->imagePath)){
+                $image = $util->toImage($backpanel->logo->imagePath);
             }elseif(!empty($backpanel->logo->image)){
                 $image = $util->toImage($backpanel->logo->image);
             }else{

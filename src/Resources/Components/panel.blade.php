@@ -40,25 +40,34 @@
         @else
         <div class="row w-100 p-0 m-0 py-2 {{$stylePanel}}">
         @endif
-        @if(!empty($panel->data->image))
+
             @php
-            if (!empty($panel->imagePath)){
-                $bgImage = $util->toImage($panel->imagePath, $panel->data->image);
-            }else{
+            if (!empty($panel->data->imageStorage)){
+                $bgImage = $panel->data->imageStorage;
+            }
+            elseif (!empty($panel->data->imagePath)){
+                $bgImage = $util->toImage($panel->data->imagePath);
+            }
+            elseif(!empty($panel->data->image)){
                 $bgImage = $util->toImage($panel->data->image);
             }
             @endphp
+        @if (!empty($bgImage))
         <div class="col-12 col-sm-5 col-md-4 bg-white my-auto w-100 px-0">
         <div class="w-100" style="background-image: url('{{$bgImage}}');background-size:contain; background-position:center center;background-repeat:no-repeat;min-widthx:230px;min-height:calc(180px + 8vw);">
         <img src="{{url('images/icons/lupa.png')}}" class="mt-2 ml-2" style="width: 15px; height:15px;">
+
         @if(!empty($panel->lightbox)  && $panel->lightbox == true && !empty($panel->images))
 
-        @foreach($panel->images as $key => $imageName)
-        @php 
-        if (!empty($panel->imagePath)){
-            $image = $util->toImage($panel->imagePath, $imageName->name);
-        }else{
-            $image = $util->toImage($imageName->name);
+        @foreach($panel->images as $key => $imageItem)
+        @php
+        if (!empty($imageItem->imageStorage)){
+           $image = $imageItem->imageStorage;
+        }
+        elseif (!empty($imageItem->imagePath)){
+            $image = $util->toImage($imageItem->imagePath);
+        }elseif(!empty($imageItem->image)){
+            $image = $util->toImage($imageItem->image);
         }
         @endphp
         @if($key == 0)
@@ -75,6 +84,7 @@
         @else
         <div class="col-12 contents pt-5pb-sm-5 pb-4 pl-sm-5 pl-4 pr-3">
         @endif
+
         @foreach($panel->showItems as $item)
         {{-----------------------------------------}}
         @php
@@ -133,26 +143,31 @@
 
     @if (!empty($panel->form))
     {{--Formulário de componente ---------------------------------}}
-    @php 
+    @php
         $route = $util->toRoute($panel->form->action);
         if (!empty($panel->form->method)){
             $method = $panel->form->method;
         }else{
             $method = 'post';
-        }       
+        }
     @endphp
         <form class="form-inline mt-2 mt-md-3" method="{{$method}}" action="{{$route}}" id="{{$panel->form->id}}">
         @csrf
         <input type="hidden" id="id" name="id" value="{{$panel->data->id}}">
         @if (!empty($panel->form->items))
         @foreach ($panel->form->items as $i => $item)
-        
+
         <div class="form-groupx mb-2 mr-2">
+        <div class="pl-2" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
         <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
         <option value="" style="font-sizex:calc(0.76em + 0.25vw); line-height: 1.5;">{{$item->label}}...</option>
         @if (!empty($item->options))
-        @foreach ($item->options as $option)
+        @foreach ($item->options as $key => $option)
+        @if ($key == 0)
+        <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;"  selected="selected">
+        @else
         <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;">
+        @endif
         <span class="border">
         {{$option->label}}
         </span>
@@ -161,16 +176,26 @@
         @endif
         </select>
         </div>
-        @php 
+        @php
         if ($i == 1){
         break;
         }
         @endphp
-        
+
         @endforeach
-        @endif    
-    <button type="submit" class="btn btn-light btn-outline-secondary mb-2"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
-    {{$panel->form->button}}</button>   
+        @endif
+        @php
+        if (!empty($panel->form->items)){
+            $marginTop = 'mt-3';
+        }else{
+            $marginTop = '';
+        }
+
+    @endphp
+    <div class="p-1">
+    <button type="submit" class="btn btn-light btn-outline-secondary mb-2 {{$marginTop}}"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
+    {{$panel->form->button}}</button>
+    </div>
     </form>
     {{--End formúlário -------------------------------------------}}
     @endif

@@ -14,7 +14,14 @@ $("#{{$validate->formName}}").validate({
     @foreach ($validate->items as $item)
     {{$item->fieldName}}:{
         @foreach ($item->rules as $rules)
-             {{$rules->type}}:{{$rules->value}},
+            @if(!empty($rules->attribute))
+               @if(!empty($rules->type) && $rules->type == 'string')
+               {{$rules->attribute}}:"{{$rules->value}}",
+               @else
+               {{$rules->attribute}}:{{$rules->value}},
+               @endif
+
+            @endif
         @endforeach
         },
     @endforeach
@@ -23,7 +30,9 @@ $("#{{$validate->formName}}").validate({
     @foreach ($validate->items as $item)
     {{$item->fieldName}}:{
         @foreach ($item->rules as $rules)
-             {{$rules->type}}:"{{$rules->message}}",
+            @if(!empty($rules->attribute))
+                {{$rules->attribute}}:"{{$rules->message}}",
+            @endif
         @endforeach
         },
     @endforeach

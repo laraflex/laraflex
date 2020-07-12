@@ -9,15 +9,19 @@ if (!empty($objectHeader)){
 if (empty($imageBar)){
     return NULL;
 }
-@endphp
-@if(!empty($imageBar->image))
 
-@php
-    if (!empty($imageBar->imagePath)){
-        $image = $util->toImage($imageBar->imagePath, $imageBar->image);
-    }else{
+    if (!empty($imageBar->imageStorage)){
+        $image = $imageBar->imageStorage;
+    }
+    elseif (!empty($imageBar->imagePath)){
+        $image = $util->toImage($imageBar->imagePath);
+    }
+    elseif(empty($imageBar->image)){
         $image = $util->toImage($imageBar->image);
     }
+@endphp
+@if(!empty($image))
+@php
 //-> Controle de fonte de texto---}}
 
         if (!empty($imageBar->fontFamily->title)){

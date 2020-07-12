@@ -14,6 +14,7 @@ class DependenciesListener extends AbstractListener{
         'panel' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
         'mediacards' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
         'storagemanager' => 'laraflex\ViewHelpers\Dependencies\StorageDependencies',
+        'sidebar' => 'laraflex\ViewHelpers\Dependencies\SidebarDependencies',
         ];
         return $var;
     }

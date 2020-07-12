@@ -165,19 +165,19 @@
     <div class="{{$margin}}">
     @endif
 
-
-    @if (!empty($lightbox->imagePath) && !empty($item->image))
-    <a href="{{$util->toPath($lightbox->imagePath, $item->image)}}" data-width="1280" data-toggle="lightbox" data-gallery="gallery">
-    <img src="{{$util->toImage($lightbox->imagePath, $item->image)}}" class="img-fluid" />
+    @if (!empty($item->imageStorage))
+    <a href="{{$item->imageStorage}}" data-width="1280" data-toggle="lightbox" data-gallery="gallery">
+    <img src="{{$item->imageStorage}}" class="img-fluid" />
     </a>
-
+    @elseif (!empty($item->imagePath))
+    <a href="{{$util->toPath($item->imagePath)}}" data-width="1280" data-toggle="lightbox" data-gallery="gallery">
+    <img src="{{$util->toImage($item->imagePath)}}" class="img-fluid" />
+    </a>
     @elseif(!empty($item->image))
     <a href="{{$util->toPath($item->image)}}" data-width="1280" data-toggle="lightbox" data-gallery="gallery">
     <img src="{{$util->toImage($item->image)}}" class="img-fluid" />
     </a>
     @endif
-
-
 
     </div>
     {{--End Bloco de imagem ------------------------------------------------}}

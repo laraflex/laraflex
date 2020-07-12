@@ -157,15 +157,19 @@
 <nav id="{{$navbar_id}}" class="{{$cssClass}}navbar navbar-expand-lg m-0x px-0x {{$styleNav}} {{$fixedNavbarClass}} {{$fixed}}" style="{{$border_bottom}} {{$background}}">
 <div class="container-xl px-2 px-xl-3 ">
 <!-- Logotipo ----------------------->
-@if (!empty($navBar->logo))
-@php 
-if (!empty($navBar->imagePath)){
-    $logo = $util->toImage($navBar->imagePath, $navBar->logo);
-}else{
+@php
+if (!empty($navBar->logoStorage)){
+    $logo = $navBar->logoStorage;
+}
+elseif (!empty($navBar->logoPath)){
+    $logo = $util->toImage($navBar->logoPath);
+}
+elseif(!empty($navBar->logo)){
     $logo = $util->toImage($navBar->logo);
 }
 @endphp
 
+@if (!empty($logo))
 
 @if(!empty($navBar->route))
 <a class="navbar-brand " href="{{$util->toRoute($navBar->route)}}">

@@ -60,19 +60,26 @@ $num_items = 0;
 
 <!-- Section footer -------------------------------------------->
 <footer id="footer" class="d-none d-sm-block">
-    @if (!empty($footer->bgImage))
     @php
-        if (!empty($footer->bgImagePath)){
-            $image = $util->toImage($footer->bgImagePath, $footer->bgImage);
-        }else{
-            $image = $util->toImage($footer->bgImage);
+        if (!empty($footer->bgImageStorage)){
+            $image = $footer->bgImageStorage;
         }
-        $bgColor = '';
-        $fontColor = 'color:#FFFFFF;text-shadow: #000000 2px 1px 2px;';
-        $background1 = 'background-image:url(' . $image . '); background-size:contain;';
-        $background2 = 'background-image:url(' . $image . '); background-size:cover;';
+        elseif (!empty($footer->bgImagePath)){
+            $image = $util->toImage($footer->bgImagePath);
+        }
+        elseif(!empty($footer->bgImage)){
+            $image = $util->toImage($footer->bgImage);
+        }else{
+            $image = NULL;
+        }
+        if ($image != NULL){
+            $bgColor = '';
+            $fontColor = 'color:#FFFFFF;text-shadow: #000000 2px 1px 2px;';
+            $background1 = 'background-image:url(' . $image . '); background-size:contain;';
+            $background2 = 'background-image:url(' . $image . '); background-size:cover;';
+        }
     @endphp
-
+    @if (!empty($image))
     <div class="px-0 mt-2 mb-0" style="border-top: 1px solid #000000; {{$bgColor}} {{$fontColor}} {{$background1}};">
     <div style="background-color: rgb(0,0,0,0.6)">
     <div class="container-xl px-0 " style="{{$background2}}">
@@ -84,10 +91,22 @@ $num_items = 0;
 
     <div class="row w-100 m-0 p-0">
     <div class="col-md-4 d-none d-md-block pt-2 pl-2 pl-md-3 pl-lg-4">
-    @if (!empty($footer->image) && !empty($footer->imagePath))
+    @php
+    if (!empty($footer->logoStorage)){
+        $image = $footer->logoStorage;
+    }
+    elseif(!empty($footer->logoPath)){
+        $image = $util->toImage($footer->logoPath);
+    }
+    elseif($footer->logo){
+        $image = $util->toImage($footer->logo);
+    }
+    @endphp
+
+    @if (!empty($image))
     <a href="{{$util->toRoute('home')}}">
-    <img src="{{$util->toImage($footer->imagePath, $footer->image)}}" width="180px" height="45px" class="d-md-none d-lg-block mt-3">
-    <img src="{{$util->toImage($footer->imagePath, $footer->image)}}" width="160px" height="40px" class="d-md-block d-lg-none mt-3">
+    <img src="{{$image}}" width="180px" height="45px" class="d-md-none d-lg-block mt-3">
+    <img src="{{$image}}" width="160px" height="40px" class="d-md-block d-lg-none mt-3">
     </a>
     @endif
 

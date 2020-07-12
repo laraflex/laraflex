@@ -21,6 +21,7 @@
     </div>
     @php
         $imageArray = array('jpg', 'png', 'svg', 'jpeg', 'tif', 'gif', 'BMP', 'exif', 'webp');
+
         $font = 'font-size:calc(12px + 0.20vw);line-height:calc(14px + 0.3vw);overflow-wrap: anywhere;';
         $borderx = '';
         if (!empty($storageManager->iconSize) && $storageManager->iconSize == 'small'){
@@ -28,6 +29,11 @@
             $font = 'font-size:calc(12px + 0.05vw);line-height:calc(14px + 0.3vw);overflow-wrap: anywhere;';
         }else{
             $column = 'col-4 col-sm-2 p-0 m-0';
+        }
+        if (!empty($storageManager->route)){
+            $routeApp = $storageManager->route;
+        }else{
+            $routeApp = 'liststorage';
         }
         if (!empty($storageManager->routeImage)){
             $routeImage = $storageManager->routeImage;
@@ -49,28 +55,33 @@
         }else{
             $routeAddFile = $util->toRoute('storage/addfile');
         }
+        if (!empty($storageManager->routeAddFolder)){
+            $routeAddFolder = $util->toRoute($storageManager->routeAddFolder);
+        }else{
+            $routeAddFolder = $util->toRoute('storage/addfolder');
+        }
     @endphp
 <div class="row p-0 m-0">
-    @if ($storageManager->path != '')
+    @if (!empty($storageManager->filesystem->path) OR $storageManager->filesystem->path != '')
     <div class="{{$column}}">
     <div class="m-1 p-2" >
     @php
         $imageNav = url('images/icons/backp.png');
-        $arrayPath = explode('/', $storageManager->path);
+        $arrayPath = explode('/', $storageManager->filesystem->path);
         if (count($arrayPath) == 0){
-            $pathTmp = $storageManager->path;
+            $pathTmp = $storageManager->filesystem->path;
         }else{
             $tmp = array_pop($arrayPath);
             $pathTmp = implode('/', $arrayPath);
         }
-        $route = route($storageManager->route, ['path' => $pathTmp]);
+        $route = route($routeApp, ['path' => $pathTmp]);
 
     @endphp
     <a href="{{$route}}">
     <img src="{{$imageNav}}" class="card-img mx-auto d-block" style="heightx:80%;">
     </a>
 
-    <div class="text-center pb-1" style="{{$font}}">{{$storageManager->path}}</div>
+    <div class="text-center pb-1" style="{{$font}}">{{$storageManager->filesystem->path}}</div>
     </div>
     </div>
     @endif
@@ -113,14 +124,14 @@
             }else{
                 $imageDir = url('images/icons/folder.png');
             }
-            $pathTmp = $storageManager->path;
+            $pathTmp = $storageManager->filesystem->path;
 
             if ($pathTmp == ''){
                 $pathDir = $item->fileName;
             }else{
                 $pathDir = $pathTmp .'/'. $item->fileName;
             }
-            $route = route($storageManager->route, ['path' => $pathDir]);
+            $route = route($routeApp, ['path' => $pathDir]);
 
         @endphp
 
@@ -135,16 +146,18 @@
 
         @php
         if ($item->dirName == ""){
-            $pathFile = $storageManager->filesystem->storagePath . $item->fileName;
+            $pathFile = $storageManager->filesystem->storagePathDisk . $item->fileName;
         }else{
-            $pathFile = $storageManager->filesystem->storagePath . $item->dirName . '/'. $item->fileName;
+            $pathFile = $storageManager->filesystem->storagePathDisk . $item->dirName . '/'. $item->fileName;
         }
             $pathTmp = $item->dirName . '/'. $item->fileName;
 
             if (!empty($storageManager->showImage) && $storageManager->showImage === true){
                 $imagePath = $pathFile;
+                $width = '';
             }else{
                 $imagePath = $util->toImage('images/icons/' . $item->extension . '.png');
+                $width = 'style="width: 80%";';
             }
         @endphp
     {{--Formulário de solicitação de imagem ------------------------------}}
@@ -160,7 +173,7 @@
     @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
         <div class="dropdown">
         <a class="btn p-0 m-0" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img class="card-img" src="{{$imagePath}}" >
+        <img class="card-img mx-auto d-block" src="{{$imagePath}}" {!!$width!!}/>
         </a>
     <div class="dropdown-menu {{$border}}" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href={{$pathFile}} data-width="1280" data-toggle="lightbox" data-gallery="gallery">{{__('Show image')}}</a>
@@ -174,7 +187,7 @@
         </div>
     @else
     <a href={{$pathFile}} data-width="1280" data-toggle="lightbox" data-gallery="gallery">
-    <img src="{{$imagePath}}" class="card-img">
+    <img src="{{$imagePath}}" class="card-img mx-auto d-block" {!!$width!!}/>
     </a>
     @endif
             {{--Fim de controle ---------------------------------------}}

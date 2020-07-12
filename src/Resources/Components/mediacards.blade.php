@@ -138,12 +138,18 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
         {{--Bloco de imagem ------------------------------------------------}}
 
 
-        @if (!empty($item->image) && in_array('image', $mediacards->showItems))
-        @php 
-        if (!empty($mediacards->imagePath)){
-            $image = $util->toImage($mediacards->imagePath, $item->image);
-        }else{
+        @if (in_array('image', $mediacards->showItems))
+        @php
+        if (!empty($item->imageStorage)){
+            $image = $item->imageStorage;
+        }
+        elseif (!empty($item->imagePath)){
+            $image = $util->toImage($item->imagePath);
+        }
+        elseif (!empty($item->image)){
             $image = $util->toImage($item->image);
+        }else{
+            $image = $util->toImage('images/app/foto01.jpg');
         }
         @endphp
 
@@ -153,7 +159,7 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
         </div>
         @else
         <div class="{{$imageMargin}}" style="background-color:#000000;">
-        <img src="{{$util->toImage('images/movies','vaula001.jpg')}}" class="mediacards-img img-fluid">
+        <img src="{{$util->toImage('images/app','foto01.jpg')}}" class="mediacards-img img-fluid">
         <img class="icon_play_mediacards rounded-circle" src="{{$util->toImage('images/icons','black_white_play.png')}}" style="top:26%;"/>
         </div>
         @endif

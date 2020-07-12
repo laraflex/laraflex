@@ -33,14 +33,23 @@
     }else{
         $font_family = '';
     }
+
+    if(!empty($form->topAlign) && $form->topAlign == true){
+        $labelStyle = 'col-md-12';
+        $inputStyle = 'col-md-12';
+        $textAlign = 'text-left';
+    }else{
+        $labelStyle = 'col-md-3 pt-0 pt-md-1';
+        $inputStyle = 'col-md-9';
+    }
 @endphp
 
 <!--Section formulário ------------------------------------------------------->
 <section id="form" class="pb-1 pt-2 pt-md-3">
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
-<div class="pb-4 p-3 mb-4 mt-4 {{$border}}">
-    @php
+<div class="pb-4 p-3 px-md-4 px-lg-5 mb-4 mt-4 {{$border}}">
+        @php
         if (!empty($form)){
             $formConfig = $form->items;
         }
@@ -71,7 +80,6 @@
                 $enctype = 'multipart/form-data';
             }
         }
-        $row_column2 = "col-md-9 col-lg-8";
     @endphp
     <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif>
         @if (!empty($form->token) && $form->token === false)
@@ -87,13 +95,13 @@
     @if ($item->type == 'fieldset')
     <fieldset class="form-group">
     <div class="row">
-    <div class="col-md-3">
+    <div class="{{$labelStyle}}">
     @if (!empty($item->label) && !empty($item->name))
     <legend for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</legend>
 
     @endif
     </div>
-<div class="{{$row_column2}}">
+<div class="{{$inputStyle}}">
     @if (!empty($item->name) && !empty($item->id) && !empty($item->items))
     {{--Adiciona um grupo de Radio ou de checkbox--}}
     @foreach ($item->items as $key => $option)
@@ -140,12 +148,12 @@
     @elseif ($item->type == 'select')
     <div class="form-group">
     <div class="row">
-    <div class="col-md-3">
+    <div class="{{$labelStyle}}">
     @if (!empty($item->label) && !empty($item->name))
     <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
     @endif
     </div>
-    <div class="{{$row_column2}}">
+    <div class="{{$inputStyle}}">
     @if (!empty($item->name) && !empty($item->id) && !empty($item->items))
      {{--adiciona regras regras de validação--}}
      @if (!empty($item->required) && $item->required === true)
@@ -173,12 +181,12 @@
     @elseif ($item->type == 'textarea' OR $item->type == 'summernote')
     <div class="form-group">
     <div class="row">
-    <div class="col-md-3">
+    <div class="{{$labelStyle}}">
     @if (!empty($item->label) && !empty($item->name))
     <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
     @endif
     </div>
-    <div class="{{$row_column2}}">
+    <div class="{{$inputStyle}}">
     @if (!empty($item->name) && !empty($item->id))
     @php
         if($item->type == 'summernote'){
@@ -307,19 +315,27 @@
     {{--Adinona um componente file--}}
     @elseif($item->type == 'file')
     <div class="form-group row pb-2 pb-md-3">
-    <div class="col-md-3">
+    <div class="{{$labelStyle}}">
+
     @if (!empty($item->label) && !empty($item->name))
     <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
     @endif
     </div>
-    <div class="{{$row_column2}}">
+    <div class="{{$inputStyle}}">
     @if (!empty($item->name) && !empty($item->id))
-    @if (property_exists($item, "image") && $item->image != NULL)
-    @if (!empty($item->imagePath) && !empty($item->image))
+
+    @if (property_exists($item, "imageStorage") && !empty($item->imageStorage))
     <div class="mb-3 mt-2">
-    <img src="{{$util->toImage($item->imagePath, $item->image)}}" style="widht:100px; height:100px;">
+    <img src="{{$item->imageStorage}}" style="widht:100px; height:100px;">
     </div>
-    @endif
+    @elseif (property_exists($item, "imagePath") && !empty($item->imagePath))
+    <div class="mb-3 mt-2">
+    <img src="{{$util->toImage($item->imagePath)}}" style="widht:100px; height:100px;">
+    </div>
+    @elseif (property_exists($item, "image") && !empty($item->image))
+    <div class="mb-3 mt-2">
+    <img src="{{$util->toImage($item->image)}}" style="widht:100px; height:100px;">
+    </div>
     @endif
     {{--adiciona regras regras de validação--}}
     @php
@@ -399,12 +415,12 @@
     @elseif(!empty($item->type))
     {{--Adiciona componentes imput text--}}
     <div class="form-group row">
-    <div class="col-md-3">
+    <div class="{{$labelStyle}}">
     @if (!empty($item->label) && !empty($item->name))
     <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>
     @endif
     </div>
-    <div class="{{$row_column2}}">
+    <div class="{{$inputStyle}}">
         @php
         if ($item->type == 'color'){
             $width = ' w-25';

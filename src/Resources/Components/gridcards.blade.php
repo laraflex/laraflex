@@ -8,7 +8,6 @@
 @endphp
 @endif
 @if (!empty($gridcards) && !empty($gridcards->items))
-
 @php
     if (!empty($gridcards->fontFamily->title)){
         $font_family_title = 'font-family:'.$gridcards->fontFamily->title .';';
@@ -21,13 +20,11 @@
         $font_family = '';
     }
 @endphp
-
 @if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
     <section id="gridcards" class="m-0 p-0 mx-0 pb-3 pb-lg-4 pt-1 pt-sm-2">
 @else
     <section id="gridcards" class="m-0 p-0 mx-0 pb-3 pb-sm-3 pt-1 pt-sm-3">
 @endif
-
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 px-2 px-lg-3 px-xl-0">
     @if (!empty($gridcards->seeMore))
@@ -102,16 +99,12 @@
     }else{
         $column = 'col-6 col-sm-4 col-lg-3';
     }
-
     @endphp
-
     <div class="row w-100 m-0 p-0">
     {{--Bloco de renderização de items de componente--}}
     @foreach($gridcards->items as $key => $item)
-
     @php
     $margen_bottom = 'mb-3';
-
     if ($showLimit === true){
         if (!empty($num_limit) && $key >= $num_limit){
         break;
@@ -135,7 +128,6 @@
         }
     }
     @endphp
-
     <div class="{{$column}} p-0  {{$margen_bottom}}">
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{--p-2x p-md-3x m-1 mb-2 mb-md-3--}} {{$border}} {{$visibility[$key]}}">
@@ -158,21 +150,21 @@
            }
         @endphp
     <a class="" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>
-
     {{--Bloco de imagem ------------------------------------------------}}
-    @if (!empty($item->image))
-    @php 
-    if (!empty($gridcards->imagePath)){
-        $image = $util->toImage($gridcards->imagePath, $item->image);
-    }else{
+    @php
+    if (!empty($item->imageStorage)){
+        $image = $item->imageStorage;
+    }
+    elseif (!empty($item->imagePath)){
+        $image = $util->toImage($item->imagePath);
+    }
+    elseif(!empty($item->image)){
         $image = $util->toImage($item->image);
+    }else{
+        $image = $util->toImage('images/app', 'image-laracast.jpg');
     }
     @endphp
-
     <img src="{{$image}}" class="img-fluid">
-    @else
-    <img src="{{$util->toImage('images/app', 'image-laracast.jpg')}}" class="img-fluid">
-    @endif
     {{--End Bloco de imagem ------------------------------------------------}}
     </a>
     @endif
@@ -188,7 +180,6 @@
             <small>{{$item->label}}</small>
             </div>
             @endif
-
             @if(!empty($item->specialLabel) && in_array('specialLabel', $gridcards->showItems))
             <div class="gridcards-item-shared pb-1" style="color: blue; font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
             {{$item->specialLabel}}
@@ -230,7 +221,6 @@
     </div>
     @endif
     {{--End Pagination----------------------------------}}
-
     </div>
     </div>
 {{--Icon de retorno ao topo da página--}}

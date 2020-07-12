@@ -7,7 +7,6 @@
         $groupCards = $object;
     @endphp
 @endif
-
 @if (!empty($groupCards) && !empty($groupCards->items))
     @php
     if (!empty($groupCards->fontFamily->title)){
@@ -21,20 +20,14 @@
         $font_family = '';
     }
     @endphp
-
-
 @if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
     <section id="groupcards" class="m-0 p-0 mx-0 pb-3 pb-lg-4 pt-1 pt-sm-2">
 @else
     <section id="groupcards" class="m-0 p-0 mx-0 pb-3 pb-sm-3 pt-1 pt-sm-3">
 @endif
-
-
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
 <div class="">
-
-
     @if (!empty($groupCards->seeMore))
     <div class="row m-0 p-0">
         <div class="col-12 col-sm-9 p-0">
@@ -62,10 +55,8 @@
             </a>
             </div>
             @endif
-
         </div>
     </div>
-
     @else
         @if(!empty($groupCards->title))
         <div class="groupcards-title mt-1 text-center pt-2 pb-3 pr-2 pl-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
@@ -76,64 +67,57 @@
         <span style="color:gray">{{$groupCards->legend}}</span></div>
         @endif
     @endif
-
-
     <div class="row p-0 m-0 pt-1">
-
     @php
     $visibility = ['d-block ', 'd-block ', 'd-block ', 'd-block', 'd-none d-sm-block d-lg-none', 'd-none d-sm-block d-lg-none'];
     $array_margin_bottom = ['mb-3 mb-lg-0','mb-3 mb-lg-0','mb-sm-3 mb-lg-0','mb-0', 'mb-0','mb-0'];
     $margin_bottom = 'mb-2 mb-md-3';
     $num_limit = 6;
     $showLimit = false;
-
     if (!empty($groupCards->seeMore)){
         $showLimit = true;
     }else{
         $showLimit = false;
     }
-
     @endphp
-
     @foreach ($groupCards->items as $key =>$item)
      {{--Início das colunas do componente--}}
     @php
     if (!empty($num_limit) && $key >= $num_limit){
     break;
     }
-
     if ($showLimit === true){
         $margin_bottom = $array_margin_bottom[$key];
     }
     @endphp
-
     <div class="col-6 col-sm-4 col-md-4 col-lg-3  {{$margin_bottom}} p-0">
-
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{$border}} {{$visibility[$key]}}">
     @else
     <div class="mx-1 h-100 {{$border}}">
     @endif
-
     {{--<div id="groupcard" class="groupcards-item ml-1 mr-1 pb-2 pb-md-0 {{$border}}" style="height:100%;">--}}
-
     {{--Bloco interno----}}
     @if (!empty($groupCards->button))
     <div class="p-2 p-md-3 m-0 " style="height:86%">
     @else
     <div class="p-2 p-md-3" style="height:100%">
     @endif
-
     {{--Controle para adicionar imagem--}}
-    @if (in_array('image', $groupCards->showItems) && !empty($item->image))
+    @if (in_array('image', $groupCards->showItems))
         @php
-        if (!empty($groupCards->imagePath)){
-            $image = $util->toImage($groupCards->imagePath, $item->image);
-        }else{
+        if (!empty($item->imageStorage)){
+            $image = $item->imageStorage;
+        }
+        elseif (!empty($item->imagePath)){
+            $image = $util->toImage($item->imagePath);
+        }
+        elseif(!empty($item->image)){
             $image = $util->toImage($item->image);
+        }else{
+            $image = $util->toImage('images/app/foto02.jpg');
         }
         @endphp
-
     @if (!empty($groupCards->bgEffect) && $groupCards->bgEffect === true)
     <div class="groupcards-panel text-center rounded mb-0" style="min-height: calc(110px + 6vw);">
     @else
@@ -143,13 +127,10 @@
     <img src="{{$image}}" class="img-fluid mx-auto " alt="...">
     </a>
     </div>
-    
     @endif
-
     {{--Fim Controle para adicionar imagem--}}
     <div class="">
     @foreach($groupCards->showItems as $fieldName)
-
     @php
         //-> Separa as propriedades de fonte do atributo de showItems
         if (strpos($fieldName, '->>')){
@@ -161,7 +142,6 @@
         }
         //-> Fim ------------------------------------------
     @endphp
-
     @if(!empty($item->$fieldName))
     @if($fieldName != 'image')
     @if($fieldName == 'title')
@@ -169,7 +149,6 @@
     <strong>{{$item->title}}</strong></div>
     @elseif($fieldName != 'rating')
     <div class="">
-
     {{--Algoritmo de codificaçãode de fonte -----------------------------------------}}
     @php
         $style_font = 'font-size:calc(0.73em + 0.25vw);line-height:calc(1.1em + 0.28vw);';
@@ -179,7 +158,6 @@
         $font_color = "";
         if ($fontOptions != ""){
             $arrayOptions = explode('|', $fontOptions);
-
             if (!empty($arrayOptions[0]) && in_array(strtolower($arrayOptions[0]), $optionsStyle)){
                 if($arrayOptions[0] == 'italic'){
                     $styleFont = '<i>';
@@ -204,20 +182,16 @@
         }
     @endphp
     {{--End de codificaçãode de fonte -----------------------------------------}}
-
     <p class="card-text pt-1 pt-lg-2" style="{{$style_font}}{{$font_color}}{{$font_family}}">
     {!!$styleFont!!} {{--Potions: italic, normal, strong--}}
     {{$item->$fieldName}}
     {!!$endStyleFont!!}
     </p>
-
     </div>
     @endif
     @endif
     @endif
-
     @endforeach
-
     @foreach ($groupCards->items as $item)
     {{--Adicionando rating --------------------------------------------------}}
     @if(!empty($item->rating) && in_array('rating', $groupCards->showItems))
@@ -236,11 +210,8 @@
     @endif
     {{--Fim de rating --------------------------------------------------------}}
     @endforeach
-
     </div>
-
     </div>
-
     @if (!empty($groupCards->button))
     @php
     if (!empty($item->btnColor)){
@@ -264,14 +235,12 @@
     {{$groupCards->button->caption}}</a>
     </div>
     @endif
-
     {{--End bloco interno----}}
     </div>
     </div>
     {{--Fim das colunas do componente--}}
     @endforeach
 </div>
-
 {{--Bloco de see more ---------------------------}}
 @if (!empty($groupCards->seeMore))
 <div class="pl-3 pl-lg-4 mt-3 d-block d-sm-none">
@@ -286,10 +255,8 @@
 </div>
 @endif
 {{--Fim de bloco seeMore--}}
-
 </div>
 </div>
-
 {{--Icon de retorno ao topo da página--}}
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
@@ -299,8 +266,6 @@
 </div>
 @endif
 {{--End Icon de retorno ao topo da página--}}
-
-
 </div>
 </section>
 @else

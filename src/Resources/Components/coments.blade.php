@@ -8,16 +8,22 @@
 
     @foreach($coments->items as $key => $item)
     @php
-        if (!empty($item->sexo)){
-            $sexo = strtoupper($item->sexo);
-        }else{
+        if (!empty($item->user->sex)){
+            $sexo = strtoupper($item->user->sex);
+        }
+        elseif(!empty($item->user->sexo)){
+            $sexo = strtoupper($item->user->sexo);
+        }
+        else{
             $sexo = 'M';
         }
-
-        if (!empty($item->photo) &&  !empty($coments->userPath)){
-            $photo = $util->toImage($coments->userPath, $item->photo);
-        }elseif(!empty($item->photo)){
-            $photo = $util->toImage($item->photo);
+        if (!empty($item->user->photoStorage)){
+            $photo = $item->user->photoStorage;
+        }
+        elseif (!empty($item->user->photoPath)){
+            $photo = $util->toImage($item->user->photoPath);
+        }elseif(!empty($item->user->photo)){
+            $photo = $util->toImage($item->user->photo);
         }elseif($sexo == 'F'){
             $photo = $util->toImage('images/users', 'perfil2.png');
         }else{
@@ -62,15 +68,22 @@
 
     @foreach($item->coments as $k => $item)
         @php
-            if (!empty($item->sexo)){
-                $sexo = strtoupper($item->sexo);
-            }else{
+            if (!empty($item->user->sexo)){
+                $sexo = strtoupper($item->user->sexo);
+            }
+            elseif(!empty($item->user->sex)){
+                $sexo = strtoupper($item->user->sex);
+            }
+            else{
                 $sexo = 'M';
             }
-            if (!empty($item->photo)){
-                $photo = $util->toImage('storage/images/users/perfil', $item->photo);
-            }elseif(!empty($item->photo)){
-                $photo = $util->toImage($item->photo);
+            if (!empty($item->user->photoStorage)){
+                $photo = $item->user->photoStorage;
+            }
+            elseif (!empty($item->user->photoPath)){
+                $photo = $util->toImage($item->user->photoPath);
+            }elseif(!empty($item->user->photo)){
+                $photo = $util->toImage($item->user->photo);
             }elseif($sexo == 'F'){
                 $photo = $util->toImage('images/users', 'perfil2.png');
             }else{

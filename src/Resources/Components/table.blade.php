@@ -170,14 +170,14 @@
         @endphp
             @if (in_array($item->id, $arrayPosts))
             <td><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
-            <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block rounded-circle" style="width:calc(18px + 0.5vw);height:calc(18px + 0.5vw);">
+            <img src="{{$util->toImage('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block rounded-circle" style="width:calc(18px + 0.5vw);height:calc(18px + 0.5vw);">
             </a></td>
             @else
             <td></td>
             @endif
         @else
         <td><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
-        <img src="{{url('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block rounded-circle" style="width:calc(18px + 0.5vw);height:calc(18px + 0.5vw);">
+        <img src="{{$util->toImage('images/icons/edit.jpg')}}" alt="{{$table->action}}" class="mx-auto d-block rounded-circle" style="width:calc(18px + 0.5vw);height:calc(18px + 0.5vw);">
         </a></td>
         @endif
     @endif
@@ -201,7 +201,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-3 d-none d-sm-block pl-5 container-xl">
     <a href="#top">
-    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+    <img src="{{$util->toImage('images/icons/setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
     </a>
     </div>
 @endif

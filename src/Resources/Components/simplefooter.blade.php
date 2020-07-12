@@ -58,14 +58,17 @@ $arrayAlign = 'text-left';
 <div class="container-xl pt-2 pb-4">
 <div class="row w-100 m-0 p-0">
     <div class="col-5 col-md-3 pl-0">
-    @if (!empty($footer->image))
-    @php 
-    if (!empty($footer->imagePath)){
-        $image = $util->toImage($footer->imagePath, $footer->image);
-    }else{
-        $image = $util->toImage($footer->image);
+    @php
+    if (!empty($footer->logoStorage)){
+        $image = $footer->logoStorage;
+    }
+    elseif (!empty($footer->logoPath)){
+        $image = $util->toImage($footer->logoPath);
+    }elseif(!empty($footer->logo)){
+        $image = $util->toImage($footer->logo);
     }
     @endphp
+    @if (!empty($image))
     <a href="{{$util->toRoute('home')}}">
     <img src="{{$image}}" width="170px" height="42px" class="d-none d-lg-block">
     <img src="{{$image}}" width="130px" height="32px" class="d-block d-lg-none">
@@ -145,9 +148,18 @@ $arrayAlign = 'text-left';
 <div class="container-xl pt-2 pb-1">
 <div class="row w-100 m-0 p-0">
     <div class="col-5 col-md-3 pl-0">
-    @if (!empty($footer->image) && !empty($footer->imagePath))
+    @php
+    if (!empty($footer->logoStorage)){
+        $image = $footer->logoStorage;
+    }elseif(!empty($footer->logoPath)){
+        $image = $util->toImage($footer->logoPath);
+    }elseif(!empty($footer->logo)){
+        $image = $util->toImage($footer->logo);
+    }
+    @endphp
+    @if (!empty($image))
     <a href="{{$util->toRoute('home')}}">
-    <img src="{{$util->toImage($footer->imagePath, $footer->image)}}" width="130px" height="32px" class="d-block d-sm-none mt-1x">
+    <img src="{{$image}}" width="130px" height="32px" class="d-block d-sm-none mt-1x">
     </a>
     @endif
     </div>
