@@ -211,7 +211,7 @@
     {{--------------------------------}}
 
     @if (!empty($item->currentValue))
-    "{!!$item->currentValue!!}"
+    {!!$item->currentValue!!}
     @endif
     </textarea>
     @else

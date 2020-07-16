@@ -199,6 +199,7 @@
     </div>
     </div>
     </div>
+
     @elseif ($item->type == 'btn-group')
     @php
     if (!empty($item->btnColor)){
@@ -223,6 +224,8 @@
     @endif
     @endforeach
     @endif
+
+
     {{--Adinona um componente file--}}
     @elseif($item->type == 'file')
     <div class="form-group row mb-2 mb-md-3">

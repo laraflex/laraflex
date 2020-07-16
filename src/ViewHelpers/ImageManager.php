@@ -5,6 +5,13 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class ImageManager{
+        protected $fileName = NULL;
+
+        public function __construct($fileName = NULL){
+            if (!empty($fileName)){
+                $this->fileName = $fileName;
+            }
+        }
 
         /**
          * Método destinado a gerar um arquivo temporário a partir de imagem base64.
@@ -78,7 +85,13 @@ class ImageManager{
                 $type = 'jpeg';
                 $extension = 'jpg';
             }
-            $fileName = 'img' . Str::random(13) . '.' . $extension;
+
+            if (!empty($this->fileName)){
+                $fileName = $this->fileName .'.'. $extension;
+            }else{
+                $fileName = 'img' . Str::random(13) . '.' . $extension;
+            }
+
 
             // Precisa de inclusão de use Illuminate\Support\Str;
             if ($destination == NULL){
@@ -196,7 +209,7 @@ class ImageManager{
             return $imgResized;
         }
 
-        static public function create(){
-            return new ImageManager();
+        static public function create($fileName = NULL){
+            return new ImageManager($fileName);
         }
 }

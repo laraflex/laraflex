@@ -22,6 +22,7 @@ if(!empty($objectConfig)){
 @endif
 {{-- Bloco de mensagem e alerta--------------------------}}
 @if(session('alert'))
+<div class="container-xl px-2 px-md-3 px-xl-0 mt-4">
     <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -30,6 +31,7 @@ if(!empty($objectConfig)){
         <hr>
         <div class="mb-2">{!! session('alert') !!}</div>
     </div>
+</div>
 {{--Session Errors ------------------------------------------------}}
 @elseif(session('errors'))
     @php
@@ -41,7 +43,7 @@ if(!empty($objectConfig)){
             }
         }
     @endphp
-    <div class="container-xl px-3 mt-4">
+    <div class="container-xl px-2 px-md-3 px-xl-0 mt-4">
     <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -53,7 +55,7 @@ if(!empty($objectConfig)){
     </div>
 {{--End Session Errors ---------------------------------------------}}
 @elseif(session('message'))
-    <div class="container-xl px-3 mt-4">
+    <div class="container-xl px-2 px-md-3 px-xl-0 mt-4">
     <div class="alert alert-primary" role="alert">
         <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
         <hr class="d-none d-sm-block">
@@ -61,7 +63,7 @@ if(!empty($objectConfig)){
     </div>
     </div>
 @elseif(!empty($alert))
-    <div class="container-xl px-3 mt-4">
+    <div class="container-xl px-2 px-md-3 px-xl-0 mt-4">
     <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -72,7 +74,7 @@ if(!empty($objectConfig)){
     </div>
     </div>
 @elseif(!empty($message))
-    <div class="container-xl px-3 mt-4">
+    <div class="container-xl px-2 px-md-3 px-xl-0 mt-4">
     <div class="alert alert-success" role="alert">
         <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
         <hr class="d-none d-sm-block">

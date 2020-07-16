@@ -52,6 +52,10 @@ class LaraflexServiceProvider extends ServiceProvider
                 __DIR__.'/public/images/users' => base_path('public/images/users'),
                 //publishes controllers
                 __DIR__.'/App/Http/Controllers' => base_path('App/Http/Controllers'),
+                //publish config
+                __DIR__.'/config' => base_path('config'),
+
+
                 ]);
 
     }

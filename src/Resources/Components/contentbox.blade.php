@@ -31,7 +31,7 @@ $data = $contentbox->data;
     @endphp
 
     @if (in_array('title', $contentbox->showItems) && !empty($data->title))
-    <div class="contentbox-title mb-3" style="font-size:calc(0.9em + 1.0vw);line-height:calc(16px + 1.5vw);{{$font_family_title}}">{{$data->title}}</div>
+    <div class="contentbox-title mb-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(16px + 1.5vw);{{$font_family_title}}">{{$data->title}}</div>
     @endif
     @if (in_array('subTitle', $contentbox->showItems) && !empty($data->subTitle))
     <h6 class="contentbox-subtitle font-weight-normal" style="font-size:calc(0.9em + 0.5vw);{{$font_family_title}}">{{$data->subTitle}}</h6>
@@ -51,7 +51,7 @@ $data = $contentbox->data;
         $image = $util->toImage($data->image);
     }
     @endphp
-    <img src="{{$image}}" class="mt-2 mb-3" alt="..." style="max-width:60%;align:left" id="imageBox">
+    <img src="{{$image}}" class="mt-2 mb-3 mt-lg-3 mb-lg-4" alt="..." style="max-width:60%; align:left" id="imagebox">
     @endif
     {{--Bloco Abstract -------------------------------}}
     @if (in_array('abstract', $contentbox->showItems) && !empty($data->abstract))
@@ -75,7 +75,7 @@ $data = $contentbox->data;
     {{--Fim do bloco abstract--------------------------}}
     {{--Bloco de conteúdo -----------------------------------------------}}
     @if (in_array('content', $contentbox->showItems) && !empty($data->content))
-        <div class="contentbox-shared text-justify" style="line-height: calc(1.1em + 0.6vw); font-size:calc(14px + 0.21vw);{{$font_family}}">
+        <div class="contentbox-shared text-justify mt-3" style="line-height: calc(1.1em + 0.6vw); font-size:calc(14px + 0.21vw);{{$font_family}}">
             {!!$data->content!!}
         </div>
     @endif
