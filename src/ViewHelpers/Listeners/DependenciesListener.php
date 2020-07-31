@@ -15,6 +15,8 @@ class DependenciesListener extends AbstractListener{
         'mediacards' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
         'storagemanager' => 'laraflex\ViewHelpers\Dependencies\StorageDependencies',
         'sidebar' => 'laraflex\ViewHelpers\Dependencies\SidebarDependencies',
+        'panelnavmodal' => 'laraflex\ViewHelpers\Dependencies\PanelnavModalDependencies',
+        'formconfirm' => 'laraflex\ViewHelpers\Dependencies\FormConfirmDependencies',
         ];
         return $var;
     }

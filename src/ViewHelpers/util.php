@@ -16,6 +16,10 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         $this->secure = $secure;
     }
 
+    static public function create(){
+        return new Util();
+    }
+
 
     public function toRoute($route, $link = NULL)
     {
@@ -174,7 +178,7 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
      * @return string A senha gerada
      */
 
-    function toCode($tamanho = 5, $maiusculas = true, $numeros = true, $simbolos = false)
+    function randomCode($tamanho = 13, $numeros = true, $maiusculas = false, $simbolos = false)
     {
         //$lmin = 'abcdefghijklmnopqrstuvwxyz';
         $lmai = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
@@ -183,8 +187,8 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         $retorno = '';
         $caracteres = '';
         //$caracteres .= $lmin;
-        if ($maiusculas) $caracteres .= $lmai;
         if ($numeros) $caracteres .= $num;
+        if ($maiusculas) $caracteres .= $lmai;
         if ($simbolos) $caracteres .= $simb;
         $len = strlen($caracteres);
         for ($n = 1; $n <= $tamanho; $n++) {

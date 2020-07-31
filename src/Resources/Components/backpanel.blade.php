@@ -2,9 +2,7 @@
 if (!empty($objectHeader)){
     $backpanel = $objectHeader;
 }
-@endphp
 
-@php
     if (!empty($backpanel->bgImageStorage)){
         $bgImage = $backpanel->bgImageStorage;
     }

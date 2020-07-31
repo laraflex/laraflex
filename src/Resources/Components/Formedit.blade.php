@@ -204,12 +204,10 @@
     @endphp
     {{--Adição de regra de validação--}}
     @if (!empty($item->required) && $item->required === true)
-    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" required>
+    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" style="width:100%" required>
     @else
-    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}">
+    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" style="width:100%">
     @endif
-    {{--------------------------------}}
-
     @if (!empty($item->currentValue))
     {!!$item->currentValue!!}
     @endif
@@ -222,6 +220,7 @@
     </div>
     @elseif ($item->type == 'btn-group')
     @php
+
     if (!empty($item->btnColor)){
     $btnOptions = ['primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Dark', 'link'];
     $btnBorder = '';
@@ -238,12 +237,23 @@
     }
     $btnColorTmp = $btnColor;
     $btnBorderTmp = $btnBorder;
+
+
     @endphp
     @if (!empty($item->items))
     {{--Bloco de adição de botões ------------------------}}
     <div class="d-none d-sm-block">
-    @foreach ($item->items as $btn)
+    @foreach ($item->items as $key => $btn)
+
     @php
+    if ($key == 0){
+        $btnColor = 'secondary';
+        $btnBorder = '';
+    }else{
+        $btnColor = $btnColorTmp;
+        $btnBorder = $btnBorderTmp;
+    }
+
     if (!empty($btn->disabled) && $btn->disabled === true){
         $active = 'disabled';
     }else{
@@ -255,6 +265,9 @@
     }
     @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
+    @if (!empty($btn->legend) && $key == 0)
+    <div class="pb-2"><small><i>* {{$btn->legend}}</i></small></div>
+    @endif
     <button type="{{$btn->subType}}" class="btn btn-{{$btnColor}} {{$btnBorder}}" {{$active}}>{{$btn->label}}</button>
     @elseif($btn->subType == 'btn' OR $btn->subType == 'button')
     @php
@@ -272,15 +285,29 @@
                 $btnBorder = '';
             }
         }
+        if (!empty($btn->action) && $btn->action == 'close'){
+            $route = $util->toRoute($btn->route);
+        }else{
+            $route = $util->toRoute($btn->route, $form->updateId);
+        }
+
     @endphp
-    <a href="{{$util->toRoute($btn->route)}}" class="btn btn-{{$btnColor}} {{$btnBorder}} {{$btnStatus}}" tabindex="-1" role="button">{{$btn->label}}</a>
+    <a href="{{$route}}" class="btn btn-{{$btnColor}} {{$btnBorder}} {{$btnStatus}}" tabindex="-1" role="button">{{$btn->label}}</a>
+
     @endif
     @endforeach
     </div>
     {{--*************************************************--}}
     <div class="d-block d-sm-none">
-    @foreach ($item->items as $btn)
+    @foreach ($item->items as $key => $btn)
     @php
+    if ($key == 0){
+        $btnColor = 'secondary';
+        $btnBorder = '';
+    }else{
+        $btnColor = $btnColorTmp;
+        $btnBorder = $btnBorderTmp;
+    }
     if (!empty($btn->disabled) && $btn->disabled === true){
         $active = 'disabled';
     }else{
@@ -288,6 +315,9 @@
     }
     @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
+    @if (!empty($btn->legend) && $key == 0)
+    <div class="pb-2"><small><i>* {{$btn->legend}}</i></small></div>
+    @endif
     <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}} mb-2" {{$active}}>{{__($btn->label)}}</button>
     @elseif($btn->subType == 'btn' OR $btn->subType == 'button')
     @php

@@ -188,9 +188,9 @@
         @endphp
     {{--Adição de regra de validação--}}
     @if (!empty($item->required) && $item->required === true)
-    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" required></textarea>
+    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" style="width:100%" required></textarea>
     @else
-    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}"></textarea>
+    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" style="width:100%"></textarea>
     @endif
     {{--------------------------------}}
     @else
@@ -199,7 +199,6 @@
     </div>
     </div>
     </div>
-
     @elseif ($item->type == 'btn-group')
     @php
     if (!empty($item->btnColor)){
@@ -216,16 +215,30 @@
         $btnColor = 'light';
         $btnBorder = 'btn-outline-secondary';
     }
+
+    $btnColorTmp = $btnColor;
+    $btnBorderTmp = $btnBorder;
+
     @endphp
     @if (!empty($item->items))
-    @foreach ($item->items as $btn)
+    @foreach ($item->items as $key => $btn)
+    @php
+    if ($key == 0){
+        $btnColor = 'secondary';
+        $btnBorder = '';
+    }else{
+        $btnColor = $btnColorTmp;
+        $btnBorder = $btnBorderTmp;
+    }
+    @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
+    @if (!empty($btn->legend) && $key == 0)
+    <div class="pb-2"><small><i>* {{$btn->legend}}</i></small></div>
+    @endif
     <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}} px-3">{{__($btn->label)}}</button>
     @endif
     @endforeach
     @endif
-
-
     {{--Adinona um componente file--}}
     @elseif($item->type == 'file')
     <div class="form-group row mb-2 mb-md-3">

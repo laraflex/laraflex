@@ -14,7 +14,6 @@ class EditorManager{
     protected $contentCode;
 
     public function __construct($width = NULL){
-
         $this->path = config('laraflex.summernote.imagePath');
         $this->mimeType = config('laraflex.summernote.extension');
         $this->quality = config('laraflex.summernote.quality');
@@ -25,23 +24,80 @@ class EditorManager{
         }
     }
 
+    /**
+     * O parâmetro contentCode permite adicionar o código (id) do conteúdo nas imagens
+     * inseridas como base64 pelo método editorConvertImageBase64
+     */
+
     public function editorEncode($str, $contentCode = NULL)
     {
-
         if ($contentCode != NULL){
             $this->contentCode = $contentCode;
         }
+        $str = $this->prepareFormat($str);
+        $str = $this->editorConvertImageBase64($str);
+        $str = addslashes($str);
+        //Codifica códogo fonte
+        $str = $this->codeFormat($str);
+        $str = $this->adviceFormat($str);
+        $str = $this->noteFormat($str);
+        $str = $this->alertFormat($str);
+        $str = str_replace('(', '', $str);
+        $str = str_replace(')', '', $str);
+        $str = str_replace('@', '(@)', $str);
+        return $str;
+    }
+
+
+
+    private function noteFormat($str){
+        $img = Util::create()->toImage('images/icons/note.jpg');
+        $icon = '<img src=\"'.$img.'\"/ class=\"mr-2 rounded-circle\" style=\"width:26px;\">';
+        $str = str_ireplace('[note]', '<note><div class=\"alert alert-primary p-3 d-block ml-3 ml-lg-5 mb-4 mr-0 mr-lg-3\">'.$icon, $str);
+        $str = str_ireplace('[endnote]', '</div></note><br/>', $str);
+        return $str;
+    }
+
+    private function adviceFormat($str){
+        $img = Util::create()->toImage('images/icons/edit.jpg');
+        $icon = '<img src=\"'.$img.'\"/ class=\"mr-2 rounded-circle\" style=\"width:26px;\">';
+        $str = str_ireplace('[advice]', '<alert><div class=\"alert alert-warning p-3 d-block ml-3 ml-lg-5 mb-4 mr-0 mr-lg-3\">'.$icon, $str);
+        $str = str_ireplace('[endadvice]', '</div></alert><br/>', $str);
+        return $str;
+    }
+
+    private function alertFormat($str){
+        $img = Util::create()->toImage('images/icons/alert.jpg');
+        $icon = '<img src=\"'.$img.'\"/ class=\"mr-2 rounded-circle\" style=\"width:26px;\">';
+        $str = str_ireplace('[alert]', '<alert><div class=\"alert alert-danger p-3 d-block ml-3 ml-lg-5 mb-4 mr-0 mr-lg-3\">'.$icon, $str);
+        $str = str_ireplace('[endalert]', '</div></alert><br/>', $str);
+        return $str;
+    }
+
+    /**
+     * Método destinado a preparar a string de conteúdo para ser codificado
+     */
+
+    private function prepareFormat($str){
+        $str = strtr($str,'\\','');
 
         $str = trim($str);
         $tmp = ['<?php', '<?', '?>', '<script',  '<script>', '</scrip'];
         foreach ($tmp as $key => $value) {
             $str = str_ireplace($value, htmlentities($value), $str);
         }
-        $str = $this->EditorConvertImageBase64($str);
-        $str = addslashes($str);
-        $str = str_ireplace('@code', '<div class=\"border rounded mr-0 mr-lg-4 px-3 px-lg-4 bg-light\" style=\"overflow:auto;\"><pre>', $str);
-        $str = str_ireplace('@endcode', '</pre></div>', $str);
-        $str = str_replace('@', '(@)', $str);
+        return $str;
+    }
+
+    /**
+     * Método privado destinado a formatar código de liguagem de programação
+     */
+
+    private function codeFormat($str){
+        $str = str_ireplace('@code', '<div class=\"border rounded mr-0 mr-lg-3 ml-3 ml-lg-5 px-3 px-lg-4 bg-light\" style=\"overflow:auto; line-height: 1.1;\"><pre>', $str);
+        $str = str_ireplace('@endcode', '</pre></div><br/>', $str);
+        $str = str_ireplace('[code]', '<div class=\"border rounded mr-0 mr-lg-3 ml-3 ml-lg-5 px-3 px-lg-4 bg-light\" style=\"overflow:auto; line-height: 1.1;\"><pre>', $str);
+        $str = str_ireplace('[endcode]', '</pre></div><br/>', $str);
         return $str;
     }
 
@@ -50,8 +106,12 @@ class EditorManager{
         return $str;
     }
 
+    public function clearReviw($str){
+
+    }
+
     /**
-     * Método destinado a apagear todas as imagens de um artigo editado pelo Suumernote
+     * Método destinado a apagar todas as imagens de um artigo editado pelo Suumernote
      * O critério usado deve ser pelo nome do arquivo a partir do "code" do artigo
      * @param $contentCode - O code do Artigo ou post;
      */
@@ -77,7 +137,7 @@ class EditorManager{
      * @param $typeNewFile - tipo Mime (extenção) para o novo arquivo.
      */
 
-    public function EditorConvertImageBase64($str){
+    public function editorConvertImageBase64($str){
         $pngHead = '<img src="data:image/png;base64';
         $jpegHead = '<img src="data:image/jpeg;base64';
         $webpHead = '<img src="data:image/webp;base64';

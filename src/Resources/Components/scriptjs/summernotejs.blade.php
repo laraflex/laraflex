@@ -48,7 +48,7 @@ $(document).ready(function() {
     }
     });
 
-    $('#summernote').summernote('lineHeight', 1.2);
+    $('#summernote').summernote('lineHeight', 1.5);
     $('#summernote').summernote('fontSize', 16);
     $('#summernote').summernote('fontName', 'Arial');
 });

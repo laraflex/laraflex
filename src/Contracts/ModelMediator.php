@@ -33,6 +33,15 @@ abstract class ModelMediator
         }
     }
 
+    public function object($data)
+    {
+        if (!empty($data)){
+            return json_decode($this->Json($data));
+        }else{
+            return NULL;
+        }
+    }
+
     // 88888888888888888888888888888888888888888888888888888888
     /**
      * Return a collection

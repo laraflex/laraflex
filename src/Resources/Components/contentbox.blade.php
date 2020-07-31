@@ -108,6 +108,7 @@ $data = $contentbox->data;
     @endif
     </div>
 </div>
+
 @if(!empty($contentbox->coments))
 @php
     $coments = $contentbox->coments;
