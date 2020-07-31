@@ -24,7 +24,6 @@ class AdminConfigComposer
     {
         $var = [
             'title' => 'Projeto Laraflex',
-            //'headerClass' => 'container',
             //'contentClass' => 'container-fluid',
             //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],

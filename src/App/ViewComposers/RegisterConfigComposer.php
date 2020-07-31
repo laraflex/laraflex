@@ -22,9 +22,6 @@ class RegisterConfigComposer
     {
         $var = [
             'title' => 'Projeto LaraFlex',
-            //'headerClass' => 'container',
-            //'contentClass' => 'container-fluid',
-            //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'dependencies' => NULL,
             'components' => NULL,

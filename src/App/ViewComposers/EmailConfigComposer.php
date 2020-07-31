@@ -23,8 +23,6 @@ class EmailConfigComposer
     {
         $var = [
             'title' => 'Projeto LaraFlex',
-            //'headerClass' => 'container',
-            //'contentClass' => 'container-fluid',
             'bgStyle' => ['border' => 'shadow'],
             'meta' => [
                 ['name' => 'keywords', 'content' => 'laravel, desenvolvimento web, php'],

@@ -25,7 +25,6 @@ class AuthConfigComposer
     {
         $var = [
             'title' => 'LaraFlex - View components and view pattern',
-            //'headerClass' => 'container',
             //'contentClass' => 'container-fluid',
             //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],

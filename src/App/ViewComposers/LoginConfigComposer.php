@@ -23,16 +23,15 @@ class LoginConfigComposer
     {
         $var = [
             'title' => 'Projeto LaraFlex',
-            //'headerClass' => 'container',
-            //'contentClass' => 'container-fluid',
-            //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'dependencies' => NULL,
-            'components' => NULL,
+            'components' => [
+                LoginPresenter::create()->toArray(),
+            ],
             'headerComponents' => [
                 NavBarDefaultPresenter::create()->toArray(),
                 ImageBarPresenter::create()->toArray(),
-             ],
+            ],
         ];
         return json_encode($var);
     }

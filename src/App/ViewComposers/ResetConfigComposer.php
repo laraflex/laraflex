@@ -23,9 +23,6 @@ class ResetConfigComposer
     {
         $var = [
             'title' => 'Projeto LaraFlex',
-            //'headerClass' => 'container',
-            //'contentClass' => 'container-fluid',
-            //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'meta' => [
                 ['name' => 'keywords', 'content' => 'laravel, desenvolvimento web, php'],
