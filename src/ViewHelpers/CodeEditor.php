@@ -19,9 +19,8 @@ class CodeEditor{
         $str = addslashes($str);
         $str = str_ireplace("@code", "<div class=\"border rounded mr-0 mt-3 mb-3 pl-2 pt-3 pr-2 pb-0 bg-light overflow-auto\"><div style=\"font-family:courier;\"><pre class=\"m-0 pb-3\" style=\"line-height: 1.4;\">", $str);
         $str = str_ireplace("@endcode", "</pre></div></div><br/>", $str);
-        $str = str_replace('(', '', $str);
-        $str = str_replace(')', '', $str);
-        $str = str_replace('@', '(@)', $str);
+        $str = str_replace('(@)', '@', $str);
+        $str = str_replace('@', '&#64;', $str);
         return $str;
     }
 

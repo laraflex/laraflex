@@ -26,8 +26,6 @@ class PublicConfigComposer
     {
         $var = [
             'title' => 'LaraFlex - View components and view pattern',
-            //'contentClass' => 'container-fluid',
-            //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'meta' => [
                 ['name' => 'keywords', 'content' => 'laravel, desenvolvimento web, php'],

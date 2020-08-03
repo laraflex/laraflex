@@ -42,9 +42,8 @@ class EditorManager{
         $str = $this->adviceFormat($str);
         $str = $this->noteFormat($str);
         $str = $this->alertFormat($str);
-        $str = str_replace('(', '', $str);
-        $str = str_replace(')', '', $str);
-        $str = str_replace('@', '(@)', $str);
+        $str = str_replace('(@)', '@', $str);
+        $str = str_replace('@', '&#64;', $str);
         return $str;
     }
 

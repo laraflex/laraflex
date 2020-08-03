@@ -4,16 +4,13 @@ namespace App\ViewComposers;
 use Illuminate\View\View;
 use laraflex\ViewHelpers\Util;
 use laraflex\ViewHelpers\Listeners\DependenciesListener;
-use App\ViewPresenters\NavBarDefaultPresenter;
-use App\ViewPresenters\VerticalNavBarPresenter;
-use App\ViewPresenters\ImagePanelPresenter;
-use App\ViewPresenters\CarouselPresenter;
+use App\ViewPresenters\Testes\SideBarAdminPresenter;
 use App\ViewPresenters\SimpleFooterPresenter;
-use App\ViewPresenters\BlogcardsExemplePresenter;
+//use App\ViewPresenters\Testes\BackPanelPresenter;
+
 use Illuminate\Support\Facades\Auth;
 
-
-class HomeConfigComposer
+class DocConfigComposer
 {
     protected $util;
     protected $secure;
@@ -28,20 +25,16 @@ class HomeConfigComposer
     {
         $var = [
             'title' => 'LaraFlex - View components and view pattern',
-            //'contentClass' => 'container-fluid',
-            //'onePage' => true,
             'bgStyle' => ['border' => 'shadow'],
             'meta' => [
                 ['name' => 'keywords', 'content' => 'laravel, desenvolvimento web, php'],
                 ['name' => 'author', 'content' => 'Dimas Vidal'],
             ],
             'dependencies' => NULL,
-            'components' => [
-                BlogcardsExemplePresenter::create()->toArray(),
-            ],
+            'components' => NULL,
             'headerComponents' => [
-                NavBarDefaultPresenter::create()->toArray(['page' => 'home']),
-                ImagePanelPresenter::create()->toArray(),
+                SideBarAdminPresenter::create()->toArray(),
+                //PanelnavModalPresenter::create()->toArray(),
             ],
             'footerComponents' => [
                 SimpleFooterPresenter::create()->toArray(),
@@ -50,10 +43,9 @@ class HomeConfigComposer
         return $var;
     }
     /**
-     * The border property sets the border types of the component.
+     * A propriedade border estabelece os tipos de borda do componente.
      * As opções são: shadow, rounded, border e none.
      */
-
     public function compose(View $view)
     {
         $dependencies = DependenciesListener::create();
@@ -67,7 +59,3 @@ class HomeConfigComposer
         }
     }
 }
-
-/**
- * Important: all ViewComposer classes must be registered with provider ComposerServiceProvider.
- */

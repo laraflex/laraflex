@@ -9,6 +9,22 @@ class NavBarDefaultPresenter extends Presenter
     use AccessControl;
     public function toArray($data = NULL)
     {
+
+        $fixedmenu = false;
+        $transparent = false;
+        $fadeTransparency = false;
+        $menuEffect = false;
+        $bgColor = 'black'; //'black', //'bordeaux', //'white', //'navyBlue',
+
+        if (!empty($data['page'])){
+            if ($data['page'] == 'home'){
+                $fixedmenu = true;
+                $transparent = true;
+                $fadeTransparency = true;
+                $menuEffect = false;
+            }
+        }
+
         $var = [
             'component' => 'navbar',
             'type' => 'header',
@@ -18,10 +34,10 @@ class NavBarDefaultPresenter extends Presenter
             'showLogin' => true,
             'showRegister' => true,
             'bgColor' => 'black', //'black', //'bordeaux', //'white', //'navyBlue',
-            //'fixedmenu' => true,
-            //'transparent' => true,
-            'fadeTransparency' => true,
-            //'menuEffect' => true,
+            'fixedmenu' => $fixedmenu,
+            'transparent' => $transparent,
+            'fadeTransparency' => $fadeTransparency,
+            'menuEffect' => $menuEffect,
             'items' => [
                 [
                     'label' => 'home',
