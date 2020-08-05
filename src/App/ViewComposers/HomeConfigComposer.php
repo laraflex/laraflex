@@ -40,7 +40,7 @@ class HomeConfigComposer
                 BlogcardsExemplePresenter::create()->toArray(),
             ],
             'headerComponents' => [
-                NavBarDefaultPresenter::create()->toArray(['page' => 'home']),
+                NavBarDefaultPresenter::create()->toArray(NULL, ['page' => 'home']),
                 ImagePanelPresenter::create()->toArray(),
             ],
             'footerComponents' => [

@@ -6,7 +6,7 @@ use laraflex\Contracts\Presenter;
 class LoginPresenter extends Presenter
 {
 
-    public function toArray($data = NULL)
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             'component' => 'login',

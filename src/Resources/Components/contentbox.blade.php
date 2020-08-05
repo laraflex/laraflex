@@ -9,7 +9,7 @@
 @endif
 
 @if (!empty($contentbox) && !empty($contentbox->showItems))
-<section id="contentbox" class="pb-1 pt-3 pt-md-4">
+<section id="contentbox" class="pb-1 pt-2 pt-md-3">
 <div class="container-xl pl-0 pr-1 pr-sm-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 @php
@@ -69,8 +69,8 @@ $data = $contentbox->data;
     <div class="contentbox-shared pt-3 pb-2" style="line-height: calc(1.1em + 0.6vw); font-size:calc(14px + 0.21vw);{{$font_family}}">
     <b>{{__('Keywords')}}</b>: {{$data->keywords}}</div>
     @endif
-    </div>
     <hr>
+    </div>
     @endif
     {{--Fim do bloco abstract--------------------------}}
     {{--Bloco de conteúdo -----------------------------------------------}}

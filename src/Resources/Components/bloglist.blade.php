@@ -138,8 +138,7 @@
     {{--End Pagination----------------------------------}}
 
     </div>
-</div>
-</div>
+
 {{--Icon de retorno ao topo da página--}}
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-0 d-none d-sm-block pl-5 container-xl">
@@ -153,11 +152,8 @@
 </div>
 {{--8888888888888888888888888888888888888888888888888988888888888--}}
 
-<div class="d-block d-sm-none mb-3 bg-white pr-1">
-    @php
-    $nullImage = false;
-    @endphp
-    <div id="headerSection" class="pt-3 pb-2">
+<div class="d-block d-sm-none mb-3 bg-white">
+    <div id="headerSection" class="pt-0 pb-2">
         <h6 class="text-center font-weight-normal">{{$bloglist->title}}</h6>
     </div>
     <ul class="list-unstyled">
@@ -171,9 +167,8 @@
                 $link = '#';
             }
         @endphp
-    <a href="{{$link}}" rel="noopener noreferrer">
-    <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded" style="background-color: #F2F2F2;">
-
+    <a href="{{$link}}">
+    <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded bg-light">
     @php
     if (!empty($item->imageStorage)){
         $image = $item->imageStorage;
@@ -186,19 +181,14 @@
     }
     @endphp
     @if (in_array('image', $bloglist->showItems) && !empty($image))
-
-    <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px; width: 76px; height: 76px">
+    <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px;width: 80px; height: 80px">
     <div class="media-body pl-1 my-auto">
     @else
-    @php
-    $nullImage = true;
-    @endphp
-    <div class="media-body pl-1 my-auto ">
+    <div class="media-body pl-1 my-auto py-2">
     @endif
-
     @if (!empty($item->title))
-    <div  class="mb-0 p-0 pt-1 pb-1">
-    <h6 class="mb-1 text-dark" style="line-height: 1.1">{{$item->title}}</h6>
+    <div class="pb-0 mb-0 p-0 pt-1 pb-1">
+    <div class=" mb-1 text-dark" style="font-size:calc(10px + 1vw);font-family:arial; line-height: 1.1">{{$item->title}}</div>
 
     @if (!empty($item->abstract))
             @php
@@ -212,13 +202,10 @@
                     }else{
                         $num = 90;
                     }
-                    if ($nullImage === true){
-                        $num = 150;
-                    }
                 $str = substr("$item->abstract", 0, $num);
             @endphp
     @if($num != 0)
-    <div style="line-height: 1.0" class="text-dark"><small>{!!$str!!} ...</small></dv>
+    <p style="line-height: 1.0; font-family:arial;" class="text-dark pb-0 mb-0"><small>{!!$str!!} ...</small></p>
     @endif
     @endif
 </div>
@@ -235,7 +222,6 @@
 </div>
 @endif
 {{--End Pagination----------------------------------}}
-
 </div>
 </section>
 @else
@@ -251,3 +237,5 @@
 </div>
 @endif
 @endif
+
+

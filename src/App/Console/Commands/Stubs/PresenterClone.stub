@@ -9,7 +9,7 @@ class PresenterClone extends Presenter
 {
     //use AccessControl, ModelPaginate;
 
-    public function toArray($data = NULL)
+    public function toArray($data = NULL, array $config = NULL)
     {
 
         $var = [

@@ -7,7 +7,7 @@ use laraflex\ViewHelpers\AccessControl;
 class NavBarDefaultPresenter extends Presenter
 {
     use AccessControl;
-    public function toArray($data = NULL)
+    public function toArray($data = NULL, array $config = NULL)
     {
 
         $fixedmenu = false;
@@ -16,8 +16,8 @@ class NavBarDefaultPresenter extends Presenter
         $menuEffect = false;
         $bgColor = 'black'; //'black', //'bordeaux', //'white', //'navyBlue',
 
-        if (!empty($data['page'])){
-            if ($data['page'] == 'home'){
+        if (!empty($config['page'])){
+            if ($config['page'] == 'home'){
                 $fixedmenu = true;
                 $transparent = true;
                 $fadeTransparency = true;

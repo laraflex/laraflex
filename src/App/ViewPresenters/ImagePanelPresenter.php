@@ -6,7 +6,7 @@ use laraflex\Contracts\Presenter;
 class ImagePanelPresenter extends Presenter
 {
 
-    public function toArray($data = NULL)
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             'component' => 'imagepanel',
