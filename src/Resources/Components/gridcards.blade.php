@@ -27,6 +27,10 @@
 @endif
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 px-2 px-lg-3 px-xl-0">
+
+
+
+
     @if (!empty($gridcards->seeMore))
     <div class="row m-0 p-0">
         <div class="col-12 col-sm-9 p-0">
@@ -68,6 +72,9 @@
         @endif
         @endif
     @endif
+
+
+
     <div class="mt-0">
     {{--<div class="row w-100 m-0 p-0">--}}
     {{--Add items ------------------------------------------------}}
@@ -128,11 +135,13 @@
         }
     }
     @endphp
+
+
     <div class="{{$column}} p-0  {{$margen_bottom}}">
     @if ($showLimit === true)
-    <div class="mx-1 h-100 {{--p-2x p-md-3x m-1 mb-2 mb-md-3--}} {{$border}} {{$visibility[$key]}}">
+    <div class="mx-1 h-100 {{$border}} {{$visibility[$key]}}">
     @else
-    <div class="mx-1 h-100   {{--p-2 p-md-3 m-1 mb-2 mb-md-3--}} {{$border}}">
+    <div class="mx-1 h-100  {{$border}}">
     @endif
     @if (!empty($gridcards->styles->bgEffect) && $gridcards->styles->bgEffect === true)
     <div class="gridcards-item {{$margin}}" style="background-color: #000000;">

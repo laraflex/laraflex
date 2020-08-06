@@ -118,7 +118,7 @@
     </div>
     </div>
     </a>
-    <img class="icon_play rounded-circle" src="images/icons/black_white_play.png" />
+    <img class="icon_play rounded-circle" src="{{$util->toImage('images/icons/black_white_play.png')}}" />
     </li>
     @endforeach
     @endif

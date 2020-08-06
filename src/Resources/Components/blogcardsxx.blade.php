@@ -25,52 +25,7 @@
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
     <div class="d-none d-sm-block pb-0 mb-0">
-
-
-        @if (!empty($blogcards->seeMore))
-        <div class="row m-0 p-0">
-            <div class="col-12 col-sm-9 p-0">
-                @if(!empty($blogcards->title))
-                <div class="blogcards-title text-left pt-3 pb-2 pl-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-                {{$blogcards->title}}</div>
-                @if (!empty($blogcards->legend))
-                    <div class="blogcards-shared text-left pb-3 pl-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-                    <span>{{$blogcards->legend}}</span></div>
-                @endif
-                @endif
-            </div>
-            <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block align-text-bottomx" style="width: 100%;">
-                @if(!empty($blogcards->legend) && !empty($blogcards->title))
-                <div class="py-2 mb-sm-1 py-xl-2"></div>
-                <div class="pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
-                <a href="{{$util->toRoute($blogcards->seeMore)}}" class="btn btn-dark m-0">
-                {{__('See more')}}
-                </a>
-                </div>
-                @else
-                <div class="pb-sm-3 pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
-                <a href="{{$util->toRoute($blogcards->seeMore)}}" class="btn btn-dark m-0">
-                {{__('See more')}}
-                </a>
-                </div>
-                @endif
-            </div>
-        </div>
-        @else
-            @if(!empty($blogcards->title))
-            <div class="blogcards-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-            {{$blogcards->title}}</div>
-            @if (!empty($blogcards->legend))
-                <div class="blogcards-shared text-center pb-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-                <span>{{$blogcards->legend}}</span></div>
-            @else
-                <div class="pt-2"></div>
-            @endif
-            @endif
-        @endif
-    {{--
     <div id="headerSection" class="">
-
         @if (!empty($blogcards->title))
         <div class="blogcards-title text-center pt-2 pb-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
         {{$blogcards->title}}</div>
@@ -80,36 +35,23 @@
         <span style="color:gray">{{$blogcards->legend}}</span></div>
         @endif
     </div>
-    --}}
-
-
     <div class="row p-2">
         {{--Início linha linha ==== --}}
     @php
-    $column = 'col-sm-4 col-md-4 col-lg-3';
-    $titleFont = 'font-size:calc(0.8em + 0.2vw); line-height:1.2;';
-    $sharedFont = 'font-size:calc(0.6em + 0.15vw);letter-spacing: 2px;';
-    $fontAbstract = 'font-size:calc(0.68em + 0.15vw);';
-
-
-    $visibility = ['d-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-none d-lg-block', 'd-none d-lg-block'];
-    $num_limit = 8;
-    @endphp
-
-
-
-    @foreach ($blogcards->items as $key => $item)
-    @if (!empty($blogcards->seeMore))
-    @php 
-    if ($key == $num_limit){
-    break;
+    if (!empty($blogcards->expanded) && $blogcards->expanded === true){
+        $column = 'col-sm-6 col-md-4 col-lg-4';
+        $titleFont = 'font-size:calc(0.9em + 0.4vw); line-height:1.2';
+        $sharedFont = 'font-size:calc(0.8em + 0.15vw);';
+        $fontAbstract = 'font-size:calc(0.82em + 0.15vw);';
+    }else{
+        $column = 'col-sm-4 col-md-4 col-lg-3';
+        $titleFont = 'font-size:calc(0.8em + 0.2vw); line-height:1.2;';
+        $sharedFont = 'font-size:calc(0.6em + 0.15vw);letter-spacing: 2px;';
+        $fontAbstract = 'font-size:calc(0.68em + 0.15vw);';
     }
     @endphp
-    <div class="{{$column}} p-0 pb-2 pb-lg-3 {{$visibility[$key]}}">
-    @else 
+    @foreach ($blogcards->items as $item)
     <div class="{{$column}} p-0 pb-2 pb-lg-3">
-    @endif
-
     <article class= "mx-sm-1 mx-lg-2 h-100 {{$border}}">
     <header class="p-sm-3 p-md-3">
     @if (in_array('title', $blogcards->showItems) && !empty($item->title))
@@ -201,8 +143,7 @@
     @endforeach
     </div>
 {{--pagination--------------------------------------}}
-@if (!empty($blogcards->seeMore))
-@elseif (!empty($blogcards->paginate))
+@if (!empty($blogcards->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
 {!!$blogcards->paginate->links()!!}
 </div>
@@ -223,7 +164,6 @@
 {{--8888888888888888888888888888888888888888888888888888888888--}}
 
 
-
 <div class="d-block d-sm-none mb-3 bg-white">
     <div id="headerSection" class="pt-0 pb-2">
         <h6 class="text-center font-weight-normal">{{$blogcards->title}}</h6>
@@ -232,10 +172,6 @@
     <ul class="list-unstyled">
     @foreach ($blogcards->items as $key => $item)
         @php
-            if (!empty($blogcards->seeMore) && $key == 4){
-            break;
-            }
-
             if(!empty($blogcards->route)){
                 $link = $util->toRoute($blogcards->route, $item->id);
             }elseif(!empty($item->link)){
@@ -298,23 +234,7 @@
     @endforeach
     </ul>
 
-{{--Bloco de see more ---------------------------}}
-@if (!empty($blogcards->seeMore))
-<div class="pl-3 pl-lg-4 mt-3 d-block d-sm-none">
-    <a href="{{$util->toRoute($blogcards->seeMore)}}" class="btn btn-sm btn-dark m-0">
-    <span class="px-2">{{__('See more')}}</span>
-    </a>
-</div>
 {{--pagination--------------------------------------}}
-@elseif (!empty($blogcards->paginate))
-<div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$blogcards->paginate->links()!!}
-</div>
-@endif
-{{--End Pagination----------------------------------}}
-
-
-{{--pagination--------------------------------------
 @if (!empty($blogcards->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
 {!!$blogcards->paginate->links()!!}

@@ -67,6 +67,8 @@
         <span style="color:gray">{{$groupCards->legend}}</span></div>
         @endif
     @endif
+
+
     <div class="row p-0 m-0 pt-1">
     @php
     $visibility = ['d-block ', 'd-block ', 'd-block ', 'd-block', 'd-none d-sm-block d-lg-none', 'd-none d-sm-block d-lg-none'];
@@ -79,6 +81,7 @@
     }else{
         $showLimit = false;
     }
+
     @endphp
     @foreach ($groupCards->items as $key =>$item)
      {{--Início das colunas do componente--}}

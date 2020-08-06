@@ -22,6 +22,7 @@
         }
 
         $num_char = 242;
+        
     @endphp
 
 <section id="bloglist" class="pb-1 pt-3 pt-md-4">
@@ -31,6 +32,50 @@
 <div id="bloglist" class="d-none d-sm-block">
     <div class="mt-0 mb-0 pr-0 pl-0">
     <div id="headerSection" class="pb-0">
+
+
+        @if (!empty($bloglist->seeMore))
+        <div class="row m-0 p-0">
+            <div class="col-12 col-sm-9 p-0">
+                @if(!empty($bloglist->title))
+                <div class="bloglist-title text-left pt-3 pb-2 pl-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+                {{$bloglist->title}}</div>
+                @if (!empty($bloglist->legend))
+                    <div class="bloglist-shared text-left pb-3 pl-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+                    <span>{{$bloglist->legend}}</span></div>
+                @endif
+                @endif
+            </div>
+            <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block align-text-bottomx" style="width: 100%;">
+                @if(!empty($bloglist->legend) && !empty($bloglist->title))
+                <div class="py-2 mb-sm-1 py-xl-2"></div>
+                <div class="pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
+                <a href="{{$util->toRoute($bloglist->seeMore)}}" class="btn btn-dark m-0">
+                {{__('See more')}}
+                </a>
+                </div>
+                @else
+                <div class="pb-sm-3 pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
+                <a href="{{$util->toRoute($bloglist->seeMore)}}" class="btn btn-dark m-0">
+                {{__('See more')}}
+                </a>
+                </div>
+                @endif
+            </div>
+        </div>
+        @else
+            @if(!empty($bloglist->title))
+            <div class="bloglist-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
+            {{$bloglist->title}}</div>
+            @if (!empty($bloglist->legend))
+                <div class="bloglist-shared text-center pb-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+                <span>{{$bloglist->legend}}</span></div>
+            @else
+                <div class="pt-2"></div>
+            @endif
+            @endif
+        @endif
+    {{--
     @if (!empty($bloglist->title))
     <div class="bloglist-title text-center pt-2 pb-3" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
     {{$bloglist->title}}</div>
@@ -40,8 +85,18 @@
     <span style="color:gray">{{$bloglist->legend}}</span></div>
     @endif
     </div>
+    --}}
+
+
+
     <div class="{{$border}} pt-3 pt-lg-4 pb-3 mb-3 mt-2">
-    @foreach ($bloglist->items as $item)
+
+    @foreach ($bloglist->items as $key => $item)
+    @php 
+    if (!empty($bloglist->seeMore) && $key == 2){
+        break;
+    }
+    @endphp
 
     <div class="row w-100 p-3 p-md-3 px-md-4 px-lg-5  mb-3 ml-0">
 
@@ -56,15 +111,28 @@
     elseif(!empty($item->image)){
         $image = $util->toImage($item->image);
     }
+
+    
+    if ($key % 2 == 0){
+        $side = 'left';
+        $padding = 'pl-3 pl-lg-4 pl-xl-5 pr-0';
+    }else{
+        $side = 'right';
+        $padding = 'pr-3 pr-lg-4 pr-xl-5 pl-0';
+    }
+
     @endphp
 
     @if (in_array('image', $bloglist->showItems) && !empty($image))
-
-    <div class="col-sm-4 col-md-5 m-0 p-0">
-    <img src="{{$image}}" class="image-fluidx mx-auto d-block" style="width:100%;">
+    
+    @if ($side == 'left')
+    <div class="col-sm-4 col-md-5 m-0 p-0" style="min-height:calc(50px + 10vw);">
+    <img src="{{$image}}" class="" style="width:100%;">
     </div>
-    <div class="col-sm-8 col-md-7 pl-3 pl-lg-4 pl-xl-5 pr-0">
-    <div class="" style="margin: 0; position: absolute; top: 50%; transform: translate(0, -50%)">
+    @endif
+
+    <div class="col-sm-8 col-md-7 p-0">
+    <div class="{{$padding}}" style="margin: 0; position: absolute; top: 50%; transform: translatey(-50%)">
     @else
     @php
         $num_char = 1000;
@@ -126,11 +194,28 @@
     {{--End button------------------------------------}}
     </div>
     </div>
+
+    @if (in_array('image', $bloglist->showItems) && !empty($image))
+    
+    @if ($side == 'right')
+    <div class="col-sm-4 col-md-5 m-0 p-0" style="min-height:calc(50px + 10vw);">
+    <img src="{{$image}}" class="" style="width:100%;">
+    </div>
+    @endif
+    @endif
+
+
     </div>
     @endforeach
+
+
+
+
     </div>
-    {{--pagination--------------------------------------}}
-    @if (!empty($bloglist->paginate))
+    {{--seeMOre and pagination--------------------------------------}}
+    @if (!empty($bloglist->seeMore))
+
+    @elseif (!empty($bloglist->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
     {!!$bloglist->paginate->links()!!}
     </div>
@@ -159,6 +244,9 @@
     <ul class="list-unstyled">
     @foreach ($bloglist->items as $key => $item)
         @php
+            if (!empty($bloglist->seeMore) && $key == 4){
+            break;
+            }
             if(!empty($bloglist->route)){
                 $link = $util->toRoute($bloglist->route, $item->id);
             }elseif(!empty($item->link)){
@@ -181,7 +269,7 @@
     }
     @endphp
     @if (in_array('image', $bloglist->showItems) && !empty($image))
-    <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px;width: 80px; height: 80px">
+    <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px; width: 80px; height: 80px">
     <div class="media-body pl-1 my-auto">
     @else
     <div class="media-body pl-1 my-auto py-2">
@@ -216,7 +304,14 @@
     @endforeach
     </ul>
 {{--pagination--------------------------------------}}
-@if (!empty($bloglist->paginate))
+{{--Bloco de see more ---------------------------}}
+@if (!empty($bloglist->seeMore))
+<div class="pl-3 pl-lg-4 mt-3 d-block d-sm-none">
+    <a href="{{$util->toRoute($bloglist->seeMore)}}" class="btn btn-sm btn-dark m-0">
+    <span class="px-2">{{__('See more')}}</span>
+    </a>
+</div>
+@elseif (!empty($bloglist->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
 {!!$bloglist->paginate->links()!!}
 </div>
