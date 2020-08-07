@@ -154,7 +154,7 @@
 
     @if (in_array('author', $bloglist->showItems) && !empty($item->author))
 
-    <div class="bloglist-item-shared d-none d-lg-block pb-1"><span card-text" style="font-size:calc(0.8em + 0.15vw);{{$font_family}}"><b>{{$item->author}}</b></span>
+    <div class="bloglist-item-shared d-none d-lg-block pb-1"><span card-text" style="font-size:calc(0.8em + 0.15vw);{{$font_family}}"><b>{{ucfirst($item->author->name)}}</b></span>
         @if (in_array('date', $bloglist->showItems)&& !empty($item->date))
         <span class="card-text ml-2" style="font-size:calc(0.59em + 0.12vw);{{$font_family}}">{{$item->date}}</span>
         @endif

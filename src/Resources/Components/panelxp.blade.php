@@ -40,7 +40,7 @@
     @if(!empty($panel->images))
     <div class="col-12 col-sm-5 col-md-4 bg-white p-0 m-0 my-auto">
     <!-- Carousel ================================================== -->
-    <div id="CarouselItems" class="carousel slide" data-ride="carousel">
+    <div id="CarouselItems" class="carousel slide pt-lg-4" data-ride="carousel">
     <ol class="carousel-indicators mb-0">
     @foreach($panel->images as $key => $image)
         @if($key == 0)
@@ -213,6 +213,7 @@
     $style_font_title = 'font-size:calc(0.96em + 0.25vw);line-height:calc(1.3em + 0.3vw);';
     $style_font = 'font-size:calc(0.8em + 0.28vw);line-height:calc(1.3em + 0.35vw);';
 @endphp
+<div class="px-2 px-lg-3 px-xl-0">
 <div class="w-100 p-3 p-sm-4 p-lg-5 mb-4 mt-3 text-justify {{$stylePanel}}">
     @if(!empty($panel->addionTitle))
     <div style="{{$style_font_title}}{{$font_family_title}}">{{$panel->addionTitle}}</div>
@@ -220,6 +221,7 @@
     @foreach($panel->showAddons as $item)
     <p class="mt-2 mt-sm-3" style="{{$style_font}}{{$font_family}}">{{$panel->data->$item}}</p>
     @endforeach
+</div>
 </div>
 @endif
 </section>

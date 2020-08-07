@@ -71,7 +71,7 @@
             }
         }
     @endphp
-    <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif>
+    <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif class="needs-validation">
     @if (!empty($form->token) && $form->token === false)
     {{--Caso falso--}}
     @else
@@ -368,8 +368,11 @@
        }
     @endphp
     required {!!$pattern!!}/>
+
     @else
     />
+    
+
     @endif
     {{--------------------------------}}
     @else

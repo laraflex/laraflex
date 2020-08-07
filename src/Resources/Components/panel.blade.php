@@ -36,9 +36,9 @@
         {{$panel->title}}</div>
         @endif
         @if(!empty($panel->bgColor))
-        <div class="row w-100 p-0 m-0 py-2 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
+        <div class="row w-100 p-0 m-0 py-2 py-lg-3 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
         @else
-        <div class="row w-100 p-0 m-0 py-2 {{$stylePanel}}">
+        <div class="row w-100 p-0 m-0 py-2 py-lg-3 {{$stylePanel}}">
         @endif
 
             @php
@@ -80,9 +80,9 @@
         @endif
         </div>
         </div>
-        <div class="col-12 col-sm-7 col-md-8 contents pt-4 pb-4 pb-sm-5 px-3 px-sm-4">
+        <div class="col-12 col-sm-7 col-md-8 contents pt-4 pb-2 pb-sm-5 px-3 px-sm-4">
         @else
-        <div class="col-12 contents pt-5pb-sm-5 pb-4 pl-sm-5 pl-4 pr-3">
+        <div class="col-12 contents pt-5pb-sm-5 pb-2 pl-sm-5 pl-4 pr-3">
         @endif
 
         @foreach($panel->showItems as $item)
@@ -208,6 +208,7 @@
     $style_font_title = 'font-size:calc(0.96em + 0.25vw);line-height:calc(1.3em + 0.3vw);';
     $style_font = 'font-size:calc(0.8em + 0.28vw);line-height:calc(1.3em + 0.35vw);';
 @endphp
+<div class="px-2 px-lg-3 px-xl-0">
 <div class="w-100 p-3 p-sm-4 p-lg-5 mb-4 mt-3 text-justify {{$stylePanel}}">
     @if(!empty($panel->addionTitle))
     <div style="{{$style_font_title}}{{$font_family_title}}">{{$panel->addionTitle}}</div>
@@ -215,6 +216,7 @@
     @foreach($panel->showAddons as $item)
     <p class="mt-2 mt-sm-3" style="{{$style_font}}{{$font_family}}">{{$panel->data->$item}}</p>
     @endforeach
+</div>
 </div>
 @endif
 </div>
@@ -228,5 +230,3 @@
     </div>
 </div>
 @endif
-
-
