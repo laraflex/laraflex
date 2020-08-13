@@ -4,9 +4,9 @@ namespace App\ViewComposers;
 use Illuminate\View\View;
 use laraflex\ViewHelpers\Util;
 use laraflex\ViewHelpers\Listeners\DependenciesListener;
-use App\ViewPresenters\Testes\SideBarAdminPresenter;
 use App\ViewPresenters\SimpleFooterPresenter;
-//use App\ViewPresenters\Testes\BackPanelPresenter;
+use App\ViewPresenters\NavBarDefaultPresenter;
+use App\ViewPresenters\ImageBarPresenter;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -33,8 +33,8 @@ class DocConfigComposer
             'dependencies' => NULL,
             'components' => NULL,
             'headerComponents' => [
-                SideBarAdminPresenter::create()->toArray(),
-                //PanelnavModalPresenter::create()->toArray(),
+                NavBarDefaultPresenter::create()->toArray(),
+                ImageBarPresenter::create()->toArray(),
             ],
             'footerComponents' => [
                 SimpleFooterPresenter::create()->toArray(),

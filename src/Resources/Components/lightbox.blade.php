@@ -29,9 +29,9 @@
 @endphp
 
 @if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
-    <section id="lightbox" class="m-0 p-0 mx-0 pb-2 pb-sm-3 pt-1 pt-sm-2">
+    <section id="lightbox" class="m-0 p-0 mx-0 pb-2 pb-sm-3 pt-1 pt-sm-3 mt-2">
 @else
-    <section id="lightbox" class="m-0 p-0 mx-0 pb-2 pb-sm-2 pt-1 pt-sm-3">
+    <section id="lightbox" class="m-0 p-0 mx-0 pb-2 pb-sm-2 pt-1 pt-sm-3 mt-2">
 @endif
 
 @if (empty($lightbox->cssClass) OR $lightbox->cssClass == 'container')

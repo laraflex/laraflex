@@ -240,17 +240,19 @@
     @endforeach
     @endif
     {{--Adinona um componente file--}}
+
     @elseif($item->type == 'file')
-    <div class="form-group row mb-2 mb-md-3">
-    {{-------------------------------------------------------------------}}
+    <div class="form-group row mb-2 mb-md-3 px-3">
+    @if ($fileConfig === true)
     <div class="{{$labelStyle}}">
     @if (!empty($item->label) && !empty($item->name))
     <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</label>
     @endif
     </div>
-    <div class="{{$inputStyle}}">
+    @else
+    @endif
+    <div class="{{$inputStyle}} custom-filex">
     @if (!empty($item->name) && !empty($item->id))
-
     {{--adiciona regras regras de validação--}}
     @php
     if (!empty($item->attributes)){
@@ -258,11 +260,30 @@
     }else{
         $attributes = '';
     }
+    if (!empty($item->multiple) && $item->multiple === true){
+        $item->name = $item->name . '[]';
+        $multiple = 'multiple="multiple"';
+    }else{
+        $multiple ='';
+    }
+    $marginFile = '';
+    if ($fileConfig === true){
+        $label = '';
+        $marginFile = 'ml-2';
+    }
+    elseif (!empty($item->label)){
+        $label = $item->label;
+    }
+    else{
+        $label = 'Add a file';
+    }
     @endphp
     @if (!empty($item->required) && $item->required === true)
-    <input type="file" class="form-control-file pl-2 {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%" required />
+    <input type="file" class="custom-file-input {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!} required>
+    <label class="custom-file-label {{$marginFile}}" for="customFile">{{__($label)}}</label>
     @else
-    <input type="file" class="form-control-file pl-2 {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%" />
+    <input type="file" class="custom-file-input {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!}>
+    <label class="custom-file-label {{$marginFile}}" for="customFile">{{__($label)}}</label>
     @endif
     {{----------------------------------------}}
     @else
@@ -371,7 +392,7 @@
 
     @else
     />
-    
+
 
     @endif
     {{--------------------------------}}

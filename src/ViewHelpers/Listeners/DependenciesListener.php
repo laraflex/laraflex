@@ -10,13 +10,13 @@ class DependenciesListener extends AbstractListener{
         'navbar' => 'laraflex\ViewHelpers\Dependencies\NavbarDependencies',
         'slidebar' => 'laraflex\ViewHelpers\Dependencies\SlidebarDependencies',
         'lightbox' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
-        'panelxp' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
-        'panel' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
+        'panelxp' => 'laraflex\ViewHelpers\Dependencies\PanelDependencies',
+        'panel' => 'laraflex\ViewHelpers\Dependencies\PanelDependencies',
         'mediacards' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
-        'storagemanager' => 'laraflex\ViewHelpers\Dependencies\StorageDependencies',
-        'sidebar' => 'laraflex\ViewHelpers\Dependencies\SidebarDependencies',
         'panelnavmodal' => 'laraflex\ViewHelpers\Dependencies\PanelnavModalDependencies',
         'formconfirm' => 'laraflex\ViewHelpers\Dependencies\FormConfirmDependencies',
+        'sidebar' => 'App\ViewPresenters\Dependencies\SidebarDependencies',
+        'storagemanager' => 'App\ViewPresenters\Dependencies\StorageDependencies',
         ];
         return $var;
     }

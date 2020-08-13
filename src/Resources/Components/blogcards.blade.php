@@ -25,8 +25,6 @@
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
     <div class="d-none d-sm-block pb-0 mb-0">
-
-
         @if (!empty($blogcards->seeMore))
         <div class="row m-0 p-0">
             <div class="col-12 col-sm-9 p-0">
@@ -68,20 +66,6 @@
             @endif
             @endif
         @endif
-    {{--
-    <div id="headerSection" class="">
-
-        @if (!empty($blogcards->title))
-        <div class="blogcards-title text-center pt-2 pb-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-        {{$blogcards->title}}</div>
-        @endif
-        @if (!empty($blogcards->legend))
-        <div class="slidebar-shared text-center pb-2" style="font-size:calc(0.78em + 0.29vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-        <span style="color:gray">{{$blogcards->legend}}</span></div>
-        @endif
-    </div>
-    --}}
-
 
     <div class="row p-2">
         {{--Início linha linha ==== --}}
@@ -90,26 +74,20 @@
     $titleFont = 'font-size:calc(0.8em + 0.2vw); line-height:1.2;';
     $sharedFont = 'font-size:calc(0.6em + 0.15vw);letter-spacing: 2px;';
     $fontAbstract = 'font-size:calc(0.68em + 0.15vw);';
-
-
     $visibility = ['d-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-none d-lg-block', 'd-none d-lg-block'];
     $num_limit = 8;
     @endphp
-
-
-
     @foreach ($blogcards->items as $key => $item)
     @if (!empty($blogcards->seeMore))
-    @php 
+    @php
     if ($key == $num_limit){
     break;
     }
     @endphp
     <div class="{{$column}} p-0 pb-2 pb-lg-3 {{$visibility[$key]}}">
-    @else 
+    @else
     <div class="{{$column}} p-0 pb-2 pb-lg-3">
     @endif
-
     <article class= "mx-sm-1 mx-lg-2 h-100 {{$border}}">
     <header class="p-sm-3 p-md-3">
     @if (in_array('title', $blogcards->showItems) && !empty($item->title))
@@ -120,7 +98,6 @@
     <span><small>  {{$item->date}}</small></span>
     </div>
     @endif
-
     @if (in_array('image', $blogcards->showItems))
         @php
         if (!empty($item->imageStorage)){
@@ -133,12 +110,10 @@
             $image = $util->toImage($item->image);
         }
         @endphp
-
     @if (!empty($image))
     <img class="card-img mt-2 mb-2" src="{{$image}}" alt="" />
     @endif
     @endif
-
     @if (in_array('abstract', $blogcards->showItems))
     @if (!empty($item->abstract))
             @php
@@ -222,8 +197,6 @@
 </div>
 {{--8888888888888888888888888888888888888888888888888888888888--}}
 
-
-
 <div class="d-block d-sm-none mb-3 bg-white">
     <div id="headerSection" class="pt-0 pb-2">
         <h6 class="text-center font-weight-normal">{{$blogcards->title}}</h6>
@@ -259,18 +232,14 @@
     }
     @endphp
     @if (in_array('image', $blogcards->showItems) && !empty($image))
-
     <img src="{{$image}}" class="mr-2 mb-1 mt-1" alt="..." style="border-radius: 10px;width: 80px; height: 80px">
     <div class="media-body pl-1 my-auto">
-
     @else
     <div class="media-body pl-1 my-auto py-2">
     @endif
-
     @if (!empty($item->title))
     <div class="pb-0 mb-0 p-0 pt-1 pb-1">
-    <h6 class=" mb-1 text-dark" style="font-family:arial; line-height: 1.1">{{$item->title}}</h6>
-
+    <div class=" mb-1 text-dark" style="font-size:calc(10px + 1vw);font-family:arial; line-height: 1.1">{{$item->title}}</div>
     @if (!empty($item->abstract))
             @php
                 $numChar = strlen($item->title);
@@ -291,7 +260,6 @@
     @endif
 </div>
 @endif
-
     </div>
     </li>
     </a>
@@ -312,20 +280,7 @@
 </div>
 @endif
 {{--End Pagination----------------------------------}}
-
-
-{{--pagination--------------------------------------
-@if (!empty($blogcards->paginate))
-<div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$blogcards->paginate->links()!!}
 </div>
-@endif
-{{--End Pagination----------------------------------}}
-
-
-</div>
-
-
 </section>
 @else
 @if (!empty($blogcards->nullable) && $blogcards->nullable === true)

@@ -357,14 +357,17 @@
     @if (property_exists($item, "imageStorage") && !empty($item->imageStorage))
     <div class="mb-3 mt-2">
     <img src="{{$item->imageStorage}}" style="widht:100px; height:100px;">
+    <input type="hidden" class="currentImage" id="currentImage" name="currentImage" value="{{$item->imageStorage}}">
     </div>
     @elseif (property_exists($item, "imagePath") && !empty($item->imagePath))
     <div class="mb-3 mt-2">
     <img src="{{$util->toImage($item->imagePath)}}" style="widht:100px; height:100px;">
+    <input type="hidden" class="currentImage" id="currentImage" name="currentImage" value="{{$item->imagePath}}">
     </div>
     @elseif (property_exists($item, "image") && !empty($item->image))
     <div class="mb-3 mt-2">
     <img src="{{$util->toImage($item->image)}}" style="widht:100px; height:100px;">
+    <input type="hidden" class="currentImage" id="currentImage" name="currentImage" value="{{$item->image}}">
     </div>
     @endif
     {{--adiciona regras regras de validação--}}

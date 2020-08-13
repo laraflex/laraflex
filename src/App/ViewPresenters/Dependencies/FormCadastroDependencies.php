@@ -59,19 +59,37 @@ class FormCadastroDependencies extends Dependencies
 
     protected function itemsValidator(){
         $var = [
+            // Exemplo não aplicado --------------------------------
+            [
+            'fieldName' => 'file',
+                'rules'  =>[
+                    [
+                        'attribute' => 'extension',
+                        'type' => 'string',
+                        'value' => 'jpg|jpeg|png|pdf|doc|docx',
+                        'message' => 'Este arquivo não é valido',
+                    ],
+                    [
+                        'attribute' => 'required',
+                        'value' => true,
+                        'message' => 'Você deve selecionar um arquivo.'
+                    ],
+                ],
+            ],
             // Primeiro item --------------------------------
             [
             'fieldName' => 'nome',
+
                 'rules'  =>[
                     [
-                        'type' => 'required',
+                        'attribute' => 'required',
                         'value' => 'true',
                         'message' => 'O campo nome deve ser preenchido',
                     ],
                     [
-                        'type' => 'minlength',
-                        'value' => 5,
-                        'message' => 'Este campo exige o mínimo de 5 caracteres',
+                        'attribute' => 'minlength',
+                        'value' => 10,
+                        'message' => 'Este campo exige o mínimo de 10 caracteres',
                     ],
                 ],
             ],
@@ -80,14 +98,14 @@ class FormCadastroDependencies extends Dependencies
             'fieldName' => 'email',
                 'rules'  => [
                     [
-                        'type' => 'required',
-                        'value' => 'true',
+                        'attribute' => 'required',
+                        'value' => true,
                         'message' => 'O campo email deve ser preenchido',
                     ],
                     [
-                        'type' => 'minlength',
-                        'value' => 10,
-                        'message' => 'Este campo exige o mínimo de 10 caracteres',
+                        'attribute' => 'email',
+                        'value' => true,
+                        'message' => 'Você deve preencher com um email válido.',
                     ],
                 ],
             ],
@@ -96,9 +114,57 @@ class FormCadastroDependencies extends Dependencies
             'fieldName' => 'endereco',
                 'rules'  => [
                     [
-                        'type' => 'required',
+                        'attribute' => 'required',
                         'value' => 'true',
-                        'message' => 'O campo nome deve ser preenchido',
+                        'message' => 'O campo nome endereço ser preenchido',
+                    ],
+                    [
+                        'attribute' => 'minlength',
+                        'value' => 10,
+                        'message' => 'Este campo exige o mínimo de 10 caracteres',
+                    ],
+                ],
+
+            ],
+            // Quarto item --------------------------------
+            [
+            'fieldName' => 'cpf',
+                'rules'  => [
+                    [
+                        'attribute' => 'required',
+                        'value' => 'true',
+                        'message' => 'O campo cpf deve ser preenchido',
+                    ],
+
+                ],
+
+            ],
+            // Quinto item --------------------------------
+            [
+            'fieldName' => 'descricao',
+                'rules'  => [
+                    [
+                        'attribute' => 'required',
+                        'value' => 'true',
+                        'message' => 'O campo descrição deve ser preenchido',
+                    ],
+                    [
+                        'attribute' => 'minlength',
+                        'value' => 10,
+                        'message' => 'Este campo exige o mínimo de 10 caracteres',
+                    ],
+
+                ],
+
+            ],
+            // Sexto item --------------------------------
+            [
+            'fieldName' => 'aceite',
+                'rules'  => [
+                    [
+                        'attribute' => 'required',
+                        'value' => 'true',
+                        'message' => 'Você deve aceitar os termos de contrato',
                     ],
                 ],
 

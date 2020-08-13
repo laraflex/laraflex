@@ -3,12 +3,12 @@
 */
 
 #item-navbar-white:hover{
-    /*border-bottom:2px solid #FAFAFA; */
-    border-bottom: 2px solid rgb(255,255,255,0.4);
+    border-bottom:2px solid #FAFAFA;
+    /*border-bottom: 2px solid rgb(255,255,255,0.4);*/
     color: #FAFAFA;
     max-width: 250px;
-   padding-bottom: 3px;
-   margin-bottom: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
 }
 
 #item-navbar-dark:hover{

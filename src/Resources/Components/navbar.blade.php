@@ -84,7 +84,6 @@
         $item_navbar_id1 = 'item-navbar-default-light';
         $item_navbar_id2 = 'item-navbar-white';
         $btn_integrated_tmp = 'btn-integrated-light';
-
     }else{
         $styleColor = 'black';
         $styleRgbColor = 'rgba(0,0,0,0.4)';
@@ -98,6 +97,8 @@
     // Classe para menu fixo
     $fixedNavbarClass = 'bg-navbar-none';
     $predominantColor = $styleColor;
+    $fontWeight = '';
+
     if(!empty($navBar->fixedmenu) && $navBar->fixedmenu == true){
         $fixed = "fixed-top";
         $styleColor = $styleRgbColor;
@@ -108,7 +109,6 @@
             $fixedNavbarClass = 'bg-navbar-dark';
         }
 
-        //$background_tmp = "background-color: " . $styleColor . ";";
         $background_tmp = "background-color: " . $predominantColor . ";";
     }else{
         $fixed = "";
@@ -119,6 +119,7 @@
             $navbar_item = 'navbar-item-link';
             $border_bottom = '';
             $btn_integrated = $btn_integrated_tmp;
+            $fontWeight = 'font-weight-bold';
         }
         elseif (!empty($navBar->transparent) && $navBar->transparent === true){
             $background_tmp = "background-color: " . $styleColor . "; opacity:0.9;";
@@ -127,6 +128,7 @@
             $navbar_item = 'navbar-item-link';
             $border_bottom = '';
             $btn_integrated = $btn_integrated_tmp;
+            $fontWeight = 'font-weight-bold';
         }
     }
     if ($styleColor != ""){
@@ -139,7 +141,6 @@
     /**
      * Define a classe de apresentação de item de menu
     */
-    //if (empty($navBar->menuEffect) OR $navBar->menuEffect === true)
     if (empty($navBar->menuEffect) OR $navBar->menuEffect === false)
     {
         $item_navbar_id = $item_navbar_id1;
@@ -197,12 +198,11 @@ $menuArray = $navBar->items;
     @foreach ($menuArray as $key => $itemMenu)
     <li class="nav-item active">
         @if (property_exists($itemMenu, "subItems"))
-
         <li class="nav-item dropdown active">
-        <a id ="{{$item_navbar_id}}" class="nav-link dropdown-toggle px-2 {{$navbar_item}}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a id ="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-toggle px-2 {{$navbar_item}}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{ __($itemMenu->label) }}
         </a>
-        <div class="dropdown-menu pb-3 shadow-lg px-2 py-3" aria-labelledby="navbarDropdownMenuLink" style="width:300px;">
+        <div class="dropdown-menu pb-3 shadow-lg px-2 py-3" aria-labelledby="navbarDropdownMenuLink" style="min-width:350px;">
             @php
             // ==========================================================================================================
             $submenu = $itemMenu->subItems;
@@ -211,28 +211,25 @@ $menuArray = $navBar->items;
             @foreach ( $submenu as $k => $item )
             @php
             $numItems = count($submenu);
-            $border_item = 'border-top: 1px solid #D8D8D8;';
+            $border_item = 'border-top: 1px dotted #D8D8D8;';
             if ($k == $numItems - 1){
-                $border_item = 'border-top: 1px solid #D8D8D8; border-bottom: 1px solid #D8D8D8;';
+                $border_item = 'border-top: 1px dotted #D8D8D8; border-bottom: 1px dotted #D8D8D8;';
             }
-
             @endphp
-            <a class="dropdown-item pl-3" href="{{$util->toRoute($itemMenu->route,$item->route)}}" style="{{$border_item}}">
+            <a class="dropdown-item pl-3 py-2"  href="{{$util->toRoute($itemMenu->route,$item->route)}}" style="{{$border_item}}">
             {{ __($item->label) }}
             </a>
             @endforeach
         </div>
         </li>
-
-
         @else
-        <a id="{{$item_navbar_id}}" class="nav-link {{$navbar_item}}" href="{{$util->toRoute($itemMenu->route)}}">
+        <a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link {{$navbar_item}}" href="{{$util->toRoute($itemMenu->route)}}">
         {{ __($itemMenu->label) }}
         </a>
         @endif
     </li>
     @php
-        if ($key == 5){
+        if ($key == 7){
             break;
         }
     @endphp
@@ -248,23 +245,71 @@ $menuArray = $navBar->items;
 <ul class="pr-3x navbar-nav p-0 float-right">
 <!-- Authentication Links -->
 @guest
-<li class="nav-item active">
-<a id="{{$item_navbar_id}}" class="nav-link px-2 {{$navbar_item}}" href="{{ route('login') }}">{{ __('Login') }}</a>
-</li>
-{{--Controle de show Register--}}
+<li class="nav-item dropdown active" >
+<a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-togglex px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+{{__('Login')}}<span class="caret"></span>
+</a>
+<div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
+<a id="{{--$item_navbar_id--}}" class="nav-linkx dropdown-item px-3 {{$navbar_item}}" href="{{ route('login') }}">{{ __('Login') }}</a>
 @if(!empty($navBar->showRegister) && $navBar->showRegister === true)
-<li class="nav-item active">
-<a id="{{$item_navbar_id}}" class="nav-link px-2 {{$navbar_item}}" href="{{ route('register') }}">{{ __('Register') }}</a>
+<a id="{{--$item_navbar_id--}}" class="nav-linkx dropdown-item px-3 {{$navbar_item}}" href="{{ route('register') }}">{{ __('Register') }}</a>
+</div>
 </li>
 @endif
 {{--Fim de controle de register--}}
 @else
+@php
+        if (!empty($navBar->perfil->photoStorage)){
+            $photo = $navBar->perfil->photoStorage;
+        }
+        elseif (!empty($navBar->perfil->photoPath)){
+            $photo = $util->toImage($navBar->perfil->photoPath);
+        }
+        elseif(!empty($navBar->perfil->photo)){
+            $photo = $util->toImage($navBar->perfil->photo);
+        }else{
+            $photo = $util->toImage('images/users/perfil1.png');
+        }
+@endphp
+
 <li class="nav-item dropdown active" >
-<a id="{{$item_navbar_id}}" class="nav-link dropdown-toggle px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-{{ Auth::user()->name }} <span class="caret"></span>
+<a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-togglex px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+<img class="mx-auto d-block borderx roundedx rounded-circle" src="{{$photo}}" alt="" style="width:32px; padding:0px;">
+
 </a>
 <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
-<a class="dropdown-item" href="{{ route('logout') }}"
+{{--Início de perfil----}}
+<div class="navbar-header dropdown-item bg-white" style="min-width:300px;">
+    <div class="user-pic pt-3">
+        @if (!empty($photo))
+        <img class="mx-auto d-block rounded" src="{{$photo}}" alt="User" style="width:60px;">
+        @else
+        <img class="mx-auto d-block rounded" src="{{$util->toImage('images/users/perfil1.png')}}" alt="User" style="width:60px;">
+        @endif
+    </div>
+    <div class="user-info text-center">
+        @if (!empty($navBar->perfil->name))
+        @php
+            $arrayName = explode(" ", $navBar->perfil->name);
+            $num_names = count($arrayName);
+        @endphp
+
+        @if ($num_names > 1)
+        <div class="user-name center-center mt-2">{{reset($arrayName)}}
+        <strong>{{end($arrayName)}}</strong>
+        </div>
+        @else
+        <div class="user-name text-center mt-2">
+        <strong>{{ trim(reset($arrayName) )}}</strong>
+        </div>
+        @endif
+
+        @endif
+        <div class="user-role px-0 mx-0 text-center"><small>{{ trim(date("d/m/Y")) }}</small></div>
+    </div>
+    </div>
+{{--Fim de perfil-------}}
+<a class="dropdown-item text-center mt-2" href="{{ route('logout') }}"
 onclick="event.preventDefault();
 document.getElementById('logout-form').submit();">
 {{ __('Logout') }}
@@ -279,10 +324,8 @@ document.getElementById('logout-form').submit();">
 {{--*******************************************************--}}
 @endif
 <!-- Fim de itens de menu ------------------>
-
 </div>
 </nav>
-
 @if(!empty($navBar->fixedmenu) && $navBar->fixedmenu === true)
 
     @if (!empty($navBar->transparent) && $navBar->transparent === true)
@@ -292,7 +335,6 @@ document.getElementById('logout-form').submit();">
     <div class="navbar-plus" style="height:68px; {{$background_tmp}}">
     </div>
     @endif
-
 @else
     @if (!empty($navBar->transparent) && $navBar->transparent === true)
     <div class="d-block d-sm-none" style="height:68px; {{$background_tmp}}">
@@ -301,7 +343,6 @@ document.getElementById('logout-form').submit();">
     <div class="d-block d-sm-none" style="height:68px; {{$background_tmp}}">
     </div>
     @endif
-
 @endif
 </div>
 @endif

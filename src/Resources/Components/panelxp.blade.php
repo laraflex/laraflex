@@ -162,30 +162,50 @@
         }
     @endphp
         <form class="form-inline mt-2 mt-md-3" method="{{$method}}" action="{{$route}}" id="{{$panel->form->id}}">
-        @csrf
-        <input type="hidden" id="id" name="id" value="{{$panel->data->id}}">
-        @if (!empty($panel->form->items))
-        @foreach ($panel->form->items as $item)
+            @csrf
+            <input type="hidden" id="id" name="id" value="{{$panel->data->id}}">
+            @if (!empty($panel->form->items))
+            @foreach ($panel->form->items as $i => $item)
+            {{--Input increment--}}
+            @if (!empty($item->type) && $item->type == 'increment')
+            <div class="d-none d-md-block">
+            <a href="#" onclick="decrementaValor(1); return false;" >
+            <span class="pr-1 " style="font-size:20px;color:#000000;">-</span></a>     
+            <a href="#" onclick="incrementaValor(10);return false;">
+            <span class="pl-1 pr-2" style="font-size:16px;color:#000000;">+</span></a>
+            </div>
+            <div class="form-groupx plx-2 mb-2 p-0 pr-2">          
+            <div class="plx-2 m-0" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>       
+            <input name="{{$item->name}}" id="increment" value="1" style="width: 45px;" class="form-control m-0">        
+            </div>
+            @elseif(!empty($item->type) && $item->type == 'select') 
+            {{--End increment--}}
+            <div class="form-groupx mb-2 mr-2">
+            <div class="pl-2 text-left" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
+            <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
+            <option value="" style="font-sizex:calc(0.76em + 0.25vw); line-height: 1.5;">{{$item->label}}...</option>
+            @if (!empty($item->options))
+            @foreach ($item->options as $key => $option)
+            @if ($key == 0)
+            <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;"  selected="selected">
+            @else
+            <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;">
+            @endif
+            <span class="border">
+            {{$option->label}}
+            </span>
+            </option>
+            @endforeach
+            @endif
+            </select>
+            </div>
+            @endif      
+            @php
+            if ($i == 1){
+            break;
+            }
+            @endphp
 
-        <div class="form-groupx mb-2 mr-2">
-        <div class="pl-2" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
-        <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
-        <option value="">{{$item->label}}.</option>
-        @if (!empty($item->options))
-        @foreach ($item->options as $key => $option)
-        @if ($key == 0)
-        <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;"  selected="selected">
-        @else
-        <option value="{{$option->value}}" style="font-sizex:calc(0.76em + 0.25vw); line-height:2;">
-        @endif
-        <span class="border">
-        {{$option->label}}
-        </span>
-        </option>
-        @endforeach
-        @endif
-        </select>
-        </div>
         @endforeach
         @endif
         @php

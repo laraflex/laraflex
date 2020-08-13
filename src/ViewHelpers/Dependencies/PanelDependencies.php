@@ -3,7 +3,7 @@ namespace laraflex\ViewHelpers\Dependencies;
 
 use laraflex\Contracts\Dependencies;
 
-class StorageDependencies extends Dependencies
+class PanelDependencies extends Dependencies
 {
     public function toArray()
     {
@@ -12,7 +12,6 @@ class StorageDependencies extends Dependencies
                 'component' => 'NULL',
                 'type' => 'link',
                 'link' => 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css',
-
             ],
             [
                 'component' => 'slideshowjs',
@@ -21,16 +20,14 @@ class StorageDependencies extends Dependencies
                 'lib' =>  'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js',
             ],
             [
-                'component' => 'storagejs',
+                'component' => 'paneljs',
                 'type' => 'scriptjs',
-            ],
+            ],            
         ];
         return $var;
     }
 
     static public function create(){
-        return new StorageDependencies();
+        return new PanelDependencies();
     }
 }
-
-

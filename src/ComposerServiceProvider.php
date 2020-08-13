@@ -29,6 +29,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('home', 'App\ViewComposers\HomeConfigComposer');
         View::composer('auth.passwords.reset', 'App\ViewComposers\ResetConfigComposer');
         View::composer('auth.passwords.email', 'App\ViewComposers\EmailConfigComposer');
+        View::composer('doc', 'App\ViewComposers\DocConfigComposer');
 
         /**
          * composer recorded related to the components

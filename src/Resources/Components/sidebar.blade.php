@@ -50,7 +50,6 @@
             $logo = $util->toImage($sidebar->logo);
         }
         @endphp
-
         @if (!empty($logo))
         @if (!empty($sidebar->route))
         <a href="{{$util->toRoute($sidebar->route)}}">
@@ -60,7 +59,6 @@
         <img src="{{$logo}}" class="mt-1 mt-md-0 mb-0 mb-md-1" style="width:calc(160px + 3.5vw); height:calc(35px + 0.7vw); "/>
         </a>
         @endif
-
         </div>
         @php
             $btnStyle = '';
@@ -80,15 +78,15 @@
 @if (!empty($sidebar->showSidebar) && $sidebar->showSidebar === true)
 <div class="page-wrapper chiller-theme toggledx">
     <a id="show-sidebar" class="{{$show_style}} btn btn-md px-xl-3 {{$btnStyle}}" href="#" aria-pressed="true">
-        <div class="d-none d-xl-block" translate="no">
+        <div class="d-none d-lg-block" translate="no">
         <span class="ml-2 mr-2" translate="no">Main Menu</span>
         <i class="fas fa-bars"></i>
         </div>
-        <div class="d-block d-xl-none px-2">
+        <div class="d-block d-lg-none px-2">
         <i class="fas fa-bars" ></i>
         </div>
     </a>
-<nav id="sidebar" class="sidebar-wrapper">
+<nav id="sidebar" class="sidebar-wrapper ">
     <div class="sidebar-content">
         <div class="sidebar-brand" translate="no">
            <a href="#">Main Menu</a>
@@ -107,7 +105,6 @@
         @else
         <div class="sidebar-header">
         <div class="user-pic">
-
             @php
             if (!empty($sidebar->perfil->photoStorage)){
                 $photo = $sidebar->perfil->photoStorage;
@@ -117,13 +114,14 @@
             }
             elseif(!empty($sidebar->perfil->photo)){
                 $photo = $util->toImage($sidebar->perfil->photo);
+            }else{
+                $photo = $util->toImage('images/users/perfil1.png');
             }
-
             @endphp
             @if (!empty($photo))
             <img class="img-fluid" src="{{$photo}}" alt="User picture">
             @else
-            <img class="img-fluid" src="{{$util->toImage('images/users/perfil.png')}}" alt="User picture">
+            <img class="img-fluid" src="{{$util->toImage('images/users/perfil1.png')}}" alt="User picture">
             @endif
         </div>
         <div class="user-info text-center">
@@ -172,8 +170,8 @@
         <div class="sidebar-search">
             <div>
             <form class="form-inline" method="post" action="{{$util->toRoute($action)}}" id="search-form">
-            <div class="input-group ">
-            <input type="text" class="form-control search-menu mx-0 mr-1 rounded" id="search" name="search" placeholder="Search..." style="width:70%;">
+            <div class="input-group " style="width:100%">
+            <input type="text" class="form-control search-menu mx-0 mr-1 rounded" id="search" name="search" placeholder="Search..." style="width:80%;">
             @csrf
             <div class="input-group-append mr-1">
             <button type="submit" class="btn m-0 p-0 mr-1" role="button">
@@ -201,15 +199,18 @@
         {{--Bloco de items de seção de menu--}}
         @if (!empty($section->items))
             @if (!empty($section->label))
-                <!--Cabeçalho de itens de menu -->
-                <li class="header-menu">
-                <span>{{$section->label}}</span>
-                </li>
-                <!--Fim de cabeçalho -->
+            <!--Cabeçalho de itens de menu -->
+            <li class="header-menu">
+            <span>{{$section->label}}</span>
+            </li>
+            <!--Fim de cabeçalho -->
+            @elseif($i == 0)
+            <li class="header-menu py-1">
+            </li>
             @else
-                <li class="header-menu">
-                <span>{{ __('Section') }} {{$i + 1}}</span>
-                </li>
+            <li class="header-menu">
+            <span>{{ __('Section') }} {{$i}}</span>
+            </li>
             @endif
         @foreach ($section->items as $key => $item)
             @if (!property_exists($item, "permission") OR $item->permission === true)

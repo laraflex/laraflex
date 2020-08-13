@@ -100,7 +100,7 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
     @foreach($mediacards->items as $key => $item)
 
     @php
-    if (!empty($num_limit) && $key >= $num_limit){
+    if ($showLimit === true && $key >= $num_limit){
     break;
     }
 
