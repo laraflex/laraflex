@@ -5,7 +5,7 @@ use laraflex\Contracts\ResourceMediator;
 class StorageMediator extends ResourceMediator{
 
     protected $image = array('jpg', 'png', 'svg', 'jpeg','tif', 'gif','bmp', 'BMP', 'exif', 'webp');
-    protected $doc = array('pdf', 'doc', 'docx', 'xls', 'xslx', 'ppt', 'pptx', 'pps');
+    protected $doc = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps');
     protected $media = array('mp3', 'mp4', 'wav', 'mkv', 'avi', 'divix','mov', 'xvid');
     protected $compacted = array('rar', 'zip', 'tar.zg');
 

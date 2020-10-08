@@ -5,7 +5,7 @@ use laraflex\Contracts\Dependencies;
 
 class SummernoteDependencies extends Dependencies
 {
-    public function toArray()
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [
@@ -19,11 +19,11 @@ class SummernoteDependencies extends Dependencies
                 'type' => 'link',
                 'link' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css',
             ],
-            
+
         ];
         return $var;
     }
-  
+
     static public function create(){
         return new SummernoteDependencies();
     }

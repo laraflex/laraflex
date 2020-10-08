@@ -22,14 +22,10 @@ class ComposerServiceProvider extends ServiceProvider
 
         View::composer('public', 'App\ViewComposers\PublicConfigComposer');
         View::composer('admin', 'App\ViewComposers\AdminConfigComposer');
-        View::composer('auth.login', 'App\ViewComposers\LoginConfigComposer');
-        View::composer('auth.verify', 'App\ViewComposers\VerifyConfigComposer');
-        View::composer('auth.register', 'App\ViewComposers\RegisterConfigComposer');
-        View::composer('auth', 'App\ViewComposers\AuthConfigComposer');
         View::composer('home', 'App\ViewComposers\HomeConfigComposer');
-        View::composer('auth.passwords.reset', 'App\ViewComposers\ResetConfigComposer');
-        View::composer('auth.passwords.email', 'App\ViewComposers\EmailConfigComposer');
+        View::composer('auth', 'App\ViewComposers\AuthConfigComposer');
         View::composer('doc', 'App\ViewComposers\DocConfigComposer');
+        View::composer('dashboard', 'App\ViewComposers\AuthConfigComposer');
 
         /**
          * composer recorded related to the components

@@ -8,6 +8,7 @@
     @endphp
 @endif
 
+
 @if (!empty($form) && !empty($form->items))
 @php
    if (!empty($form->textAlign)){
@@ -21,13 +22,19 @@
    }else{
        $textAlign = 'text-left text-md-right';
    }
-   if(!empty($form->topAlign) && $form->topAlign == true){
-       $labelStyle = 'col-md-12';
-       $inputStyle = 'col-md-12';
-   }else{
-       $labelStyle = 'col-md-3 pt-0 pt-md-1';
-       $inputStyle = 'col-md-8';
-   }
+    if(!empty($form->topAlign) && $form->topAlign == true){
+        $labelStyle = 'col-md-12';
+        $inputStyle = 'col-md-12';
+        $fileConfig = false;
+    }elseif(!empty($form->fullPage) && $form->fullPage == true){
+        $labelStyle = 'col-md-12';
+        $inputStyle = 'col-md-12';
+        $fileConfig = false;
+    }else{
+        $labelStyle = 'col-md-3 pt-0 pt-md-1';
+        $inputStyle = 'col-md-8';
+        $fileConfig = true;
+    }
 
     if (!empty($form->fontFamily->title)){
         $font_family_title = 'font-family:'.$form->fontFamily->title .';';
@@ -71,7 +78,7 @@
             }
         }
     @endphp
-    <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif class="needs-validation">
+    <form method="{{$form->method}}" action="{{$route}}" id="{{$form->id}}" @if($enctype != '') enctype="{{$enctype}}" @endif>
     @if (!empty($form->token) && $form->token === false)
     {{--Caso falso--}}
     @else
@@ -250,9 +257,12 @@
     @endif
     </div>
     @else
+
     @endif
+
     <div class="{{$inputStyle}} custom-filex">
     @if (!empty($item->name) && !empty($item->id))
+
     {{--adiciona regras regras de validação--}}
     @php
     if (!empty($item->attributes)){
@@ -389,11 +399,8 @@
        }
     @endphp
     required {!!$pattern!!}/>
-
     @else
     />
-
-
     @endif
     {{--------------------------------}}
     @else
@@ -417,7 +424,6 @@
     </div>
 </div>
 @endif
-
 
 
 

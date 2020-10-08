@@ -29,7 +29,7 @@ class StorageDependencies extends Dependencies
         return $var;
     }
 
-    public function toArray()
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [

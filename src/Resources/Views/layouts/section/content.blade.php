@@ -88,31 +88,33 @@ if(!empty($objectConfig)){
 {{-- Início do bloco lógico -------------------------------}}
     @foreach ($objetoConfig->components as $object)
     @if (strtolower($object->type) == 'content')
-
     @php
     $component = strtolower($object->component);
     @endphp
-        @if(!empty($object->pathComponents))
-        @include($object->pathComponents . '.' . $component)
-        @else
-        @include('laraflex::' . $component)
-        @endif
-
+    @if(!empty($object->pathComponents))
+    @php
+    $object->pathComponent = strtr($object->pathComponent, '/', '.');
+    $object->pathComponent = strtr($object->pathComponent, '\\', '.');
+    @endphp
+    @include($object->pathComponents . '.' . $component)
+    @else
+    @include('laraflex::' . $component)
+    @endif
     @endif
     @endforeach
 {{-- fim do bloco lógico ----------------------------------}}
 
-    @if (empty($objetoConfig->onePage) OR $objetoConfig->onePage === false)
-    {{--Icon de retorno ao topo da página--}}
-    <div class="w-100 pb-sm-3 d-none d-sm-block">
-    <a href="#top">
-    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="25" height="25" class="rounded-circle mx-auto d-block">
-    </a>
-    </div>
-    {{--End Icon de retorno ao topo da página--}}
-    @else
-    <div class="p-sm-2"></div>
-    @endif
+@if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
+<div class="p-sm-2"></div>
+@else
+{{--Icon de retorno ao topo da página--}}
+<div class="w-100 pb-sm-3 d-none d-sm-block">
+<a href="#top">
+<img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="25" height="25" class="rounded-circle mx-auto d-block">
+</a>
+</div>
+{{--End Icon de retorno ao topo da página--}}
+@endif
 @endif
 </div>
 </main>

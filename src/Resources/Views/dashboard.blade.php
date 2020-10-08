@@ -9,7 +9,7 @@
     @include('layouts.section.header')
 @endsection
 @section('content')
-    @include('laraflex::email')
+    @include('layouts.section.content')
 @endsection
 @section('footer')
     @include('layouts.section.footer')

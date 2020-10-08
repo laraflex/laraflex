@@ -4,7 +4,7 @@ use laraflex\Contracts\Dependencies;
 
 class SlidebarDependencies extends Dependencies
 {
-    public function toArray()
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [

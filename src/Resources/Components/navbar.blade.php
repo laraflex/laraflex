@@ -99,7 +99,7 @@
     $predominantColor = $styleColor;
     $fontWeight = '';
 
-    if(!empty($navBar->fixedmenu) && $navBar->fixedmenu == true){
+    if(!empty($navBar->fixedMenu) && $navBar->fixedMenu == true){
         $fixed = "fixed-top";
         $styleColor = $styleRgbColor;
         $border = '1px solid rgba(0,0,0,0.2)';
@@ -326,7 +326,7 @@ document.getElementById('logout-form').submit();">
 <!-- Fim de itens de menu ------------------>
 </div>
 </nav>
-@if(!empty($navBar->fixedmenu) && $navBar->fixedmenu === true)
+@if(!empty($navBar->fixedMenu) && $navBar->fixedMenu === true)
 
     @if (!empty($navBar->transparent) && $navBar->transparent === true)
     <div class="navbar-plus d-block d-sm-none" style="height:68px; {{$background_tmp}}">

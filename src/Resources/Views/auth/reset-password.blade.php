@@ -11,17 +11,14 @@
             <img src="{{url('images/jeticon.png')}}" width="40px" alt="JetStream">
         </div>
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('password.update') }}">
             @csrf
 
-            <div>
-                <x-jet-label for="name" value="{{ __('Name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            </div>
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <div class="mt-4">
+            <div class="block">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
             </div>
 
             <div class="mt-4">
@@ -35,12 +32,8 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-jet-button class="ml-4">
-                    {{ __('Register') }}
+                <x-jet-button>
+                    {{ __('Reset Password') }}
                 </x-jet-button>
             </div>
         </form>

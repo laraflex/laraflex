@@ -5,7 +5,7 @@ use laraflex\Contracts\Dependencies;
 
 class SummernoteDependencies extends Dependencies
 {
-    public function toArray()
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [

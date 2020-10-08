@@ -89,7 +89,7 @@
     <div class="d-none d-sm-block px-2 px-lg-3 pt-3 mb-3 mt-5 mt-lg-5 pb-1 {{$border}}">
     @endif
     @if (!empty($table->legend))
-    <div class="py-2 py-lg-3 mt-1 px-3" style="background-color: {!!$styleTable['legend']!!}; font-size:calc(0.75em + 0.23vw); color:{!!$styleTable['hColor']!!};{{$font_family}}; border-left: 1px solid #E6E6E6; border-top: 1px solid #E6E6E6; ">
+    <div class="py-3 py-lg-3 mt-1 px-3" style="background-color: {!!$styleTable['legend']!!}; font-size:calc(0.85em + 0.20vw); color:{!!$styleTable['hColor']!!};{{$font_family}}; border-left: 1px solid #E6E6E6; border-top: 1px solid #E6E6E6; ">
     <strong>{{$table->legend}}</strong></div>
     @endif
     <table class="table table-sm table-bordered table-responsive-sm mt-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.17vw);">
@@ -140,14 +140,14 @@
     @if ($key == $table->link)
     <td  class="{{$td_height}} {{$px}}">
     <a href="{{$util->toRoute($table->route, $item->id)}}" class="table-link"
-    style="font-size:calc(0.75em + 0.25vw); color:{!!$styleTable['lineColor']!!};">
+    style="font-size:calc(0.75em + 0.20vw); color:{!!$styleTable['lineColor']!!};">
     <span class="badge badge-pillx px-2x py-2 mx-0 mr-2" style="width:30px; height:30px; background-color: {!!$styleTable['badge']!!}; color:{!!$styleTable['lineColor']!!}; border: 1px solid #A4A4A4;font-size:14px;">
     {{str_split($fieldValue)[0]}}</span>
     {{$fieldValue}}
     </a>
     </td>
     @else
-    <td class="{{$td_height}} {{$px}}" style="font-size:calc(0.75em + 0.25vw); color:{!!$styleTable['lineColor']!!};">
+    <td class="{{$td_height}} {{$px}}" style="font-size:calc(0.75em + 0.20vw); color:{!!$styleTable['lineColor']!!};">
     {{$fieldValue}}
     </td>
     @endif

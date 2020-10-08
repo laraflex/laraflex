@@ -5,7 +5,7 @@ use laraflex\Contracts\Dependencies;
 
 class NavbarDependencies extends Dependencies
 {
-    public function toArray()
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [

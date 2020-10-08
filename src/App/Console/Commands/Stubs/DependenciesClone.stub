@@ -5,7 +5,7 @@ use laraflex\Contracts\Dependencies;
 
 class DependenciesClone extends Dependencies
 {
-    public function toArray()
+    public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [
