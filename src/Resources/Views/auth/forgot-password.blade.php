@@ -2,7 +2,7 @@
     <x-jet-authentication-card>
         <x-slot name="logo">
             <a href="{{url('/')}}">
-                <img src="http://localhost/laravel8-tmp/public/images/app/logo.png" width="220" height="52">
+                <img src="{{url('images/app/logo.png')}}" width="220" height="52">
             </a>
         </x-slot>
 
@@ -18,7 +18,7 @@
 
         <x-jet-validation-errors class="mb-4" />
         <div class="flex items-center justify-end mb-1">
-            <img src="{{url('images/jeticon.png')}}" width="40px" alt="JetStream">
+            <img src="{{url('images/app/jeticon.png')}}" width="40px" alt="JetStream">
         </div>
 
         <form method="POST" action="{{ route('password.email') }}">
