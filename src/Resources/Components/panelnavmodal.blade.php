@@ -84,7 +84,7 @@ elseif(!empty($panelnav->logo)){
     <div class="modal-dialog float-left ml-2 ml-md-5" style="min-widthx:340px;">
       <div class="modal-content" style="min-width:340px;">
         <div class="modal-header p-2">
-           <img src="{{$util->toImage('images/app/etiqueta.jpg')}}" style="width: 60%;">
+           <img src="{{$util->toImage('local/images/app/etiqueta.jpg')}}" style="width: 60%;">
            <h4 class="" style="position:absolute; left:20px; top:15px;font-family:verdana; color: #FFFFFF;text-shadow: 2px 2px 3px #6E6E6E;">
             {{__($btnLabel)}}</h4>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">

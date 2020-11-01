@@ -77,17 +77,19 @@ if (!empty($objetoConfig->components)){
      * Adicionando dependencias de componentes
     */
     foreach ($objetoConfig->components as $item){
-        if (property_exists($item, "dependencies") && !empty($item->dependencies)){
-            foreach($item->dependencies as $value){
-                if (is_array($value)){
-                    foreach ($value as $item){
-                        $objetoConfig->dependencies[] = $item;
+        if (!empty($item)) {
+            if (property_exists($item, "dependencies") && !empty($item->dependencies)){
+                foreach($item->dependencies as $value){
+                    if (is_array($value)){
+                        foreach ($value as $item){
+                            $objetoConfig->dependencies[] = $item;
+                        }
+
+                    }else{
+                        $objetoConfig->dependencies[] = $value;
                     }
 
-                }else{
-                    $objetoConfig->dependencies[] = $value;
                 }
-
             }
         }
     }

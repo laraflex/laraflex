@@ -12,7 +12,10 @@ abstract class AbstractListener{
         if (!empty($arrayObjects)){
             $arrayComponents = array();
             foreach ($arrayObjects as $object){
-                $arrayComponents[] = $object->component;
+                if (!empty($object->component)) {
+                    $arrayComponents[] = $object->component;
+                }
+
             }
 
             $arrayTmp = array();

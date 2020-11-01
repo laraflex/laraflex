@@ -66,7 +66,7 @@
     <div class="{{$column}}">
     <div class="m-1 p-2" >
     @php
-        $imageNav = url('images/icons/backp.png');
+        $imageNav = url('local/images/icons/backp.png');
         $arrayPath = explode('/', $storageManager->filesystem->path);
         if (count($arrayPath) == 0){
             $pathTmp = $storageManager->filesystem->path;
@@ -120,9 +120,9 @@
         @php
         $arrayIcons = array('images', 'projects', 'users', 'perfil', 'products', 'app');
             if (in_array($item->fileName, $arrayIcons)){
-                $imageDir = url('images/icons/'. $item->fileName . '.png');
+                $imageDir = url('local/images/icons/'. $item->fileName . '.png');
             }else{
-                $imageDir = url('images/icons/folder.png');
+                $imageDir = url('local/images/icons/folder.png');
             }
             $pathTmp = $storageManager->filesystem->path;
 
@@ -156,7 +156,7 @@
                 $imagePath = $pathFile;
                 $width = '';
             }else{
-                $imagePath = $util->toImage('images/icons/' . $item->extension . '.png');
+                $imagePath = $util->toImage('local/images/icons/' . $item->extension . '.png');
                 $width = 'style="width: 80%";';
             }
         @endphp
@@ -197,7 +197,7 @@
     @else
         @php
             $pathTmp = $item->dirName . '/'. $item->fileName;
-             $imagePath = $util->toImage('images/icons/' . $item->extension . '.png');
+             $imagePath = $util->toImage('local/images/icons/' . $item->extension . '.png');
 
         @endphp
     {{--Formulário de solicitação de arquivo ------------------------------}}

@@ -53,9 +53,9 @@
             }
             @endphp
         @if (!empty($bgImage))
-        <div class="col-12 col-sm-5 col-md-4 bg-white my-auto w-100 px-0">
+        <div class="col-12 col-sm-5 col-md-4 bg-white my-auto w-100 px-0 p-2">
         <div class="w-100" style="background-image: url('{{$bgImage}}');background-size:contain; background-position:center center;background-repeat:no-repeat;min-widthx:230px;min-height:calc(180px + 8vw);">
-        <img src="{{url('images/icons/lupa.png')}}" class="mt-2 ml-2" style="width: 15px; height:15px;">
+        <!--img src="{{url('local/images/icons/lupa.png')}}" class="mt-2 ml-2" style="width: 15px; height:15px;"-->
 
         @if(!empty($panel->lightbox)  && $panel->lightbox == true && !empty($panel->images))
 
@@ -70,6 +70,7 @@
             $image = $util->toImage($imageItem->image);
         }
         @endphp
+
         @if($key == 0)
         <a href="{{$image}}" class="stretched-link w-100" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
         </a>
@@ -160,15 +161,15 @@
             @if (!empty($item->type) && $item->type == 'increment')
             <div class="d-none d-md-block">
             <a href="#" onclick="decrementaValor(1); return false;" >
-            <span class="pr-1 " style="font-size:20px;color:#000000;">-</span></a>     
+            <span class="pr-1 " style="font-size:20px;color:#000000;">-</span></a>
             <a href="#" onclick="incrementaValor(10);return false;">
             <span class="pl-1 pr-2" style="font-size:16px;color:#000000;">+</span></a>
             </div>
-            <div class="form-groupx plx-2 mb-2 p-0 pr-2">          
-            <div class="plx-2 m-0" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>       
-            <input name="{{$item->name}}" id="increment" value="1" style="width: 45px;" class="form-control m-0">        
+            <div class="form-groupx plx-2 mb-2 p-0 pr-2">
+            <div class="plx-2 m-0" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
+            <input name="{{$item->name}}" id="increment" value="1" style="width: 45px;" class="form-control m-0">
             </div>
-            @elseif(!empty($item->type) && $item->type == 'select') 
+            @elseif(!empty($item->type) && $item->type == 'select')
             {{--End increment--}}
             <div class="form-groupx mb-2 mr-2">
             <div class="pl-2 text-left" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
@@ -189,7 +190,7 @@
             @endif
             </select>
             </div>
-            @endif      
+            @endif
             @php
             if ($i == 1){
             break;

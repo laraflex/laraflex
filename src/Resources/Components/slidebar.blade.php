@@ -106,7 +106,7 @@
         $image = $util->toImage($item->image);
     }
     else{
-        $image = $util->toImage('images/app/foto01.jpg');
+        $image = $util->toImage('local/images/app/foto01.jpg');
     }
     @endphp
 
@@ -118,7 +118,7 @@
     </div>
     </div>
     </a>
-    <img class="icon_play rounded-circle" src="{{$util->toImage('images/icons/black_white_play.png')}}" />
+    <img class="icon_play rounded-circle" src="{{$util->toImage('local/images/icons/black_white_play.png')}}" />
     </li>
     @endforeach
     @endif
@@ -150,7 +150,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 d-none d-sm-block pl-5 container-xl">
     <a href="#top">
-    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+    <img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
     </a>
     </div>
 @endif

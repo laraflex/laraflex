@@ -5,7 +5,7 @@
     <div class="modal-header">
     @if(!empty($user))
     <h6 class="modal-title" id="ModalLabel">
-        <img src="{{url('images/icons/message.png')}}" class="mr-2 ml-3" style="width:40px; height:40px;">
+        <img src="{{url('local/images/icons/message.png')}}" class="mr-2 ml-3" style="width:40px; height:40px;">
         {{$user->name}}</h6>
     @endif
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

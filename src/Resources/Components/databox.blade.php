@@ -121,7 +121,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
     <a href="#top">
-    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+    <img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
     </a>
     </div>
 @endif

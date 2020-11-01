@@ -22,14 +22,24 @@
         }
 
         $num_char = 242;
-        
+
     @endphp
 
 <section id="bloglist" class="pb-1 pt-3 pt-md-4">
+
+{{--BLOCO PARA COMPONENTES VUEJS--}}
+@if (!empty($bloglist->vuejsComponents))
+@php
+    $vuejsComponents = $bloglist->vuejsComponents;
+@endphp
+@include('components.vuejsComponents')
+@endif
+{{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
+
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 
-<div id="bloglist" class="d-none d-sm-block">
+<div class="d-none d-sm-block">
     <div class="mt-0 mb-0 pr-0 pl-0">
     <div id="headerSection" class="pb-0">
 
@@ -75,24 +85,11 @@
             @endif
             @endif
         @endif
-    {{--
-    @if (!empty($bloglist->title))
-    <div class="bloglist-title text-center pt-2 pb-3" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-    {{$bloglist->title}}</div>
-    @endif
-      @if (!empty($bloglist->legend))
-    <div class="slidebar-shared text-center pb-1 pb-md-2 pl-2" style="font-size:calc(0.78em + 0.29vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-    <span style="color:gray">{{$bloglist->legend}}</span></div>
-    @endif
-    </div>
-    --}}
-
-
 
     <div class="{{$border}} pt-3 pt-lg-4 pb-3 mb-3 mt-2">
 
     @foreach ($bloglist->items as $key => $item)
-    @php 
+    @php
     if (!empty($bloglist->seeMore) && $key == 2){
         break;
     }
@@ -112,7 +109,7 @@
         $image = $util->toImage($item->image);
     }
 
-    
+
     if ($key % 2 == 0){
         $side = 'left';
         $padding = 'pl-3 pl-lg-4 pl-xl-5 pr-0';
@@ -124,7 +121,7 @@
     @endphp
 
     @if (in_array('image', $bloglist->showItems) && !empty($image))
-    
+
     @if ($side == 'left')
     <div class="col-sm-4 col-md-5 m-0 p-0" style="min-height:calc(50px + 10vw);">
     <img src="{{$image}}" class="" style="width:100%;">
@@ -171,8 +168,14 @@
     {!!$item->abstract!!}</p>
     @endif
     @endif
-    {{--Button------------------------------------}}
-    @if(!empty($bloglist->route))
+
+    {{--ACTION DE COMPONENTS vUEJS -----------------------------------}}
+    @if (!empty($bloglist->vueAction) && !empty($bloglist->vuejsComponents))
+    <a href="#" class="btn btn-sm btn-outline-dark mt-2" v-on:click="{{$bloglist->vueAction}}('{{$item->id}}')" >{{__('Read more')}}</a>
+
+    {{--ROUTE DE COMPONENTE BLADE ------------------------------------}}
+    @elseif (!empty($bloglist->route))
+
         @php
         $link = $util->toRoute($bloglist->route, $item->id);
            if (!empty($bloglist->target) && $bloglist->target == 'blank'){
@@ -196,7 +199,7 @@
     </div>
 
     @if (in_array('image', $bloglist->showItems) && !empty($image))
-    
+
     @if ($side == 'right')
     <div class="col-sm-4 col-md-5 m-0 p-0" style="min-height:calc(50px + 10vw);">
     <img src="{{$image}}" class="" style="width:100%;">
@@ -210,14 +213,13 @@
 
 
 
-
     </div>
     {{--seeMOre and pagination--------------------------------------}}
     @if (!empty($bloglist->seeMore))
 
     @elseif (!empty($bloglist->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-    {!!$bloglist->paginate->links()!!}
+    {!!$bloglist->paginate->links('components.bootstrap')!!}
     </div>
     @endif
     {{--End Pagination----------------------------------}}
@@ -228,7 +230,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-0 d-none d-sm-block pl-5 container-xl">
 <a href="#top">
-<img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+<img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
 </a>
 </div>
 @endif
@@ -255,8 +257,14 @@
                 $link = '#';
             }
         @endphp
+
+    @if (!empty($bloglist->vueAction) && !empty($bloglist->vuejsComponents))
+    <a href="#" v-on:click="{{$bloglist->vueAction}}('{{$item->id}}')" >
+    @else
     <a href="{{$link}}">
-    <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded bg-light">
+    @endif
+
+    <li class="media pb-0 pl-1 pr-2 mb-1 border rounded bg-light">
     @php
     if (!empty($item->imageStorage)){
         $image = $item->imageStorage;
@@ -313,7 +321,7 @@
 </div>
 @elseif (!empty($bloglist->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$bloglist->paginate->links()!!}
+{!!$bloglist->paginate->links('components.bootstrap')!!}
 </div>
 @endif
 {{--End Pagination----------------------------------}}

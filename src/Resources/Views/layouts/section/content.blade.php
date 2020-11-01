@@ -11,14 +11,14 @@ if(!empty($objectConfig)){
 @endphp
 
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
-<main id="content" class="pt-3 pt-sm-4" style="min-height:calc(66vh);">
+<main id="content" class="pt-3 pt-sm-4" style="min-height:calc(52vh);">
 @else
-<main id="content" class="pt-3 pt-sm-2" style="min-height:calc(66vh);">
+<main id="content" class="pt-3 pt-sm-2" style="min-height:calc(52vh);">
 @endif
 @if (!empty($objetoConfig->contentClass) && $objetoConfig->contentClass != 'container')
-<div class="w-100" style="min-height:calc(55vh);">
+<div class="w-100" style="min-height:calc(43vh);">
 @else
-<div class="container-xl px-0" style="min-height:calc(55vh);">
+<div class="container-xl px-0" style="min-height:calc(43vh);">
 @endif
 {{-- Bloco de mensagem e alerta--------------------------}}
 @if(session('alert'))
@@ -87,36 +87,38 @@ if(!empty($objectConfig)){
 @if (!empty($objetoConfig->components))
 {{-- Início do bloco lógico -------------------------------}}
     @foreach ($objetoConfig->components as $object)
-    @if (strtolower($object->type) == 'content')
-    @php
-    $component = strtolower($object->component);
-    @endphp
-    @if(!empty($object->pathComponents))
-    @php
-    $object->pathComponent = strtr($object->pathComponent, '/', '.');
-    $object->pathComponent = strtr($object->pathComponent, '\\', '.');
-    @endphp
-    @include($object->pathComponents . '.' . $component)
-    @else
-    @include('laraflex::' . $component)
-    @endif
-    @endif
+        @if (!empty($object))
+            @if (strtolower($object->type) == 'content')
+            @php
+            $component = strtolower($object->component);
+            @endphp
+            @if(!empty($object->pathComponents))
+            @php
+            $object->pathComponent = strtr($object->pathComponent, '/', '.');
+            $object->pathComponent = strtr($object->pathComponent, '\\', '.');
+            @endphp
+            @include($object->pathComponents . '.' . $component)
+            @else
+            @include('laraflex::' . $component)
+            @endif
+            @endif
+        @endif
     @endforeach
 {{-- fim do bloco lógico ----------------------------------}}
 
+
+@endif
+</div>
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="p-sm-2"></div>
 @else
 {{--Icon de retorno ao topo da página--}}
 <div class="w-100 pb-sm-3 d-none d-sm-block">
 <a href="#top">
-<img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="25" height="25" class="rounded-circle mx-auto d-block">
+<img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="25" height="25" class="rounded-circle mx-auto d-block">
 </a>
 </div>
-{{--End Icon de retorno ao topo da página--}}
 @endif
-@endif
-</div>
 </main>
 
 

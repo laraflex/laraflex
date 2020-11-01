@@ -268,7 +268,7 @@ $menuArray = $navBar->items;
         elseif(!empty($navBar->perfil->photo)){
             $photo = $util->toImage($navBar->perfil->photo);
         }else{
-            $photo = $util->toImage('images/users/perfil1.png');
+            $photo = $util->toImage('local/images/users/perfil1.png');
         }
 @endphp
 
@@ -284,7 +284,7 @@ $menuArray = $navBar->items;
         @if (!empty($photo))
         <img class="mx-auto d-block rounded" src="{{$photo}}" alt="User" style="width:60px;">
         @else
-        <img class="mx-auto d-block rounded" src="{{$util->toImage('images/users/perfil1.png')}}" alt="User" style="width:60px;">
+        <img class="mx-auto d-block rounded" src="{{$util->toImage('local/images/users/perfil1.png')}}" alt="User" style="width:60px;">
         @endif
     </div>
     <div class="user-info text-center">

@@ -115,13 +115,13 @@
             elseif(!empty($sidebar->perfil->photo)){
                 $photo = $util->toImage($sidebar->perfil->photo);
             }else{
-                $photo = $util->toImage('images/users/perfil1.png');
+                $photo = $util->toImage('local/images/users/perfil1.png');
             }
             @endphp
             @if (!empty($photo))
             <img class="img-fluid" src="{{$photo}}" alt="User picture">
             @else
-            <img class="img-fluid" src="{{$util->toImage('images/users/perfil1.png')}}" alt="User picture">
+            <img class="img-fluid" src="{{$util->toImage('local/images/users/perfil1.png')}}" alt="User picture">
             @endif
         </div>
         <div class="user-info text-center">
@@ -228,9 +228,16 @@
                 <div class="sidebar-submenu">
                 <ul>
                 @foreach ($item->subItems as $subItem)
+
                 @if (!property_exists($subItem, "permission") OR $subItem->permission === true)
                 <li>
+                @if (!empty($subItem->vueAction))
+                <a href="#" v-on:click="{{$subItem->vueAction}}">{{$subItem->label}}</a>
+                @elseif(!empty($item->route) && !empty($subItem->route))
                 <a href="{{$util->toRoute($item->route, $subItem->route)}}">{{$subItem->label}}</a>
+                @endif
+
+
                 </li>
                 @endif
                 @endforeach
@@ -239,7 +246,13 @@
             </li>
             @else
             <li>
+                @if (!empty($item->vueAction))
+                <a href="#" v-on:click="{{$item->vueAction}}">
+                @elseif(!empty($item->route))
                 <a href="{{$util->toRoute($item->route)}}">
+                @else
+                <a href="#">
+                @endif
                 @if (!empty($item->icon))
                 <i class="fas fa-{{$item->icon}}"></i>
                 @else
@@ -289,7 +302,11 @@
                     @foreach ($item->subItems as $subItem)
                     @if (!property_exists($subItem, "permission") OR $subItem->permission === true)
                     <li>
+                    @if (!empty($subItem->vueAction))
+                    <a href="#" v-on:click="{{$subItem->vueAction}}">{{$subItem->label}}</a>
+                    @elseif(!empty($item->route) && !empty($subItem->route))
                     <a href="{{$util->toRoute($item->route, $subItem->route)}}">{{$subItem->label}}</a>
+                    @endif
                     </li>
                     @endif
                     @endforeach
@@ -298,7 +315,13 @@
                 </li>
                 @else
                 <li>
+                    @if (!empty($item->vueAction))
+                    <a href="#" v-on:click="{{$item->vueAction}}">
+                    @elseif(!empty($item->route))
                     <a href="{{$util->toRoute($item->route)}}">
+                    @else
+                    <a href="#">
+                    @endif
                     @if (!empty($item->icon))
                     <i class="fas fa-{{$item->icon}}"></i>
                     @else

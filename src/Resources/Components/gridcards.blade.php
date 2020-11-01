@@ -25,11 +25,18 @@
 @else
     <section id="gridcards" class="m-0 p-0 mx-0 pb-3 pb-sm-3 pt-1 pt-sm-3">
 @endif
+
+{{--BLOCO PARA COMPONENTES VUEJS--}}
+@if (!empty($gridcards->vuejsComponents))
+@php
+    $vuejsComponents = $gridcards->vuejsComponents;
+@endphp
+@include('components.vuejsComponents')
+@endif
+{{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
+
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 px-2 px-lg-3 px-xl-0">
-
-
-
 
     @if (!empty($gridcards->seeMore))
     <div class="row m-0 p-0">
@@ -72,9 +79,6 @@
         @endif
         @endif
     @endif
-
-
-
     <div class="mt-0">
     {{--<div class="row w-100 m-0 p-0">--}}
     {{--Add items ------------------------------------------------}}
@@ -136,7 +140,6 @@
     }
     @endphp
 
-
     <div class="{{$column}} p-0  {{$margen_bottom}}">
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{$border}} {{$visibility[$key]}}">
@@ -149,8 +152,14 @@
     <div class="{{$margin}}">
     @endif
     {{--End Backgrond effect--}}
-    {{--Button --------------------}}
-    @if (!empty($gridcards->route))
+
+    {{--ACTION DE COMPONENTS vUEJS -----------------------------------}}
+    @if (!empty($gridcards->vueAction) && !empty($gridcards->vuejsComponents))
+    <a href="#" v-on:click="{{$gridcards->vueAction}}('{{$item->id}}')" >
+
+    {{--ROUTE DE COMPONENTE BLADE ------------------------------------}}
+
+    @elseif (!empty($gridcards->route))
         @php
            if (!empty($gridcards->target) && $gridcards->target == 'blank'){
                $target = 'target="_blank"';
@@ -160,6 +169,10 @@
         @endphp
     <a class="" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>
     {{--Bloco de imagem ------------------------------------------------}}
+    @else
+    <a href="#">
+    @endif
+
     @php
     if (!empty($item->imageStorage)){
         $image = $item->imageStorage;
@@ -170,13 +183,13 @@
     elseif(!empty($item->image)){
         $image = $util->toImage($item->image);
     }else{
-        $image = $util->toImage('images/app', 'image-laracast.jpg');
+        $image = $util->toImage('local/images/app', 'image-laracast.jpg');
     }
     @endphp
     <img src="{{$image}}" class="img-fluid">
     {{--End Bloco de imagem ------------------------------------------------}}
     </a>
-    @endif
+
     {{--End button ----------------}}
     </div>
         @if(!empty($item->title) && in_array('title', $gridcards->showItems))
@@ -199,10 +212,10 @@
                 <div class="" style="font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
                 {{$item->rating}}
                 @for ($i = 1; $i <= intval($item->rating); $i++)
-                <img src="{{$util->toImage('images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+                <img src="{{$util->toImage('local/images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
                 @endfor
                 @if ($item->rating != intval($item->rating))
-                <img src="{{$util->toImage('images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+                <img src="{{$util->toImage('local/images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
                 @endif
                 </div>
             @endif
@@ -226,7 +239,7 @@
     {{--pagination--------------------------------------}}
     @elseif (!empty($gridcards->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-    {!!$gridcards->paginate->links()!!}
+    {!!$gridcards->paginate->links('components.bootstrap')!!}
     </div>
     @endif
     {{--End Pagination----------------------------------}}
@@ -236,7 +249,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
     <a href="#top">
-    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+    <img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
     </a>
     </div>
 @endif

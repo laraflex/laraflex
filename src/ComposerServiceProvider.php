@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('home', 'App\ViewComposers\HomeConfigComposer');
         View::composer('auth', 'App\ViewComposers\AuthConfigComposer');
         View::composer('doc', 'App\ViewComposers\DocConfigComposer');
-        View::composer('dashboard', 'App\ViewComposers\AuthConfigComposer');
+        View::composer('dashboard', 'App\ViewComposers\DashboardConfigComposer');
 
         /**
          * composer recorded related to the components

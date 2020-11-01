@@ -21,11 +21,11 @@ class ImageManager{
          * @param $pathFile - Diretório público onde imagens serão gravadas.
          * @class ImageManager
          */
-        public function base64ResizeAndConvert($base64ImageString, $pathFile = 'images/posts', $width = 800, $typeNewFile = 'webp'){
+        public function base64ResizeAndConvert($base64ImageString, $pathFile = 'local/images/posts', $width = 800, $typeNewFile = 'webp'){
             return base64ImageTemporaryToSave($base64ImageString, $pathFile, $width, $typeNewFile);
         }
 
-        public function base64ImageTemporaryToSave($base64ImageString, $pathFile = 'images/posts', $width = 700, $typeNewFile = 'webp') {
+        public function base64ImageTemporaryToSave($base64ImageString, $pathFile = 'local/images/posts', $width = 700, $typeNewFile = 'webp') {
             $splited = explode(',', substr( $base64ImageString , 5 ) , 2);
             $mime=$splited[0];
             $data=$splited[1];
@@ -37,10 +37,10 @@ class ImageManager{
                 if($extension=='jpeg'){
                     $extension='jpg';
                 }
-                if (!is_dir('images/tmp')){
-                    mkdir('images/tmp', 0700);
+                if (!is_dir('local/images/tmp')){
+                    mkdir('local/images/tmp', 0700);
                 }
-                $TmpPathFile = 'images/tmp/tmp.'.$extension;
+                $TmpPathFile = 'local/images/tmp/tmp.'.$extension;
             }
             file_put_contents( $TmpPathFile, base64_decode($data));
             $imgCompress = $this->saveImageConvert($TmpPathFile, $pathFile, $width, $typeNewFile);
@@ -95,10 +95,10 @@ class ImageManager{
 
             // Precisa de inclusão de use Illuminate\Support\Str;
             if ($destination == NULL){
-                if (!is_dir('images/tmp')){
-                    mkdir('images/tmp');
+                if (!is_dir('local/images/tmp')){
+                    mkdir('local/images/tmp');
                 }
-                $pathFile = 'images/tmp/tmp.img';
+                $pathFile = 'local/images/tmp/tmp.img';
             }else{
                 $destination = $string = Str::of($destination)->rtrim('/');
                 if (!is_dir($destination)){
@@ -184,7 +184,7 @@ class ImageManager{
             }else{
                 return false;
             }
-            $tmpPathFile = 'images/tmp/';
+            $tmpPathFile = 'local/images/tmp/';
             $fileName = $tmpPathFile . 'tmp.tmp';
             if (move_uploaded_file($image, $fileName)){
                 $type = $extension;
@@ -198,7 +198,7 @@ class ImageManager{
 
         public function ResizeAndConvert($imageFile, $width = 700, $type = 'webp', $quality = NULL){
             $image = $imageFile->path();
-            $tmpPathFile = 'images/tmp/';
+            $tmpPathFile = 'local/images/tmp/';
             $fileName = $tmpPathFile . 'tmp.tmp';
             if (move_uploaded_file($image, $fileName)){
                 $imgResized = $this->saveImageConvert($fileName, NULL, $width, $type, $quality);

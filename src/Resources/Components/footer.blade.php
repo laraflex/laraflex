@@ -179,27 +179,27 @@ $num_items = 0;
 
     @if (!empty($footer->socialNetworks->facebook))
     <a href="{{$util->socialNetworkUrl('facebook', $footer->socialNetworks->facebook)}}" target="_blank" rel="noopener noreferrer" >
-    <img src="{{$util->toImage('images/icons', $icon[0])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
+    <img src="{{$util->toImage('local/images/icons', $icon[0])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->instagram))
     <a href="{{$util->socialNetworkUrl('instagram', $footer->socialNetworks->instagram)}}" target="_blank" rel="noopener noreferrer">
-    <img src="{{$util->toImage('images/icons', $icon[1])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
+    <img src="{{$util->toImage('local/images/icons', $icon[1])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
      </a>
     @endif
     @if (!empty($footer->socialNetworks->twitter))
     <a href="{{$util->socialNetworkUrl('twitter', $footer->socialNetworks->twitter)}}" target="_blank" rel="noopener noreferrer">
-    <img src="{{$util->toImage('images/icons', $icon[2])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
+    <img src="{{$util->toImage('local/images/icons', $icon[2])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->pinterest))
     <a href="{{$util->socialNetworkUrl('pinterest', $footer->socialNetworks->pinterest)}}" target="_blank" rel="noopener noreferrer">
-    <img src="{{$util->toImage('images/icons', $icon[3])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
+    <img src="{{$util->toImage('local/images/icons', $icon[3])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->youtube))
     <a href="{{$util->socialNetworkUrl('youtube', $footer->socialNetworks->youtube)}}" target="_blank" rel="noopener noreferrer">
-    <img src="{{$util->toImage('images/icons', $icon[4])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
+    <img src="{{$util->toImage('local/images/icons', $icon[4])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
     </a>
     @endif
 

@@ -24,6 +24,7 @@ class EditorManager{
         }
     }
 
+
     /**
      * O parâmetro contentCode permite adicionar o código (id) do conteúdo nas imagens
      * inseridas como base64 pelo método editorConvertImageBase64
@@ -50,7 +51,7 @@ class EditorManager{
 
 
     private function noteFormat($str){
-        $img = Util::create()->toImage('images/icons/note.jpg');
+        $img = Util::create()->toImage('local/images/icons/note.jpg');
         $icon = '<img src=\"'.$img.'\"/ class=\"mr-2 rounded-circle\" style=\"width:26px;\">';
         $str = str_ireplace('[note]', '<note><div class=\"alert alert-primary p-3 d-block ml-3 ml-lg-5 mb-4 mr-0 mr-lg-3\">'.$icon, $str);
         $str = str_ireplace('[endnote]', '</div></note><br/>', $str);
@@ -58,7 +59,7 @@ class EditorManager{
     }
 
     private function adviceFormat($str){
-        $img = Util::create()->toImage('images/icons/edit.jpg');
+        $img = Util::create()->toImage('local/images/icons/edit.jpg');
         $icon = '<img src=\"'.$img.'\"/ class=\"mr-2 rounded-circle\" style=\"width:26px;\">';
         $str = str_ireplace('[advice]', '<alert><div class=\"alert alert-warning p-3 d-block ml-3 ml-lg-5 mb-4 mr-0 mr-lg-3\">'.$icon, $str);
         $str = str_ireplace('[endadvice]', '</div></alert><br/>', $str);
@@ -66,7 +67,7 @@ class EditorManager{
     }
 
     private function alertFormat($str){
-        $img = Util::create()->toImage('images/icons/alert.jpg');
+        $img = Util::create()->toImage('local/images/icons/alert.jpg');
         $icon = '<img src=\"'.$img.'\"/ class=\"mr-2 rounded-circle\" style=\"width:26px;\">';
         $str = str_ireplace('[alert]', '<alert><div class=\"alert alert-danger p-3 d-block ml-3 ml-lg-5 mb-4 mr-0 mr-lg-3\">'.$icon, $str);
         $str = str_ireplace('[endalert]', '</div></alert><br/>', $str);
@@ -218,7 +219,7 @@ class EditorManager{
         $posFinal = stripos($str, '>', $posInicial);
         $tamanho = $posFinal - $posInicial;
         $subStr = substr($str, $posInicial, $tamanho + 1);
-        $path = 'images/app/replaceimage.jpg';
+        $path = 'local/images/app/replaceimage.jpg';
         $srcImage = '<img src="'. Util::create()->toImage($path) . '" style="max-width:80%">';
         $str = str_replace($subStr, $srcImage, $str);
         return $str;

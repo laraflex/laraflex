@@ -213,7 +213,7 @@
     {{--pagination--------------------------------------}}
     @elseif (!empty($lightbox->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-2" aria-label="Page" translator>
-    {!!$lightbox->paginate->links()!!}
+    {!!$lightbox->paginate->links('components.bootstrap')!!}
     </div>
     @endif
     {{--End Pagination----------------------------------}}
@@ -224,7 +224,7 @@
     @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
     <div class="w-100 pb-3 d-none d-sm-block pl-5 container-xl">
         <a href="#top">
-        <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+        <img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
         </a>
         </div>
     @endif

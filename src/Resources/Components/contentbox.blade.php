@@ -8,9 +8,9 @@
     @endphp
 @endif
 
-@if (!empty($contentbox) && !empty($contentbox->showItems))
+@if (!empty($contentbox) && !empty($contentbox->showItems) && !empty($contentbox->data))
 <section id="contentbox" class="pb-1 pt-2 pt-md-3">
-<div class="container-xl pl-0 pr-1 pr-sm-0">
+<div class="container-xl pl-0 pr-0 pr-sm-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 @php
 $data = $contentbox->data;
@@ -71,6 +71,7 @@ $data = $contentbox->data;
     @endif
     <hr>
     </div>
+
     @endif
     {{--Fim do bloco abstract--------------------------}}
     {{--Bloco de conteúdo -----------------------------------------------}}
@@ -123,7 +124,7 @@ $data = $contentbox->data;
 </div>
 </section>
 @else
-<div class="container-xl px-3 mt-4 pb-2" translation="no">
+<div class="container-xl mt-4 pb-2 px-2 px-md-3 px-xl-0"" translation="no">
     <div class="alert alert-primary {{$border}}" role="alert">
     <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
     <hr class="d-none d-sm-block">

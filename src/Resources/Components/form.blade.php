@@ -237,12 +237,17 @@
         $btnColor = $btnColorTmp;
         $btnBorder = $btnBorderTmp;
     }
+    if (!empty($btn->disabled) && $btn->disabled === true){
+        $disabled = 'disabled';
+    }else{
+        $disabled = '';
+    }
     @endphp
     @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
     @if (!empty($btn->legend) && $key == 0)
     <div class="pb-2"><small><i>* {{$btn->legend}}</i></small></div>
     @endif
-    <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}} px-3">{{__($btn->label)}}</button>
+    <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}} px-3" {{$disabled}}>{{__($btn->label)}}</button>
     @endif
     @endforeach
     @endif

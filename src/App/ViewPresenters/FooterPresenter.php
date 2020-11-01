@@ -13,8 +13,8 @@ class FooterPresenter extends Presenter
             'logoPath' => 'images/app/logo-option1.png',
             //'label' => 'Fale conosco',
             'route' => '#top',
-            'bgColor' => 'marine',
-            'bgImagePath' => 'images/components/imagepanel17.jpg',
+            //'bgColor' => 'marine',
+            //'bgImagePath' => 'images/components/imagepanel17.jpg',
             'items' => [
                 'Laraflex' => [
                     [

@@ -5,7 +5,7 @@
         <div class="modal-header">
         @if(!empty($user))
         <h6 class="modal-title" id="ModalLabel">
-            <img src="{{$util->toImage('images/icons/message.png')}}" class="mr-2 ml-3" style="width:40px; height:40px;">
+            <img src="{{$util->toImage('local/images/icons/message.png')}}" class="mr-2 ml-3" style="width:40px; height:40px;">
             @if(!empty($user->name))
             {{$user->name}}</h6>
             @endif

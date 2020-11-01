@@ -20,10 +20,26 @@
         }else{
             $font_family = '';
         }
+        ;
+
     @endphp
+
+
 <section id="blogcards" class="pb-1 pt-3 pt-md-4">
+<!--div id="blogcards" class="pb-1 pt-3 pt-md-4"-->
+
+{{--BLOCO PARA COMPONENTES VUEJS--}}
+@if (!empty($blogcards->vuejsComponents))
+@php
+    $vuejsComponents = $blogcards->vuejsComponents;
+@endphp
+@include('components.vuejsComponents')
+@endif
+{{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
+
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
+
     <div class="d-none d-sm-block pb-0 mb-0">
         @if (!empty($blogcards->seeMore))
         <div class="row m-0 p-0">
@@ -37,7 +53,7 @@
                 @endif
                 @endif
             </div>
-            <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block align-text-bottomx" style="width: 100%;">
+            <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block" style="width: 100%;">
                 @if(!empty($blogcards->legend) && !empty($blogcards->title))
                 <div class="py-2 mb-sm-1 py-xl-2"></div>
                 <div class="pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
@@ -149,16 +165,18 @@
     @if(!empty($item->rating) && in_array('rating', $blogcards->showItems))
     <div>
     @for ($i = 1; $i <= intval($item->rating); $i++)
-    <img src="{{$util->toImage('images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+    <img src="{{$util->toImage('local/images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
     @endfor
     @if ($item->rating != intval($item->rating))
-    <img src="{{$util->toImage('images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+    <img src="{{$util->toImage('local/images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
     @endif
     </div>
     @endif
     {{--Fim de rating --------------------------------------------------------}}
     {{--Button --------------------}}
-    @if (!empty($blogcards->route))
+    @if (!empty($blogcards->vueAction) && !empty($blogcards->vuejsComponents))
+    <a href="#" class="btn btn-sm btn-outline-dark mt-2" v-on:click="{{$blogcards->vueAction}}('{{$item->id}}')" >{{__('Read more')}}</a>
+    @elseif (!empty($blogcards->route))
         @php
            $link = $util->toRoute($blogcards->route, $item->id);
            if (!empty($blogcards->target) && $blogcards->target == 'blank'){
@@ -175,11 +193,13 @@
     </div>
     @endforeach
     </div>
+
 {{--pagination--------------------------------------}}
 @if (!empty($blogcards->seeMore))
+
 @elseif (!empty($blogcards->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$blogcards->paginate->links()!!}
+{!!$blogcards->paginate->links('components.bootstrap')!!}
 </div>
 @endif
 {{--End Pagination----------------------------------}}
@@ -188,7 +208,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-0 d-none d-sm-block pl-5 container-xl">
 <a href="#top">
-<img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+<img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
 </a>
 </div>
 @endif
@@ -218,7 +238,14 @@
             }
 
         @endphp
-    <a href="{{$link}}">
+
+@if (!empty($blogcards->vueAction) && !empty($blogcards->vuejsComponents))
+<a href="#" v-on:click="{{$blogcards->vueAction}}('{{$item->id}}')" >
+@else
+<a href="{{$link}}">
+@endif
+
+
     <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded bg-light">
     @php
     if (!empty($item->imageStorage)){
@@ -276,12 +303,15 @@
 {{--pagination--------------------------------------}}
 @elseif (!empty($blogcards->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$blogcards->paginate->links()!!}
+{!!$blogcards->paginate->links('components.bootstrap')!!}
 </div>
 @endif
 {{--End Pagination----------------------------------}}
 </div>
+<!--/div-->
 </section>
+
+
 @else
 @if (!empty($blogcards->nullable) && $blogcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>

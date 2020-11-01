@@ -14,6 +14,11 @@
         $arrayImports = array();
     @endphp
     @if (!in_array($objetojs->lib, $arrayImports))
+    @php
+    if (!empty($objetojs->cdn) && $objetojs->cdn === 'local') {
+        $objetojs->lib = $util->toRoute($objetojs->lib);
+    }
+    @endphp
 
     {{-- Inclusão de script JQuery ou javascript --}}
      <script src="{!!$objetojs->lib!!}"></script>

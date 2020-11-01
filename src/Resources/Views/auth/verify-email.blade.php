@@ -2,7 +2,7 @@
     <x-jet-authentication-card>
         <x-slot name="logo">
             <a href="{{url('/')}}">
-                <img src="{{url('images/app/logo.png')}}" width="220" height="52">
+                <img src="{{url('local/images/app/logo.png')}}" width="220" height="52">
             </a>
         </x-slot>
 
@@ -16,7 +16,7 @@
             </div>
         @endif
         <div class="flex items-center justify-end mb-1">
-            <img src="{{url('images/app/jeticon.png')}}" width="40px" alt="JetStream">
+            <img src="{{url('local/images/app/jeticon.png')}}" width="40px" alt="JetStream">
         </div>
 
         <div class="mt-4 flex items-center justify-between">

@@ -149,18 +149,18 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
         elseif (!empty($item->image)){
             $image = $util->toImage($item->image);
         }else{
-            $image = $util->toImage('images/app/foto01.jpg');
+            $image = $util->toImage('local/images/app/foto01.jpg');
         }
         @endphp
 
         <div class="{{$imageMargin}}" style="background-color:#000000;">
         <img src="{{$image}}" class="mediacards-img img-fluid">
-        <img class="icon_play_mediacards rounded-circle" src="{{$util->toImage('images/icons','black_white_play.png')}}" style="top:26%;"/>
+        <img class="icon_play_mediacards rounded-circle" src="{{$util->toImage('local/images/icons','black_white_play.png')}}" style="top:26%;"/>
         </div>
         @else
         <div class="{{$imageMargin}}" style="background-color:#000000;">
-        <img src="{{$util->toImage('images/app','foto01.jpg')}}" class="mediacards-img img-fluid">
-        <img class="icon_play_mediacards rounded-circle" src="{{$util->toImage('images/icons','black_white_play.png')}}" style="top:26%;"/>
+        <img src="{{$util->toImage('local/images/app','foto01.jpg')}}" class="mediacards-img img-fluid">
+        <img class="icon_play_mediacards rounded-circle" src="{{$util->toImage('local/images/icons','black_white_play.png')}}" style="top:26%;"/>
         </div>
         @endif
         {{--End Bloco de imagem ------------------------------------------------}}
@@ -178,10 +178,10 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
         <div class="pt-2 pl-1" style="font-size:calc(11px + 0.25vw);line-height:1.3;color:#000000;{{$font_family}}">
         {{$item->rating}}
         @for ($i = 1; $i <= intval($item->rating); $i++)
-        <img src="{{$util->toImage('images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+        <img src="{{$util->toImage('local/images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
         @endfor
         @if ($item->rating != intval($item->rating))
-        <img src="{{$util->toImage('images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+        <img src="{{$util->toImage('local/images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
         @endif
         </div>
         @endif
@@ -205,7 +205,7 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
     {{--pagination--------------------------------------}}
     @elseif (!empty($mediacards->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-    {!!$mediacards->paginate->links()!!}
+    {!!$mediacards->paginate->links('components.bootstrap')!!}
     </div>
     @endif
     {{--Fim de bloco seeMore--}}
@@ -216,7 +216,7 @@ if (!empty($mediacards->styles->margin) && $mediacards->styles->margin === true)
     @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
     <div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
     <a href="#top">
-    <img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+    <img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
     </a>
     </div>
     @endif

@@ -45,11 +45,12 @@ class LaraflexServiceProvider extends ServiceProvider
                 __DIR__.'/App/Console/Commands' => base_path('App/Console/Commands'),
                 //publishes public files
                 __DIR__.'/public/css' => base_path('public/css'),
-                __DIR__.'/public/images/app' => base_path('public/images/app'),
-                __DIR__.'/public/images/icons' => base_path('public/images/icons'),
-                __DIR__.'/public/images/posts' => base_path('public/images/posts'),
-                __DIR__.'/public/images/slides' => base_path('public/images/slides'),
-                __DIR__.'/public/images/users' => base_path('public/images/users'),
+                __DIR__.'/public/images/app' => base_path('public/local/images/app'),
+                __DIR__.'/public/images/icons' => base_path('public/local/images/icons'),
+                __DIR__.'/public/images/posts' => base_path('public/local/images/posts'),
+                __DIR__.'/public/images/slides' => base_path('public/local/images/slides'),
+                __DIR__.'/public/images/users' => base_path('public/local/images/users'),
+                __DIR__.'/public/js/laraflex' => base_path('public/laraflex'),
                 //publishes controllers
                 __DIR__.'/App/Http/Controllers' => base_path('App/Http/Controllers'),
                 //publish config

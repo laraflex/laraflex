@@ -20,6 +20,14 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         return new Util();
     }
 
+    public function domain () {
+        $app_secure_url = env('APP_SECURE_URL');
+        if ($this->secure && !empty($app_secure_url)){
+            return $app_secure_url;
+        }else{
+            return env('APP_URL');
+        }
+    }
 
     public function toRoute($route, $link = NULL)
     {
@@ -43,11 +51,12 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         return $this->toMedia($path,$image);
     }
 
+
     public function toMovie($path,$movie = NULL){
         return $this->toMedia($path,$movie);
     }
 
-    public function toMedia($path, $media)
+    public function toMedia($path, $media = NULL)
     {
         $numChar = strlen($path);
         $x = $numChar - 1;

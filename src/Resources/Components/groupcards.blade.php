@@ -25,6 +25,16 @@
 @else
     <section id="groupcards" class="m-0 p-0 mx-0 pb-3 pb-sm-3 pt-1 pt-sm-3">
 @endif
+
+{{--BLOCO PARA COMPONENTES VUEJS--}}
+@if (!empty($groupCards->vuejsComponents))
+@php
+    $vuejsComponents = $groupCards->vuejsComponents;
+@endphp
+@include('components.vuejsComponents')
+@endif
+{{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
+
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
 <div class="">
@@ -67,8 +77,6 @@
         <span style="color:gray">{{$groupCards->legend}}</span></div>
         @endif
     @endif
-
-
     <div class="row p-0 m-0 pt-1">
     @php
     $visibility = ['d-block ', 'd-block ', 'd-block ', 'd-block', 'd-none d-sm-block d-lg-none', 'd-none d-sm-block d-lg-none'];
@@ -80,6 +88,7 @@
         $showLimit = true;
     }else{
         $showLimit = false;
+        $num_limit = NULL;
     }
 
     @endphp
@@ -99,7 +108,6 @@
     @else
     <div class="mx-1 h-100 {{$border}}">
     @endif
-    {{--<div id="groupcard" class="groupcards-item ml-1 mr-1 pb-2 pb-md-0 {{$border}}" style="height:100%;">--}}
     {{--Bloco interno----}}
     @if (!empty($groupCards->button))
     <div class="p-2 p-md-3 m-0 " style="height:86%">
@@ -118,7 +126,7 @@
         elseif(!empty($item->image)){
             $image = $util->toImage($item->image);
         }else{
-            $image = $util->toImage('images/app/foto02.jpg');
+            $image = $util->toImage('local/images/app/foto02.jpg');
         }
         @endphp
     @if (!empty($groupCards->bgEffect) && $groupCards->bgEffect === true)
@@ -126,9 +134,17 @@
     @else
     <div class="text-center mb-0" style="min-height: calc(60px + 12vw) height:100%;">
     @endif
+    {{--BLOCO DE INTEGRAÇÃO COM EVENTO vUEJS--}}
+    @if (!empty($groupCards->vueAction) && !empty($groupCards->vuejsComponents))
+    <a href="#" v-on:click="{{$groupCards->vueAction}}('{{$item->id}}')" >
+    @elseif(!empty($groupCards->route))
     <a href="{{$util->toRoute($groupCards->route, $item->id)}}" class="" >
+    @else
+    <a href="#">
+    @endif
     <img src="{{$image}}" class="img-fluid mx-auto " alt="...">
     </a>
+
     </div>
     @endif
     {{--Fim Controle para adicionar imagem--}}
@@ -191,40 +207,41 @@
     {!!$endStyleFont!!}
     </p>
     </div>
-    @endif
-    @endif
-    @endif
-    @endforeach
-    @foreach ($groupCards->items as $item)
-    {{--Adicionando rating --------------------------------------------------}}
-    @if(!empty($item->rating) && in_array('rating', $groupCards->showItems))
+    @elseif($fieldName == 'rating')
+    @if(!empty($item->rating))
         <div class="mt-2" style="font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
         {{$item->rating}}
         @for ($i = 1; $i <= intval($item->rating); $i++)
-        <img src="{{$util->toImage('images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+        <img src="{{$util->toImage('local/images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
         @endfor
         @if ($item->rating != intval($item->rating))
-        <img src="{{$util->toImage('images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
+        <img src="{{$util->toImage('local/images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
         @endif
         </div>
-        @php
-        break;
-        @endphp
     @endif
-    {{--Fim de rating --------------------------------------------------------}}
+    @endif
+    @endif
+    @endif
     @endforeach
     </div>
     </div>
-    @if (!empty($groupCards->button))
+    @if (!empty($groupCards->vueAction) && !empty($groupCards->vuejsComponents))
+    <div class="px-2 px-sm-3" style="height:14%;">
+    <a href="#" class="btn btn-sm btn-outline-dark mt-3 btn-block" v-on:click="{{$groupCards->button->vueAction}}('{{$item->id}}')" role="button"
+    style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.7em + 0.17vw);">
+    {{ $groupCards->button->caption }}</a>
+    </div>
+
+    @elseif (!empty($groupCards->button))
     @php
-    if (!empty($item->btnColor)){
+    if (!empty($groupCards->button->btnColor)){
     $btnOptions = ['primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Dark', 'link'];
     $btnBorder = '';
-    if (!in_array($item->btnColor, $btnOptions)){
+    if (!in_array($groupCards->button->btnColor, $btnOptions)){
         $btnColor = 'light';
         $btnBorder = 'btn-outline-secondary';
     }else{
-        $btnColor = $item->btnColor;
+        $btnColor = $groupCards->button->btnColor;
         $btnBorder = '';
     }
     }else{
@@ -238,6 +255,7 @@
     {{$groupCards->button->caption}}</a>
     </div>
     @endif
+
     {{--End bloco interno----}}
     </div>
     </div>
@@ -254,7 +272,7 @@
 {{--pagination--------------------------------------}}
 @elseif (!empty($groupCards->paginate))
 <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$groupCards->paginate->links()!!}
+{!!$groupCards->paginate->links('components.bootstrap')!!}
 </div>
 @endif
 {{--Fim de bloco seeMore--}}
@@ -264,7 +282,7 @@
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
 <a href="#top">
-<img src="{{$util->toImage('images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
+<img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
 </a>
 </div>
 @endif

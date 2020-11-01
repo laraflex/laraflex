@@ -27,6 +27,7 @@
     @php
     if (!empty($carousel->imageStorage) && $carousel->imageStorage === true){
         //
+
     }
     else{
         $image = $util->toImage($image);

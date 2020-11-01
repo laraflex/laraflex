@@ -25,9 +25,9 @@
         }elseif(!empty($item->user->photo)){
             $photo = $util->toImage($item->user->photo);
         }elseif($sexo == 'F'){
-            $photo = $util->toImage('images/users', 'perfil2.png');
+            $photo = $util->toImage('local/images/users', 'perfil2.png');
         }else{
-            $photo = $util->toImage('images/users', 'perfil1.png');
+            $photo = $util->toImage('local/images/users', 'perfil1.png');
         }
     @endphp
     <li class=" pb-2 pb-sm-3">
@@ -36,7 +36,6 @@
     <img src="{{$photo}}" class="m-0 img-fluid mx-auto d-none d-sm-block" alt="..." style="max-width:50px; max-height:50px;">
     </div>
     <div class="media-bodyx col-12 col-sm-11 m-0 p-0 pl-sm-3 pl-lg-0">
-
     {{---------------------------------------------}}
     <img src="{{$photo}}" class="m-0 img-fluid m-2 d-block d-sm-none float-left" alt="..." style="max-width:40px; max-height:40px;">
     <div class="mt-0 mb-1">
@@ -86,9 +85,9 @@
             }elseif(!empty($item->user->photo)){
                 $photo = $util->toImage($item->user->photo);
             }elseif($sexo == 'F'){
-                $photo = $util->toImage('images/users', 'perfil2.png');
+                $photo = $util->toImage('local/images/users', 'perfil2.png');
             }else{
-                $photo = $util->toImage('images/users', 'perfil1.png');
+                $photo = $util->toImage('local/images/users', 'perfil1.png');
             }
 
         @endphp
