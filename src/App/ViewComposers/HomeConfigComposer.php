@@ -3,7 +3,7 @@ namespace App\ViewComposers;
 
 use Illuminate\View\View;
 use laraflex\ViewHelpers\Util;
-use laraflex\ViewHelpers\Listeners\DependenciesListener;
+use App\ViewListeners\DependenciesListener;
 use App\ViewPresenters\NavBarDefaultPresenter;
 use App\ViewPresenters\VerticalNavBarPresenter;
 use App\ViewPresenters\ImagePanelPresenter;

@@ -37,9 +37,10 @@ class LaraflexServiceProvider extends ServiceProvider
         $this->publishes([
                 __DIR__.'/Resources/lang' => base_path('resources/lang'),
                 __DIR__.'/Resources/Views' => base_path('resources/views'),
-                //publishes View Composers, View Presenters and ResourceMediators
+                //publishes View Composers, View Presenters, viewListeners and ResourceMediators
                 __DIR__.'/App/ViewComposers' => base_path('App/ViewComposers'),
                 __DIR__.'/App/ViewPresenters' => base_path('App/ViewPresenters'),
+                __DIR__.'/App/ViewListeners' => base_path('App/ViewListeners'),
                 __DIR__.'/App/ResourceMediators' => base_path('App/ResourceMediators'),
                 //publishes Command and Stubs
                 __DIR__.'/App/Console/Commands' => base_path('App/Console/Commands'),

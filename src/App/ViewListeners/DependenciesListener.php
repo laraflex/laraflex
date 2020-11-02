@@ -1,5 +1,5 @@
 <?php
-namespace laraflex\ViewHelpers\Listeners;
+namespace App\ViewListeners;
 
 use laraflex\Contracts\AbstractListener;
 
