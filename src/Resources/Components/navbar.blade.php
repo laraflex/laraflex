@@ -99,12 +99,12 @@
     $predominantColor = $styleColor;
     $fontWeight = '';
 
-    if(!empty($navBar->fixedMenu) && $navBar->fixedMenu == true){
+    if(!empty($navBar->fixedMenu) && $navBar->fixedMenu === true){
         $fixed = "fixed-top";
         $styleColor = $styleRgbColor;
         $border = '1px solid rgba(0,0,0,0.2)';
         if ($bgColor == 'white' OR $bgColor == 'light'){
-            $fixedNavbarClass = 'bg-navbar-bright';
+            $fixedNavbarClass = 'bg-navbar-light';
         }else{
             $fixedNavbarClass = 'bg-navbar-dark';
         }
