@@ -137,7 +137,7 @@
     <tr {!!$bgColor!!}>
     @foreach ($item as $key => $fieldValue)
     @if (in_array($key, $table->showItems))
-    @if ($key == $table->link)
+    @if (!empty($table->link) && $key == $table->link)
     <td  class="{{$td_height}} {{$px}}">
     <a href="{{$util->toRoute($table->route, $item->id)}}" class="table-link"
     style="font-size:calc(0.75em + 0.20vw); color:{!!$styleTable['lineColor']!!};">
@@ -240,37 +240,28 @@
     @foreach ($item as $key => $value)
     @if (in_array($key, $table->showItems))
     @if (!empty($table->link) && $table->link == $key)
-    <div class="row w-100 mx-0 py-2">
-    <div class="col-2 pb-1">
+
+    <div class=" w-100 mx-0 p-2">
+
     @if (!empty($table->route))
-    <a href="{{$util->toRoute($table->route, $item->id)}}">
-    <span class="badge badge-pillx px-2x py-2" style="width:32px; height:32px; background-color: {!!$styleTable['badge']!!}; color:{!!$styleTable['lineColor']!!}; border: 1px solid #A4A4A4;font-size:14px;">
-    {{str_split($value)[0]}}</span>
-    </a>
-    @else
-    <span class="badge badge-pillx px-2x py-2" style="width:32px; height:32px; background-color: {!!$styleTable['badge']!!}; color:{!!$styleTable['lineColor']!!}; border: 1px solid #A4A4A4;font-size:14px;">
-    {{str_split($value)[0]}}</span>
-    @endif
-    </div>
-    @if (!empty($table->route))
-    <div class="col-10 pb-1 pl-0" style="font-size:90%;line-height:1.2"><strong>
+    <div class="pb-1 pl-0" style="font-size:90%;line-height:1.2"><strong>
     <a href="{{$util->toRoute($table->route, $item->id)}}">
     {{$value}}
     </a></strong>
     </div>
     @else
-    <div class="col-10 pb-1 pl-0" style="font-size:90%;line-height:1.2"><strong>
+    <div class="pb-1 pl-0" style="font-size:90%;line-height:1.2"><strong>
     {{$value}}
     </strong>
     </div>
     @endif
     @else
     @if (!empty($table->caption->$key))
-    <div class="col-12 pl-3 pl-0" style="font-size:80%;line-height:1.3; color:{{$font_color_mobile}};">
+    <div class="pl-1 pl-0" style="font-size:80%;line-height:1.3; color:{{$font_color_mobile}};">
     {{$table->caption->$key}}: {{$value}}
     </div>
     @else
-    <div class="col-12 pl-3" style="font-size:80%;line-height:1.3; color:{{$font_color_mobile}};">
+    <div class="pl-1" style="font-size:80%;line-height:1.3; color:{{$font_color_mobile}};">
     {{ucfirst($key)}}: {{$value}}
     </div>
     @endif
@@ -293,12 +284,12 @@
         }
         @endphp
         @if (in_array($item->id, $arrayPosts))
-        <div class="col-12 text-right pt-0"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+        <div class="text-left pt-0"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
         <span class="" style="font-size:90%;"><strong>{{ucfirst($table->action)}}</strong></span>
         </a></div>
         @endif
         @else
-        <div class="col-12 text-right pt-0"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
+        <div class="text-left pt-0"><a href="{{$util->toRoute($table->actionRoute, $item->id)}}">
         <span class="" style="font-size:90%;"><strong>{{ucfirst($table->action)}}</strong></span>
         </a></div>
         @endif

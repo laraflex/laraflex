@@ -187,9 +187,14 @@
                 $id = $item->id;
                 $name = $item->name;
             }
+            $attributes = '';
             if (!empty($item->attributes)){
                 $attributes = $item->attributes;
-            }else{
+            }
+            elseif(!empty($item->rows)) {
+                $attributes .= ' rows ="' . $item->rows . '"';
+            }
+            else{
                 $attributes = 'rows="5"';
             }
         @endphp
@@ -297,7 +302,7 @@
     <input type="file" class="custom-file-input {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!} required>
     <label class="custom-file-label {{$marginFile}}" for="customFile">{{__($label)}}</label>
     @else
-    <input type="file" class="custom-file-input {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!}>
+    <input type="file" class="custom-file-input  {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!}>
     <label class="custom-file-label {{$marginFile}}" for="customFile">{{__($label)}}</label>
     @endif
     {{----------------------------------------}}

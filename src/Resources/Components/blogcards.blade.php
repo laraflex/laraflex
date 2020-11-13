@@ -20,8 +20,6 @@
         }else{
             $font_family = '';
         }
-        ;
-
     @endphp
 
 

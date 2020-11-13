@@ -43,13 +43,14 @@
     'baseball-ball', 'cogs'];
 
 @endphp
-
+{{--
 <form method="get" id="{{$id}}">
 @if (!empty($form->token) && $form->token === false)
-{{--Caso falso--}}
+
 @else
 @csrf
 @endif
+--}}
 
 @foreach ($form->items as $iconKey => $item)
 @if (!empty($item->type) && $item->type == 'button')
@@ -76,7 +77,7 @@
     @endif
 @endif
 @endforeach
-</form>
+<!--/form-->
 </div>
 </div>
 </div>

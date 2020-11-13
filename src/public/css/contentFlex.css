@@ -168,7 +168,7 @@
 a.tooltip-dx {
     position: relative ;
   }
-  a.tooltip-dx:hover::after {
+a.tooltip-dx:hover::after {
     content: attr(data-tooltip);
     position: absolute ;
     top:-35px;
@@ -183,23 +183,23 @@ a.tooltip-dx {
     background-color: rgb(255,255,255,0.95);
     z-index: 1050;
     white-space: pre-line;
-  }
+}
 
-  #mediacards-box a:hover img{
-      opacity: 0.6;
-  }
+#mediacards-box a:hover img{
+    opacity: 0.6;
+}
 
-  .icon_play_mediacards{
+.icon_play_mediacards{
     top: 40%;
     left:42%;
     width:25px;
     height:25px;
     opacity: 0.6;
-   }
+}
 
-    a:hover .icon_play_mediacards{
-        opacity: 0.98;
-    }
+a:hover .icon_play_mediacards{
+    opacity: 0.98;
+}
 
 #default-paginator ul li a{
     color: #1C1C1C;
@@ -209,6 +209,37 @@ a.tooltip-dx {
     background-color:#F2F2F2;
     Border: 1px solid #CCCCCC;
     color: #848484;
+}
+
+#image-control-panel a #item-card {
+    background-color: rgba(0,0,0,0.4);
+    color: #F2F2F2;
+}
+
+#image-control-panel a:hover #item-card {
+    background-color:rgb(0,0,0, 0);
+
+    color: #FFFFFF;
+}
+
+#card-control-panel a{
+    color:#000000;
+}
+
+#card-control-panel a i{
+    color:#000000;
+}
+
+#card-control-panel a:hover {
+    color:#000000;
+}
+
+#card-control-panel a:hover i{
+    color:#6E6E6E;
+}
+
+#card-control-panel .card:hover{
+    background-color:#FAFAFA;
 }
 
 @media screen and (min-width: 576px ) {

@@ -141,7 +141,7 @@
             </span>
             @endif
             @endif
-            <span class="user-role px-0 mx-0 text-center">{{ trim(date("d/m/Y")) }}</span>
+            <!--span class="user-role px-0 mx-0 text-center">{{-- trim(date("d/m/Y")) --}}</span-->
             <div>
             <a class="tooltip-dx btn" data-tooltip="Desconectar" href="{{ route('logout') }}"
             onclick="event.preventDefault();

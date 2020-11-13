@@ -70,7 +70,7 @@ if (!empty($objectHeader)){
         </div>
           @if (!empty($backpanel->title))
           <div class="mb-2 mb-md-2 " style="text-shadow: #151515 2px 3px 2px;">{{$backpanel->title}}</div>
-          @endif
+
 
 
           {{--Bloco de controle de botões--}}
@@ -90,6 +90,9 @@ if (!empty($objectHeader)){
           @else
           <div class="p-1 p-md-2"></div>
           @endif
+
+          @endif
+
           {{--Fim de bloco de controle de botões --}}
 
 

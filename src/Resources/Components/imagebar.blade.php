@@ -89,23 +89,30 @@ if(!empty($imageBar->height) && $heightImage > 199){
         $textAlign = 'text-left';
     }
     @endphp
-@if (!empty($imageBar->title))
+
 @php
+if (!empty($imageBar->title)) {
     $num_char = strlen($imageBar->title);
     if ($num_char > 49){
         $imageBar->title = substr($imageBar->title, 0, 49) . "...";
     }
-    $num_char_text = strlen($imageBar->text);
-    if ($num_char_text > 104){
-        $imageBar->text = substr($imageBar->text, 0, 104) . "...";
+    if (!empty($imageBar->text)) {
+        $num_char_text = strlen($imageBar->text);
+        if ($num_char_text > 104){
+            $imageBar->text = substr($imageBar->text, 0, 104) . "...";
+        }
     }
-
+}
 @endphp
 @if (!empty($imageBar->fadeImage) && $imageBar->fadeImage === true)
-<div class="imagebar-bgcolor" style="width:100%; height:100%; background-color: rgb(0,0,0,0.2);">
+<div class="imagebar-bgcolor" style="width:100%; height:100%; background-color: rgba(0,0,0,0.2);">
 @else
 <div class="imagebar-bgcolor" style="width:100%; height:100%;">
 @endif
+
+@if (!empty($imageBar->title))
+
+
 <div class="container-xl mt-0 mb-0 px-0 {{$textAlign}}" style="width:100%; height:100%; position:relative;">
 <div class="p-0 mx-0" id="content" style="margin: 0; position: absolute; top: 50%; transform: translate(-50%, -50%);left: 50%; margin-right: -50; width:100%">
 @if ($imageBar->type == 'content')
