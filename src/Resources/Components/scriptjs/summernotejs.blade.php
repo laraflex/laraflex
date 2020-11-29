@@ -17,7 +17,7 @@ $(document).ready(function() {
     $('.summernote').summernote({
 
         height: 400,
-        fontSizes:['8', '10', '12', '14', '16', '18', '24', '36'],
+        fontSizes:['8', '10', '12', '14', '16', '18', '20', '24', '28', '36'],
         toolbar: [
             // [groupName, [list of button]]
             ['style', ['bold', 'italic', 'underline']],
