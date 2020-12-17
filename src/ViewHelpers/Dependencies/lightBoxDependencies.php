@@ -28,4 +28,7 @@ class LightboxDependencies extends Dependencies
     static public function create(){
         return new LightboxDependencies();
     }
+    /**
+     * Version 1.0
+     */
 }

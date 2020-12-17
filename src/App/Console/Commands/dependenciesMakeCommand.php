@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
@@ -80,4 +79,7 @@ class DependenciesMakeCommand extends GeneratorCommand
     {
         
     }
+    /**
+    * Version 1.0
+    */
 }

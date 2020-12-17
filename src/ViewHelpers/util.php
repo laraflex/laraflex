@@ -1,5 +1,4 @@
 <?php
-
 namespace laraflex\ViewHelpers;
 
 use Illuminate\Support\Str;
@@ -206,4 +205,7 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         }
         return $retorno;
     }
+    /**
+     * Version 1.0
+     */
 }
