@@ -3,7 +3,7 @@ namespace laraflex\ViewHelpers\Dependencies;
 
 use laraflex\Contracts\Dependencies;
 
-class LightboxDependencies extends Dependencies
+class LightBoxDependencies extends Dependencies
 {
     public function toArray($data = NULL, array $config = NULL)
     {
@@ -26,7 +26,7 @@ class LightboxDependencies extends Dependencies
     }
 
     static public function create(){
-        return new LightboxDependencies();
+        return new LightBoxDependencies();
     }
     /**
      * Version 1.0
