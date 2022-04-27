@@ -140,18 +140,40 @@
     }
     @endphp
 
+
+    {{--Start File Style and block style--}}
     <div class="{{$column}} p-0  {{$margen_bottom}}">
+    @if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true)
+    
+    @if ($showLimit === true)
+    <div class="mx-1 h-100 {{$visibility[$key]}}">
+    @else
+    <div class="mx-1 h-100">
+    @endif
+    <div class="gridcards-item {{$margin}}" style="text-align:center">
+
+    @else
+    
+    
+
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{$border}} {{$visibility[$key]}}">
     @else
-    <div class="mx-1 h-100  {{$border}}">
+    <div class="mx-1 h-100  {{$border}}">    
     @endif
+
+
+    {{--start Background effect--}}
     @if (!empty($gridcards->styles->bgEffect) && $gridcards->styles->bgEffect === true)
     <div class="gridcards-item {{$margin}}" style="background-color: #000000;">
     @else
-    <div class="{{$margin}}">
+    <div class="gridcards-item {{$margin}}">
     @endif
+
+
     {{--End Backgrond effect--}}
+    {{--file File Style and block style--}}
+    @endif
 
     {{--ACTION DE COMPONENTS vUEJS -----------------------------------}}
     @if (!empty($gridcards->vueAction) && !empty($gridcards->vuejsComponents))
@@ -166,6 +188,9 @@
            }else{
                $target = '';
            }
+           if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true){
+               $target = 'target="_blank"';
+           }
         @endphp
     <a class="" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>
     {{--Bloco de imagem ------------------------------------------------}}
@@ -173,28 +198,50 @@
     <a href="#">
     @endif
 
+
+
+
     @php
-    if (!empty($item->imageStorage)){
-        $image = $item->imageStorage;
-    }
-    elseif (!empty($item->imagePath)){
-        $image = $util->toImage($item->imagePath);
-    }
-    elseif(!empty($item->image)){
-        $image = $util->toImage($item->image);
+    if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true){
+        $image = $util->toImage('local/images/icons', 'pdf.png');
     }else{
-        $image = $util->toImage('local/images/app', 'image-laracast.jpg');
+
+    
+        if (!empty($item->imageStorage)){
+            $image = $item->imageStorage;
+        }
+        elseif (!empty($item->imagePath)){
+            $image = $util->toImage($item->imagePath);
+        }
+        elseif(!empty($item->image)){
+            $image = $util->toImage($item->image);
+        }else{
+            $image = $util->toImage('local/images/app', 'image-laracast.jpg');
+        }
     }
     @endphp
+
+
     <img src="{{$image}}" class="img-fluid">
+    
     {{--End Bloco de imagem ------------------------------------------------}}
     </a>
 
     {{--End button ----------------}}
     </div>
+
+
         @if(!empty($item->title) && in_array('title', $gridcards->showItems))
-        <div class="px-3 {{$paddingText}}">
-            <div class="gridcards-item-shared text-left text-dark" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
+
+        @if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true)
+        <div class="px-3 {{$paddingText}}" style="text-align:center">
+        @else
+        <div class="px-3 {{$paddingText}}" style="text-align:left">
+        @endif
+
+
+
+            <div class="gridcards-item-shared text-dark" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
             {{$item->title}}
             </div>
             @if(!empty($item->label) && in_array('label', $gridcards->showItems))
@@ -222,6 +269,8 @@
             {{--Fim de rating --------------------------------------------------------}}
         </div>
         @endif
+
+
     </div>
     </div>
     @endforeach
