@@ -16,7 +16,6 @@
 $data = $contentbox->data;
 @endphp
 <div class="p-3 p-sm-4 p-lg-5 {{$border}} m-0 mt-4 mb-4">
-
     @php
         if (!empty($contentbox->fontFamily->title)){
             $font_family_title = 'font-family:'.$contentbox->fontFamily->title;
@@ -29,7 +28,6 @@ $data = $contentbox->data;
             $font_family = '';
         }
     @endphp
-
     @if (in_array('title', $contentbox->showItems) && !empty($data->title))
     <div class="contentbox-title mb-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(16px + 1.5vw);{{$font_family_title}}">{{$data->title}}</div>
     @endif
@@ -50,8 +48,13 @@ $data = $contentbox->data;
     elseif(!empty($data->image)){
         $image = $util->toImage($data->image);
     }
+    if (!empty($data->maxWidthImage) &&  ($data->maxWidthImage == false)){
+        $maxWidth = 'max-width:100%';
+    }else{
+        $maxWidth = 'max-width:70%';
+    }
     @endphp
-    <img src="{{$image}}" class="mt-2 mb-3 mt-lg-3 mb-lg-4" alt="..." style="max-width:60%; align:left" id="imagebox">
+    <img src="{{$image}}" class="mt-2 mb-3 mt-lg-3 mb-lg-4" alt="..." style="{{$maxWidth}}; align:left" id="imagebox">
     @endif
     {{--Bloco Abstract -------------------------------}}
     @if (in_array('abstract', $contentbox->showItems) && !empty($data->abstract))
@@ -71,7 +74,6 @@ $data = $contentbox->data;
     @endif
     <hr>
     </div>
-
     @endif
     {{--Fim do bloco abstract--------------------------}}
     {{--Bloco de conteúdo -----------------------------------------------}}
@@ -99,6 +101,20 @@ $data = $contentbox->data;
     <p class=" contentbox-shared card-text" style="line-height: calc(1.1em + 0.6vw);font-size:calc(0.8em + 0.18vw);{{$font_family}}">Autor: {{$data->author->name}}</p>
     </div>
     @endif
+    {{--Bloco para adicionar um anexo ao conteúdo--}}
+    @if (in_array('attached', $contentbox->showItems) && !empty($data->attached))
+    <div class="p-2" style="width:150px">
+    @php
+    $image = $util->toImage('local/images/icons', 'pdf.png');
+    $alt = '';
+    @endphp
+    <a href="{{$data->attached}}" rel="noopener noreferrer" target="_blank">
+    <img src="{{$image}}" class="img-fluidx mx-auto d-block" alt="Open the file" />
+    </a>
+    <div class="text-center">{{__('Open file')}}</div>
+    @endif
+    {{----------------------------------------------}}
+    </div>
     <div class="p-2">
     @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)
     <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3 mt-3" data-toggle="modal" data-target="#comentModal" data-id="0">
@@ -109,7 +125,6 @@ $data = $contentbox->data;
     @endif
     </div>
 </div>
-
 @if(!empty($contentbox->coments))
 @php
     $coments = $contentbox->coments;
@@ -119,7 +134,6 @@ $data = $contentbox->data;
 @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)
 @include('laraflex::include.formcoments')
 @endif
-
 </div>
 </div>
 </section>
@@ -132,5 +146,4 @@ $data = $contentbox->data;
     </div>
 </div>
 @endif
-
 

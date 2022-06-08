@@ -42,6 +42,7 @@
     'weight', 'volleyball-ball', 'users-cog', 'truck-loading', 'store', 'pallet', 'basketball-ball',  'film', 'file-archive',
     'baseball-ball', 'cogs'];
 
+    $buttonActive = '';
 @endphp
 {{--
 <form method="get" id="{{$id}}">
@@ -51,11 +52,9 @@
 @csrf
 @endif
 --}}
-
 @foreach ($form->items as $iconKey => $item)
 @if (!empty($item->type) && $item->type == 'button')
     @php
-
     if (!empty($nbtn == 0)){
         $btnColor = 'dark';
         $btnBorder = '';
@@ -69,11 +68,17 @@
     $nbtn ++;
     @endphp
     @if (!empty($action))
-    <a type="button" href="{{$action}}" class="btn btn-{{$btnColor}} {{$btnBorder}} pl-2 mb-2">
+    @php 
+        if (!empty($item->inactive) && $item->inactive == true){
+           $buttonActive = 'disabled';
+        }else{
+           $buttonActive = '';
+        }
+    @endphp
+    <a type="button" href="{{$action}}" class="btn btn-{{$btnColor}} {{$btnBorder}} pl-2 mb-2 {{$buttonActive}}">
     <i class="fas fa-{{$arrayIcon[$iconKey + 5]}}"></i>
     <span class="px-2">{{__($item->label)}}</span>
     </a>
-
     @endif
 @endif
 @endforeach

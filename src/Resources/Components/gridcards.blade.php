@@ -19,6 +19,7 @@
     }else{
         $font_family = '';
     }
+    $bgRound = '';
 @endphp
 @if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
     <section id="gridcards" class="m-0 p-0 mx-0 pb-3 pb-lg-4 pt-1 pt-sm-2">
@@ -87,7 +88,7 @@
     //--Backgrond effect e margin--//
     if (!empty($gridcards->styles->margin) && $gridcards->styles->margin === true){
         $margin = 'm-2';
-        $paddingText = 'pt-1 pb-3';
+        $paddingText = 'pt-1 pb-1';
     }else{
         $margin = '';
         $paddingText = 'pt-3 pb-3';
@@ -138,8 +139,13 @@
             }
         }
     }
-    @endphp
+    // Definição do atributo 'ALT"'
+    $alt = '';
+    if (!empty($item->alt)){
+        $alt = 'alt="' . $item->alt . '"';
+    }
 
+    @endphp
 
     {{--Start File Style and block style--}}
     <div class="{{$column}} p-0  {{$margen_bottom}}">
@@ -154,14 +160,11 @@
 
     @else
     
-    
-
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{$border}} {{$visibility[$key]}}">
     @else
     <div class="mx-1 h-100  {{$border}}">    
     @endif
-
 
     {{--start Background effect--}}
     @if (!empty($gridcards->styles->bgEffect) && $gridcards->styles->bgEffect === true)
@@ -169,7 +172,6 @@
     @else
     <div class="gridcards-item {{$margin}}">
     @endif
-
 
     {{--End Backgrond effect--}}
     {{--file File Style and block style--}}
@@ -198,15 +200,31 @@
     <a href="#">
     @endif
 
-
-
-
     @php
     if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true){
-        $image = $util->toImage('local/images/icons', 'pdf.png');
+        $icons_var = ['icon_file01.jpg','icon_file02.jpg','icon_file03.jpg','icon_file04.jpg','icon_file05.jpg','icon_file06.jpg','icon_file07.jpg','icon_file08.jpg','icon_file09.jpg',
+        'icon_file10.jpg','icon_file11.jpg','icon_file12.jpg','icon_file01.jpg','icon_file02.jpg','icon_file03.jpg','icon_file04.jpg','icon_file05.jpg','icon_file06.jpg','icon_file07.jpg',
+        'icon_file08.jpg','icon_file09.jpg','icon_file10.jpg','icon_file11.jpg','icon_file12.jpg','icon_file01.jpg','icon_file02.jpg','icon_file03.jpg','icon_file04.jpg','icon_file05.jpg', 
+        'icon_file06.jpg','icon_file07.jpg','icon_file08.jpg','icon_file09.jpg','icon_file10.jpg','icon_file11.jpg','icon_file12.jpg',];
+        $num_var = 0;
+        if (!empty($gridcards->styles->bgStyle) && $gridcards->styles->bgStyle === 'image'){
+            if ($key >= 34) {
+                $num_var = $key - 36;
+            }elseif ($key >= 68){
+                $num_var = $key - 72;
+            }else{
+                $num_var = $key;
+            }
+            $image = $util->toImage('local/images/icons_file', $icons_var[$num_var]);
+            //$image = 'local/images/icons_file/' . $icons_var[$num_var];
+            $bgRound = 'rounded img-thumbnail';
+        }else{
+            $image = $util->toImage('local/images/icons', 'pdf.png');
+            //$image = 'local/images/icons/pdf.png';
+        }
+        
     }else{
-
-    
+  
         if (!empty($item->imageStorage)){
             $image = $item->imageStorage;
         }
@@ -221,8 +239,7 @@
     }
     @endphp
 
-
-    <img src="{{$image}}" class="img-fluid">
+    <img src="{{$image}}" class="img-fluid {{$bgRound}}" {!!$alt!!}>
     
     {{--End Bloco de imagem ------------------------------------------------}}
     </a>
@@ -230,20 +247,19 @@
     {{--End button ----------------}}
     </div>
 
-
-        @if(!empty($item->title) && in_array('title', $gridcards->showItems))
+        @if(in_array('title', $gridcards->showItems) || in_array('label', $gridcards->showItems))
 
         @if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true)
         <div class="px-3 {{$paddingText}}" style="text-align:center">
         @else
         <div class="px-3 {{$paddingText}}" style="text-align:left">
         @endif
-
-
-
+           @if(!empty($item->title) && in_array('title', $gridcards->showItems))
             <div class="gridcards-item-shared text-dark" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
             {{$item->title}}
             </div>
+            @endif
+
             @if(!empty($item->label) && in_array('label', $gridcards->showItems))
             <div class="gridcards-item-shared text-dark pb-1" style="font-size:calc(0.70em + 0.3vw);line-height:1.3;{{$font_family}}">
             <small>{{$item->label}}</small>
@@ -269,8 +285,6 @@
             {{--Fim de rating --------------------------------------------------------}}
         </div>
         @endif
-
-
     </div>
     </div>
     @endforeach

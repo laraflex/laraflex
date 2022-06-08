@@ -8,7 +8,6 @@
     @endphp
 @endif
 
-
 @if (!empty($form) && !empty($form->items))
 @php
    if (!empty($form->textAlign)){
@@ -35,7 +34,6 @@
         $inputStyle = 'col-md-8';
         $fileConfig = true;
     }
-
     if (!empty($form->fontFamily->title)){
         $font_family_title = 'font-family:'.$form->fontFamily->title .';';
     }else{
@@ -52,7 +50,6 @@
 <section id="form" class="pb-1 pt-3 pt-md-4">
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
-
 <div class=" mb-3 p-3 px-xl-4 pb-4 {{$border}}">
     @php
         if (!empty($form)){
@@ -84,7 +81,6 @@
     @else
     @csrf
     @endif
-
     @foreach ($formItems as $key => $item)
     @if ($item->type == 'fieldset')
     <fieldset class="form-group">
@@ -267,10 +263,8 @@
     @endif
     </div>
     @else
-
     @endif
-
-    <div class="{{$inputStyle}} custom-filex">
+    <div class="{{$inputStyle}}">
     @if (!empty($item->name) && !empty($item->id))
 
     {{--adiciona regras regras de validação--}}
@@ -299,11 +293,11 @@
     }
     @endphp
     @if (!empty($item->required) && $item->required === true)
-    <input type="file" class="custom-file-input {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!} required>
-    <label class="custom-file-label {{$marginFile}}" for="customFile">{{__($label)}}</label>
+    <label class="mb-2 {{$marginFile}}" for="customFile">{{__($label)}}</label>
+    <input type="file" class="mb-2 form-control-file {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!} required>    
     @else
-    <input type="file" class="custom-file-input  {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" style="font-size:90%;" {!!$multiple!!}>
-    <label class="custom-file-label {{$marginFile}}" for="customFile">{{__($label)}}</label>
+    <label class="mb-2 {{$marginFile}}" for="customFile">{{__($label)}}</label>
+    <input type="file" class="mb-2 form-control-file  {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!}>   
     @endif
     {{----------------------------------------}}
     @else
@@ -434,6 +428,5 @@
     </div>
 </div>
 @endif
-
 
 

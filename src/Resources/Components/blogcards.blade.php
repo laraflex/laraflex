@@ -22,7 +22,6 @@
         }
     @endphp
 
-
 <section id="blogcards" class="pb-1 pt-3 pt-md-4">
 <!--div id="blogcards" class="pb-1 pt-3 pt-md-4"-->
 
@@ -34,10 +33,8 @@
 @include('components.vuejsComponents')
 @endif
 {{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
-
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
-
     <div class="d-none d-sm-block pb-0 mb-0">
         @if (!empty($blogcards->seeMore))
         <div class="row m-0 p-0">
@@ -80,7 +77,6 @@
             @endif
             @endif
         @endif
-
     <div class="row p-2">
         {{--Início linha linha ==== --}}
     @php
@@ -88,8 +84,8 @@
     $titleFont = 'font-size:calc(0.8em + 0.2vw); line-height:1.2;';
     $sharedFont = 'font-size:calc(0.6em + 0.15vw);letter-spacing: 2px;';
     $fontAbstract = 'font-size:calc(0.68em + 0.15vw);';
-    $visibility = ['d-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-block', 'd-none d-lg-block', 'd-none d-lg-block'];
-    $num_limit = 8;
+    $visibility = ['d-block', 'd-block', 'd-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block'];
+    $num_limit = 4;
     @endphp
     @foreach ($blogcards->items as $key => $item)
     @if (!empty($blogcards->seeMore))
@@ -214,12 +210,10 @@
 </div>
 </div>
 {{--8888888888888888888888888888888888888888888888888888888888--}}
-
 <div class="d-block d-sm-none mb-3 bg-white">
     <div id="headerSection" class="pt-0 pb-2">
         <h6 class="text-center font-weight-normal">{{$blogcards->title}}</h6>
     </div>
-
     <ul class="list-unstyled">
     @foreach ($blogcards->items as $key => $item)
         @php
@@ -242,8 +236,6 @@
 @else
 <a href="{{$link}}">
 @endif
-
-
     <li class="media pb-0 pl-1 pr-2 mb-1 mx-2 border rounded bg-light">
     @php
     if (!empty($item->imageStorage)){
@@ -308,8 +300,6 @@
 </div>
 <!--/div-->
 </section>
-
-
 @else
 @if (!empty($blogcards->nullable) && $blogcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>

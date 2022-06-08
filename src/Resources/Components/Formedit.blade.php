@@ -364,8 +364,6 @@
     <div class="{{$inputStyle}}">
     @if (!empty($item->name) && !empty($item->id))
 
-
-
     {{--adiciona regras regras de validação--}}
     @php
     if (!empty($item->attributes)){
@@ -377,19 +375,15 @@
         $label = $item->label;
     }else {
         $label = 'Add a file';
-    }
-
+    }  
     @endphp
-
     @if (!empty($item->required) && $item->required === true)
-    <input type="file" class="custom-file-input pl-2 {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%" required />
-    <label class="custom-file-label" for="customFile">{{__($label)}}</label>
+    <label class="mb-2" for="customFile">{{__($label)}}</label>
+    <input type="file" class="mb-2 form-control-file pl-2 {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%" required />
     @else
-    <input type="file" class="custom-file-input pl-2 {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" />
-    <label class="custom-file-label" for="customFile">{{__($label)}}</label>
+    <label class="mb-2" for="customFile">{{__($label)}}</label>
+    <input type="file" class="mb-2 form-control-file pl-2 {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" />    
     @endif
-
-
     @if (property_exists($item, "imageStorage") && !empty($item->imageStorage))
     <div class="mb-0 p-2">
     <img src="{{$item->imageStorage}}" style="widht:100px; height:100px;">
@@ -406,8 +400,6 @@
     <input type="hidden" class="currentImage" id="currentImage" name="currentImage" value="{{$item->image}}">
     </div>
     @endif
-
-
     {{----------------------------------------}}
     @else
     <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
