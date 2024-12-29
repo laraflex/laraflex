@@ -8,6 +8,7 @@
     @endphp
 @endif
 
+
 @if (!empty($blogcards) && !empty($blogcards->items))
     @php
         if (!empty($blogcards->fontFamily->title)){

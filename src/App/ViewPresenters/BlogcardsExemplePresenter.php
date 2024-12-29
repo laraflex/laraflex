@@ -3,6 +3,7 @@ namespace App\ViewPresenters;
 
 use laraflex\Contracts\Presenter;
 
+
 class BlogcardsExemplePresenter extends Presenter
 {
     public function toArray($data = NULL, array $config = NULL)
