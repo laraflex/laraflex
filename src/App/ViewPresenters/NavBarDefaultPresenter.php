@@ -29,7 +29,7 @@ class NavBarDefaultPresenter extends Presenter
         $var = [
             'component' => 'navbar',
             'type' => 'header',
-            'logoPath' => 'images/app/logo-option1.png',
+            'logoPath' => 'local/images/app/logo-option1.png',
             'label' => 'LaraFlex',
             'route' => 'home',
             'showLogin' => true,

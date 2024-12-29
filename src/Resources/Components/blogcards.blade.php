@@ -88,6 +88,9 @@
     $visibility = ['d-block', 'd-block', 'd-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block'];
     $num_limit = 4;
     @endphp
+
+    {{--INICIO DE ITENS DE BLOGCARDS--}}
+
     @foreach ($blogcards->items as $key => $item)
     @if (!empty($blogcards->seeMore))
     @php

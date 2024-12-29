@@ -15,7 +15,7 @@ class SimpleFooterPresenter extends Presenter
         $var = [
             'component' => 'simplefooter',
             'type' => 'footer',
-            'logoPath' => 'images/app/logo-option1.png',
+            'logoPath' => 'local/images/app/logo-option1.png',
             'bgColor' => 'black',
 
             'label' => 'All rights reserved. © Laraflex. 2019',

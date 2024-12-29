@@ -13,7 +13,7 @@ class ImagePanelPresenter extends Presenter
             'type' => 'header',
             'textAlign' => 'right',
             'title' => 'General Title of Component',
-            'imagePath' => 'images/app/imagepanel1.jpg',
+            'imagePath' => 'local/images/app/imagepanel1.jpg',
             'title' => 'Laraflex view package',
             'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.',
             'btnLabel' => 'Saiba mais',
