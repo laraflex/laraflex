@@ -12,7 +12,7 @@ return [
     */
 
     'summernote' => [
-        'imagePath' => 'images/posts',
+        'imagePath' => 'local/images/posts',
         'width' => 1100,
         'extension' => 'webp',
         'quality' => NULL,
