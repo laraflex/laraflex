@@ -7,6 +7,7 @@ class SummernoteDependencies extends Dependencies
 {
     public function toArray($data = NULL, array $config = NULL)
     {
+
         $var = [
             [
                 'component' => 'summernotejs',

@@ -2,22 +2,28 @@
 namespace App\ViewPresenters\Dependencies;
 
 use laraflex\Contracts\Dependencies;
+use Illuminate\Support\Facades\Config;
 
 class SummernoteDependencies extends Dependencies
 {
     public function toArray($data = NULL, array $config = NULL)
     {
+        $valueJs = config('laraflex.summernote.cdnjs');
+        $valueCss = config('laraflex.summernote.cdncss');
+
         $var = [
             [
                 'component' => 'summernotejs',
                 'type' => 'scriptjs',
-                'lib' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js',
+                'lib' => $valueJs,
+                //'lib' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote-bs4.min.js',
                 'insertImage' => true,
             ],
             [
                 'component' => 'NULL',
                 'type' => 'link',
-                'link' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css',
+                'link' => $valueCss,
+                //'link' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote-bs4.min.css',
             ],
 
         ];

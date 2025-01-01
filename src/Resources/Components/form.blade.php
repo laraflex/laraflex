@@ -174,6 +174,7 @@
     @endif
     </div>
     <div class="{{$inputStyle}}">
+    {{--Componente summenote--}}
     @if (!empty($item->name) && !empty($item->id))
         @php
             if($item->type == 'summernote'){
@@ -294,10 +295,10 @@
     @endphp
     @if (!empty($item->required) && $item->required === true)
     <label class="mb-2 {{$marginFile}}" for="customFile">{{__($label)}}</label>
-    <input type="file" class="mb-2 form-control-file {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!} required>    
+    <input type="file" class="mb-2 form-control-file {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!} required>
     @else
     <label class="mb-2 {{$marginFile}}" for="customFile">{{__($label)}}</label>
-    <input type="file" class="mb-2 form-control-file  {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!}>   
+    <input type="file" class="mb-2 form-control-file  {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!}>
     @endif
     {{----------------------------------------}}
     @else

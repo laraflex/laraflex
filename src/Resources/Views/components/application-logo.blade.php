@@ -5,5 +5,5 @@
 -->
 
 <a href="{{url('/')}}">
-    <img src="{{url('/images/app/logo.png')}}" width="220" height="52">
+    <img src="{{url('local/images/app/logo.png')}}" width="220" height="52">
 </a>

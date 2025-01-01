@@ -48,14 +48,19 @@ class DashboardConfigComposer
 
     public function compose(View $view)
     {
+        $defaultConfig['jquery'] = config('laraflex.defaultconfig.jquery');
+        $defaultConfig['pooperjs'] = config('laraflex.defaultconfig.pooperjs');
+        $defaultConfig['bootstrapjs'] = config('laraflex.defaultconfig.bootstrapjs');
+        $defaultConfig['bootstrapcss'] = config('laraflex.defaultconfig.bootstrapcss');
+        //--------------------------------------------------------------//
         $dependencies = DependenciesListener::create();
         $jsonTmp = json_encode($this->toArray());
         $objeto = json_decode($jsonTmp);
         if(Auth::check()){
             $user = Auth::user();
-            $view->with('objectConfig', $objeto)->with('util', $this->util)->with('user', $user)->with('objectListener', $dependencies);
+            $view->with('objectConfig', $objeto)->with('defaultConfig', $defaultConfig)->with('util', $this->util)->with('user', $user)->with('objectListener', $dependencies);
         }else{
-            $view->with('objectConfig', $objeto)->with('util', $this->util)->with('objectListener', $dependencies);
+            $view->with('objectConfig', $objeto)->with('defaultConfig', $defaultConfig)->with('util', $this->util)->with('objectListener', $dependencies);
         }
     }
 }
