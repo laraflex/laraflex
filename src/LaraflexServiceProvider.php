@@ -7,6 +7,8 @@
 namespace laraflex;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
+
 
 class LaraflexServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class LaraflexServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/Resources/Components', 'laraflex');
         $this->loadViewsFrom(__DIR__.'/Resources/Components/scriptjs', 'laraflexscript');
+        Blade::anonymousComponentPath(__DIR__.'/Resources/components/ComponentParts', 'laraflex');
 
         /**
          * Opções de publish para instalação

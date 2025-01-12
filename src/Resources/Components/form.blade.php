@@ -19,7 +19,8 @@
             $textAlign = 'text-left';
        }
    }else{
-       $textAlign = 'text-left text-md-right';
+       $textAlign = 'text-left';
+       //$textAlign = 'text-left text-md-right';
    }
     if(!empty($form->topAlign) && $form->topAlign == true){
         $labelStyle = 'col-md-12';
@@ -44,9 +45,12 @@
     }else{
         $font_family = '';
     }
+    $labelstyle = $labelStyle;
+    $textalign = $textAlign;
+    $inputstyle = $inputStyle;
 @endphp
 
-<!--Section formulário ------------------------------------------------------->
+{{----Section form =============================================--}}
 <section id="form" class="pb-1 pt-3 pt-md-4">
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
@@ -57,13 +61,24 @@
         }
     @endphp
     <div class="pt-2 pb-3 text-center">
+
+    {{--title component form ===================================--}}
     @if (!empty($form->title))
-    <div class="form-title text-center pt-2 pb-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-    {{$form->title}}</div>
+    @php
+        $title = $form->title;
+        $font = $font_family_title;
+    @endphp
+        {{--@include('laraflex::ComponentParts.form.title')--}}
+        <x-laraflex::form.title :title="$title" :font="$font" />
     @endif
+    {{--legend component form ===================================--}}
     @if (!empty($form->legend))
-    <div class="form-item-shared text-center pb-2" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-    <span style="color:gray">{{$form->legend}}</span></div>
+    @php
+        $legend = $form->legend;
+        $font = $font_family;
+    @endphp
+        {{--@include('laraflex::ComponentParts.form.legend')--}}
+        <x-laraflex::form.legend :legend="$legend" :font="$font" />
     @endif
     </div>
     @php
@@ -82,208 +97,141 @@
     @csrf
     @endif
     @foreach ($formItems as $key => $item)
-    @if ($item->type == 'fieldset')
-    <fieldset class="form-group">
-    <div class="row mb-2 mb-md-3">
-    {{--------------------------------------------}}
-    <div class="{{$labelStyle}}">
-    @if (!empty($item->label) && !empty($item->name))
-    <legend for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</legend>
-    @endif
-    </div>
-    <div class="{{$inputStyle}}">
-    @if (!empty($item->name) && !empty($item->id) && !empty($item->items))
-    {{--Adiciona um grupo de Radio ou de checkbox--}}
-    @foreach ($item->items as $key => $option)
-    @if($item->subType == 'radio')
-    <div class="form-check">
-    <input class="form-check-input {{$item->name}}" type="{{$item->subType}}" name="{{$item->name}}" id="{{$item->id}}"
-    value="{{$option->value}}"
-        @if ($loop->first)
-            checked
-        @endif
-    {{--adiciona regras regras de validação--}}
-    @if (!empty($item->required) && $item->required === true)
-    required />
+
+    {{--add fieldset component form ================================--}}
+    @if ($item->type === 'fieldset')
+    @if (!empty($item->name) && !empty($item->items))
+    @php
+        $name = $item->name;
+        $labelcomponent = $item->label;
+        $itemscomponent = $item->items;
+        if (!empty($item->subtype)){
+            $subtype = $item->subtype;
+        }
+        $required = "";
+        if (!empty($item->required) && $item->required === true){
+            $required = "required";
+        }
+    @endphp
+    {{--@props(['labelstyle', 'textalign','inputstyle','labelcomponent', 'name', 'subtype', 'id', 'value', 'label', 'checked', 'required'])--}}
+    <x-laraflex::form.fieldset :labelstyle="$labelstyle" :textalign="$textalign" :inputstyle="$inputstyle" :itemscomponent="$itemscomponent" :labelcomponent="$labelcomponent" :name="$name" :subtype="$subtype" :required="$required"/>
+    {{--@include('laraflex::ComponentParts.form.fieldset')--}}
     @else
-    />
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.')}} "{{$item->type}}" {{__('and subtype')}} "{{$item->subtype}}".</h5>
     @endif
-    {{---------------------------------------}}
-    <label class="form-check-label" for="{{$item->name}}" style="font-size:calc(14px + 0.10vw);">
-    {{$option->label}}
-    </label>
-    </div>
-    @elseif($item->subType == 'checkbox')
-    <div class="form-check">
-    <input class="form-check-input {{$item->name}}" type="{{$item->subType}}" name="{{$item->name}}" id="{{$item->id}}"
-    value="{{$option->value}}">
-    <label class="form-check-label" for="{{$item->name}}" style="font-size:calc(14px + 0.10vw);">
-    {{$option->label}}
-    </label>
-    </div>
-    @endif
-    @endforeach
-    @else
-    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
-    @endif
-    </div>
-    </div>
-    </fieldset>
-    {{--Adiciona um componente select--}}
+
+    {{--add select component form ===============================--}}
     @elseif ($item->type == 'select')
-    <div class="form-group">
-    <div class="row mb-2 mb-md-3">
-    {{-----------------------------------------------------}}
-    <div class="{{$labelStyle}}">
-    @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</label>
-    @endif
-    </div>
-    <div class="{{$inputStyle}}">
-    @if (!empty($item->name) && !empty($item->id) && !empty($item->items))
-    {{--adiciona regras regras de validação--}}
-    @if (!empty($item->required) && $item->required === true)
-    <select id="{{$item->id}}" class="custom-select  {{$item->name}}" name="{{$item->name}}" required>
+    @if (!empty($item->name) && !empty($item->items))
+    @php
+        $legendoption = $item->legendOption;
+        $itemlabel = $item->label;
+        $itemname = $item->name;
+        $itemsoption = $item->items;
+        if (!empty($item->id)){
+            $id = $item->id;
+        }else{
+            $id = $item->name;
+        }
+        if (!empty($item->required)){
+            $required = $item->required;
+        }else{
+            $required = "";
+        }
+    @endphp
+    {{--@props(['labelstyle', 'textalign', 'inputstyle','itemsoption', 'legendoption', 'itemlabel', 'itemname', 'id', 'required'])--}}
+    <x-laraflex::form.select :labelstyle="$labelstyle" :textalign="$textalign" :inputstyle="$inputstyle" :itemsoption="$itemsoption" :legendoption="$legendoption" :itemlabel="$itemlabel" :itemname="$itemlabel" :id="$id" :required="$required" />
     @else
-    <select id="{{$item->id}}" class="form-control {{$item->name}}" name="{{$item->name}}">
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.')}} {{$item->type}}.</h5>
     @endif
-    {{---------------------------------------}}
-    @if (!empty($item->legendOption))
-    <option value="" style="font-size:calc(14px + 0.10vw);">{{$item->legendOption}}...</option>
-    @else
-    <option value="">...</option>
-    @endif
-    @foreach ($item->items as $key => $option)
-    <option value="{{$option->value}}" style="font-size:calc(14px + 0.10vw);">{{$option->label}}</option>
-    @endforeach
-    </select>
-    @else
-    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
-    @endif
-    </div>
-    </div>
-    </div>
-    {{--Adiciona um componente textarea--}}
+
+    {{--add textarea component form =================================--}}
     @elseif ($item->type == 'textarea' OR $item->type == 'summernote')
-    <div class="form-group">
-    <div class="row mb-2 mb-md-3">
-    {{------------------------------------------------------}}
-    <div class="{{$labelStyle}}">
-    @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</label>
-    @endif
-    </div>
-    <div class="{{$inputStyle}}">
-    {{--Componente summenote--}}
     @if (!empty($item->name) && !empty($item->id))
-        @php
-            if($item->type == 'summernote'){
-                $id = 'summernote';
-                $name = 'summernote';
-            }else{
-                $id = $item->id;
-                $name = $item->name;
-            }
-            $attributes = '';
-            if (!empty($item->attributes)){
-                $attributes = $item->attributes;
-            }
-            elseif(!empty($item->rows)) {
-                $attributes .= ' rows ="' . $item->rows . '"';
-            }
-            else{
-                $attributes = 'rows="5"';
-            }
-        @endphp
-    {{--Adição de regra de validação--}}
-    @if (!empty($item->required) && $item->required === true)
-    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" style="width:100%" required></textarea>
+    @php
+        if($item->type == 'summernote'){
+            $id = 'summernote';
+            $name = 'summernote';
+        }else{
+            $id = $item->id;
+            $name = $item->name;
+        }
+        $properties = "";
+        if (!empty($item->attributes)){
+            $properties = $item->attributes;
+        }
+        elseif(!empty($item->rows)) {
+            $properties = ' rows =' . $item->rows;
+        }
+        else{
+            $properties = ' rows=10';
+        }
+        //Adição de regra de validação -----
+        if (!empty($item->required) && $item->required === true){
+            $required = "required";
+        }else{
+            $required = "";
+        }
+        $label = $item->label;
+    @endphp
+    {{--@props(['labelstyle','textalign', 'inputstyle', 'label', 'name', 'id', 'properties', 'required'])--}}
+    <x-laraflex::form.textarea :labelstyle="$labelstyle" :textalign="$textalign" :inputstyle="$inputstyle" :label="$label" :name="$name" :id="$id" :properties="$properties" :required="$required" />
+    {{--@include('laraflex::ComponentParts.form.textarea')--}}
     @else
-    <textarea class="form-control {{$name}}" id="{{$id}}" {!!$attributes!!} name="{{$item->id}}" style="width:100%"></textarea>
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.')}} "{{$item->type}}".</h5>
     @endif
-    {{--------------------------------}}
-    @else
-    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
-    @endif
-    </div>
-    </div>
-    </div>
+
+
+    {{--btn-group component form =================================--}}
     @elseif ($item->type == 'btn-group')
+    @if (!@empty($item->items))
     @php
     if (!empty($item->btnColor)){
     $btnOptions = ['primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Dark', 'link'];
     $btnBorder = '';
         if (!in_array($item->btnColor, $btnOptions)){
             $btnColor = 'light';
-                $btnBorder = 'btn-outline-secondary';
+            $btnBorder = 'btn-outline-secondary';
         }else{
-                $btnColor = $item->btnColor;
-                $btnBorder = '';
+            $btnColor = $item->btnColor;
+            $btnBorder = '';
         }
     }else{
         $btnColor = 'light';
         $btnBorder = 'btn-outline-secondary';
     }
-
     $btnColorTmp = $btnColor;
     $btnBorderTmp = $btnBorder;
-
+    $buttons = $item->items;
     @endphp
-    @if (!empty($item->items))
-    @foreach ($item->items as $key => $btn)
-    @php
-    if ($key == 0){
-        $btnColor = 'secondary';
-        $btnBorder = '';
-    }else{
-        $btnColor = $btnColorTmp;
-        $btnBorder = $btnBorderTmp;
-    }
-    if (!empty($btn->disabled) && $btn->disabled === true){
-        $disabled = 'disabled';
-    }else{
-        $disabled = '';
-    }
-    @endphp
-    @if ($btn->subType == 'submit' OR $btn->subType == 'reset')
-    @if (!empty($btn->legend) && $key == 0)
-    <div class="pb-2"><small><i>* {{$btn->legend}}</i></small></div>
-    @endif
-    <button type="{{$btn->subType}}" class="btn btn-sm btn-{{$btnColor}} {{$btnBorder}} px-3" {{$disabled}}>{{__($btn->label)}}</button>
-    @endif
-    @endforeach
-    @endif
-    {{--Adinona um componente file--}}
-
-    @elseif($item->type == 'file')
-    <div class="form-group row mb-2 mb-md-3 px-3">
-    @if ($fileConfig === true)
-    <div class="{{$labelStyle}}">
-    @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</label>
-    @endif
-    </div>
+    {{--@props(['buttons', 'btnColorTmp', 'btnBorderTmp'])--}}
+    <x-laraflex::form.btn-group :buttons="$buttons" :btnColorTmp="$btnColorTmp" :btnBorderTmp="$btnBorderTmp" />
+    {{--@include('laraflex::ComponentParts.form.btn-group')--}}
     @else
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>
     @endif
-    <div class="{{$inputStyle}}">
-    @if (!empty($item->name) && !empty($item->id))
 
-    {{--adiciona regras regras de validação--}}
+    {{--file component form ====================================--}}
+    @elseif($item->type == 'file')
+    @if (!empty($item->name) && !empty($item->id))
     @php
+    $name = $item->name;
+    $id = $item->id;
     if (!empty($item->attributes)){
-        $attributes = $item->attributes;
+        $properties = $item->attributes;
     }else{
-        $attributes = '';
+        $properties = '';
     }
     if (!empty($item->multiple) && $item->multiple === true){
-        $item->name = $item->name . '[]';
+        $name = $item->name . '[]';
         $multiple = 'multiple="multiple"';
     }else{
         $multiple ='';
     }
     $marginFile = '';
     if ($fileConfig === true){
-        $label = '';
+        //$label = '';
+        $label = $item->label;
         $marginFile = 'ml-2';
     }
     elseif (!empty($item->label)){
@@ -292,130 +240,150 @@
     else{
         $label = 'Add a file';
     }
+    $id = $item->id;
+    if (!empty($item->required) && $item->required === true){
+        $required = "required";
+    }else{
+        $required = "";
+    }
     @endphp
-    @if (!empty($item->required) && $item->required === true)
-    <label class="mb-2 {{$marginFile}}" for="customFile">{{__($label)}}</label>
-    <input type="file" class="mb-2 form-control-file {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!} required>
+    {{--@props(['fileConfig', 'labelStyle', 'textAlign', 'inputStyle', 'properties', 'marginFile', 'label', 'name', 'id', 'multiple'])--}}
+    <x-laraflex::form.file :fileConfig="$fileConfig" :labelStyle="$labelStyle" :textAlign="$textAlign" :inputStyle="$inputStyle" :properties="$properties" :marginFile="$marginFile" :label="$label" :name="$name" :id="$id" :multiple="$multiple" />
+    {{--@include('laraflex::ComponentParts.form.file')--}}
     @else
-    <label class="mb-2 {{$marginFile}}" for="customFile">{{__($label)}}</label>
-    <input type="file" class="mb-2 form-control-file  {{$marginFile}} {{$item->name}}" {!!$attributes!!} id="{{$item->id}}" name="{{$item->name}}" style="font-size:90%;" {!!$multiple!!}>
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>
     @endif
-    {{----------------------------------------}}
+
+    {{--hidden component form ====================================--}}
+    @elseif($item->type == 'hidden')
+    @if (!empty($item->name) && !empty($item->id) && !empty($item->value))
+    @php
+        $name = $item->name;
+        $id = $item->id;
+        $value = $item->value;
+    @endphp
+    {{--@props(['name', 'id', 'value'])--}}
+    <x-laraflex::form.hidden :name="$name" :id="$id" :value="$value" />
+    {{--@include('laraflex::ComponentParts.form.hidden')--}}
+    @else
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type')}} "{{$item->type }}."</h5>
+    @endif
+
+    {{--imput checkbox component form ==================================--}}
+    @elseif(!empty($item->type) && $item->type == 'checkbox')
+    @if (!empty($item->name) && !empty($item->id))
+    @php
+        $subtype = $item->type;
+        $name =$item->name;
+        $id = "$item->id";
+        $value = $item->value;
+        $label = $item->label;
+        if (!empty($item->required) && $item->required === true){
+            $required = "required";
+        }else{
+            $required = "";
+        }
+    @endphp
+    <div class="form-group row mb-2 mb-md-3 ml-2">
+    <div class="{{$inputStyle}} form-check py-2">
+    {{--@props(['name', 'id', 'value', 'label', 'required'])--}}
+    <x-laraflex::form.checkbox :name="$name" :id="$id" :value="$value" :label="$label" :required="$required" />
+    {{--@include('laraflex::ComponentParts.form.checkbox')--}}
+    </div>
+    </div>
+    @else
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>
+    @endif
+
+    {{--Multiples components form (date,time, month, week)===================================--}}
+    @elseif(!empty($item->type) && ($item->type == 'date' OR $item->type == 'time') OR  $item->type == 'month' OR  $item->type == 'week')
+    @if (!empty($item->label) && !empty($item->name))
+    @php
+        $type = $item->type;
+        $name = $item->name;
+        $label = $item->label;
+        if (!empty($item->id)){
+            $id = $item->id;
+        }else{
+            $id = $item->name;
+        }
+        $id = $item->id;
+        if (!empty($item->attributes)){
+            $properties = $item->attributes;
+        }else{
+            $properties = "";
+        }
+        if (!empty($item->required) && $item->required === true){
+            $required = "required";
+        }else{
+            $required = "";
+        }
+        if (!empty($item->value)){
+            $value = 'value = "'.$item->value.'"';
+        }else{
+            $value = "";
+        }
+    @endphp
+    {{--@props(['type','labelStyle','textAlign','inputStyle' 'name', 'id', 'value', 'label','properties', 'required'])--}}
+    <x-laraflex::form.date-time :type="$type" :labelStyle="$labelStyle" :textAlign="$textAlign" :inputStyle="$inputStyle" :name="$name" :id="$id" :value="$value" :label="$label" :properties="$properties" :required="$required" />
+    {{--@include('laraflex::ComponentParts.form.date-time')--}}
     @else
     <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
     @endif
-    </div>
-    </div>
-    {{--Adiciona componentes hidden--}}
-    @elseif($item->type == 'hidden')
-    @if (!empty($item->name) && !empty($item->id) && !empty($item->value))
-    <input type="{{$item->type}}" class="{{$item->name}}" id="{{$item->id}}" name="{{$item->name}}" value="{{$item->value}}">
-    @endif
-    {{--Adiciona componentes imput checkbox -----------------}}
-    @elseif(!empty($item->type) && $item->type == 'checkbox')
-    <div class="form-group row mb-2 mb-md-3">
-    <div class="{{$labelStyle}}">
-    </div>
-    <div class="{{$inputStyle}} form-check py-2">
-        @if (!empty($item->name) && !empty($item->id))
-        <input type="{{$item->type}}" class="form-check-input ml-1" {{$item->name}} " id="{{$item->id}}" name="{{$item->name}}"
-        @if (!empty($item->value))
-        value="{{$item->value}}"
-        @endif
-        {{--Adiciona regras de validação--}}
-        @if (!empty($item->required) && $item->required === true)
-        required />
-        @else
-        />
-        @endif
-        {{--------------------------------}}
-        @if (!empty($item->label) && !empty($item->name))
-        <span for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100x ml-4 pl-1" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</span>
-        @endif
-        @else
-        <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
-        @endif
-    </div>
-    </div>
-    {{--Adiciona componentes imput data -------------------}}
-    @elseif(!empty($item->type) && $item->type == 'date')
-    <div class="form-group row mb-2 mb-md-3">
-    <div class="{{$labelStyle}}">
-    @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</label>
-    @endif
-    </div>
-    <div class="{{$inputStyle}} form-check py-0 pl-3">
-        @if (!empty($item->name) && !empty($item->id))
-        <label class="m-0">
-        <input type="{{$item->type}}" class="form-control" {{$item->name}} " id="{{$item->id}}" name="{{$item->name}}"
-        @if (!empty($item->value))
-        value="{{$item->value}}"
-        @endif
-        {{--Adiciona regras de validação--}}
-        @if (!empty($item->required) && $item->required === true)
-        required />
-        @else
-        />
-        @endif
-        </label>
-        {{--------------------------------}}
-        @else
-        <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
-        @endif
-    </div>
-    </div>
+
+    {{--Multiples components form (text, email, number, color, search, password, )=========--}}
     @elseif(!empty($item->type))
-    <div class="form-group row mb-2 mb-md-3">
-    {{----------------------------------------------------------------}}
-    <div class="{{$labelStyle}}">
+
     @if (!empty($item->label) && !empty($item->name))
-    <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100 py-0" style="font-size:calc(14px + 0.10vw);">{{$item->label}}:</label>
-    @endif
-    </div>
-    <div class="{{$inputStyle}}">
     @php
+        $type = $item->type;
+        $name = $item->name;
+        $label = $item->label;
         if ($item->type == 'color'){
             $width = ' w-25';
         }else{
             $width = '';
         }
-    @endphp
-    @if (!empty($item->name) && !empty($item->id))
-    @if (!empty($item->attributes))
-    <input type="{{$item->type}}" class="form-control {{$item->name}}{{$width}}" id="{{$item->id}}" name="{{$item->name}}" {!!$item->attributes!!}
-    @else
-    <input type="{{$item->type}}" class="form-control {{$item->name}}{{$width}}" id="{{$item->id}}" name="{{$item->name}}"
-    @endif
-    @if (!empty($item->value))
-    value="{{$item->value}}"
-    @endif
-    {{--Adiciona regras de validação--}}
-    @if (!empty($item->required) && $item->required === true)
-    @php
-       if (!empty($item->pattern)){
+        if (!empty($item->value)){
+            $value = $item->value;
+        }else{
+            $value = "";
+        }
+        if (!empty($item->id)){
+            $id = $item->id;
+        }else{
+            $id = $item->name;
+        }
+        if (!empty($item->pattern)){
             if (!empty($item->message)){
                 $pattern = 'pattern="' . $item->pattern . '" title="' . strtoupper($item->message) . '"';
             }else{
                 $pattern = 'pattern="' . $item->pattern . '"';
             }
-       }else{
-           $pattern = '';
-       }
+        }else{
+            $pattern = '';
+        }
+        if (!empty($item->attributes)){
+            $properties = $item->attributes;
+        }else{
+            $properties = "";
+        }
+        if (!empty($item->required) && $item->required === true){
+            $required = "required";
+        }else{
+            $required = "";
+        }
     @endphp
-    required {!!$pattern!!}/>
+    {{--@props(['type','labelStyle','textAlign','inputStyle', 'name', 'id','width', 'value', 'label','properties', 'pattern', 'required'])--}}
+    <x-laraflex::form.input :type="$type" :labelStyle="$labelStyle" :textAlign="$textAlign" :inputStyle="$inputStyle" :name="$name" :id="$id" :value="$value" :width="$width"  :label="$label" :properties="$properties" :pattern="$pattern" :required="$required" />
+    {{--@include('laraflex::ComponentParts.form.input')--}}
     @else
-    />
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>
     @endif
-    {{--------------------------------}}
-    @else
-    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }}.</h5>
-    @endif
-    </div>
-    </div>
+    {{--end of adding form components--}}
     @endif
     @endforeach
-      </form>
+    </form>
 </div>
 </div>
 </div>
