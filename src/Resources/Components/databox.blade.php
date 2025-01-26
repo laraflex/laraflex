@@ -19,7 +19,7 @@
 {{--Component title--}}
 @if(!empty($dataBox->title))
 
-<div class="mt-1 text-center pt-2 pb-2" style="  font-size:calc(1.1em + 0.6vw);">
+<div class="mt-1 text-center pt-2 pb-2" style="  font-size:calc(0.9em + 1.0vw);">
 {{$dataBox->title}}
 </div>
 @endif
@@ -27,6 +27,14 @@
 {{--component items--}}
 <div class="row ml-0 mr-0">
 @foreach($dataBox->items as $item)
+@php
+    if (!empty($item->label)){
+        $label = $item->label;
+    }else{
+        $label = "__('No value found for label')";
+    }
+@endphp
+
 @if(!empty($item->type) && $item->type == 'longText')
 <div class="col-sm-12 p-1 pt-2">
 <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
@@ -54,15 +62,16 @@
     <div class="col-sm-12 p-1 pt-2">
     <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
     <div class="p-0" style="max-width: 250px;">
-    <img src="{{$image}}" class="image-fluid img-thumbnail" style="max-width: 250px;">
+    <img src="{{$image}}" class="image-fluid img-thumbnail d-none d-sm-block" style="max-width: 150px;">
+    <img src="{{$image}}" class="image-fluid img-thumbnail d-block d-sm-none" style="max-width: 100px;">
     </div>
     </div>
     @endif
 
 
-@elseif(empty($item->type) OR $item->type != 'images')
+@elseif(empty($item->type) OR $item->type == 'text')
 <div class="col-sm-6 col-xl-4 p-1 pt-2">
-<span class="pl-2"><small><b>{{$item->label}}</b></small></span>
+<span class="pl-2"><small><b>{{$label}}</b></small></span>
 <div class="border rounded p-2">
 {{$item->data}}
 </div>
@@ -81,8 +90,8 @@
         <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
     </div>
 
-    @foreach ($item->images as $key => $imageItem)
 
+    @foreach ($item->images as $key => $imageItem)
         @php
             if (!empty($imageItem->imageStorage)){
                 $image = $imageItem->imageStorage;
@@ -93,8 +102,6 @@
                 $image = $util->toImage($imageItem->image);
             }
         @endphp
-
-
 
         @if (!empty($image))
         <div class="col-6 col-sm-4 col-lg-3 p-1 pt-2 {{$column[$key]}}">

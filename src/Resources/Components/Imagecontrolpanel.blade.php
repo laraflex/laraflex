@@ -99,7 +99,7 @@ if (!empty($blogcards->fontFamily->shared)){
             @endif
             {{--<img src="{{$image}}" class="card-img img-fluid" alt="...">--}}
             <div id="item-card" class="card-img-overlay text-center">
-                <i class="fas {{$icon}} mt-2 mb-1" style="font-size: 120%"></i>
+                <i class="fas {{$icon}} mt-2 mb-1" style="font-size: 150%"></i>
                 @if ($item->label)
                 <div class="card-title mt-1" style="font-size:calc(13px + 0.10vw); line-height: 1.2"><b>{{$item->label}}</b></div>
                 @endif

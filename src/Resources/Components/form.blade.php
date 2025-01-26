@@ -269,11 +269,40 @@
     <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type')}} "{{$item->type }}."</h5>
     @endif
 
+
+    {{--link checkbox component form ==================================--}}
+    @elseif(!empty($item->type) && $item->type == 'link')
+    @if (!empty($item->url) && !empty($item->label))
+    @php
+        $url =$item->url;
+        $label = $item->label;
+        $target = 'target = "_blank"';
+    @endphp
+    <div class="form-group row mt-0 mb-1 md-3 ml-2">
+    <div class="{{$inputStyle}} form-check py-2">
+    {{--@props(['url', 'label', 'target'])--}}
+    <x-laraflex::link :url="$url" :label="$label" :target="$target"/>
+    {{--@include('laraflex::ComponentParts.link')--}}
+    </div>
+    </div>
+    @else
+    <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>
+    @endif
+
+
+
+
+
+
+
+
+
+
+
     {{--imput checkbox component form ==================================--}}
     @elseif(!empty($item->type) && $item->type == 'checkbox')
     @if (!empty($item->name) && !empty($item->id))
     @php
-        $subtype = $item->type;
         $name =$item->name;
         $id = "$item->id";
         $value = $item->value;
@@ -344,11 +373,6 @@
         }else{
             $width = '';
         }
-        if (!empty($item->value)){
-            $value = $item->value;
-        }else{
-            $value = "";
-        }
         if (!empty($item->id)){
             $id = $item->id;
         }else{
@@ -364,18 +388,26 @@
             $pattern = '';
         }
         if (!empty($item->attributes)){
+
             $properties = $item->attributes;
         }else{
             $properties = "";
         }
-        if (!empty($item->required) && $item->required === true){
-            $required = "required";
+        if (!empty($item->placeholder)){
+            $properties .= ' placeholder="'.$item->placeholder.'"';
+        }
+        $value = "";
+        if (!empty($item->readonly) && $item->readonly === true ){
+            $value = 'value="'.$item->value.'"';
+            $rules = "readonly";
+        }elseif (!empty($item->required) && $item->required === true){
+            $rules = "required";
         }else{
-            $required = "";
+            $rules = "";
         }
     @endphp
-    {{--@props(['type','labelStyle','textAlign','inputStyle', 'name', 'id','width', 'value', 'label','properties', 'pattern', 'required'])--}}
-    <x-laraflex::form.input :type="$type" :labelStyle="$labelStyle" :textAlign="$textAlign" :inputStyle="$inputStyle" :name="$name" :id="$id" :value="$value" :width="$width"  :label="$label" :properties="$properties" :pattern="$pattern" :required="$required" />
+    {{--@props(['type','labelStyle','textAlign','inputStyle', 'name', 'id','width', 'value', 'label','properties', 'pattern', 'rules'])--}}
+    <x-laraflex::form.input :type="$type" :labelStyle="$labelStyle" :textAlign="$textAlign" :inputStyle="$inputStyle" :name="$name" :id="$id" :value="$value" :width="$width"  :label="$label" :properties="$properties" :pattern="$pattern" :rules="$rules" />
     {{--@include('laraflex::ComponentParts.form.input')--}}
     @else
     <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>

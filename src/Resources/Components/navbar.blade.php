@@ -98,6 +98,7 @@
     $fixedNavbarClass = 'bg-navbar-none';
     $predominantColor = $styleColor;
     $fontWeight = '';
+    $fixed = "";
 
     if(!empty($navBar->fixedMenu) && $navBar->fixedMenu === true){
         $fixed = "fixed-top";
