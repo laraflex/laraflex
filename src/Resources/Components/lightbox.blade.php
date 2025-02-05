@@ -56,7 +56,29 @@
         @endif
         @endif
     </div>
+<<<<<<< HEAD
 
+=======
+    {{--
+    <div class="col-0 col-sm-3 text-right pr-2 d-none d-sm-block     " style="width: 100%;">
+        @if(!empty($lightbox->legend) && !empty($lightbox->title))
+            <div class="pt-0 pt-sm-2 mb-sm-1 py-xl-2"></div>
+            <div class="pt-sm-1 pt-lg-2 pt-xl-1 pr-3 pr-lg-4 align-text-bottom" >
+            <a href="{{$util->toRoute($lightbox->seeMore)}}" class="btn btn-dark m-0">
+            {{__('See more')}}
+            </a>
+            </div>
+            @else
+            <div class=" pt-0 pt-md-0 pt-lg-1 pr-3 pr-lg-4 align-text-bottom">
+            <a href="{{$util->toRoute($lightbox->seeMore)}}" class="btn btn-dark m-0 mb-sm-3">
+            {{__('See more')}}
+            </a>
+            </div>
+        @endif
+
+    </div>
+    --}}
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 </div>
 @else
     @if(!empty($lightbox->title))
@@ -194,7 +216,16 @@
     {{--Bloco de see more ---------------------------}}
 
     @if (!empty($seeMore))
+<<<<<<< HEAD
 
+=======
+    {{--
+    <div class="pl-3 pl-lg-4 mt-2 d-block d-sm-none">
+        <a href="{{$util->toRoute($lightbox->seeMore)}}" class="btn btn-sm btn-dark m-0">
+        <span class="px-2">{{__('See more')}}</span>
+        </a>
+    </div>
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     {{--pagination--------------------------------------}}
     @elseif (!empty($lightbox->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-2" aria-label="Page" translator>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @props(['util','page', 'pageConfig', 'showItems','seeMore', 'items', 'num_char', 'route', 'font_family', 'font_family_title'])
+=======
+@props(['util', 'showItems','seeMore', 'items', 'num_char', 'route', 'font_family', 'font_family_title'])
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 @foreach ($items as $key => $item)
 @php
     $num_char = 242;
@@ -55,6 +59,7 @@
     }else{
         $abstract = NULL;
     }
+<<<<<<< HEAD
 
     //== Definição de pagina de paginação no link do componente
     if (!empty($route)){
@@ -67,6 +72,13 @@
         $routeItem = NULL;
     }
 
+=======
+    if (!empty($route)){
+        $routeItem = $util->toRoute($route, $item->id);
+    }else{
+        $routeItem = NULL;
+    }
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 @endphp
 
 <div class="row w-100 p-0 m-0 pl-2 pr-2 p-sm-3 p-md-3 px-md-4 px-lg-5  mb-sm-3 ml-0">

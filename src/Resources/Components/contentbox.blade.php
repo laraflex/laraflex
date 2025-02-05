@@ -211,6 +211,10 @@ if (!empty($contentbox->comentInsert)){
 </section>
 @else
 {{--messageNull component ContentBox ==========================================--}}
+<<<<<<< HEAD
 <x-laraflex::shared.messagenull />
+=======
+<x-laraflex::shered.messagenull />
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 @endif
 

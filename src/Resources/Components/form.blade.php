@@ -285,13 +285,29 @@
     {{--@include('laraflex::ComponentParts.link')--}}
     </div>
     </div>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     @else
     <h5 style="color:red">{{ __('Alert - Check your Presenter class for this type.') }} "{{$item->type}}".</h5>
     @endif
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     {{--imput checkbox component form ==================================--}}
     @elseif(!empty($item->type) && $item->type == 'checkbox')
     @if (!empty($item->name) && !empty($item->id))

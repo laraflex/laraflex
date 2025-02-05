@@ -14,8 +14,12 @@ elseif(!empty($backpanel->bgImage)){
 @endphp
 @if(!empty($backpanel) && !empty($bgImage))
 
+<<<<<<< HEAD
 <section id="backpanel" >
 
+=======
+<section id="backpanel">
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     @if (!empty($backpanel->fadeImage) && $backpanel->fadeImage === true)
     {{--@props(['bgImage'])--}}
     <x-laraflex::backpanel.fadeimage :bgImage="$bgImage" />
@@ -28,7 +32,10 @@ elseif(!empty($backpanel->bgImage)){
     <div class="p-0 p-sm-3 p-xl-4" ></div>
     <div class="p-1 py-md-2 py-lg-3">
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     {{--logo component backpanel ====================================--}}
     @if (!empty($backpanel->logo))
     @php
@@ -43,6 +50,7 @@ elseif(!empty($backpanel->bgImage)){
             $logo = NULL;
         }
         if (!empty($backpanel->logo->route)){
+<<<<<<< HEAD
             $routeLogo = $util->toRoute($backpanel->logo->route);
         }else{
             $routeLogo = NULL;
@@ -56,6 +64,16 @@ elseif(!empty($backpanel->bgImage)){
     @if (!empty($logo))
     {{--@props(['logo', 'route','size'])--}}
     <x-laraflex::backpanel.logo :logo="$logo" :routeLogo="$routeLogo" :size="$size" />
+=======
+            $route = 'a href="'.$util->toRoute($backpanel->logo->route).'"';
+        }else{
+            $route = NULL;
+        }
+    @endphp
+    @if (!empty($logo))
+    {{--@props(['logo', 'route'])--}}
+    <x-laraflex::backpanel.logo :logo="$logo" :route="$route" />
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     {{--@include('laraflex::ComponentParts.backpanel.logo')--}}
 
     @else
@@ -104,7 +122,11 @@ elseif(!empty($backpanel->bgImage)){
         <div class="text-center mt-2 mb-2"></div>
     @else
     {{--messageNull component ContentBox ==========================================--}}
+<<<<<<< HEAD
     <x-laraflex::shared.messagenull />
+=======
+    <x-laraflex::shered.messagenull />
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 
     @endif
 @endif

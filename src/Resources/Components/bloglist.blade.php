@@ -21,9 +21,12 @@
             $font_family = '';
         }
         // HEADERS COMPONENTS ============================================
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
         if (!empty($bloglist->seeMore)){
             $seeMore = $bloglist->seeMore;
             $route = $util->toRoute($seeMore);
@@ -31,6 +34,7 @@
             $route = '';
             $seeMore = NULL;
         }
+<<<<<<< HEAD
 
         if(!empty($blogcards->seeMore)){
             $route = $util->toRoute($bloglist->seeMore);
@@ -46,6 +50,8 @@
 
 
 
+=======
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
         if (!empty($bloglist->title)){
             $title = $bloglist->title;
         }else{
@@ -89,7 +95,14 @@
     }else{
         $showItems = NULL;
     }
+    if (!empty($bloglist->route)){
+        $route = $bloglist->route;
+    }else{
+        $route = NULL;
+    }
+@endphp
 
+<<<<<<< HEAD
     $pageConfig = $bloglist->page;
 
     if (!empty($bloglist->route)){
@@ -118,6 +131,16 @@
 </div>
 </div>
 
+=======
+{{-- BLOGLIST ITEM BLOCK ============================== --}}
+{{--@props(['showItems','items','seeMore', 'num_char', 'route', 'font_family', 'font_family_title'])--}}
+<x-laraflex::bloglist.blogitems :util="$util" :showItems="$showItems" :seeMore="$seeMore" :items="$items" :num_char="$num_char" :route="$route" :font_family="$font_family" :font_family_title="$font_family_title" />
+
+</div>
+</div>
+</div>
+
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 {{--Bloco de see more ===============================---}}
 @if (!empty($bloglist->seeMore))
 <div class="pl-3 pl-lg-4 mt-3 d-block d-sm-block">
@@ -148,7 +171,20 @@
     <div class="text-center mt-2 mb-2"></div>
 @else
 {{--messageNull component ContentBox ==========================================--}}
+<<<<<<< HEAD
 <x-laraflex::shared.messagenull />
+=======
+<x-laraflex::shered.messagenull />
+{{--
+<div class="container-xl px-3 mt-4 pb-2" translation="no">
+    <div class="alert alert-primary {{$border}}" role="alert">
+    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
+    <hr class="d-none d-sm-block">
+    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
+    </div>
+</div>
+--}}
+>>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 
 @endif
 @endif
