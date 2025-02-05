@@ -41,11 +41,11 @@ if(!empty($imagePanel->textAlign)){
 @endphp
 {{-------------------------------}}
 @if(!empty($imagePanel) && !empty($image))
-
 <div id="ImagePanel" class="{{$imageClass}} px-0 shadow" data-ride="carousel" style="border-bottom:1px solid #cccccc;">
 <div class="carousel-inner pl-0 pr-0 ">
 <div class="carousel-item active">
 
+ {{--Image bacground component Imagepanel ====================================--}}
     <img src="{{$image}}" class="img-fluid w-100">
 
     <div class="container-xl">
@@ -54,8 +54,12 @@ if(!empty($imagePanel->textAlign)){
                 $fontColor = 'color:white; text-shadow: 2px 2px 3px #6E6E6E;';
                 $btnColor = 'btn-outline-light';
                 $imagebutton = 'imagebutton';
+            }elseif(!empty($imagePanel->fontColor) && $imagePanel->fontColor == 'white'){
+                $fontColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 3px #6E6E6E;';
+                $btnColor = 'btn-outline-light';
+                $imagebutton = 'imagebutton';
             }elseif(!empty($imagePanel->fontColor) && $imagePanel->fontColor != 'white'){
-                $fontColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 3px #FFFFFF;';
+                $fontColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 3px #c0c0c0;';
                 $btnColor = 'btn-outline-dark';
                 $imagebutton = 'imagebutton-dark';
             }else{
@@ -63,26 +67,39 @@ if(!empty($imagePanel->textAlign)){
                 $btnColor = 'btn-outline-light';
                 $imagebutton = 'imagebutton';
             }
+            if (!empty($imagePanel->title)){
+                $title = $imagePanel->title;
+            }else{
+                $title = NULL;
+            }
+            if (!empty($imagePanel->legend)){
+                $legend = $imagePanel->legend;
+            }else{
+                $legend = NULL;
+            }
+            if (!empty($imagePanel->route)){
+                $route = $util->toRoute($imagePanel->route);
+            }else{
+                $route = '#';
+            }
+            if (!empty($imagePanel->btnLabel)){
+                $btnLabel = $imagePanel->btnLabel;
+            }else{
+                $btnLabel = NULL;
+            }
+
         @endphp
-        <div class="carousel-caption {{$textAlign}} pxx-0 pxx-lg-2  px-xl-5 pb-2 pb-lg-3 pb-xl-5">
-            @if(!empty($imagePanel->title))
-        <div style="{{$fontColor}} font-size:calc(1.1em + 1.3vw);{{$font_family_title}}"><span translate="no">{{$imagePanel->title}}</span></div>
-            @endif
-            @if(!empty($imagePanel->text))
-            @php
-                $num_char = strlen($imagePanel->text);
-                if ($num_char > 110){
-                    $imagePanel->text = substr($imagePanel->text, 0, 115) . "...";
-                }
-            @endphp
-            <div class="d-none d-sm-block imagepanel-shared mb-1 mb-md-2 mb-xl-3 mt-0 mt-sm-1 mt-md-2 mt-lg-3" style="{{$fontColor}};line-height:calc(0.96em + 0.9vw); font-size:calc(0.85em + 0.4vw);{{$font_family}}"><span spantranslate="no">{{$imagePanel->text}}</span></div>
-            @endif
-            @if($imagePanel->btnLabel)
-            <p><a class="imagepanel-shared btn mt-2 px-3 mt-0 mt-sm-2 mt-md-3 mt-lg-4 {{$btnColor}}" href="{{$util->toRoute($imagePanel->route)}}" id="{{$imagebutton}}" role="button">{{$imagePanel->btnLabel}}</a></p>
-            @endif
-        </div>
+        {{--content components Imagepanel ====================================--}}
+        {{--@props(['textAlign', 'title', 'text', 'btnLabel', 'btnColor', 'route', 'imagebutton', 'fontColor', 'font_family', 'font_family_title'])--}}
+        @include('laraflex::ComponentParts.imagepanel.content')
+
     </div>
 </div>
 </div>
 </div>
+
+@else
+ {{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
+
 @endif

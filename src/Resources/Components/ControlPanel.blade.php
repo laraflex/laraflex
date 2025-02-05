@@ -56,6 +56,7 @@ if (!empty($controlpanel->fontFamily->shared)){
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 {{--INICIO DE BLOCO DE COMPONENTE--}}
 
+
 @if(!empty($controlpanel->title))
     <div class="controlpanel-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
     {{$controlpanel->title}}</div>
@@ -130,10 +131,10 @@ if (!empty($controlpanel->fontFamily->shared)){
             @endif
             <div id="item-card" class="card-img-overlay text-center">
 
-            <i class="fas {{$icon}} mt-2 mb-2" style="font-size:150%;{{$iconColor}};"></i>
+            <i class="fas {{$icon}} mt-2 mb-2" style="font-size:180%;{{$iconColor}};"></i>
 
             @if ($item->label)
-            <div class="card-title mt-1" style="font-size:calc(13px + 0.08vw); line-height: 1.2;{{$fontColor}}">{{$item->label}}</div>
+            <div class="card-title mt-1" style="font-size:calc(13px + 0.10vw); line-height: 1.2;{{$fontColor}}">{{$item->label}}</div>
             @endif
             </div>
             </a>

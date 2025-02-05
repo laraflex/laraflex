@@ -38,7 +38,7 @@
         $show_style = 'show-sidebar-dark-out';
         @endphp
     @elseif (!empty($sidebar->showBar) && $sidebar->showBar === true)
-        <div class="w-100 text-center py-2 mb-0" style="min-height:65px;border-bottom:1px solid #848484;{{$background}}">
+        <div class="w-100 text-center py-2 mb-0 border-bottom" style="min-height:65px;{{$background}}">
         @php
         if (!empty($sidebar->logoStorage)){
             $logo = $sidebar->logoStorage;
@@ -86,8 +86,8 @@
         <i class="fas fa-bars" ></i>
         </div>
     </a>
-<nav id="sidebar" class="sidebar-wrapper ">
-    <div class="sidebar-content">
+<nav id="sidebar" class="sidebar-wrapper border-right">
+    <div class="sidebar-content" >
         <div class="sidebar-brand" translate="no">
            <a href="#">Main Menu</a>
            <div id="close-sidebar">
@@ -97,12 +97,9 @@
         {{--Bloco de identificação de usuário --}}
         @if (!empty($sidebar->perfil))
         @guest
-        <div class="sidebar-header">
-        <div class="user-info text-center">
-        <Span class="user-name text-center">{{ __('Expired section' )}}</span>
-        </div>
-        </div>
+
         @else
+
         <div class="sidebar-header">
         <div class="user-pic">
             @php
@@ -171,7 +168,7 @@
             <div>
             <form class="form-inline" method="post" action="{{$util->toRoute($action)}}" id="search-form">
             <div class="input-group " style="width:100%">
-            <input type="text" class="form-control search-menu mx-0 mr-1 rounded" id="search" name="search" placeholder="Search..." style="width:80%;">
+            <input type="text" class="form-control search-menux mx-0 mr-1 rounded" id="search" name="search" placeholder="Search..." style="width:80%;">
             @csrf
             <div class="input-group-append mr-1">
             <button type="submit" class="btn m-0 p-0 mr-1" role="button">
@@ -187,9 +184,9 @@
         </div>
         @endif
         {{--Bloco de Menu --}}
-    <div class="sidebar-menu">
+    <div class="sidebar-menu" >
     {{--Bloco de seção de menu --------------------------------------------------------------}}
-        @if (!empty($sidebar->sections))
+    @if (!empty($sidebar->sections))
         @php
         $iconKey = 0;
         @endphp
@@ -200,7 +197,7 @@
         @if (!empty($section->items))
             @if (!empty($section->label))
             <!--Cabeçalho de itens de menu -->
-            <li class="header-menu">
+            <li class="header-menu pb-2">
             <span>{{$section->label}}</span>
             </li>
             <!--Fim de cabeçalho -->
@@ -212,32 +209,34 @@
             <span>{{ __('Section') }} {{$i}}</span>
             </li>
             @endif
-        @foreach ($section->items as $key => $item)
-            @if (!property_exists($item, "permission") OR $item->permission === true)
-            @if (property_exists($item, "subItems"))
-            <li class="sidebar-dropdown">
+            @foreach ($section->items as $key => $itemSection)
+            @if (!property_exists($itemSection, "permission") OR $itemSection->permission === true)
+
+            @if (property_exists($itemSection, "subItems"))
+            @if ($key == 0)
+            <li class="sidebar-dropdown border-top border-bottom">
+            @else
+            <li class="sidebar-dropdown border-bottom">
+            @endif
                 <a href="#">
-                    @if (!empty($item->icon))
-                    <i class="fas fa-{{$item->icon}}"></i>
+                    @if (!empty($itemSection->icon))
+                    <i class="fas fa-{{$itemSection->icon}}"></i>
                     @else
                         <i class="fas fa-{{$arrayIcon[$iconKey]}}"></i>
                     @endif
-                <span>{{$item->label}}</span>
+                <span>{{$itemSection->label}}</span>
                 </a>
                 <!-- Submenu -->
                 <div class="sidebar-submenu">
                 <ul>
-                @foreach ($item->subItems as $subItem)
-
+                @foreach ($itemSection->subItems as $subItem)
                 @if (!property_exists($subItem, "permission") OR $subItem->permission === true)
                 <li>
                 @if (!empty($subItem->vueAction))
                 <a href="#" v-on:click="{{$subItem->vueAction}}">{{$subItem->label}}</a>
-                @elseif(!empty($item->route) && !empty($subItem->route))
-                <a href="{{$util->toRoute($item->route, $subItem->route)}}">{{$subItem->label}}</a>
+                @elseif(!empty($itemSection->route) && !empty($subItem->route))
+                <a href="{{$util->toRoute($itemSection->route, $subItem->route)}}">{{$subItem->label}}</a>
                 @endif
-
-
                 </li>
                 @endif
                 @endforeach
@@ -245,22 +244,28 @@
                 </div>
             </li>
             @else
-            <li>
-                @if (!empty($item->vueAction))
-                <a href="#" v-on:click="{{$item->vueAction}}">
-                @elseif(!empty($item->route))
-                <a href="{{$util->toRoute($item->route)}}">
+            @if ($key == 0)
+            <li class="border-top border-bottom">
+            @else
+            <li class="border-bottom">
+            @endif
+
+                @if (!empty($itemSection->vueAction))
+                <a href="#" v-on:click="{{$itemSection->vueAction}}">
+
+                @elseif(!empty($itemSection->route))
+                <a href="{{$util->toRoute($itemSection->route)}}">
                 @else
                 <a href="#">
                 @endif
-                @if (!empty($item->icon))
-                <i class="fas fa-{{$item->icon}}"></i>
+                @if (!empty($itemSection->icon))
+                <i class="fas fa-{{$itemSection->icon}}"></i>
                 @else
                     <i class="fas fa-{{$arrayIcon[$iconKey]}}"></i>
                 @endif
-                <span>{{$item->label}}</span>
+                <span>{{$itemSection->label}}</span>
                 </a>
-                </li>
+            </li>
             @endif
             @endif
             @php
@@ -279,16 +284,26 @@
         @endforeach
     {{--Fim de bloco de seção de menu -----------------------------------------------------------------}}
     {{--Bloco de Itens de menu ------------------------------------------------------------------------}}
-        @elseif (!empty($sidebar->items))
+
+
+
+    @elseif (!empty($sidebar->items))
         @php
             $iconKey = 0;
         @endphp
-        <ul class="mt-3">
+        <ul class="mt-2">
             @foreach ($sidebar->items as $key => $item)
             @if (!property_exists($item, "permission") OR $item->permission === true)
+
+
                 @if (property_exists($item, "subItems"))
-                <li class="sidebar-dropdown">
-                    <a href="#">
+                @if ($key == 0)
+                <li class="sidebar-dropdown border-top border-bottom">
+                @else
+                <li class="sidebar-dropdown border-bottom">
+                @endif
+                {{--<li class="sidebar-dropdown">--}}
+                    <a href="#" >
                         @if (!empty($item->icon))
                         <i class="fas fa-{{$item->icon}}"></i>
                         @else
@@ -296,15 +311,16 @@
                         @endif
                     <span>{{$item->label}}</span>
                     </a>
+
+
                     <!-- Submenu -->
                     <div class="sidebar-submenu">
                     <ul>
                     @foreach ($item->subItems as $subItem)
-                    @if (!property_exists($subItem, "permission") OR $subItem->permission === true)
+                    @if (!property_exists($subItem, "permission") OR $subItem->permission == true)
                     <li>
-                    @if (!empty($subItem->vueAction))
-                    <a href="#" v-on:click="{{$subItem->vueAction}}">{{$subItem->label}}</a>
-                    @elseif(!empty($item->route) && !empty($subItem->route))
+
+                    @if(!empty($item->route) && !empty($subItem->route))
                     <a href="{{$util->toRoute($item->route, $subItem->route)}}">{{$subItem->label}}</a>
                     @endif
                     </li>
@@ -313,8 +329,15 @@
                     </ul>
                     </div>
                 </li>
+
+
                 @else
-                <li>
+                @if ($key == 0)
+                <li class="border-top border-bottom">
+                @else
+                <li class="border-bottom">
+                @endif
+                {{--<li >--}}
                     @if (!empty($item->vueAction))
                     <a href="#" v-on:click="{{$item->vueAction}}">
                     @elseif(!empty($item->route))
@@ -329,37 +352,39 @@
                     @endif
                     <span>{{$item->label}}</span>
                     </a>
-                    </li>
+                </li>
                 @endif
                 @php
                 if ($key < 20){
                     $iconKey ++;
                 }else{
                     $iconKey = 0;
-                    //$iconKey = mt_rand(0,37);
+
                 }
                 @endphp
             @endif
             @endforeach
+
         </ul>
-        @endif
+    @endif
     {{--Fim do bloco de Itens de menu ----------------------------------------------------------------------}}
     </div>
 </nav>
 </div>
 @else
-@guest
+    @guest
     @if (!empty($sidebar->hiddenConect) && $sidebar->hiddenConect === true)
-    @else
+
     <a id="show-sidebar" class="dropdown btn {{$show_style}} {{$btnStyle}}" id="dropdownLogin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-pressed="true">
         <div class="d-none d-md-block ml-2 mr-2">
         <span class="mr-2" translate="no">{{ __('connect') }}</span>
         <i class="fas fa-bars"></i>
         </div>
-        <div class="d-bloc d-md-none">
+        <div class="d-block d-md-none">
             <i class="fas fa-bars"></i>
         </div>
     </a>
+    @else
     <div class="dropdown-menu sidebar-menu shadow" aria-labelledby="dropdownLogin" style="width: 250px;background-color:#F2F2F2;">
         <a class="dropdown-item pl-3" href="{{ route('login') }}">
         <i class="fas fa-user-lock border rounded p-2" style="font-size:12px; background-color:#CCCCCC;"></i>
@@ -372,7 +397,7 @@
         </a>
     </div>
     @endif
-@endguest
+    @endguest
 </div>
 @endif
 @else

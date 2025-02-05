@@ -202,17 +202,11 @@ $num_items = 0;
     <img src="{{$util->toImage('local/images/icons', $icon[4])}}" {!!$attributes!!} class="rounded-circle {{$socialClass}} shadow">
     </a>
     @endif
-
     </div>
-
     @endif
-
     </div>
     </div>
-
-
     </div>
-
 </div>
 @if (!empty($footer->bgImage) && !empty($footer->bgImagePath))
 </div>
@@ -222,11 +216,8 @@ $num_items = 0;
 </footer>
 <!--End Section ------------------------------------------------>
 @else
-<div class="container-xl px-3 mt-4 pb-2" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+
+{{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
+
 @endif

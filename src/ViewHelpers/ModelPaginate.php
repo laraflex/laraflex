@@ -6,6 +6,7 @@ trait ModelPaginate{
     /**
      * Return object Json and object Paginate
      */
+
     public function withPaginate($data = NULL, array $config = NULL)
     {
         $arrayTmp = $this->toArray($data, $config);
@@ -16,5 +17,6 @@ trait ModelPaginate{
         //dd($object);
         return $object;
     }
+
 
 }

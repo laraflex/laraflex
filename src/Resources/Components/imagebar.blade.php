@@ -16,8 +16,10 @@ if (empty($imageBar)){
     elseif (!empty($imageBar->imagePath)){
         $image = $util->toImage($imageBar->imagePath);
     }
-    elseif(empty($imageBar->image)){
+    elseif(!empty($imageBar->image)){
         $image = $util->toImage($imageBar->image);
+    }else{
+        $image = NULL;
     }
 @endphp
 @if(!empty($image))
@@ -37,19 +39,18 @@ if (empty($imageBar)){
 //->-------------------------------}}
 if(!empty($imageBar->height)){
     $heightImage = intval($imageBar->height);
-    $value = $heightImage - 48;
-    $height = 'height:calc(' . $value . 'px + 3vw);';
-    //$height = 'height:' . $imageBar->height . ';';
+    $value = $heightImage - 100;
+    $height = 'height:calc(' . $value . 'px + 12vw);';
 }else{
     $heightImage = 200;
-    $height = 'height:calc(160px + 3vw);';
+    $height = 'height:calc(80px + 10vw);';
 
     //$height = 'height:200px;';
 }
 $ptTmp = '';
 $titleSize = false;
 $line_height = '14px';
-$font_size_base =  '1.2em';
+$font_size_base =  '0.9em';
 $mTopText = 'mt-2';
 if(!empty($imageBar->height) && $heightImage <= 110){
     $mTopText = '';
@@ -65,17 +66,16 @@ if(!empty($imageBar->height) && $heightImage > 199){
 @endphp
 <div id="imagebar" class="imageBar">
     @if ($imageBar->type == 'content')
-    <div class="container-xl px-3 mt-3 mt-md-4">
+    <div class="container-xl px-3 mt-1 mt-sm-3 mt-md-4">
     @elseif (!empty($imageBar->cssClass) && $imageBar->cssClass == 'container')
     <div class="container-xl px-0">
     @else
     <div>
     @endif
-    @if(!empty($imageBar->mobile) && $imageBar->mobile == true)
+
+
     <div class="imagebar-image" data-background-color style="background-image: url('{{$image}}');background-repeatx:round;background-size:cover;border-bottom:1px solid #cccccc; {{$height}}">
-    @else
-    <div class="imagebar-image d-none d-sm-block" data-background-color style="background-image: url('{{$image}}');background-repeatx:round;background-size:cover;border-bottom:1px solid #cccccc; {{$height}}">
-    @endif
+
 
     @php
     if(!empty($imageBar->fontColor)){
@@ -102,12 +102,18 @@ if (!empty($imageBar->title)) {
             $imageBar->text = substr($imageBar->text, 0, 104) . "...";
         }
     }
+
 }
 @endphp
 @if (!empty($imageBar->fadeImage) && $imageBar->fadeImage === true)
 <div class="imagebar-bgcolor" style="width:100%; height:100%; background-color: rgba(0,0,0,0.2);">
 @else
 <div class="imagebar-bgcolor" style="width:100%; height:100%;">
+@endif
+
+@if (!empty($imageBar->logo))
+
+
 @endif
 
 @if (!empty($imageBar->title))
@@ -118,7 +124,7 @@ if (!empty($imageBar->title)) {
 @if ($imageBar->type == 'content')
 <div id="imagebar-panel" class="px-4">
 @else
-<div id="imagebar-panel" class="px-5 pt-5">
+<div id="imagebar-panel" class="px-5 pt-2 pt-sm-5">
 @endif
 @if(!empty($imageBar->route))
 <a href="{{$util->toRoute($imageBar->route)}}">
@@ -126,10 +132,10 @@ if (!empty($imageBar->title)) {
 <a>
 @endif
 @if($titleSize == true)
-<div class="imagebar-title imagebar-title" style="text-shadow: 2px 2px 2px #6E6E6E;font-size:calc({{$font_size_base}} + 0.7vw);line-height:calc({{$line_height}} + 1.3vw);color:{{$color}};{{$font_family_title}}">
+<div class="imagebar-title imagebar-title" style="text-shadow: 2px 2px 2px #6E6E6E;font-size:calc({{$font_size_base}} + 1.0vw);line-height:calc({{$line_height}} + 1.3vw);color:{{$color}};{{$font_family_title}}">
 {{$imageBar->title}}</div>
 @else
-<div class="imagebar-title" style="text-shadow: 2px 2px 2px #6E6E6E;font-size:calc({{$font_size_base}} + 0.7vw);line-height:calc({{$line_height}} + 1vw);color:{{$color}};{{$font_family_title}}">
+<div class="imagebar-title" style="text-shadow: 2px 2px 2px #6E6E6E;font-size:calc({{$font_size_base}} + 1.0vw);line-height:calc({{$line_height}} + 1vw);color:{{$color}};{{$font_family_title}}">
 {{$imageBar->title}}</div>
 @endif
 @if (!empty($imageBar->text))
@@ -138,7 +144,7 @@ if (!empty($imageBar->title)) {
 @else
 <a>
 @endif
-<div class="imagebar-share mt-1 {{$mTopText}}" style="text-shadow: 2px 2px 2px #6E6E6E;line-height:calc(0.98em + 0.6vw); font-size:calc(10px + 0.47vw);color:{{$color}};{{$font_family}}">
+<div class="imagebar-share mt-1 d-none d-sm-block {{$mTopText}}" style="text-shadow: 2px 2px 2px #6E6E6E;line-height:calc(0.98em + 0.6vw); font-size:calc(10px + 0.47vw);color:{{$color}};{{$font_family}}">
 <strong>{{$imageBar->text}}</strong>
 </div>
 </a>
@@ -154,13 +160,9 @@ if (!empty($imageBar->title)) {
 @if (!empty($blogcards->nullable) && $blogcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>
 @else
-<div class="container-xl px-3 mt-4 pb-2" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+ {{--messageNull component shered ==========================================--}}
+ <x-laraflex::shared.messagenull />s
+
 @endif
 
 @endif

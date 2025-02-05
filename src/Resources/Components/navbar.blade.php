@@ -98,6 +98,7 @@
     $fixedNavbarClass = 'bg-navbar-none';
     $predominantColor = $styleColor;
     $fontWeight = '';
+    $fixed = "";
 
     if(!empty($navBar->fixedMenu) && $navBar->fixedMenu === true){
         $fixed = "fixed-top";
@@ -155,7 +156,7 @@
     }
 @endphp
 <div id="navbar-default">
-<nav id="{{$navbar_id}}" class="{{$cssClass}}navbar navbar-expand-lg m-0x px-0x {{$styleNav}} {{$fixedNavbarClass}} {{$fixed}}" style="{{$border_bottom}} {{$background}}">
+<nav id="{{$navbar_id}}" class="{{$cssClass}} navbar navbar-expand-lg m-0x px-0x {{$styleNav}} {{$fixedNavbarClass}} {{$fixed}}" style="{{$border_bottom}} {{$background}}">
 <div class="container-xl px-2 px-xl-3 ">
 <!-- Logotipo ----------------------->
 @php

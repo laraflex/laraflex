@@ -9,6 +9,13 @@
 @endif
 
 @if (!empty($dataBox->items))
+@php
+    if (!empty($dataBox->title)){
+        $title = $dataBox->title;
+    }else{
+        $title = NULL;
+    }
+@endphp
 
 <section id="databox" class="pb-1 pt-2 pt-md-3">
 <div class="container-xl px-0">
@@ -16,29 +23,45 @@
 
 
 <div class="p-3 pb-5 {{$border}} mt-3 mb-4" >
-{{--Component title--}}
-@if(!empty($dataBox->title))
-
-<div class="mt-1 text-center pt-2 pb-2" style="  font-size:calc(1.1em + 0.6vw);">
-{{$dataBox->title}}
-</div>
+{{--Component title =================================--}}
+@if(!empty($title))
+    @include('laraflex::ComponentParts.databox.title')
 @endif
 
 {{--component items--}}
 <div class="row ml-0 mr-0">
 @foreach($dataBox->items as $item)
-@if(!empty($item->type) && $item->type == 'longText')
-<div class="col-sm-12 p-1 pt-2">
-<span class="pl-2"><small><b>{{$item->label}}</b></small></span>
-<div class="border rounded p-2">
-{{$item->data}}
-</div>
-</div>
 
+@php
+    if (!empty($item->label)){
+        $label = $item->label;
+    }else{
+        $label = '';
+    }
+    if (!empty($item->type)){
+        $type = $item->type;
+    }else{
+        $type = NULL;
+    }
+    if (!empty($item->data)){
+        $data = $item->data;
+    }else{
+        $data = NULL;
+    }
+    if (!empty($item->images)){
+        $images = $item->images;
+    }else{
+        $images = NULL;
+    }
+@endphp
 
-@elseif(!empty($item->type) && $item->type == 'image')
+{{--longText Component Databox ===================================--}}
+@if(!empty($type) && $type == 'longText')
+@include('laraflex::ComponentParts.databox.longtext')
 
-    @php
+{{--Image Component Databox ===================================--}}
+@elseif(!empty($type) && $type == 'image')
+@php
     if (!empty($item->imageStorage)){
         $image = $item->imageStorage;
     }
@@ -48,72 +71,20 @@
     elseif(!empty($item->image)){
         $image = $util->toImage($item->image);
     }
-
-    @endphp
-    @if (!empty($image))
-    <div class="col-sm-12 p-1 pt-2">
-    <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
-    <div class="p-0" style="max-width: 250px;">
-    <img src="{{$image}}" class="image-fluid img-thumbnail" style="max-width: 250px;">
-    </div>
-    </div>
-    @endif
-
-
-@elseif(empty($item->type) OR $item->type != 'images')
-<div class="col-sm-6 col-xl-4 p-1 pt-2">
-<span class="pl-2"><small><b>{{$item->label}}</b></small></span>
-<div class="border rounded p-2">
-{{$item->data}}
-</div>
-</div>
+@endphp
+@if (!empty($image))
+@include('laraflex::ComponentParts.databox.image')
 @endif
 
-@if(!empty($item->type) && $item->type == 'images')
-{{--</div>--}}
-<div class="row px-3">
-    @php
-    $column = ['d-block', 'd-block', 'd-none d-sm-block', 'd-none d-lg-block']
-    @endphp
-
-    @if (!empty($item->images))
-    <div class="col-12 pt-2">
-        <span class="pl-2"><small><b>{{$item->label}}</b></small></span>
-    </div>
-
-    @foreach ($item->images as $key => $imageItem)
-
-        @php
-            if (!empty($imageItem->imageStorage)){
-                $image = $imageItem->imageStorage;
-            }
-            elseif (!empty($imageItem->imagePath)){
-                $image = $util->toImage($imageItem->imagePath);
-            }elseif(!empty($imageItem->image)){
-                $image = $util->toImage($imageItem->image);
-            }
-        @endphp
-
-
-
-        @if (!empty($image))
-        <div class="col-6 col-sm-4 col-lg-3 p-1 pt-2 {{$column[$key]}}">
-        <div class="p-0" style="">
-        <img src="{{$image}}" class="image-fluid img-thumbnail" style="">
-        </div>
-        </div>
-        @endif
-        @php
-        if ($key == 3){
-        break;
-        }
-        @endphp
-    @endforeach
-    @endif
-</div>
+{{--Text Component Databox ===================================--}}
+@elseif(empty($type) OR $type == 'text')
+@include('laraflex::ComponentParts.databox.text')
 @endif
 
-
+{{--Images Component Databox ===================================--}}
+@if(!empty($type) && $type == 'images')
+@include('laraflex::ComponentParts.databox.images')
+@endif
 
 @endforeach
 </div>
@@ -129,13 +100,8 @@
 </div>
 </section>
 @else
-<div class="container-xl px-3 mt-4 pb-2" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+{{--messageNull component ContentBox ==========================================--}}
+<x-laraflex::shared.messagenull />
 @endif
 
 </div>

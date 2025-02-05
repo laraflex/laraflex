@@ -15,6 +15,7 @@ class DependenciesListener extends AbstractListener{
         'mediacards' => 'laraflex\ViewHelpers\Dependencies\LightboxDependencies',
         'panelnavmodal' => 'laraflex\ViewHelpers\Dependencies\PanelnavModalDependencies',
         'formconfirm' => 'laraflex\ViewHelpers\Dependencies\FormConfirmDependencies',
+        'imagecontrolpanel' => 'laraflex\ViewHelpers\Dependencies\ImageControlPanelDependencies',
         'sidebar' => 'App\ViewPresenters\Dependencies\SidebarDependencies',
         'storagemanager' => 'App\ViewPresenters\Dependencies\StorageDependencies',
         ];

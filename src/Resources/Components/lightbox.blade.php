@@ -24,6 +24,9 @@
     if (!empty($lightbox->showLimit) && $lightbox->showLimit){
         $lightbox_text_align = 'text-right';
     }
+    if (empty($lightbox->paginate)){
+        $seeMore = true;
+    }
 
     $margen_bottom = '';
 @endphp
@@ -41,7 +44,7 @@
 @endif
 <div class="mx-0 mb-0 px-2 px-lg-3 px-xl-0">
 
-@if (!empty($lightbox->seeMore))
+@if (!empty($seeMore))
 <div class="row m-0 p-0">
     <div class="col-12 col-sm-9 p-0">
         @if(!empty($lightbox->title))
@@ -53,22 +56,7 @@
         @endif
         @endif
     </div>
-    <div class="col-0 col-sm-3 text-right pr-2 d-none d-sm-block     " style="width: 100%;">
-        @if(!empty($lightbox->legend) && !empty($lightbox->title))
-            <div class="pt-0 pt-sm-2 mb-sm-1 py-xl-2"></div>
-            <div class="pt-sm-1 pt-lg-2 pt-xl-1 pr-3 pr-lg-4 align-text-bottom" >
-            <a href="{{$util->toRoute($lightbox->seeMore)}}" class="btn btn-dark m-0">
-            {{__('See more')}}
-            </a>
-            </div>
-            @else
-            <div class=" pt-0 pt-md-0 pt-lg-1 pr-3 pr-lg-4 align-text-bottom">
-            <a href="{{$util->toRoute($lightbox->seeMore)}}" class="btn btn-dark m-0 mb-sm-3">
-            {{__('See more')}}
-            </a>
-            </div>
-        @endif
-    </div>
+
 </div>
 @else
     @if(!empty($lightbox->title))
@@ -107,7 +95,7 @@
         }
 
         $showLimit = false;
-        if (!empty($lightbox->seeMore)){
+        if (!empty($seeMore)){
             $showLimit = true;
         }elseif(!empty($lightbox->showLimit) && $lightbox->showLimit === true){
             $showLimit = true;
@@ -204,12 +192,9 @@
     </div>
     </div>
     {{--Bloco de see more ---------------------------}}
-    @if (!empty($lightbox->seeMore))
-    <div class="pl-3 pl-lg-4 mt-2 d-block d-sm-none">
-        <a href="{{$util->toRoute($lightbox->seeMore)}}" class="btn btn-sm btn-dark m-0">
-        <span class="px-2">{{__('See more')}}</span>
-        </a>
-    </div>
+
+    @if (!empty($seeMore))
+
     {{--pagination--------------------------------------}}
     @elseif (!empty($lightbox->paginate))
     <div id="default-paginator" class="text-center nav justify-content-center pt-2" aria-label="Page" translator>

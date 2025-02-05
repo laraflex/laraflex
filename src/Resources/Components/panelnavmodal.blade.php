@@ -27,7 +27,7 @@ elseif(!empty($panelnav->logo)){
 
 @if (!empty($panelnav))
 <section id="panelnavmodal" class="m-0 p-0">
-<div style="height:4px; border-bottom:1px solid #000;border-top: 1px solid #000;" class="m-0 p-0"></div>
+<div style=" class="m-0 p-0"></div>
 
 <div id="panelnav" class="p-0 m-0" style="background-image: url({{$bgImage}});background-size:contain;width:100%;">
 <div class="" style="background-color:rgba(0,0,0, 0.3);">
@@ -40,7 +40,7 @@ elseif(!empty($panelnav->logo)){
 <img class="float-right {{--mx-auto d-block--}}" src="{{$logo}}" style="width:calc(120px + 5vw)" />
 </div>
 @else
-<div class="col-12 pr-4 pr-md-5  py-4 py-sm-5  mb-2 mb-xl-3">
+<div class="col-12 pr-4 pr-md-5  py-2 py-sm-5  mb-2 mb-xl-3">
 </div>
 @endif
 
@@ -51,13 +51,13 @@ elseif(!empty($panelnav->logo)){
     {{$panelnav->title}}
     </div>
     @if (!empty($panelnav->subTitle))
-    <div class="py-1 py-md-2 pl-4 mt-2 mt-md-3 rounded m-0" style="width:70%; background-color:rgb(0,0,0,0.5); color:#FFF;font-size:calc(12px + 0.8vw);line-height:calc(14px + 1.0vw);text-shadow: 2px 2px 3px #000;">
+    <div class="py-1 py-md-2 pl-0 mt-2 mt-md-3 m-0 d-none d-sm-block" style="width:100%; color:#FFF;font-size:calc(12px + 0.8vw);line-height:calc(14px + 1.0vw);text-shadow: 2px 2px 3px #000;">
     {{$panelnav->subTitle}}</div>
     @endif
     @endif
 
 
-    <div class="mt-3 mt-md-4">
+    <div class="mt-3 mt-md-4 mb-2">
         @php
         if (!empty($panelnav->btnLabel)){
             $btnLabel = $panelnav->btnLabel;

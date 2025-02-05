@@ -38,7 +38,9 @@ if (!empty($blogcards->fontFamily->shared)){
 @endphp
 
 <section id="image-control-panel" class="pb-1 pt-2 pt-md-3">
+
 {{--BLOCO PARA COMPONENTES VUEJS--}}
+{{--
 @if (!empty($imagecontrolpanel->vuejsComponents))
 @php
     $vuejsComponents = $imagecontrolpanel->vuejsComponents;
@@ -50,16 +52,23 @@ if (!empty($blogcards->fontFamily->shared)){
 <div class="container-xl pl-0 pr-0 pr-sm-0 mb-2">
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 {{--INICIO DE BLOCO DE COMPONENTE--}}
+@php
+    if (!empty($imagecontrolpanel->title)){
+        $title = $imagecontrolpanel->title;
+    }else{
+        $title = NULL;
+    }
+    if (!empty($imagecontrolpanel->legend)){
+        $legend = $imagecontrolpanel->legend;
+    }else{
+        $legend = NULL;
+    }
+@endphp
 
 @if(!empty($imagecontrolpanel->title))
-    <div class="imagecontrolpanel-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-    {{$imagecontrolpanel->title}}</div>
-    @if (!empty($imagecontrolpanel->legend))
-    <div class="imagecontrolpanel-shared text-center pb-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-    <span>{{$imagecontrolpanel->legend}}</span></div>
-    @else
-    <div class="pt-2"></div>
-    @endif
+{{--@props(['title', 'legend', 'font_family_title', 'font_family']) --}}
+    @include('laraflex::ComponentParts.databox.title')
+
 @endif
 
 <div class="cards row p-0 m-0">
@@ -86,28 +95,21 @@ if (!empty($blogcards->fontFamily->shared)){
         }else {
             $icon = 'fa-' . $arrayIcon[$key];
         }
+        if (!empty($item->route)){
+            $route = $util->toRoute($item->route);
+        }else{
+            $route = NULL;
+        }
+        if (!empty($item->label)){
+            $label = $item->label;
+        }else{
+            $label = NULL;
+        }
     // ---------------------------------------------------------------------------
     @endphp
 
-    <div class="{{$collumnConfig}} p-0 m-0">
-    <div class="m-2 m-md-1">
-    <div class="card bg-dark {{$border}}" style="background-image: url({{$image}});background-repeat:round; min-height:8em">
-            @if (!empty($item->route))
-            <a href="{{$util->toRoute($item->route)}}">
-            @else
-            <a href="#" >
-            @endif
-            {{--<img src="{{$image}}" class="card-img img-fluid" alt="...">--}}
-            <div id="item-card" class="card-img-overlay text-center">
-                <i class="fas {{$icon}} mt-2 mb-1" style="font-size: 120%"></i>
-                @if ($item->label)
-                <div class="card-title mt-1" style="font-size:calc(13px + 0.10vw); line-height: 1.2"><b>{{$item->label}}</b></div>
-                @endif
-            </div>
-            </a>
-        </div>
-    </div>
-    </div>
+    {{--@props(['image', 'route','label','icon', 'collumnConfig', 'border']) --}}
+    @include('laraflex::ComponentParts.imagecontrolpanel.imagecontrolitem')
 
     @endforeach
 </div>
@@ -116,11 +118,6 @@ if (!empty($blogcards->fontFamily->shared)){
 </div>
 </section>
 @else
-<div class="container-xl mt-4 pb-2 px-2 px-md-3 px-xl-0"" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+ {{--messageNull component shered ==========================================--}}
+ <x-laraflex::shared.messagenull />s
 @endif

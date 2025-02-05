@@ -28,7 +28,7 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         }
     }
 
-    public function toRoute($route, $link = NULL)
+    public function toRoute($route, $link = NULL, $parameter = NULL)
     {
         $numChar = strlen($route);
         $x = $numChar - 1;
@@ -37,7 +37,11 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
             $route = substr($route, 0, $x);
         }
         if (!empty($link)){
-            $route = $route . '/' . $link;
+            if (empty($paramer)){
+                $route = $route . '/' . $link . '/' . $parameter;
+            }else{
+                $route = $route . '/' . $link;
+            }
         }
         if ($this->secure){
             return secure_url($route);

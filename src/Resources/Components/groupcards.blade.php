@@ -26,7 +26,7 @@
     <section id="groupcards" class="m-0 p-0 mx-0 pb-3 pb-sm-3 pt-1 pt-sm-3">
 @endif
 
-{{--BLOCO PARA COMPONENTES VUEJS--}}
+{{--BLOCO PARA COMPONENTES VUEJS--
 @if (!empty($groupCards->vuejsComponents))
 @php
     $vuejsComponents = $groupCards->vuejsComponents;
@@ -38,44 +38,48 @@
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
 <div class="">
+@php
+
+    if(!empty($groupCards->seeMore)){
+        $seeMore = $util->toRoute($groupCards->seeMore);
+        $paginate = NULL;
+        $pageNumber = NULL;
+        $groupCards->page = false;
+
+    }elseif(!empty($groupCards->paginate)){
+        $paginate = $groupCards->paginate;
+        $paginates = $groupCards->paginate->links('components.bootstrap');
+        $seeMore = NULL;
+        $pageNumber = $paginate->currentPage();
+    }
+    if (!empty($groupCards->title)){
+        $title = $groupCards->title;
+    }else{
+        $title = NULL;
+    }
+    if (!empty($groupCards->legend)){
+        $legend = $groupCards->legend;
+    }else{
+        $legend = NULL;
+    }
+@endphp
     @if (!empty($groupCards->seeMore))
-    <div class="row m-0 p-0">
-        <div class="col-12 col-sm-9 p-0">
-            @if(!empty($groupCards->title))
-            <div class="groupcards-title text-left pt-3 pb-2 pl-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-            {{$groupCards->title}}</div>
-            @if (!empty($groupCards->legend))
-                <div class="groupcards-shared text-left pb-3 pl-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-                <span>{{$groupCards->legend}}</span></div>
-            @endif
-            @endif
-        </div>
-        <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block align-text-bottomx" style="width: 100%;">
-            @if(!empty($groupCards->legend) && !empty($groupCards->title))
-            <div class="py-2 mb-sm-1 py-xl-2"></div>
-            <div class="pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
-            <a href="{{$util->toRoute($groupCards->seeMore)}}" class="btn btn-dark m-0">
-            {{__('See more')}}
-            </a>
-            </div>
-            @else
-            <div class="pb-sm-3 pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
-            <a href="{{$util->toRoute($groupCards->seeMore)}}" class="btn btn-dark m-0">
-            {{__('See more')}}
-            </a>
-            </div>
-            @endif
-        </div>
-    </div>
+    @php
+        $seeMore = $util->toRoute($groupCards->seeMore);
+        $position = "text-left";
+    @endphp
+    {{--SEEMORE COMPONENT GROUPCARDS ============================== --}}
+    {{--@props(['seeMore','title','legend','font_family','font_family_title','position' ])--}}
+    <x-laraflex::groupcards.seemore :seeMore="$seeMore" :title="$title" :legend="$legend" :font_family="$font_family" :font_family_title="$font_family_title" :position="$position"/>
+
     @else
-        @if(!empty($groupCards->title))
-        <div class="groupcards-title mt-1 text-center pt-2 pb-3 pr-2 pl-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-        {{$groupCards->title}}</div>
-        @endif
-        @if (!empty($groupCards->legend))
-        <div class="slidebar-shared text-center pb-2 pb-sm-3" style="font-size:calc(0.78em + 0.29vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-        <span style="color:gray">{{$groupCards->legend}}</span></div>
-        @endif
+    @php
+        $position = "text-center";
+    @endphp
+    {{-- TITLE COMPONENT GROUPCARDS ============================== --}}
+    {{--@props(['title','legend','font_family','font_family_title' ])--}}
+    <x-laraflex::groupcards.title :title="$title" :legend="$legend" :font_family="$font_family" :font_family_title="$font_family_title" :position="$position"  />
+
     @endif
     <div class="row p-0 m-0 pt-1">
     @php
@@ -91,8 +95,36 @@
         $num_limit = NULL;
     }
 
+    if (!empty($groupCards->button)){
+        $button = $groupCards->button;
+    }else{
+        $button = NULL;
+    }
+    if (!empty($groupCards->showItems)){
+        $showItems = $groupCards->showItems;
+    }else{
+        $showItems = NULL;
+    }
+    if (!empty($groupCards->bgEffect)){
+        $bgEffect = $groupCards->bgEffect;
+    }else{
+        $bgEffect = NULL;
+    }
+    if (!empty($groupCards->route)){
+        $route = $groupCards->route;
+    }else{
+        $route = NULL;
+    }
+    if (!empty($groupCards->page)){
+        $page = $groupCards->page;
+    }else{
+        $page = NULL;
+    }
+    $items = $groupCards->items;
     @endphp
-    @foreach ($groupCards->items as $key =>$item)
+
+    {{--ADD CARDS IN COMPONENT GROUPCARDS--}}
+    @foreach ($items as $key =>$item)
      {{--Início das colunas do componente--}}
     @php
     if (!empty($num_limit) && $key >= $num_limit){
@@ -109,47 +141,19 @@
     <div class="mx-1 h-100 {{$border}}">
     @endif
     {{--Bloco interno----}}
-    @if (!empty($groupCards->button))
+    @if (!empty($button))
     <div class="p-2 p-md-3 m-0 " style="height:86%">
     @else
     <div class="p-2 p-md-3" style="height:100%">
     @endif
-    {{--Controle para adicionar imagem--}}
-    @if (in_array('image', $groupCards->showItems))
-        @php
-        if (!empty($item->imageStorage)){
-            $image = $item->imageStorage;
-        }
-        elseif (!empty($item->imagePath)){
-            $image = $util->toImage($item->imagePath);
-        }
-        elseif(!empty($item->image)){
-            $image = $util->toImage($item->image);
-        }else{
-            $image = $util->toImage('local/images/app/foto02.jpg');
-        }
-        @endphp
-    @if (!empty($groupCards->bgEffect) && $groupCards->bgEffect === true)
-    <div class="groupcards-panel text-center rounded mb-0" style="min-height: calc(110px + 6vw);">
-    @else
-    <div class="text-center mb-0" style="min-height: calc(60px + 12vw) height:100%;">
-    @endif
-    {{--BLOCO DE INTEGRAÇÃO COM EVENTO vUEJS--}}
-    @if (!empty($groupCards->vueAction) && !empty($groupCards->vuejsComponents))
-    <a href="#" v-on:click="{{$groupCards->vueAction}}('{{$item->id}}')" >
-    @elseif(!empty($groupCards->route))
-    <a href="{{$util->toRoute($groupCards->route, $item->id)}}" class="" >
-    @else
-    <a href="#">
-    @endif
-    <img src="{{$image}}" class="img-fluid mx-auto " alt="...">
-    </a>
 
-    </div>
-    @endif
-    {{--Fim Controle para adicionar imagem--}}
+    {{--ADD IMAGE COMPONENT GROUPCARDS ===========================--}}
+    {{--@props(['util','item','showItems','bgEffect','route'])--}}
+    <x-laraflex::groupcards.image :util="$util" :item="$item" :showItems="$showItems" :bgEffect="$bgEffect" :route="$route" :page="$page" :pageNumber="$pageNumber" />
+
     <div class="">
-    @foreach($groupCards->showItems as $fieldName)
+    {{--CARDS COMPONENT GROUPCARD ================================--}}
+    @foreach($showItems as $fieldName)
     @php
         //-> Separa as propriedades de fonte do atributo de showItems
         if (strpos($fieldName, '->>')){
@@ -162,62 +166,28 @@
         //-> Fim ------------------------------------------
     @endphp
     @if(!empty($item->$fieldName))
+
     @if($fieldName != 'image')
     @if($fieldName == 'title')
     <div class="card-text pt-2 pt-lg-3" style="font-size:calc(0.76em + 0.3vw);line-height:calc(14px + 0.3vw);{{$font_family_title}}">
     <strong>{{$item->title}}</strong></div>
+
+    {{--ADD CONTENTS COMPONENTS GROUPCARDS--}}
     @elseif($fieldName != 'rating')
-    <div class="">
-    {{--Algoritmo de codificaçãode de fonte -----------------------------------------}}
     @php
-        $style_font = 'font-size:calc(0.73em + 0.25vw);line-height:calc(1.1em + 0.28vw);';
-        $optionsStyle = ['italic','normal','strong'];
-        $styleFont = "";
-        $endStyleFont = "";
-        $font_color = "";
-        if ($fontOptions != ""){
-            $arrayOptions = explode('|', $fontOptions);
-            if (!empty($arrayOptions[0]) && in_array(strtolower($arrayOptions[0]), $optionsStyle)){
-                if($arrayOptions[0] == 'italic'){
-                    $styleFont = '<i>';
-                    $endStyleFont = '</i>';
-                }else{
-                    $styleFont = '<' .$arrayOptions[0] . '>';
-                    $endStyleFont = '</' . $arrayOptions[0] . '>';
-                }
-                if(!empty($arrayOptions[1])){
-                    if (strtolower($arrayOptions[1]) == 'large'){
-                        $style_font = 'font-size:calc(0.9em + 0.20vw);line-height:calc(1.1em + 0.28vw);';
-                    }elseif (strtolower($arrayOptions[1]) == 'x-large'){
-                        $style_font = 'font-size:calc(1em + 0.25vw);line-height:calc(1.1em + 0.28vw);';
-                    }if (strtolower($arrayOptions[1]) == 'normal'){
-                        $style_font = 'font-size:calc(0.73em + 0.25vw);line-height:calc(1.1em + 0.28vw);';
-                    }
-                    if(!empty($arrayOptions[2])){
-                        $font_color = 'color:' . $arrayOptions[2] . ';';
-                    }
-                }
-            }
-        }
+        $fieldNameTmp = $item->$fieldName;
     @endphp
-    {{--End de codificaçãode de fonte -----------------------------------------}}
-    <p class="card-text pt-1 pt-lg-2" style="{{$style_font}}{{$font_color}}{{$font_family}}">
-    {!!$styleFont!!} {{--Potions: italic, normal, strong--}}
-    {{$item->$fieldName}}
-    {!!$endStyleFont!!}
-    </p>
-    </div>
+
+    {{--@props(['util','fieldNameTmp','font_family','fontOptions'])--}}
+    <x-laraflex::groupcards.codeditems :util="$util" :fieldNameTmp="$fieldNameTmp" :fontOptions="$fontOptions" :font_family="$font_family" />
+
     @elseif($fieldName == 'rating')
     @if(!empty($item->rating))
-        <div class="mt-2" style="font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
-        {{$item->rating}}
-        @for ($i = 1; $i <= intval($item->rating); $i++)
-        <img src="{{$util->toImage('local/images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
-        @endfor
-        @if ($item->rating != intval($item->rating))
-        <img src="{{$util->toImage('local/images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
-        @endif
-        </div>
+
+    {{--ADD RATING COMPONENT GROUPCARDS ===========================================--}}
+    {{--@props(['util','item','font_family'])--}}
+    <x-laraflex::shared.rating :util="$util" :item="$item" :font_family="$font_family" />
+
     @endif
     @endif
     @endif
@@ -225,55 +195,37 @@
     @endforeach
     </div>
     </div>
-    @if (!empty($groupCards->vueAction) && !empty($groupCards->vuejsComponents))
-    <div class="px-2 px-sm-3" style="height:14%;">
-    <a href="#" class="btn btn-sm btn-outline-dark mt-3 btn-block" v-on:click="{{$groupCards->button->vueAction}}('{{$item->id}}')" role="button"
-    style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.7em + 0.17vw);">
-    {{ $groupCards->button->caption }}</a>
-    </div>
 
-    @elseif (!empty($groupCards->button))
+    {{--ADD BUTTON COMPONENT GROUPCARDS ===========================================--}}
+    @if (!empty($button))
     @php
-    if (!empty($groupCards->button->btnColor)){
-    $btnOptions = ['primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Dark', 'link'];
-    $btnBorder = '';
-    if (!in_array($groupCards->button->btnColor, $btnOptions)){
-        $btnColor = 'light';
-        $btnBorder = 'btn-outline-secondary';
-    }else{
-        $btnColor = $groupCards->button->btnColor;
-        $btnBorder = '';
-    }
-    }else{
-        $btnColor = 'light';
-        $btnBorder = 'btn-outline-secondary';
-    }
+        if (!empty($item->id)){
+            $id = $item->id;
+        }else{
+            $id = NULL;
+        }
     @endphp
-    <div class="px-2 px-sm-3" style="height:14%;">
-    <a href="{{$util->toRoute($groupCards->button->route, $item->id)}}" class="btn btn-{{$btnColor}} {{$btnBorder}} btn-sm btn-block mt-3" role="button"
-    style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.7em + 0.17vw);">
-    {{$groupCards->button->caption}}</a>
-    </div>
-    @endif
+    {{--@props(['util','button','id'])--}}
+    <x-laraflex::groupcards.button :util="$util" :button="$button" :id="$id" />
 
+    @endif
     {{--End bloco interno----}}
     </div>
     </div>
     {{--Fim das colunas do componente--}}
     @endforeach
 </div>
+
 {{--Bloco de see more ---------------------------}}
 @if (!empty($groupCards->seeMore))
-<div class="pl-3 pl-lg-4 mt-3 d-block d-sm-none">
-    <a href="{{$util->toRoute($groupCards->seeMore)}}" class="btn btn-sm btn-dark m-0">
-    <span class="px-2">{{__('See more')}}</span>
-    </a>
-</div>
+{{--@props(['seeMore'])--}}
+<x-laraflex::shared.seemore :seeMore="$seeMore" />
+
 {{--pagination--------------------------------------}}
 @elseif (!empty($groupCards->paginate))
-<div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-{!!$groupCards->paginate->links('components.bootstrap')!!}
-</div>
+{{--@props(['paginates'])--}}
+<x-laraflex::shared.paginate :paginates="$paginates" />
+
 @endif
 {{--Fim de bloco seeMore--}}
 </div>
@@ -293,12 +245,9 @@
 @if (!empty($blogcards->nullable) && $blogcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>
 @else
-<div class="container-xl px-3 mt-4 pb-2" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+
+{{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
+
 @endif
 @endif

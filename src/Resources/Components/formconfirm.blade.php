@@ -8,21 +8,28 @@
     @endphp
 @endif
 
-@if (!empty($form) && $form->items)
+@if (!empty($form->items))
 <section id="form" class="pb-1 pt-3 pt-md-4">
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
 <div class=" mb-3x px-3 px-xl-4 pb-2 {{$border}}">
-    <div class="pt-2 pb-3 text-left">
-        @if (!empty($form->title))
-        <div class="form-title text-left pt-2 pb-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);">
-        {{$form->title}}</div>
-        @endif
-        @if (!empty($form->legend))
-        <div class="form-item-shared text-left" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);">
-        <span style="color:gray">{{$form->legend}}</span></div>
-        @endif
-        </div>
+@php
+    if (!empty($form->title)){
+        $title = $form->title;
+    }else{
+        $title = NULL;
+    }
+    if (!empty($form->legend)){
+        $legend = $form->legend;
+    }else{
+        $legend = NULL;
+    }
+@endphp
+
+    {{--Title component FormConfirm ====================================--}}
+    {{--@props(['title', 'legend'])--}}
+    @include('laraflex::ComponentParts.formconfirm.title')
+
 @php
     $enctype = '';
     //$route = url($form->action);
@@ -43,48 +50,19 @@
     'baseball-ball', 'cogs'];
 
     $buttonActive = '';
+    $id = $form->id;
+    $items = $form->items;
 @endphp
-{{--
-<form method="get" id="{{$id}}">
-@if (!empty($form->token) && $form->token === false)
 
-@else
-@csrf
-@endif
---}}
-@foreach ($form->items as $iconKey => $item)
-@if (!empty($item->type) && $item->type == 'button')
-    @php
-    if (!empty($nbtn == 0)){
-        $btnColor = 'dark';
-        $btnBorder = '';
-    }else{
-        $btnColor = '';
-        $btnBorder = 'btn-outline-dark';
-    }
-    if (!empty($item->action)){
-        $action = $util->toRoute($item->action . '/' . $form->id);
-    }
-    $nbtn ++;
-    @endphp
-    @if (!empty($action))
-    @php 
-        if (!empty($item->inactive) && $item->inactive == true){
-           $buttonActive = 'disabled';
-        }else{
-           $buttonActive = '';
-        }
-    @endphp
-    <a type="button" href="{{$action}}" class="btn btn-{{$btnColor}} {{$btnBorder}} pl-2 mb-2 {{$buttonActive}}">
-    <i class="fas fa-{{$arrayIcon[$iconKey + 5]}}"></i>
-    <span class="px-2">{{__($item->label)}}</span>
-    </a>
-    @endif
-@endif
-@endforeach
-<!--/form-->
+{{--Items buttons component FormConfirm ====================================--}}
+{{--@props(['items', 'nbtn', 'id', 'util', 'arrayIcon'])--}}
+<x-laraflex::formconfirm.items :items="$items" :nbtn="$nbtn" :id="$id" :util="$util" :arrayIcon="$arrayIcon" />
+
 </div>
 </div>
 </div>
 </section>
+@else
+ {{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
 @endif
