@@ -88,9 +88,6 @@
 <x-laraflex::panel.showitems :util="$util" :data="$data" :showItems="$showItems" :font_family="$font_family" />
 @endif
 
-
-
-
     @if (!empty($panel->form))
     {{--Formulário de componente ---------------------------------}}
     @php

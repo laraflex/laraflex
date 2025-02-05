@@ -155,7 +155,6 @@
             $icon = '';
             $smallIicon = '';
         }
-<<<<<<< HEAD
         //=======================================
         if(!empty($blogcards->seeMore)){
             $seeMore = $util->toRoute($blogcards->seeMore);
@@ -168,8 +167,6 @@
             $page = $paginate->currentPage();
         }
 
-=======
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
         //BUTTONS CONFIGURATION ============================
         if (!empty($blogcards->vueAction) && !empty($blogcards->vuejsComponents)){
             $vueAction = $blogcards->vueAction;
@@ -177,51 +174,34 @@
             $id = $item->id;
             $route = NULL;
         }elseif(!empty($blogcards->route)){
-<<<<<<< HEAD
             if (!empty($page) && $blogcards->page == true){
                 $route = $util->toRoute($blogcards->route, $item->id).'?page='.$page;
             }else{
                 $route = $util->toRoute($blogcards->route, $item->id);
             }
 
-=======
-            $route = $util->toRoute($blogcards->route, $item->id);
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
             $label = __('Read more');
             $vueAction = NULL;
             $vuejsComponents = NULL;
             if (!empty($blogcards->target) && $blogcards->target == 'blank'){
-<<<<<<< HEAD
                  $target = 'target="_blank';
-=======
-                 $target = 'target="_blank"';
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
             }else{
                 $target = '';
             }
         }else{
             $route = NULL;
         }
-<<<<<<< HEAD
         /*
         if(!empty($blogcards->seeMore)){
             $seeMore = $util->toRoute($blogcards->seeMore);
             $paginate = NULL;
             $page = NULL;
-=======
-        if(!empty($blogcards->seeMore)){
-            $seeMore = $util->toRoute($blogcards->seeMore);
-            $paginate = NULL;
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
         }elseif(!empty($blogcards->paginate)){
             $paginate = $blogcards->paginate;
             $paginates = $blogcards->paginate->links('components.bootstrap');
             $seeMore = NULL;
         }
-<<<<<<< HEAD
         */
-=======
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     @endphp
 
     {{--title component blogcards ====================================--}}
@@ -261,11 +241,7 @@
 
     @elseif (!empty($route))
      {{--@props(['route', 'target', 'label'])--}}
-<<<<<<< HEAD
      <x-laraflex::shared.button :route="$route" :target="$target" :label="$label" />
-=======
-     <x-laraflex::shered.button :route="$route" :target="$target" :label="$label" />
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
     @endif
 
     </header>
@@ -278,20 +254,12 @@
 {{--seeMore Component Shered ==================================--}}
 @if (!empty($seeMore))
 {{--@props(['seeMore'])--}}
-<<<<<<< HEAD
 <x-laraflex::shared.seemore :seeMore="$seeMore" />
-=======
-<x-laraflex::shered.seemore :seeMore="$seeMore" />
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 
 {{--paginate Component Shered =================================--}}
 @elseif (!empty($paginate))
 {{--@props(['paginates'])--}}
-<<<<<<< HEAD
 <x-laraflex::shared.paginate :paginates="$paginates" />
-=======
-<x-laraflex::shered.paginate :paginates="$paginates" />
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 @endif
 
 {{--End add components==========================================--}}
@@ -302,13 +270,8 @@
 @if (!empty($blogcards->nullable) && $blogcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>
 @else
-<<<<<<< HEAD
 {{--messageNull component Blogcardes ==========================================--}}
 <x-laraflex::shared.messagenull />
-=======
-{{--messageNull component ContentBox ==========================================--}}
-<x-laraflex::shered.messagenull />
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 
 @endif
 @endif

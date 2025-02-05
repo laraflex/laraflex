@@ -77,8 +77,6 @@
 <x-laraflex::panel.showitems :util="$util" :data="$data" :showItems="$showItems" :font_family="$font_family" />
 @endif
 
-
-
 {{-- FORM COMPONENTS PANEL ============================== --}}
 
 @if (!empty($panel->form))

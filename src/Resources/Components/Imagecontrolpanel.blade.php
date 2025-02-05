@@ -108,30 +108,8 @@ if (!empty($blogcards->fontFamily->shared)){
     // ---------------------------------------------------------------------------
     @endphp
 
-<<<<<<< HEAD
     {{--@props(['image', 'route','label','icon', 'collumnConfig', 'border']) --}}
     @include('laraflex::ComponentParts.imagecontrolpanel.imagecontrolitem')
-=======
-    <div class="{{$collumnConfig}} p-0 m-0">
-    <div class="m-2 m-md-1">
-    <div class="card bg-dark {{$border}}" style="background-image: url({{$image}});background-repeat:round; min-height:8em">
-            @if (!empty($item->route))
-            <a href="{{$util->toRoute($item->route)}}">
-            @else
-            <a href="#" >
-            @endif
-            {{--<img src="{{$image}}" class="card-img img-fluid" alt="...">--}}
-            <div id="item-card" class="card-img-overlay text-center">
-                <i class="fas {{$icon}} mt-2 mb-1" style="font-size: 150%"></i>
-                @if ($item->label)
-                <div class="card-title mt-1" style="font-size:calc(13px + 0.10vw); line-height: 1.2"><b>{{$item->label}}</b></div>
-                @endif
-            </div>
-            </a>
-        </div>
-    </div>
-    </div>
->>>>>>> eb967ff9c00abb42b201820d97becc2f5e6ae0da
 
     @endforeach
 </div>
