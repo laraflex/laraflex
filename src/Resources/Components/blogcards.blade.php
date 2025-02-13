@@ -81,9 +81,9 @@
     break;
     }
     @endphp
-    <div class="{{$column}} p-0 pb-2 pb-lg-3 {{$visibility[$key]}}">
+    <div class="{{$column}} p-0 pb-2 pb-lg-2 {{$visibility[$key]}}">
     @else
-    <div class="{{$column}} p-0 pb-2 pb-lg-3">
+    <div class="{{$column}} p-0 pb-2 pb-lg-2">
     @endif
     <article class= "mx-sm-1 mx-lg-2 h-100 {{$border}}">
     <header class="p-3 p-sm-3 p-md-3">
@@ -97,11 +97,8 @@
             $alt = "";
         }
         // DATE CONFIGURATION ===================
-        if (!empty($item->date)){
-            $date = $item->date;
-        }else{
-            $date = NULL;
-        }
+        $date = !empty($item->date)?$item->date:$date = NULL;
+
         // IMAGE CONFIGURATION ===================
         if (!empty($item->imageStorage)){
             $image = $item->imageStorage;
@@ -113,33 +110,28 @@
             $image = $util->toImage($item->image);
         }else{
             $fhoto = array('foto01.jpg','foto02.jpg','foto03.jpg','foto04.jpg','foto05.jpg', 'foto06.jpg', 'foto07.jpg', 'foto08.jpg', 'foto09.jpg', 'foto10.jpg');
-            $int = rand(1, 10);
-            $image = $util->toImage('local/images/posts/'.$fhoto[$int]);
+            $index = $key;
+            if ($index > 9){
+                $index = rand(0, 9);
+            }
+            //$image = $util->toImage('local/images/posts/'.$fhoto[$int]);
+            $image = $util->toImage('local/images/posts/'.$fhoto[$index]);
+
         }
         // ABSTRACT CONFIGURATION ===================
-        if (in_array('title', $blogcards->showItems) && !empty($item->title)){
-            $numCharTitle = strlen($item->title);
+        if (in_array('title', $blogcards->showItems) && !empty($title)){
+            $numCharTitle = strlen($title);
         }else{
             $numCharTitle = 30;
         }
-        if (!empty($blogcards->expanded) && $blogcards->expanded === true){
-            if ($numCharTitle <= 32){
-                $numChar = 252;
-            }elseif($numCharTitle > 31 && $numCharTitle < 64){
-                $numChar = 220;
-            }else{
-                $numChar = 160;
-            }
+        if ($numCharTitle <= 28){
+            $numChar = 150;
+        }elseif($numCharTitle > 28 && $numCharTitle <= 52){
+            $numChar = 135;
         }else{
-            if ($numCharTitle <= 28){
-                $numChar = 150;
-            }elseif($numCharTitle > 26 && $numCharTitle <= 52){
-                $numChar = 135;
-            }else{
-                $numChar = 100;
-            }
+            $numChar = 100;
         }
-        $abstract = substr("$item->abstract", 0, $numChar);
+        $abstract = !empty($item->abstract)?substr("$item->abstract", 0, $numChar):$abstract = NULL;
 
         // RATING CONFIGURATION ======================
         if (!empty($item->rating)){
@@ -159,13 +151,14 @@
         if(!empty($blogcards->seeMore)){
             $seeMore = $util->toRoute($blogcards->seeMore);
             $paginate = NULL;
-            $page = NULL;
+            $numPage = NULL;
         }elseif(!empty($blogcards->paginate)){
             $paginate = $blogcards->paginate;
             $paginates = $blogcards->paginate->links('components.bootstrap');
             $seeMore = NULL;
-            $page = $paginate->currentPage();
+            $numPage = $paginate->currentPage();
         }
+        $page = !empty($blogcards->page)?$blogcards->page:$page = NULL;
 
         //BUTTONS CONFIGURATION ============================
         if (!empty($blogcards->vueAction) && !empty($blogcards->vuejsComponents)){
@@ -175,7 +168,7 @@
             $route = NULL;
         }elseif(!empty($blogcards->route)){
             if (!empty($page) && $blogcards->page == true){
-                $route = $util->toRoute($blogcards->route, $item->id).'?page='.$page;
+                $route = $util->toRoute($blogcards->route, $item->id).'?page='.$numPage;
             }else{
                 $route = $util->toRoute($blogcards->route, $item->id);
             }
@@ -251,6 +244,13 @@
     </div>
     {{--END OF INCLUSION OF CARDS--}}
 
+
+@if (!empty($blogcards->onePage) && $blogcards->onePage === true)
+{{--ONEPAGE COMPONENT SHARED ============================================--}}
+@include('laraflex::ComponentParts.shared.onepage')
+@endif
+
+
 {{--seeMore Component Shered ==================================--}}
 @if (!empty($seeMore))
 {{--@props(['seeMore'])--}}
@@ -258,9 +258,11 @@
 
 {{--paginate Component Shered =================================--}}
 @elseif (!empty($paginate))
+
 {{--@props(['paginates'])--}}
 <x-laraflex::shared.paginate :paginates="$paginates" />
 @endif
+
 
 {{--End add components==========================================--}}
 </div>

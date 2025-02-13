@@ -22,8 +22,6 @@
         }
         // HEADERS COMPONENTS ============================================
 
-
-
         if (!empty($bloglist->seeMore)){
             $seeMore = $bloglist->seeMore;
             $route = $util->toRoute($seeMore);
@@ -42,10 +40,6 @@
             $seeMore = NULL;
             $page = $paginate->currentPage();
         }
-
-
-
-
         if (!empty($bloglist->title)){
             $title = $bloglist->title;
         }else{
@@ -94,9 +88,6 @@
     }else{
         $route = NULL;
     }
-@endphp
-
-    $pageConfig = $bloglist->page;
 
     if (!empty($bloglist->route)){
         $route = $bloglist->route;
@@ -106,13 +97,17 @@
     if (!empty($bloglist->paginate)){
         $paginate = $bloglist->paginate;
         $page = $paginate->currentPage();
+    }else{
+        $page = NULL;
     }
+    $pageConfig = !empty($bloglist->page)?$bloglist->page:$pageConfig = NULL;
+    /*
     if (!empty($bloglist->page)){
         $pageConfig = $bloglist->page;
     }else{
         $pageConfig = NULL;
     }
-
+    */
 
 @endphp
 

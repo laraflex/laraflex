@@ -1,8 +1,8 @@
-@if (!empty($objectHeader))
+@if (!empty($objectHeader) && !empty($objectHeader->items))
     @php
         $navBar = $objectHeader;
     @endphp
-{{--<div id="Navbar">--}}
+
 @php
     if (!empty($navBar->bgColor)){
         $bgColor = strtolower($navBar->bgColor); // Controle sobre valor de propriedade de cor de componente
@@ -168,18 +168,16 @@ elseif (!empty($navBar->logoPath)){
 }
 elseif(!empty($navBar->logo)){
     $logo = $util->toImage($navBar->logo);
+}else{
+    $logo = $util->toImage('local/images/app/logo-option4.png');
 }
 @endphp
 
 @if (!empty($logo))
 
-@if(!empty($navBar->route))
-<a class="navbar-brand " href="{{$util->toRoute($navBar->route)}}">
-<img src="{{$logo}}" width="170" height="42">
-</a>
-@else
-<img src="{{$logo}}" width="170" height="42">
-@endif
+{{--LOGO COMPONENT NAVBAR ============================================--}}
+@include('laraflex::ComponentParts.navbar.logo')
+
 @elseif(!empty($navBar->label))
 <a class="navbar-brand" href="#">{{$navBar->label}}</a>
 @endif
@@ -196,133 +194,29 @@ elseif(!empty($navBar->logo)){
 $menuArray = $navBar->items;
 // ===================================================================================================================
 @endphp
-    @foreach ($menuArray as $key => $itemMenu)
-    <li class="nav-item active">
-        @if (property_exists($itemMenu, "subItems"))
-        <li class="nav-item dropdown active">
-        <a id ="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-toggle px-2 {{$navbar_item}}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{ __($itemMenu->label) }}
-        </a>
-        <div class="dropdown-menu pb-3 shadow-lg px-2 py-3" aria-labelledby="navbarDropdownMenuLink" style="min-width:350px;">
-            @php
-            // ==========================================================================================================
-            $submenu = $itemMenu->subItems;
-            // =========================================================================================================
-            @endphp
-            @foreach ( $submenu as $k => $item )
-            @php
-            $numItems = count($submenu);
-            $border_item = 'border-top: 1px dotted #D8D8D8;';
-            if ($k == $numItems - 1){
-                $border_item = 'border-top: 1px dotted #D8D8D8; border-bottom: 1px dotted #D8D8D8;';
-            }
-            @endphp
-            <a class="dropdown-item pl-3 py-2"  href="{{$util->toRoute($itemMenu->route,$item->route)}}" style="{{$border_item}}">
-            {{ __($item->label) }}
-            </a>
-            @endforeach
-        </div>
-        </li>
-        @else
-        <a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link {{$navbar_item}}" href="{{$util->toRoute($itemMenu->route)}}">
-        {{ __($itemMenu->label) }}
-        </a>
-        @endif
-    </li>
-    @php
-        if ($key == 7){
-            break;
-        }
-    @endphp
-    @endforeach
+@foreach ($menuArray as $key => $itemMenu)
+
+{{--ITEMS COMPONENT NAVBAR ============================================--}}
+@include('laraflex::ComponentParts.navbar.menuitems')
+
+@php
+if ($key == 7){
+    break;
+}
+@endphp
+@endforeach
 @else
 <li class="nav-item">
 <a class="nav-link" href="#">Home</a>
 </li>
 @endif
 </ul>
+
 @if(!empty($navBar->showLogin) && $navBar->showLogin === true)
-{{--*******************************************************--}}
-<ul class="pr-3x navbar-nav p-0 float-right">
-<!-- Authentication Links -->
-@guest
-<li class="nav-item dropdown active" >
-<a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-togglex px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-{{__('Login')}}<span class="caret"></span>
-</a>
-<div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
-<a id="{{--$item_navbar_id--}}" class="nav-linkx dropdown-item px-3 {{$navbar_item}}" href="{{ route('login') }}">{{ __('Login') }}</a>
-@if(!empty($navBar->showRegister) && $navBar->showRegister === true)
-<a id="{{--$item_navbar_id--}}" class="nav-linkx dropdown-item px-3 {{$navbar_item}}" href="{{ route('register') }}">{{ __('Register') }}</a>
-</div>
-</li>
-@endif
-{{--Fim de controle de register--}}
-@else
-@php
-        if (!empty($navBar->perfil->photoStorage)){
-            $photo = $navBar->perfil->photoStorage;
-        }
-        elseif (!empty($navBar->perfil->photoPath)){
-            $photo = $util->toImage($navBar->perfil->photoPath);
-        }
-        elseif(!empty($navBar->perfil->photo)){
-            $photo = $util->toImage($navBar->perfil->photo);
-        }else{
-            $photo = $util->toImage('local/images/users/perfil1.png');
-        }
-@endphp
 
-<li class="nav-item dropdown active" >
-<a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-togglex px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-<img class="mx-auto d-block borderx roundedx rounded-circle" src="{{$photo}}" alt="" style="width:32px; padding:0px;">
+{{--ACCESSCONTROL COMPONENT NAVBAR ============================================--}}
+@include('laraflex::ComponentParts.navbar.accesscontrol')
 
-</a>
-<div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
-{{--Início de perfil----}}
-<div class="navbar-header dropdown-item bg-white" style="min-width:300px;">
-    <div class="user-pic pt-3">
-        @if (!empty($photo))
-        <img class="mx-auto d-block rounded" src="{{$photo}}" alt="User" style="width:60px;">
-        @else
-        <img class="mx-auto d-block rounded" src="{{$util->toImage('local/images/users/perfil1.png')}}" alt="User" style="width:60px;">
-        @endif
-    </div>
-    <div class="user-info text-center">
-        @if (!empty($navBar->perfil->name))
-        @php
-            $arrayName = explode(" ", $navBar->perfil->name);
-            $num_names = count($arrayName);
-        @endphp
-
-        @if ($num_names > 1)
-        <div class="user-name center-center mt-2">{{reset($arrayName)}}
-        <strong>{{end($arrayName)}}</strong>
-        </div>
-        @else
-        <div class="user-name text-center mt-2">
-        <strong>{{ trim(reset($arrayName) )}}</strong>
-        </div>
-        @endif
-
-        @endif
-        <div class="user-role px-0 mx-0 text-center"><small>{{ trim(date("d/m/Y")) }}</small></div>
-    </div>
-    </div>
-{{--Fim de perfil-------}}
-<a class="dropdown-item text-center mt-2" href="{{ route('logout') }}"
-onclick="event.preventDefault();
-document.getElementById('logout-form').submit();">
-{{ __('Logout') }}
-</a>
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-@csrf
-</form>
-</div>
-</li>
-@endguest
-</ul>
-{{--*******************************************************--}}
 @endif
 <!-- Fim de itens de menu ------------------>
 </div>
@@ -346,8 +240,15 @@ document.getElementById('logout-form').submit();">
     @endif
 @endif
 </div>
+@else
+@if (!empty($blogcards->nullable) && $blogcards->nullable === true)
+    <div class="text-center mt-2 mb-2"></div>
+@else
+{{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
 @endif
 
-{{--
 
-    --}}
+@endif
+
+

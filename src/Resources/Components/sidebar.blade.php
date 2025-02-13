@@ -77,295 +77,43 @@
 
 @if (!empty($sidebar->showSidebar) && $sidebar->showSidebar === true)
 <div class="page-wrapper chiller-theme toggledx">
-    <a id="show-sidebar" class="{{$show_style}} btn btn-md px-xl-3 {{$btnStyle}}" href="#" aria-pressed="true">
-        <div class="d-none d-lg-block" translate="no">
-        <span class="ml-2 mr-2" translate="no">Main Menu</span>
-        <i class="fas fa-bars"></i>
-        </div>
-        <div class="d-block d-lg-none px-2">
-        <i class="fas fa-bars" ></i>
-        </div>
-    </a>
+    {{--BUTTON COMPONENT SIDEBAR ===================================--}}
+    @include('laraflex::ComponentParts.sidebar.button')
+
 <nav id="sidebar" class="sidebar-wrapper border-right">
     <div class="sidebar-content" >
-        <div class="sidebar-brand" translate="no">
-           <a href="#">Main Menu</a>
-           <div id="close-sidebar">
-           <i class="fas fa-times"></i>
-           </div>
-        </div>
-        {{--Bloco de identificação de usuário --}}
-        @if (!empty($sidebar->perfil))
-        @guest
+    {{--HEADE COMPONENT SIDEBAR ===================================--}}
+    @include('laraflex::ComponentParts.sidebar.heade')
 
-        @else
+    {{--PERFIL COMPONENT SIDEBAR ===================================--}}
+    @include('laraflex::ComponentParts.sidebar.perfil')
 
-        <div class="sidebar-header">
-        <div class="user-pic">
-            @php
-            if (!empty($sidebar->perfil->photoStorage)){
-                $photo = $sidebar->perfil->photoStorage;
-            }
-            elseif (!empty($sidebar->perfil->photoPath)){
-                $photo = $util->toImage($sidebar->perfil->photoPath);
-            }
-            elseif(!empty($sidebar->perfil->photo)){
-                $photo = $util->toImage($sidebar->perfil->photo);
-            }else{
-                $photo = $util->toImage('local/images/users/perfil1.png');
-            }
-            @endphp
-            @if (!empty($photo))
-            <img class="img-fluid" src="{{$photo}}" alt="User picture">
-            @else
-            <img class="img-fluid" src="{{$util->toImage('local/images/users/perfil1.png')}}" alt="User picture">
-            @endif
-        </div>
-        <div class="user-info text-center">
-            @if (!empty($sidebar->perfil->name))
-            @php
-                $arrayName = explode(" ", $sidebar->perfil->name);
-                $num_names = count($arrayName);
-            @endphp
+    @if (!empty($sidebar->search) && $sidebar->search === true)
+    @php
+        if (!empty($sidebar->action)){
+            $action = $sidebar->action;
+        }else{
+            $action = 'search';
+        }
+    @endphp
+    {{--SEARCH COMPONENT SIDEBAR ===================================--}}
+    @include('laraflex::ComponentParts.sidebar.search')
+    @endif
 
-            @if ($num_names > 1)
-            <span class="user-name text-center">{{reset($arrayName)}}
-            <strong>{{end($arrayName)}}</strong>
-            </span>
-            @else
-            <span class="user-name text-center">
-            <strong>{{ trim(reset($arrayName) )}}</strong>
-            </span>
-            @endif
-            @endif
-            <!--span class="user-role px-0 mx-0 text-center">{{-- trim(date("d/m/Y")) --}}</span-->
-            <div>
-            <a class="tooltip-dx btn" data-tooltip="Desconectar" href="{{ route('logout') }}"
-            onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">
-            <span class="user-status text-center">
-            <i class="fas fa-circle"></i>
-            <span>{{__('Connected')}}</span>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-            </form>
-            </div>
-        </div>
-        </div>
-        @endguest
-        @endif
-        {{--Bloco de a´rea de busca --}}
-        @if (!empty($sidebar->search) && $sidebar->search === true)
-        @php
-            if (!empty($sidebar->action)){
-                $action = $sidebar->action;
-            }else{
-                $action = 'search';
-            }
-        @endphp
-        <div class="sidebar-search">
-            <div>
-            <form class="form-inline" method="post" action="{{$util->toRoute($action)}}" id="search-form">
-            <div class="input-group " style="width:100%">
-            <input type="text" class="form-control search-menux mx-0 mr-1 rounded" id="search" name="search" placeholder="Search..." style="width:80%;">
-            @csrf
-            <div class="input-group-append mr-1">
-            <button type="submit" class="btn m-0 p-0 mr-1" role="button">
-            <span class="input-group-text py-2">
-            <i class="fas fa-search" aria-hidden="true"></i>
-            </span>
-            </button>
-            </div>
 
-            </div>
-            </form>
-            </div>
-        </div>
-        @endif
         {{--Bloco de Menu --}}
     <div class="sidebar-menu" >
     {{--Bloco de seção de menu --------------------------------------------------------------}}
     @if (!empty($sidebar->sections))
-        @php
-        $iconKey = 0;
-        @endphp
-        @foreach ($sidebar->sections as $i => $section)
-        @if (!property_exists($section, "permission") OR $section->permission === true)
-        <ul>
-        {{--Bloco de items de seção de menu--}}
-        @if (!empty($section->items))
-            @if (!empty($section->label))
-            <!--Cabeçalho de itens de menu -->
-            <li class="header-menu pb-2">
-            <span>{{$section->label}}</span>
-            </li>
-            <!--Fim de cabeçalho -->
-            @elseif($i == 0)
-            <li class="header-menu py-1">
-            </li>
-            @else
-            <li class="header-menu">
-            <span>{{ __('Section') }} {{$i}}</span>
-            </li>
-            @endif
-            @foreach ($section->items as $key => $itemSection)
-            @if (!property_exists($itemSection, "permission") OR $itemSection->permission === true)
 
-            @if (property_exists($itemSection, "subItems"))
-            @if ($key == 0)
-            <li class="sidebar-dropdown border-top border-bottom">
-            @else
-            <li class="sidebar-dropdown border-bottom">
-            @endif
-                <a href="#">
-                    @if (!empty($itemSection->icon))
-                    <i class="fas fa-{{$itemSection->icon}}"></i>
-                    @else
-                        <i class="fas fa-{{$arrayIcon[$iconKey]}}"></i>
-                    @endif
-                <span>{{$itemSection->label}}</span>
-                </a>
-                <!-- Submenu -->
-                <div class="sidebar-submenu">
-                <ul>
-                @foreach ($itemSection->subItems as $subItem)
-                @if (!property_exists($subItem, "permission") OR $subItem->permission === true)
-                <li>
-                @if (!empty($subItem->vueAction))
-                <a href="#" v-on:click="{{$subItem->vueAction}}">{{$subItem->label}}</a>
-                @elseif(!empty($itemSection->route) && !empty($subItem->route))
-                <a href="{{$util->toRoute($itemSection->route, $subItem->route)}}">{{$subItem->label}}</a>
-                @endif
-                </li>
-                @endif
-                @endforeach
-                </ul>
-                </div>
-            </li>
-            @else
-            @if ($key == 0)
-            <li class="border-top border-bottom">
-            @else
-            <li class="border-bottom">
-            @endif
-
-                @if (!empty($itemSection->vueAction))
-                <a href="#" v-on:click="{{$itemSection->vueAction}}">
-
-                @elseif(!empty($itemSection->route))
-                <a href="{{$util->toRoute($itemSection->route)}}">
-                @else
-                <a href="#">
-                @endif
-                @if (!empty($itemSection->icon))
-                <i class="fas fa-{{$itemSection->icon}}"></i>
-                @else
-                    <i class="fas fa-{{$arrayIcon[$iconKey]}}"></i>
-                @endif
-                <span>{{$itemSection->label}}</span>
-                </a>
-            </li>
-            @endif
-            @endif
-            @php
-            if ($iconKey < 20){
-                $iconKey ++;
-            }else{
-                $iconKey = 0;
-                //$iconKey = mt_rand(0,37);
-            }
-            @endphp
-        @endforeach
-        {{--Fim de bloco de items de seção de menu--}}
-        @endif
-        </ul>
-        @endif
-        @endforeach
-    {{--Fim de bloco de seção de menu -----------------------------------------------------------------}}
-    {{--Bloco de Itens de menu ------------------------------------------------------------------------}}
-
-
+    {{--SECTIONS COMPONENT SIDEBAR ===================================--}}
+    @include('laraflex::ComponentParts.sidebar.sections')
 
     @elseif (!empty($sidebar->items))
-        @php
-            $iconKey = 0;
-        @endphp
-        <ul class="mt-2">
-            @foreach ($sidebar->items as $key => $item)
-            @if (!property_exists($item, "permission") OR $item->permission === true)
 
+    {{--ITEMS COMPONENT SIDEBAR ===================================--}}
+    @include('laraflex::ComponentParts.sidebar.items')
 
-                @if (property_exists($item, "subItems"))
-                @if ($key == 0)
-                <li class="sidebar-dropdown border-top border-bottom">
-                @else
-                <li class="sidebar-dropdown border-bottom">
-                @endif
-                {{--<li class="sidebar-dropdown">--}}
-                    <a href="#" >
-                        @if (!empty($item->icon))
-                        <i class="fas fa-{{$item->icon}}"></i>
-                        @else
-                            <i class="fas fa-{{$arrayIcon[$iconKey]}}"></i>
-                        @endif
-                    <span>{{$item->label}}</span>
-                    </a>
-
-
-                    <!-- Submenu -->
-                    <div class="sidebar-submenu">
-                    <ul>
-                    @foreach ($item->subItems as $subItem)
-                    @if (!property_exists($subItem, "permission") OR $subItem->permission == true)
-                    <li>
-
-                    @if(!empty($item->route) && !empty($subItem->route))
-                    <a href="{{$util->toRoute($item->route, $subItem->route)}}">{{$subItem->label}}</a>
-                    @endif
-                    </li>
-                    @endif
-                    @endforeach
-                    </ul>
-                    </div>
-                </li>
-
-
-                @else
-                @if ($key == 0)
-                <li class="border-top border-bottom">
-                @else
-                <li class="border-bottom">
-                @endif
-                {{--<li >--}}
-                    @if (!empty($item->vueAction))
-                    <a href="#" v-on:click="{{$item->vueAction}}">
-                    @elseif(!empty($item->route))
-                    <a href="{{$util->toRoute($item->route)}}">
-                    @else
-                    <a href="#">
-                    @endif
-                    @if (!empty($item->icon))
-                    <i class="fas fa-{{$item->icon}}"></i>
-                    @else
-                        <i class="fas fa-{{$arrayIcon[$iconKey]}}"></i>
-                    @endif
-                    <span>{{$item->label}}</span>
-                    </a>
-                </li>
-                @endif
-                @php
-                if ($key < 20){
-                    $iconKey ++;
-                }else{
-                    $iconKey = 0;
-
-                }
-                @endphp
-            @endif
-            @endforeach
-
-        </ul>
     @endif
     {{--Fim do bloco de Itens de menu ----------------------------------------------------------------------}}
     </div>
@@ -374,7 +122,6 @@
 @else
     @guest
     @if (!empty($sidebar->hiddenConect) && $sidebar->hiddenConect === true)
-
     <a id="show-sidebar" class="dropdown btn {{$show_style}} {{$btnStyle}}" id="dropdownLogin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-pressed="true">
         <div class="d-none d-md-block ml-2 mr-2">
         <span class="mr-2" translate="no">{{ __('connect') }}</span>
@@ -404,13 +151,9 @@
     @if (!empty($sidebar->nullable) && $sidebar->nullable === true)
         <div class="text-center mt-2 mb-2"></div>
     @else
-    <div class="container-xl px-3 mt-4 pb-2" translation="no">
-        <div class="alert alert-primary {{$border}}" role="alert">
-        <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-        <hr class="d-none d-sm-block">
-        <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-        </div>
-    </div>
+    {{--messageNull component Blogcardes ==========================================--}}
+    <x-laraflex::shared.messagenull />
+
     @endif
 @endif
 

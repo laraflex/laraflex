@@ -38,8 +38,6 @@ if (!empty($controlpanel->fontFamily->shared)){
 }else{
     $font_family = '';
 }
-
-
 @endphp
 
 <section id="card-control-panel" class="pb-1 pt-2 pt-md-3">
@@ -162,11 +160,7 @@ if (!empty($controlpanel->fontFamily->shared)){
 </div>
 </section>
 @else
-<div class="container-xl mt-4 pb-2 px-2 px-md-3 px-xl-0"" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+{{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
+
 @endif

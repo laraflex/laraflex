@@ -45,7 +45,7 @@
         if (!empty($table->styleTable)){
             $table->styleTable = strtolower($table->styleTable);
             if ($table->styleTable == 'light'){
-                $styleTable = ['head' => '#F2F2F2', 'line' => '#FFFFFF', 'hColor' => '#2E2E2E', 'lineColor' => '#1C1C1C', 'legend' => '#F2F2F2', 'badge' => '#F2F2F2'];
+                $styleTable = ['head' => '#D8D8D8', 'line' => '#D8D8D8', 'hColor' => '#000', 'lineColor' => '#1C1C1C', 'legend' => '#F2F2F2', 'badge' => '#F2F2F2'];
             }elseif($table->styleTable == 'navyblue'){
                 $borderMobilie = false;
                 $styleTable = ['head' => '#336699', 'line' => '#CCE5FF', 'hColor' => '#FAFAFA', 'lineColor' => '#336699', 'legend' => '#1C2A51', 'badge' => '#F2F2F2'];
@@ -63,24 +63,25 @@
                 $styleTable = ['head' => '#6E6E6E', 'line' => '#F2F2F2', 'hColor' => '#FFFFFF', 'lineColor' => '#7B0B00', 'legend' => '#800001', 'badge' => '#F2F2F2'];
             }elseif($table->styleTable == 'dark' OR $table->styleTable == 'black'){
                 $styleTable = ['head' => '#585858', 'line' => '#F2F2F2', 'hColor' => '#FFFFFF', 'lineColor' => '#000000', 'legend' => '#424242', 'badge' => '#F2F2F2'];
-            }else{
-                $table->styleTable = 'light';
-                $styleTable = ['head' => '#F2F2F2', 'line' => '#FFFFFF', 'hColor' => '#2E2E2E', 'lineColor' => '#1C1C1C', 'legend' => '#F2F2F2', 'badge' => '#F2F2F2'];
             }
         }else{
-            $styleTable = ['head' => '#F2F2F2', 'line' => '#FFFFFF', 'hColor' => '#2E2E2E', 'lineColor' => '#1C1C1C', 'legend' => '#F2F2F2', 'badge' => '#F2F2F2'];
+            $styleTable = ['head' => '#D8D8D8', 'line' => '#F2F2F2', 'hColor' => '#2E2E2E', 'lineColor' => '#1C1C1C', 'legend' => '#F2F2F2', 'badge' => '#D8D8D8'];
         }
     @endphp
 
-    @if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
-        <section id="table" class="m-0 p-0 mx-0 pb-2 pb-sm-3 pt-1 pt-sm-2">
-    @else
-        <section id="table" class="m-0 p-0 mx-0 pb-2 pb-sm-2 pt-1 pt-sm-3">
-    @endif
+@if (!empty($objectConfig->onePage) && $objectConfig->onePage === true)
+    <section id="table" class="m-0 p-0 mx-0 pb-2 pb-sm-3 pt-1 pt-sm-2">
+@else
+    <section id="table" class="m-0 p-0 mx-0 pb-2 pb-sm-2 pt-1 pt-sm-3">
+@endif
 
     <div class="container-xl px-0">
     <div class="mx-0 pb-0 px-2 px-lg-3 px-xl-0">
+
+
     @if (!empty($table->title))
+
+
     <div class="pb-3 pt-0 text-center d-none d-sm-block" style="font-size:calc(0.89em + 0.7vw);{{$font_family_title}}">
     {{$table->title}}
     </div>
@@ -88,10 +89,15 @@
     @else
     <div class="d-none d-sm-block px-2 px-lg-3 pt-3 mb-3 mt-5 mt-lg-5 pb-1 {{$border}}">
     @endif
+
     @if (!empty($table->legend))
-    <div class="py-3 py-lg-3 mt-1 px-3" style="background-color: {!!$styleTable['legend']!!}; font-size:calc(0.85em + 0.20vw); color:{!!$styleTable['hColor']!!};{{$font_family}}; border-left: 1px solid #E6E6E6; border-top: 1px solid #E6E6E6; ">
-    <strong>{{$table->legend}}</strong></div>
+    <div class="py-3 py-lg-3 mt-1 px-3" style="background-color: {!!$styleTable['legend']!!}; font-size:calc(1.0em + 0.20vw); color:{!!$styleTable['hColor']!!};{{$font_family}}; border-left: 1px solid #E6E6E6; border-top: 1px solid #E6E6E6; ">
+    {{$table->legend}}</div>
     @endif
+
+
+
+
     <table class="table table-sm table-bordered table-responsive-sm mt-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.17vw);">
     @if (!empty($paginate))
     @if ($paginate->lastPage() > 1)
@@ -103,6 +109,8 @@
     <thead>
     <tr class="" style="background-color: {!!$styleTable['head']!!};">
     @foreach ($table->showItems as $key => $item)
+
+
     @php
     if ($key == 0){
         $px = 'px-3';
@@ -112,6 +120,8 @@
     @endphp
     <th class="py-2 {{$px}}" scope="col" style="font-size:calc(0.75em + 0.23vw); color:{!!$styleTable['hColor']!!};">{{$caption[$key]}}</th>
     @endforeach
+
+
 
     {{--Adição de coluna na tabela para ações do tipo [editar, deletar]--}}
     @if (!empty($table->action))

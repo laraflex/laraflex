@@ -27,7 +27,6 @@ if (!empty($footer->bgColor)){
     }elseif($footerColor == 'bordeaux'){
         $bgColor = 'background-color:#8A0808;';
         $fontColor = 'color:#FAFAFA;';
-
     }elseif($footerColor == 'marine'){
         $bgColor = 'background-color:#3A727E;';
         $fontColor = 'color:#F2F2F2;';

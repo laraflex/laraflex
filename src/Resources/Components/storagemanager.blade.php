@@ -27,14 +27,17 @@
         if (!empty($storageManager->iconSize) && $storageManager->iconSize == 'small'){
             $column = 'col-4 col-sm-2 col-lg-1 p-0 m-0';
             $font = 'font-size:calc(12px + 0.05vw);line-height:calc(14px + 0.3vw);overflow-wrap: anywhere;';
+            $iconsPadding = '';
         }else{
             $column = 'col-4 col-sm-2 p-0 m-0';
+            $iconsPadding = "px-md-3 py-md-3";
         }
         if (!empty($storageManager->route)){
             $routeApp = $storageManager->route;
         }else{
             $routeApp = 'liststorage';
         }
+
         if (!empty($storageManager->routeImage)){
             $routeImage = $storageManager->routeImage;
         }else{
@@ -68,6 +71,7 @@
     @php
         $imageNav = url('local/images/icons/backp.png');
         $arrayPath = explode('/', $storageManager->filesystem->path);
+
         if (count($arrayPath) == 0){
             $pathTmp = $storageManager->filesystem->path;
         }else{
@@ -75,8 +79,8 @@
             $pathTmp = implode('/', $arrayPath);
         }
         $route = route($routeApp, ['path' => $pathTmp]);
-
     @endphp
+
     <a href="{{$route}}">
     <img src="{{$imageNav}}" class="card-img mx-auto d-block" style="heightx:80%;">
     </a>
@@ -90,6 +94,7 @@
         $countDir = 0;
     @endphp
 @if (!empty($storageManager->items))
+
     {{------------------------------------------------------------------------}}
 @foreach ($storageManager->items as $item)
 
@@ -101,11 +106,15 @@
                 $openDir = true;
                 $countDir ++;
             }
-        }elseif(!empty($storageManager->hiddenFolder)){
-            if (!empty($item) && !in_array($item->fileName, $storageManager->hiddenFolder) && $item->type == 'dir'){
+        }elseif(!empty($storageManager->hiddenFolders)){
+            if (!empty($item) && !in_array($item->fileName, $storageManager->hiddenFolders) && $item->type == 'dir'){
                 $openDir = true;
                 $countDir ++;
             }
+        }
+        elseif(empty($storageManager->visibleFolders) && empty($storageManager->hiddenFolders)){
+            $openDir = true; // testar impacto
+            $countDir ++;
         }
         if($item->type == 'file'){
             $openDir = true;
@@ -116,6 +125,7 @@
     {{--Fim do bloco de controle---------------------------------------------}}
     <div class="{{$column}}" >
     <div class="m-1 p-1">
+
     @if ($item->type == 'dir')
         @php
         $arrayIcons = array('images', 'projects', 'users', 'perfil', 'products', 'app');
@@ -125,25 +135,22 @@
                 $imageDir = url('local/images/icons/folder.png');
             }
             $pathTmp = $storageManager->filesystem->path;
-
             if ($pathTmp == ''){
                 $pathDir = $item->fileName;
             }else{
                 $pathDir = $pathTmp .'/'. $item->fileName;
             }
             $route = route($routeApp, ['path' => $pathDir]);
-
         @endphp
-
+        <div class="{!!$iconsPadding!!}">
         <a href="{{$route}}">
         <img src="{{$imageDir}}" class="card-img mx-auto d-block" style="width:80%;">
         </a>
-
+        </div>
         <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @elseif($item->type == 'file' && !empty($item->extension))
 
     @if(in_array(strtolower($item->extension), $imageArray))
-
         @php
         if ($item->dirName == ""){
             $pathFile = $storageManager->filesystem->storagePathDisk . $item->fileName;
@@ -194,6 +201,7 @@
     </form>
     {{--Fim de formulário de solicitação de imagem ------------------------------}}
     <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
+
     @else
         @php
             $pathTmp = $item->dirName . '/'. $item->fileName;
@@ -202,10 +210,17 @@
         @endphp
     {{--Formulário de solicitação de arquivo ------------------------------}}
     @if (!empty($storageManager->openFileNewTarget) && $storageManager->openFileNewTarget === true)
-    <form method="post" id="storage-file" target="_blank" rel="noopener noreferrer">
+    @php
+        $openFile = $util->toRoute('/local', $item->path);
+    @endphp
+    <div class="{!!$iconsPadding!!}">
+    <a href="{{$openFile}}" target="_blank" rel="noopener noreferrer">
+    <img class="card-img mx-auto d-block" src="{{$imagePath}}" style="width:85%;">
+    </a>
+    </div>
     @else
     <form method="post" id="storage-file">
-    @endif
+    {{--@endif--}}
         @csrf
         <input type="hidden" id="path" name="path" value="{{$pathTmp}}">
         <input type="hidden" id="path" name="disk" value="{{$storageManager->filesystem->disk}}">
@@ -232,6 +247,7 @@
         @endif
         {{--Fim de controle ---------------------------------------}}
         </form>
+    @endif
     {{--Fim de Formulário de solicitação de arquivo ------------------------------}}
     <div class="text-center pb-1" style="{{$font}}">{{$item->fileName}}</div>{{--caption--}}
     @endif
@@ -249,6 +265,7 @@
 @endif
 </div>
 </div>
+
 @if(!empty($storageManager->managerPermission) && $storageManager->managerPermission === true)
 @include('laraflex::include.formconfirm')
 @endif
@@ -281,13 +298,9 @@
 @if (!empty($storageManager->nullable) && $storageManager->nullable === true)
     <div class="text-center mt-2 mb-2"></div>
 @else
-<div class="container-xl px-2 mt-4 pb-2" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-block"></hr>
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+{{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
+
 @endif
 @endif
 

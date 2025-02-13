@@ -28,6 +28,7 @@
 @endif
 
 {{--BLOCO PARA COMPONENTES VUEJS--}}
+{{--}}
 @if (!empty($gridcards->vuejsComponents))
 @php
     $vuejsComponents = $gridcards->vuejsComponents;
@@ -40,50 +41,23 @@
 <div class="mx-0 mb-0 px-2 px-lg-3 px-xl-0">
 
     @if (!empty($gridcards->seeMore))
-    <div class="row m-0 p-0">
-        <div class="col-12 col-sm-9 p-0">
-            @if(!empty($gridcards->title))
-            <div class="gridcards-title text-left pt-3 pb-2 pl-3" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-            {{$gridcards->title}}</div>
-            @if (!empty($gridcards->legend))
-                <div class="gridcards-shared text-left pb-3 pl-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-                <span>{{$gridcards->legend}}</span></div>
-            @endif
-            @endif
-        </div>
-        <div class="col-0 col-sm-3 text-right p-0 pr-2 d-none d-sm-block align-text-bottomx" style="width: 100%;">
-            @if(!empty($gridcards->legend) && !empty($gridcards->title))
-            <div class="py-2 mb-sm-1 py-xl-2"></div>
-            <div class="pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
-            <a href="{{$util->toRoute($gridcards->seeMore)}}" class="btn btn-dark m-0">
-            {{__('See more')}}
-            </a>
-            </div>
-            @else
-            <div class="pb-sm-3 pt-1 pt-md-2 pt-lg-3 pr-3 pr-lg-4 align-text-bottom" style="height: 100%;">
-            <a href="{{$util->toRoute($gridcards->seeMore)}}" class="btn btn-dark m-0">
-            {{__('See more')}}
-            </a>
-            </div>
-            @endif
-        </div>
-    </div>
+    {{--SEEMORE COMPONENT GRIDCARDS ============================================--}}
+    @include('laraflex::ComponentParts.gridcards.seemore')
+
     @else
         @if(!empty($gridcards->title))
-        <div class="gridcards-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
-        {{$gridcards->title}}</div>
-        @if (!empty($gridcards->legend))
-            <div class="gridcards-shared text-center pb-3" style="font-size:calc(0.72em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-            <span>{{$gridcards->legend}}</span></div>
-        @else
-            <div class="pt-2"></div>
-        @endif
-        @endif
+        {{--SEEMORE COMPONENT GRIDCARDS ============================================--}}
+        @include('laraflex::ComponentParts.gridcards.title')
+
     @endif
+    @endif
+
+
     <div class="mt-0">
     {{--<div class="row w-100 m-0 p-0">--}}
     {{--Add items ------------------------------------------------}}
     @if(!empty($gridcards->items))
+
     @php
     //--Backgrond effect e margin--//
     if (!empty($gridcards->styles->margin) && $gridcards->styles->margin === true){
@@ -114,6 +88,7 @@
     @endphp
     <div class="row w-100 m-0 p-0">
     {{--Bloco de renderização de items de componente--}}
+
     @foreach($gridcards->items as $key => $item)
     @php
     $margen_bottom = 'mb-3';
@@ -144,147 +119,40 @@
     if (!empty($item->alt)){
         $alt = 'alt="' . $item->alt . '"';
     }
-
     @endphp
-
     {{--Start File Style and block style--}}
     <div class="{{$column}} p-0  {{$margen_bottom}}">
     @if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true)
-    
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{$visibility[$key]}}">
     @else
     <div class="mx-1 h-100">
     @endif
     <div class="gridcards-item {{$margin}}" style="text-align:center">
-
     @else
-    
     @if ($showLimit === true)
     <div class="mx-1 h-100 {{$border}} {{$visibility[$key]}}">
     @else
-    <div class="mx-1 h-100  {{$border}}">    
+    <div class="mx-1 h-100  {{$border}}">
     @endif
-
     {{--start Background effect--}}
     @if (!empty($gridcards->styles->bgEffect) && $gridcards->styles->bgEffect === true)
     <div class="gridcards-item {{$margin}}" style="background-color: #000000;">
     @else
     <div class="gridcards-item {{$margin}}">
     @endif
-
     {{--End Backgrond effect--}}
     {{--file File Style and block style--}}
     @endif
-
-    {{--ACTION DE COMPONENTS vUEJS -----------------------------------}}
-    @if (!empty($gridcards->vueAction) && !empty($gridcards->vuejsComponents))
-    <a href="#" v-on:click="{{$gridcards->vueAction}}('{{$item->id}}')" >
-
-    {{--ROUTE DE COMPONENTE BLADE ------------------------------------}}
-
-    @elseif (!empty($gridcards->route))
-        @php
-           if (!empty($gridcards->target) && $gridcards->target == 'blank'){
-               $target = 'target="_blank"';
-           }else{
-               $target = '';
-           }
-           if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true){
-               $target = 'target="_blank"';
-           }
-        @endphp
-    <a class="" href="{{$util->toRoute($gridcards->route, $item->id)}}" role="button" rel="noopener noreferrer" {!!$target!!}>
-    {{--Bloco de imagem ------------------------------------------------}}
-    @else
-    <a href="#">
-    @endif
-
-    @php
-    if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true){
-        $icons_var = ['icon_file01.jpg','icon_file02.jpg','icon_file03.jpg','icon_file04.jpg','icon_file05.jpg','icon_file06.jpg','icon_file07.jpg','icon_file08.jpg','icon_file09.jpg',
-        'icon_file10.jpg','icon_file11.jpg','icon_file12.jpg','icon_file01.jpg','icon_file02.jpg','icon_file03.jpg','icon_file04.jpg','icon_file05.jpg','icon_file06.jpg','icon_file07.jpg',
-        'icon_file08.jpg','icon_file09.jpg','icon_file10.jpg','icon_file11.jpg','icon_file12.jpg','icon_file01.jpg','icon_file02.jpg','icon_file03.jpg','icon_file04.jpg','icon_file05.jpg', 
-        'icon_file06.jpg','icon_file07.jpg','icon_file08.jpg','icon_file09.jpg','icon_file10.jpg','icon_file11.jpg','icon_file12.jpg',];
-        $num_var = 0;
-        if (!empty($gridcards->styles->bgStyle) && $gridcards->styles->bgStyle === 'image'){
-            if ($key >= 34) {
-                $num_var = $key - 36;
-            }elseif ($key >= 68){
-                $num_var = $key - 72;
-            }else{
-                $num_var = $key;
-            }
-            $image = $util->toImage('local/images/icons_file', $icons_var[$num_var]);
-            //$image = 'local/images/icons_file/' . $icons_var[$num_var];
-            $bgRound = 'rounded img-thumbnail';
-        }else{
-            $image = $util->toImage('local/images/icons', 'pdf.png');
-            //$image = 'local/images/icons/pdf.png';
-        }
-        
-    }else{
-  
-        if (!empty($item->imageStorage)){
-            $image = $item->imageStorage;
-        }
-        elseif (!empty($item->imagePath)){
-            $image = $util->toImage($item->imagePath);
-        }
-        elseif(!empty($item->image)){
-            $image = $util->toImage($item->image);
-        }else{
-            $image = $util->toImage('local/images/app', 'image-laracast.jpg');
-        }
-    }
-    @endphp
-
-    <img src="{{$image}}" class="img-fluid {{$bgRound}}" {!!$alt!!}>
-    
-    {{--End Bloco de imagem ------------------------------------------------}}
-    </a>
-
-    {{--End button ----------------}}
+    {{--IMAGE AND ICON COMPOPNENT GRIDECARDS--}}
+    @include('laraflex::ComponentParts.gridcards.imageandicon')
     </div>
 
-        @if(in_array('title', $gridcards->showItems) || in_array('label', $gridcards->showItems))
+    @if(in_array('title', $gridcards->showItems) || in_array('label', $gridcards->showItems))
+    {{--IMAGE AND ICON COMPOPNENT GRIDECARDS--}}
+    @include('laraflex::ComponentParts.gridcards.griditems')
 
-        @if (!empty($gridcards->styles->fileStyle) && $gridcards->styles->fileStyle === true)
-        <div class="px-3 {{$paddingText}}" style="text-align:center">
-        @else
-        <div class="px-3 {{$paddingText}}" style="text-align:left">
-        @endif
-           @if(!empty($item->title) && in_array('title', $gridcards->showItems))
-            <div class="gridcards-item-shared text-dark" style="font-size:calc(0.76em + 0.25vw);line-height:calc(14px + 0.3vw);{{$font_family}}">
-            {{$item->title}}
-            </div>
-            @endif
-
-            @if(!empty($item->label) && in_array('label', $gridcards->showItems))
-            <div class="gridcards-item-shared text-dark pb-1" style="font-size:calc(0.70em + 0.3vw);line-height:1.3;{{$font_family}}">
-            <small>{{$item->label}}</small>
-            </div>
-            @endif
-            @if(!empty($item->specialLabel) && in_array('specialLabel', $gridcards->showItems))
-            <div class="gridcards-item-shared pb-1" style="color: blue; font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
-            {{$item->specialLabel}}
-            </div>
-            @endif
-            {{--Adicionando rating --------------------------------------------------}}
-            @if(!empty($item->rating) && in_array('rating', $gridcards->showItems))
-                <div class="" style="font-size:calc(11px + 0.25vw);line-height:1.3;{{$font_family}}">
-                {{$item->rating}}
-                @for ($i = 1; $i <= intval($item->rating); $i++)
-                <img src="{{$util->toImage('local/images/icons', 'star.png')}}" width="13px" height="12px" class="m-0 mb-1" />
-                @endfor
-                @if ($item->rating != intval($item->rating))
-                <img src="{{$util->toImage('local/images/icons', 'starsmall.png')}}" width="13px" height="12px" class="m-0 mb-1" />
-                @endif
-                </div>
-            @endif
-            {{--Fim de rating --------------------------------------------------------}}
-        </div>
-        @endif
+    @endif
     </div>
     </div>
     @endforeach
@@ -292,30 +160,35 @@
     {{--End items ------------------------------------}}
     </div>
     </div>
+
+    {{--Icon de retorno ao topo da página--}}
+    @if (!empty($gridcards->onePage) && $gridcards->onePage === true)
+    {{--ONEPAGE COMPONENT SHARED ============================================--}}
+    @include('laraflex::ComponentParts.shared.onepage')
+    @endif
+
+
     {{--Bloco de see more ---------------------------}}
     @if (!empty($gridcards->seeMore))
-    <div class="pl-3 pl-lg-4 mt-3 d-block d-sm-none">
-        <a href="{{$util->toRoute($gridcards->seeMore)}}" class="btn btn-sm btn-dark m-0">
-        <span class="px-2">{{__('See more')}}</span>
-        </a>
-    </div>
+    @php
+        $seeMore = $gridcards->seeMore;
+    @endphp
+    {{--@props(['seeMore'])--}}
+    <x-laraflex::shared.seemore :seeMore="$seeMore" />
+
     {{--pagination--------------------------------------}}
     @elseif (!empty($gridcards->paginate))
-    <div id="default-paginator" class="text-center nav justify-content-center pt-sm-2" aria-label="Page" translator>
-    {!!$gridcards->paginate->links('components.bootstrap')!!}
-    </div>
+    @php
+        $paginates = $gridcards->paginate->links('components.bootstrap');
+    @endphp
+    {{--@props(['paginates'])--}}
+    <x-laraflex::shared.paginate :paginates="$paginates" />
+
     @endif
     {{--End Pagination----------------------------------}}
     </div>
     </div>
-{{--Icon de retorno ao topo da página--}}
-@if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
-<div class="w-100 pb-sm-3 pt-sm-3 d-none d-sm-block pl-5 container-xl">
-    <a href="#top">
-    <img src="{{$util->toImage('local/images/icons', 'setadupla.png')}}" width="26" height="26" class="float-left rounded d-block">
-    </a>
-    </div>
-@endif
+
 {{--End Icon de retorno ao topo da página--}}
 </div>
 </section>
@@ -323,12 +196,8 @@
 @if (!empty($gridcards->nullable) && $gridcards->nullable === true)
     <div class="text-center mt-2 mb-2"></div>
 @else
-<div class="container-xl px-3 mt-4 pb-2" translation="no">
-    <div class="alert alert-primary {{$border}}" role="alert">
-    <div class="content-message alert-heading" style="font-size:calc(0.85em + 0.4vw)"><strong>{{__('Message')}}!</strong></div>
-    <hr class="d-none d-sm-block">
-    <div class="mb-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.18vw);">{{ __('There are no items to display.') }}</div>
-    </div>
-</div>
+{{--messageNull component Blogcardes ==========================================--}}
+<x-laraflex::shared.messagenull />
+
 @endif
 @endif
