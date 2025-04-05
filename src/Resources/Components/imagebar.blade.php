@@ -45,7 +45,6 @@ if(!empty($imageBar->height)){
     $heightImage = 200;
     $height = 'height:calc(80px + 10vw);';
 
-    //$height = 'height:200px;';
 }
 $ptTmp = '';
 $titleSize = false;
@@ -72,11 +71,7 @@ if(!empty($imageBar->height) && $heightImage > 199){
     @else
     <div>
     @endif
-
-
     <div class="imagebar-image" data-background-color style="background-image: url('{{$image}}');background-repeatx:round;background-size:cover;border-bottom:1px solid #cccccc; {{$height}}">
-
-
     @php
     if(!empty($imageBar->fontColor)){
         $color = $imageBar->fontColor;
