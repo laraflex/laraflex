@@ -22,11 +22,13 @@ class AdminConfigComposer
 
     protected function toArray()
     {
+        $borderStyle = config('laraflex.borderStyle.default');
+
         $var = [
             'title' => 'Projeto Laraflex',
             //'contentClass' => 'container-fluid',
             //'onePage' => true,
-            'bgStyle' => ['border' => 'shadow'],
+            'bgStyle' => $borderStyle,
             'meta' => [
                 ['name' => 'keywords', 'content' => 'Laravel', 'Laraflex', 'Framework', 'php', 'desenvolvimento web'],
                 ['name' => 'author', 'content' => 'Dimas Vidal'],

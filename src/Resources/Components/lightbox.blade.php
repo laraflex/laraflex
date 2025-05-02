@@ -1,12 +1,13 @@
-@if (!empty($objeto))
 @php
-    $lightbox = $objeto;
+    if (!empty($object)){
+        $lightbox = $object;
+    }
+    elseif (!empty($objectBlog)){
+        $lightbox = $objectBlog;
+    }
 @endphp
-@elseif(!empty($object))
-@php
-    $lightbox = $object;
-@endphp
-@endif
+
+
 @if (!empty($lightbox) && !empty($lightbox->items))
 
 @php

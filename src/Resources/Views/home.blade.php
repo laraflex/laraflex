@@ -10,6 +10,9 @@
 @section('header')
     @include('layouts.section.header')
 @endsection
+@section('blog')
+    @include('layouts.section.blog')
+@endsection
 @section('content')
     @include('layouts.section.content')
 @endsection
@@ -19,3 +22,4 @@
 @section('scriptjs')
     @include('layouts.functional.scriptjs')
 @endsection
+

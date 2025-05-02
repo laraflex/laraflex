@@ -10,6 +10,18 @@ return [
     |--------------------------------------------------------------------------
     |
     */
+
+    'borderStyle' => [
+        'default' => ['border' => 'border'],
+        'docStyle' => ['border' => 'border'],
+    /*
+    * Options ========================================================
+        'default' => ['border' => 'rounded'],
+        'default' => ['border' => 'shadow'],
+        'default' => ['border' => 'none'],
+    * ================================================================
+    */
+
     'defaultconfig' => [
         'bootstrapcss' => '"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"',
         'jquery' => '"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.js" integrity="sha512-docBEeq28CCaXCXN7cINkyQs0pRszdQsVBFWUd+pLNlEk3LDlSDDtN7i1H+nTB8tshJPQHS0yu0GW9YGFd/CRg==" crossorigin="anonymous" referrerpolicy="no-referrer"',

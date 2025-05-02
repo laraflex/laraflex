@@ -2,16 +2,19 @@
 if(!empty($objectConfig)){
    $objetoConfig = $objectConfig;
 }
+//Gestão de comonentes objectHeader =========================================
 if (!empty($objectHeader)){
     $itemHeader = $objectHeader;
     $objetoConfig->headerComponents[] = $itemHeader;
 }
+
 if (!empty($arrayObjectsHeader)){
     foreach ($arrayObjectsHeader as $objectHeader){
         $itemHeader = $objectHeader;
         $objetoConfig->headerComponents[] = $itemHeader;
     }
 }
+
 if(!empty($objetoConfig->headerComponents)){
     foreach($objetoConfig->headerComponents as $headerItem){
         if (property_exists($headerItem, "dependencies") && !empty($headerItem->dependencies)){
@@ -21,6 +24,8 @@ if(!empty($objetoConfig->headerComponents)){
         }
     }
 }
+//Fim do bloco de componentes ObjectHeader ======================================
+
 if(!empty($arrayObjetos)){
     $arrayItems = $arrayObjetos;
 }elseif(!empty($arrayObjects)){
@@ -61,7 +66,9 @@ if(!empty($arrayItems)){
  }
 
 /**
+ * ============================================================================
  * Adicionando dependencias de componentes ao ArrayListener
+ * ============================================================================
  */
 if (!empty($objetoConfig->components)){
 
@@ -73,8 +80,11 @@ if (!empty($objetoConfig->components)){
         }
     }
 
+
+
+
     /**
-     * Adicionando dependencias de componentes
+     * Adicionando dependencias de components
     */
     foreach ($objetoConfig->components as $item){
         if (!empty($item)) {
@@ -94,7 +104,50 @@ if (!empty($objetoConfig->components)){
         }
     }
 }
-//********************************************************************
+
+
+/*
+* =======================================================================
+* Componentes para a área de BLOGCOMPONENTS
+* =======================================================================
+*/
+
+
+if (!empty($objectBlog)){
+
+    $objetoConfig->blogComponents[] = $objectBlog;
+}
+
+if (!empty($arrayObjectsBlog)){
+    foreach ($arrayObjectsBlog as $item){
+
+        $objetoConfig->blogComponents[] = $item;
+    }
+}
+/*
+* Adicionando dependencias de BLOGCOMPONENTS
+*/
+
+if(!empty($objetoConfig->blogComponents)){
+
+    if (!empty($arrayListeners = $objectListener->dependencies($objetoConfig->blogComponents))){
+        foreach ($arrayListeners as $itemListener){
+            foreach($itemListener as $item){
+                $objetoConfig->dependencies[] = $item;
+            }
+        }
+    }
+
+
+    foreach($objetoConfig->blogComponents as $blogItem){
+        if (property_exists($blogItem, "dependencies") && !empty($blogItem->dependencies)){
+            foreach($blogItem->dependencies as $value){
+                $objetoConfig->dependencies[] = $value;
+            }
+        }
+    }
+}
+
 @endphp
 
 {{---Inclusaão de metas de página-------------------------------------}}

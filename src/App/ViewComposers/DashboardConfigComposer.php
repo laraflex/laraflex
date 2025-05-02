@@ -23,11 +23,13 @@ class DashboardConfigComposer
 
     protected function toArray()
     {
+        $borderStyle = config('laraflex.borderStyle.default');
+
         $var = [
             'title' => 'LaraFlex - View components and view pattern',
             //'contentClass' => 'container-fluid',
             //'onePage' => true,
-            'bgStyle' => ['border' => 'shadow'],
+            'bgStyle' => $borderStyle,
             'dependencies' => NULL,
             'components' => NULL,
 

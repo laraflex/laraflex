@@ -23,9 +23,11 @@ class DocConfigComposer
 
     protected function toArray()
     {
+        $borderStyle = config('laraflex.borderStyle.docStyle');
+
         $var = [
             'title' => 'LaraFlex - View components and view pattern',
-            'bgStyle' => ['border' => 'shadow'],
+            'bgStyle' => $borderStyle,
             'meta' => [
                 ['name' => 'keywords', 'content' => 'laravel, desenvolvimento web, php'],
                 ['name' => 'author', 'content' => 'Dimas Vidal'],

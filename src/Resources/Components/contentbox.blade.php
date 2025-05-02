@@ -1,18 +1,23 @@
-@if (!empty($objeto))
-    @php
-        $contentbox = $objeto;
-    @endphp
-@elseif(!empty($object))
-    @php
+@php
+    if (!empty($object)){
         $contentbox = $object;
-    @endphp
-@endif
+    }elseif(!empty($objectBlog)){
+        $contentbox = $objectBlog;
+    }
+@endphp
 
 @if (!empty($contentbox) && !empty($contentbox->showItems) && !empty($contentbox->data))
 <section id="contentbox" class="pb-1 pt-2 pt-md-3">
 <div class="container-xl pl-0 pr-0 pr-sm-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 @php
+
+if (!empty($contentbox->hiddenBorder) && $contentbox->hiddenBorder == true){
+    $border = '';
+}
+
+
+
 $data = $contentbox->data;
 if (!empty($contentbox->showItems)){
     foreach ($contentbox->showItems as $key => $value){
@@ -21,11 +26,32 @@ if (!empty($contentbox->showItems)){
 }
 
 // FONT CONFIG ================================
+
+
 if (!empty($contentbox->fontFamily->title)){
     $font_family_title = 'font-family:'.$contentbox->fontFamily->title;
 }else{
     $font_family_title = '';
 }
+
+if (!empty($contentbox->fontFamily->size)){
+    if ($contentbox->fontFamily->size == 'large'){
+        $font_size = 'font-size:calc(0.9em + 1.1vw);line-height:calc(16px + 1.5vw);';
+    }else{
+        $font_size = 'font-size:calc(0.9em + 0.8vw);line-height:calc(16px + 1.5vw);';
+    }
+}else{
+    $font_size = 'font-size:calc(0.9em + 0.8vw);line-height:calc(16px + 1.5vw);';
+}
+
+if (!empty($contentbox->fontFamily->style) && $contentbox->fontFamily->style == 'italic'){
+    $font_style = 'font-style:italic;';
+}else{
+    $font_style = '';
+}
+
+
+
 if (!empty($contentbox->fontFamily->shared)){
     $font_family = 'font-family:'.$contentbox->fontFamily->shared;
 }else{
@@ -121,17 +147,21 @@ if (!empty($data->attachedLabel)){
 }else{
     $attachedLabel = __('Open file');
 }
+
+
 //COMENT COMPONENTS CONFIG =============================================
 if (!empty($contentbox->comentInsert)){
 
 }
+
+
 @endphp
-<div class="p-3 p-sm-4 p-lg-5 {{$border}} m-0 mt-4 mb-4">
+<div class="p-3 p-sm-4 p-lg-5 m-0 mt-4 mb-2 {{$border}}">
 
     {{--title component ContentBox ==========================================--}}
     @if (in_array('title', $showItems) && !empty($title))
-    {{--@props(['title', 'font_family_title'])--}}
-    <x-laraflex::contentbox.title :title="$title" :font_family_title="$font_family_title" />
+    {{--@props(['title', 'font_size', 'font_style', 'font_family_title'])--}}
+    <x-laraflex::contentbox.title :title="$title" :font_size="$font_size" :font_style="$font_style" :font_family_title="$font_family_title" />
     @endif
 
     {{--subTitle component ContentBox ==========================================--}}

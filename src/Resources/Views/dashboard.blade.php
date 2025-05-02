@@ -8,6 +8,9 @@
 @section('header')
     @include('layouts.section.header')
 @endsection
+@section('blog')
+    @include('layouts.section.blog')
+@endsection
 @section('content')
     @include('layouts.section.content')
 @endsection

@@ -24,9 +24,11 @@ class PublicConfigComposer
 
     protected function toArray()
     {
+        $borderStyle = config('laraflex.borderStyle.default');
+
         $var = [
             'title' => 'LaraFlex - View components and view pattern',
-            'bgStyle' => ['border' => 'shadow'],
+            'bgStyle' => $borderStyle,
             'meta' => [
                 ['name' => 'keywords', 'content' => 'laravel, desenvolvimento web, php'],
                 ['name' => 'author', 'content' => 'Dimas Vidal'],

@@ -8,7 +8,6 @@ if (!empty($objetoConfig->components->border)){
 }else{
     $border = NULL;
 }
-
 @endphp
 
 @if (!empty($objetoConfig->footerComponents))

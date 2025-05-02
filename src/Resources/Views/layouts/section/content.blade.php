@@ -84,6 +84,7 @@ if(!empty($objectConfig)){
 @endif
 {{--Fim bloco de mensagem e alerta--------------------------}}
 
+
 @if (!empty($objetoConfig->components))
 {{-- Início do bloco lógico -------------------------------}}
     @foreach ($objetoConfig->components as $object)
