@@ -54,7 +54,6 @@ if (!empty($controlpanel->fontFamily->shared)){
 <div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
 {{--INICIO DE BLOCO DE COMPONENTE--}}
 
-
 @if(!empty($controlpanel->title))
     <div class="controlpanel-title text-center pt-3 pb-2" style="font-size:calc(0.9em + 0.8vw);line-height:calc(14px + 1.3vw);{{$font_family_title}}">
     {{$controlpanel->title}}</div>
@@ -67,6 +66,10 @@ if (!empty($controlpanel->fontFamily->shared)){
 @endif
 
 <div class="cards row p-0 m-0">
+
+    @php
+        //dd($controlpanel->items);
+    @endphp
 
     @foreach ($controlpanel->items as $key => $item)
 

@@ -1,5 +1,5 @@
 @props(['name', 'label','id', 'labelStyle', 'currentValue', 'required', 'textAlign', 'inputStyle', 'properties'])
-<div class="form-group">
+<div class="form-group my-2">
 <div class="row">
 <div class="{{$labelStyle}}">
 @if (!empty($label) && !empty($name))

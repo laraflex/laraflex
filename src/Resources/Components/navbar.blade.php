@@ -1,254 +1,175 @@
+{{-- COMPONENT NAVBAR v:2025 =================================================== --}}
+
 @if (!empty($objectHeader) && !empty($objectHeader->items))
-    @php
-        $navBar = $objectHeader;
-    @endphp
 
 @php
-    if (!empty($navBar->bgColor)){
-        $bgColor = strtolower($navBar->bgColor); // Controle sobre valor de propriedade de cor de componente
+    $navBar = $objectHeader;
+    if (!empty($navBar->container) && $navBar->container == true){
+         $container = 'container-fluid';
     }else{
-        $bgColor = 'black';
+        $container = 'container-fluid';
     }
-    $navbar_id = "";
-    $navbar_item = "";
-    $btn_integrated = "";
-    if ($bgColor == 'white'){
-        $styleColor = 'white';
-        $styleRgbColor = 'rgba(255, 255, 255, 0.7)';
-        $styleNav = 'navbar-light';
-        $border = '1px solid #A4A4A4';
-        $item_navbar_id1 = 'item-navbar-default-dark';
-        $item_navbar_id2 = 'item-navbar-dark';
-        $btn_integrated_tmp = 'btn-integrated-dark';
-    }elseif($bgColor == 'light'){
-        $styleColor = '#F2F2F2';
-        $styleRgbColor = 'rgba(242,242,242, 0.8)';
-        $styleNav = 'navbar-light';
-        $border = '1px solid #A4A4A4';
-        $item_navbar_id1 = 'item-navbar-default-dark';
-        $item_navbar_id2 = 'item-navbar-dark';
-        $btn_integrated_tmp = 'btn-integrated-dark';
-    }elseif($bgColor == 'dark'){
-        $styleColor = '#1C1C1C';
-        $styleRgbColor = 'rgba(0,0,0,0.4)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #ccc';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
-    }elseif($bgColor == 'navyblue'){
-        $styleColor = '#0B173B';
-        $styleRgbColor = 'rgba(11,23,59, 0.7)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
-    }elseif($bgColor == 'bordeaux'){
-        $styleColor = '#8A0808';
-        $styleRgbColor = 'rgba(138,8,8, 0.7)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
-    }elseif($bgColor == 'marine'){
-        $styleColor = '#3A727E';
-        $styleRgbColor = 'rgba(58,114,126,0.7)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
-    }elseif($bgColor == 'brown'){
-        $styleColor = '#4C3A26';
-        $styleRgbColor = 'rgba(76,58,38, 0.6)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
-    }elseif($bgColor == 'lightbrown'){
-        $styleColor = '#A59A86';
-        $styleRgbColor = 'rgba(165,154,134,0.7)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
-    }elseif($bgColor == 'blue'){
-        $styleColor = '#354F76';
-        $styleRgbColor = 'rgba(53,79,118,0.8)';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
+    if (!empty($navBar->logoStorage)){
+        $logo = $navBar->logoStorage;
+    }
+    elseif (!empty($navBar->logoPath)){
+        $logo = $util->toImage($navBar->logoPath);
+    }
+    elseif(!empty($navBar->logo)){
+        $logo = $util->toImage($navBar->logo);
     }else{
-        $styleColor = 'black';
-        $styleRgbColor = 'rgba(0,0,0,0.4)';
-        $navBgColor = '#000';
-        $styleNav = 'navbar-dark';
-        $border = '1px solid #6E6E6E';
-        $item_navbar_id1 = 'item-navbar-default-light';
-        $item_navbar_id2 = 'item-navbar-white';
-        $btn_integrated_tmp = 'btn-integrated-light';
+        $logo = '';
     }
-    // Classe para menu fixo
-    $fixedNavbarClass = 'bg-navbar-none';
-    $predominantColor = $styleColor;
-    $fontWeight = '';
-    $fixed = "";
-
-    if(!empty($navBar->fixedMenu) && $navBar->fixedMenu === true){
-        $fixed = "fixed-top";
-        $styleColor = $styleRgbColor;
-        $border = '1px solid rgba(0,0,0,0.2)';
-        if ($bgColor == 'white' OR $bgColor == 'light'){
-            $fixedNavbarClass = 'bg-navbar-light';
-        }else{
-            $fixedNavbarClass = 'bg-navbar-dark';
-        }
-
-        $background_tmp = "background-color: " . $predominantColor . ";";
-    }else{
-        $fixed = "";
-        if (!empty($navBar->fadeTransparency) && $navBar->fadeTransparency === true){
-            $background_tmp = "background-color: " . $styleColor . "; opacity:0.9;";
-            $styleColor = $styleRgbColor;
-            $navbar_id = 'navbar';
-            $navbar_item = 'navbar-item-link';
-            $border_bottom = '';
-            $btn_integrated = $btn_integrated_tmp;
-            $fontWeight = 'font-weight-bold';
-        }
-        elseif (!empty($navBar->transparent) && $navBar->transparent === true){
-            $background_tmp = "background-color: " . $styleColor . "; opacity:0.9;";
-            $styleColor = "";
-            $navbar_id = 'navbar';
-            $navbar_item = 'navbar-item-link';
-            $border_bottom = '';
-            $btn_integrated = $btn_integrated_tmp;
-            $fontWeight = 'font-weight-bold';
-        }
-    }
-    if ($styleColor != ""){
-        $background = "background-color: " . $styleColor . ";";
-        //$background = '';
-        $border_bottom = 'border-bottom:' . $border . ';';
-    }else{
-        $background = '';
-    }
-    /**
-     * Define a classe de apresentação de item de menu
+    /*
+    * Bloco de configuração de temas - Theme configuration block
     */
-    if (empty($navBar->menuEffect) OR $navBar->menuEffect === false)
-    {
-        $item_navbar_id = $item_navbar_id1;
+    if (!empty($navBar->theme)) {
+        $theme = $navBar->theme;
     }else{
-        $item_navbar_id = $item_navbar_id2;
+        $theme = '';
     }
-    $cssClass = ''; // definição de container a partir de componente header
-    if (!empty($objectConfig->headerClass) && $objectConfig->headerClass == 'container'){
-        if ($fixed != 'fixed-top'){
-            $cssClass = 'container-xl ';
+    if (!empty($navBar->transparent) && $navBar->transparent == true) {
+        $transparent = true;
+        $transparentClass = 'position-absolute top-0 start-0 w-100';
+    }else {
+        $transparent = false;
+        $transparentClass = '';
+    }
+    if (!empty($navbar->altLogo)){
+        $alt = $navbar->altLogo;
+    }else {
+        $alt = '';
+    }
+    /*
+    * THEMAS DISPONÍVEIS ========================================
+    */
+    if ($theme == 'dark') {
+        if ($transparent == true) {
+            $bgColor = 'background-color:rgb(0,0,0,0.5);';
+            $font_color = 'color: #FFFFFF;';
+        }else {
+            $bgColor = 'background-color:#161718;';
+            $font_color = 'color: #b8babb;'; //#e9ebef;';
         }
+        $bgIcon = 'background-color:rgba(255,255,255, 0.5);';
+        $mobileColor = 'background-color:#161718;';
+        $itemNavbarColor = 'navbar-dark-color rounded';
+        $borderNav = 'border-bottom:1px solid #666666;';
+        $bgBtnSearchColor = '"";';
+        //$btnColor = 'background-color: #181818;';
+        $btnColor = 'background-color: #262727;';
+        $bgColorSearch = 'background-color:rgb(255,255,255, 0.1);';
+
+    }elseif($theme == 'light') {
+        if ($transparent == true) {
+            $bgColor = 'background-color:rgba(238,238,228, 0.8);';
+            $font_color = 'color: #000000;';
+            $itemNavbarColor = 'navbar-white-color rounded';
+            $btnBorder = 'border-secondary';
+            $bgBtnSearchColor = '';
+        }else{
+            $bgColor = 'background-color: #edeeef;'; //#dfe6e9
+            $font_color = 'color: #050512;';
+             $itemNavbarColor = 'navbar-white-color rounded';
+             $bgBtnSearchColor = 'background-color: rgba(232, 240, 243, 0.3);';
+        }
+        $bgIcon = '';
+        $mobileColor = 'background-color:#FFFFFF;';
+        $borderNav = 'border-bottom:1px solid #cccccc;';
+        $btnColor = 'background-color: #181818;';
+        $bgColorSearch = 'background-color:rgb(255,255,255, 0.3);';
+
+    }elseif($theme == 'white') {
+        if ($transparent == true) {
+            $bgColor = 'background-color:rgba(255,255,255, 0.8);';
+            $font_color = 'color: #000000;';
+            $bgBtnSearchColor =  'background-color: rgba(232, 240, 243, 0.3);';
+            $itemNavbarColor = 'navbar-white-color rounded';
+        }else{
+            $bgColor = 'background-color:#FFFFFF;';
+            $font_color = 'color: #050512;';
+            $bgBtnSearchColor =  'background-color: rgba(232, 240, 243, 0.3);';
+            $itemNavbarColor = 'navbar-white-color rounded;';
+        }
+        $bgIcon = '';
+        $mobileColor = 'background-color:#FFFFFF;';
+        $borderNav = 'border-bottom:1px solid #cccccc;';
+        $btnColor = 'background-color: #313131;';
+        $bgColorSearch = 'background-color:rgb(255,255,255, 0.3);';
+
+    }elseif($theme == 'nave') {
+        if ($transparent == true) {
+            $bgColor = 'background-color: rgb(6, 51, 100, 0.6);';
+            $font_color = 'color: #FFFFFF;';
+        }else {
+            $bgColor = 'background-color:#0d1e68;';
+            $font_color = 'color: #cccccc;';
+        }
+        $bgIcon = 'background-color:rgb(255,255,255, 0.5);';
+        $mobileColor = 'background-color:#0d1e68;';
+        $itemNavbarColor = 'navbar-nave-color rounded';
+        $borderNav = 'border-bottom:1px solid #666666;';
+        $bgBtnSearchColor = '';
+        $btnColor = '';
+        $bgColorSearch = 'background-color:rgb(255,255,255, 0.1);';
+    }else {
+        $bgIcon = '';
+        $bgColor = 'background-color:#FFFFFF;';
+        $font_color = 'color: #050512;';
+        $itemNavbarColor = 'navbar-light-color;';
+        $borderNav = 'border-bottom:1px solid #cccccc;';
+        $mobileColor = 'background-color:#FFFFFF;';
+        $bgBtnSearchColor =  'background-color: rgba(232, 240, 243, 0.3);';
+        $btnColor = 'background-color: #666666;';
+        $bgColorSearch = 'background-color:rgb(255,255,255, 0.3);';
     }
+    $subMenuColor = 'background-color: rgb(255,255,255, 0.9);';
+    $fontBtn = 'font-size:calc(0.6em + 0.8vw);';
 @endphp
-<div id="navbar-default">
-<nav id="{{$navbar_id}}" class="{{$cssClass}} navbar navbar-expand-lg m-0x px-0x {{$styleNav}} {{$fixedNavbarClass}} {{$fixed}}" style="{{$border_bottom}} {{$background}}">
-<div class="container-xl px-2 px-xl-3 ">
-<!-- Logotipo ----------------------->
-@php
-if (!empty($navBar->logoStorage)){
-    $logo = $navBar->logoStorage;
-}
-elseif (!empty($navBar->logoPath)){
-    $logo = $util->toImage($navBar->logoPath);
-}
-elseif(!empty($navBar->logo)){
-    $logo = $util->toImage($navBar->logo);
-}else{
-    $logo = $util->toImage('local/images/app/logo-option4.png');
-}
-@endphp
+{{--fim do bloco de configuração de temas--}}
 
-@if (!empty($logo))
+<nav class="navbar navbar-dark navbar-expand-lg p-0 {{$transparentClass}}" style="z-index:10">
+<div class="{{$container}} pbx-2 ptx-1 ptx-lg-0 pbx-lg-0 py-2" style="z-index:15;{{$bgColor}}{{$borderNav}}">
+    @if ($logo != '')
+    <a href="{{$util->toRoute('home')}}">
+        <img src="{{$logo}}" alt="{{$alt}}" width="170" height="44" class="my-1">
+    </a>
+    @endif
+    <button id="navbar-toggler" class="navbar-toggler" style="{{$bgIcon}} {{$fontBtn}} {{$font_color}}{{$btnColor}}" type="button" data-bs-toggle="collapse" data-bs-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-{{--LOGO COMPONENT NAVBAR ============================================--}}
-@include('laraflex::ComponentParts.navbar.logo')
+<div class="collapse navbar-collapse px-3 rounded" id="mainmenu" ">
 
-@elseif(!empty($navBar->label))
-<a class="navbar-brand" href="#">{{$navBar->label}}</a>
-@endif
-<!-- fim logotipo ------------------->
-<button id="navbar-btn" class="navbar-toggler {{$btn_integrated}}" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarDefault">
-<!-- Início de itens de menu ------------------>
-<ul id="navbar-nav-items" class="navbar-nav mr-auto pl-0">
-@if (!empty($navBar->items))
-@php
-// ===================================================================================================================
-$menuArray = $navBar->items;
-// ===================================================================================================================
-@endphp
-@foreach ($menuArray as $key => $itemMenu)
+{{--ITEMS COMPONENT NAVBAR =====================================--}}
+<ul class="navbar-nav me-auto mb-2 mb-lg-0" >
 
-{{--ITEMS COMPONENT NAVBAR ============================================--}}
 @include('laraflex::ComponentParts.navbar.menuitems')
 
-@php
-if ($key == 7){
-    break;
-}
-@endphp
-@endforeach
-@else
-<li class="nav-item">
-<a class="nav-link" href="#">Home</a>
-</li>
-@endif
+
 </ul>
+{{-- ==========================[]===============================--}}
+{{--FORM SEARCH COMPONENT ======================================--}}
+
+@if (!empty($navBar->showSearch) && $navBar->showSearch == true)
+
+@include('laraflex::ComponentParts.navbar.searchform')
+
+@endif
+{{-- ============================================================ --}}
 
 @if(!empty($navBar->showLogin) && $navBar->showLogin === true)
+{{-- COMPONENTE DE LOGIN E REGISTRO ========================--}}
 
-{{--ACCESSCONTROL COMPONENT NAVBAR ============================================--}}
 @include('laraflex::ComponentParts.navbar.accesscontrol')
 
 @endif
-<!-- Fim de itens de menu ------------------>
+</div>
 </div>
 </nav>
-@if(!empty($navBar->fixedMenu) && $navBar->fixedMenu === true)
-
-    @if (!empty($navBar->transparent) && $navBar->transparent === true)
-    <div class="navbar-plus d-block d-sm-none" style="height:68px; {{$background_tmp}}">
-    </div>
-    @else
-    <div class="navbar-plus" style="height:68px; {{$background_tmp}}">
-    </div>
-    @endif
-@else
-    @if (!empty($navBar->transparent) && $navBar->transparent === true)
-    <div class="d-block d-sm-none" style="height:68px; {{$background_tmp}}">
-    </div>
-    @elseif (!empty($navBar->fadeTransparency) && $navBar->fadeTransparency === true)
-    <div class="d-block d-sm-none" style="height:68px; {{$background_tmp}}">
-    </div>
-    @endif
+{{----}}
+@if (!empty($navBar->transparent) && $navBar->transparent == true)
+<div class="container-fluid d-block d-sm-none" style="height: 70px;{{$mobileColor}}"></div>
 @endif
-</div>
-@else
-@if (!empty($blogcards->nullable) && $blogcards->nullable === true)
-    <div class="text-center mt-2 mb-2"></div>
-@else
-{{--messageNull component Blogcardes ==========================================--}}
-<x-laraflex::shared.messagenull />
+{{--Fim do bloco de navbar - End of navbar block --}}
 @endif
-
-
-@endif
-
-

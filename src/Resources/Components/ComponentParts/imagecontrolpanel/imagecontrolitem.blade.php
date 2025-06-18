@@ -1,6 +1,6 @@
  {{--@props(['image', 'route','label','icon', 'collumnConfig', 'border']) --}}
 <div class="{{$collumnConfig}} p-0 m-0">
-<div class="m-2 m-md-1">
+<div class="m-1 m-md-1">
 <div class="card bg-dark {{$border}}" style="background-image: url({{$image}});background-repeat:round; min-height:8em">
     @if (!empty($route))
     <a href="{{$route}}">

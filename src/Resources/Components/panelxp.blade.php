@@ -63,6 +63,7 @@
 
     @endphp
 
+
 @if(!empty($images))
 {{--@props(['util','images','lightbox' ])--}}
 <x-laraflex::panel.carousel :util="$util" :images="$images" :lightbox="$lightbox" />

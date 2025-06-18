@@ -56,7 +56,7 @@
 }
 
 .percentage .frame {
-    
+
     width:100%;
 }
 
@@ -65,19 +65,20 @@
 }
 
 .variablewidth li {
-    
-    width:calc(45vw); 
-    
+
+    width:calc(45vw);
+
     /*
-    width: 157px; 
-    */     
-    height:calc(0.67 * 50vw); 
+    width: 157px;
+    */
+    height:calc(0.67 * 50vw);
     margin-right: 10px;
 }
 
 .variablewidth li a{
-    
+
 	color:#FFFFFF;
+    text-decoration: none;
 }
 
 .variablewidth li a:hover{
@@ -124,7 +125,7 @@
 
 .next svg, .prev svg {
     width: 20px;
-    
+
     transition: .4s;
 }
 
@@ -136,15 +137,15 @@
     background-color: transparent;
     position: absolute;
     top: 43%;
-    left:39%;
+    left:45 %;
     width:30px;
     height:30px;
     background-color: rgb(255,255,255,0.5);
-   
+
 }
 
-a:hover.js_slide{        
-    opacity:0.5     
+a:hover.js_slide{
+    opacity:0.5
 }
 
 .text_bar{
@@ -187,17 +188,17 @@ a:hover.js_slide{
     .events > .frame li {
         width:100%;
     }
-    
-    
+
+
     /*
      .next svg, .prev svg {
         width: 25px;
         transition: .4s;
     }
     */
-    
+
      .variablewidth li{
-        
+
         width:calc(0.9 * (35vw));
         /*
         width: 266px;
@@ -205,7 +206,7 @@ a:hover.js_slide{
         height:calc(0.75 * (100px + 15vw));
         margin-right: 10px;
     }
-    
+
 }
 
 @media screen and (min-width: 768px ) {

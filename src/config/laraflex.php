@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Str;
+//use Illuminate\Support\Str;
 
 return [
 
@@ -12,22 +12,30 @@ return [
     */
 
     'borderStyle' => [
-        'default' => ['border' => 'border'],
+        'default' => ['border' => 'shadow'],
+        //'default' => ['border' => 'border'],
         'docStyle' => ['border' => 'border'],
     /*
     * Options ========================================================
         'default' => ['border' => 'rounded'],
         'default' => ['border' => 'shadow'],
+        'default' => ['border' => 'border'],
         'default' => ['border' => 'none'],
     * ================================================================
     */
+    ],
 
     'defaultconfig' => [
-        'bootstrapcss' => '"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"',
-        'jquery' => '"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.js" integrity="sha512-docBEeq28CCaXCXN7cINkyQs0pRszdQsVBFWUd+pLNlEk3LDlSDDtN7i1H+nTB8tshJPQHS0yu0GW9YGFd/CRg==" crossorigin="anonymous" referrerpolicy="no-referrer"',
-        'pooperjs' => '"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"',
-        'bootstrapjs' => '"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"',
+        'bootstrapcss' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous',
+        'pooperjs' => 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous',
+        //'bootstrapjs' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous',
+        'bootstrapjs' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">',
+        'jquery' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js',
+        'transparentTheme' => true,
     ],
+
+    'sideBarstyle' => 'light', //options: dark, light
+    //'contentClass' => 'container-fluid',
 
     /*
     |--------------------------------------------------------------------------
@@ -43,5 +51,4 @@ return [
         'cdnjs' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote-bs4.min.js',
         'cdncss' => 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote-bs4.min.css',
     ],
-
 ];

@@ -70,11 +70,13 @@ Retira a barra no final da propriedade route, caso tenha sido colocado.
         if (!empty($media)){
             $path = $path . '/' . $media;
         }
+
         if ($this->secure){
             return secure_url($path);
         }else{
             return url($path);
         }
+
     }
 
     public function toPath($path,$file = NUll){

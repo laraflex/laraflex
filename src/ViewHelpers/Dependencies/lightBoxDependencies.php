@@ -14,12 +14,12 @@ class LightBoxDependencies extends Dependencies
                 'link' => 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css',
 
             ],
+
             [
                 'component' => 'slideshowjs',
                 'type' => 'scriptjs',
                 'arrowColor' => true,
-                //'lib' => 'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js',
-                'lib' =>  'https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js',
+                'lib' => 'https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.5/dist/index.bundle.min.js',
             ],
         ];
         return $var;

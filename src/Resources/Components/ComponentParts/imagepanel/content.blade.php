@@ -1,18 +1,20 @@
-@props(['textAlign', 'title', 'text', 'btnLabel', 'btnColor', 'route', 'imagebutton', 'fontColor', 'font_family', 'font_family_title'])
-<div class="carousel-caption {{$textAlign}} pxx-0 pxx-lg-2  px-xl-5 pb-2 pb-lg-3 pb-xl-5" style="{{$fontColor}}"">
-    @if(!empty($title))
-    <div style="{{$fontColor}} font-size:calc(0.7em + 1.8vw);{{$font_family_title}}"><span translate="no">{{$title}}</span></div>
+{{--DICA: Extender para uso de navebar transparente =================== --}}
+
+    @if (!empty($defaultConfig['transparentTheme']) && $defaultConfig['transparentTheme'] == true)
+    <div class="d-none d-sm-block" style="height: 60px;"></div>
     @endif
-    @if(!empty($legend))
-    @php
-        $num_char = strlen($legend);
-        if ($num_char > 110){
-            $legend = substr($legend, 0, 115) . "...";
-        }
-    @endphp
-    <div class="d-none d-sm-block imagepanel-shared mb-1 mb-md-2 mb-xl-3 mt-0 mt-sm-1 mt-md-2 mt-lg-3" style="{{$fontColor}};line-height:calc(0.96em + 0.9vw); font-size:calc(0.85em + 0.4vw);{{$font_family}}"><span spantranslate="no">{{$legend}}</span></div>
-    @endif
-    @if (!empty($btnLabel))
-    <p><a class="imagepanel-shared btn mt-2 px-3 mt-0 mt-sm-2 mt-md-3 mt-lg-4 {{$btnColor}}" href="{{$route}}" id="{{$imagebutton}}" role="button">{{$btnLabel}}</a></p>
-    @endif
-</div>
+
+    <div class="col-8 col-sm-7 col-md-8 p-lg-5 mx-auto my-4 my-sm-5">
+        @if (!empty($imagePanel->title))
+        <p class="display-4 fw-normal" style="{{$fontStyleColor}} {{$fontSizeTitle}} {{$fontFamilyTitle}}">{{$imagePanel->title}}</p>
+        @endif
+        @if (!empty($imagePanel->legend))
+        <p class="lead fw-normal d-none d-sm-block" style="{{$fontStyleColor}} {{$fontSizeLegend}}">{{$imagePanel->legend}}</p>
+        @endif
+        @if (!empty($imagePanel->btnLabel) && !empty($imagePanel->route))
+        @php
+            $route = $util->toRoute($imagePanel->route);
+        @endphp
+        <a class="btn shadow-lg mt-sm-3 {{$btnClassStyle}}" href="{{$route}}" style="{{$fontBtn}} {{$btnColor}}">{{$imagePanel->btnLabel}}</a>
+        @endif
+    </div>

@@ -50,11 +50,11 @@ if (!empty($footer->bgColor)){
 $arrayAlign = 'text-left';
 @endphp
 
-<footer id="footer" class="footer mt-auto">
+<footer id="footer" class="footer mt-autox">
 
-<div class="px-0 pt-3 mb-0 d-none d-sm-block" style="border-top: 1px solid #ccc; {{$bgColor}} {{$fontColor}}">
+<div class="px-0 pt-3 pb-3 mb-0 d-none d-sm-block" style="border-top: 1px solid #ccc; {{$bgColor}} {{$fontColor}}">
 
-<div class="container-xl pt-2 pb-4">
+<div class="container-xl">
 <div class="row w-100 m-0 p-0">
     <div class="col-5 col-md-3 pl-0">
     @php
@@ -104,29 +104,29 @@ $arrayAlign = 'text-left';
     @endphp
 
     @if (!empty($footer->socialNetworks->facebook))
-    <a href="{{$util->socialNetworkUrl('facebook', $footer->socialNetworks->facebook)}}" target="_blank" rel="noopener noreferrer">
-    <img src="{{$util->toImage('local/images/icons', $icon[0])}}" {!!$attributes!!} class="rounded-circle shadow">
+    <a href="{{$util->socialNetworkUrl('facebook', $footer->socialNetworks->facebook)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
+    <img src="{{$util->toImage('local/images/icons', $icon[0])}}" {!!$attributes!!} class="rounded-circle shadowx">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->instagram))
-    <a href="{{$util->socialNetworkUrl('instagram', $footer->socialNetworks->instagram)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('instagram', $footer->socialNetworks->instagram)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[1])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
 
     @if (!empty($footer->socialNetworks->twitter))
-    <a href="{{$util->socialNetworkUrl('twitter', $footer->socialNetworks->twitter)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('twitter', $footer->socialNetworks->twitter)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[2])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
 
     @if (!empty($footer->socialNetworks->pinterest))
-    <a href="{{$util->socialNetworkUrl('pinterest', $footer->socialNetworks->pinterest)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('pinterest', $footer->socialNetworks->pinterest)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[3])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->youtube))
-    <a href="{{$util->socialNetworkUrl('youtube', $footer->socialNetworks->youtube)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('youtube', $footer->socialNetworks->youtube)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[4])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
@@ -185,29 +185,29 @@ $arrayAlign = 'text-left';
     @endphp
 
     @if (!empty($footer->socialNetworks->facebook))
-    <a href="{{$util->socialNetworkUrl('facebook', $footer->socialNetworks->facebook)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('facebook', $footer->socialNetworks->facebook)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[0])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->instagram))
-    <a href="{{$util->socialNetworkUrl('instagram', $footer->socialNetworks->instagram)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('instagram', $footer->socialNetworks->instagram)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[1])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
 
     @if (!empty($footer->socialNetworks->twitter))
-    <a href="{{$util->socialNetworkUrl('twitter', $footer->socialNetworks->twitter)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('twitter', $footer->socialNetworks->twitter)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[2])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
 
     @if (!empty($footer->socialNetworks->pinterest))
-    <a href="{{$util->socialNetworkUrl('pinterest', $footer->socialNetworks->pinterest)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('pinterest', $footer->socialNetworks->pinterest)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[3])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif
     @if (!empty($footer->socialNetworks->youtube))
-    <a href="{{$util->socialNetworkUrl('youtube', $footer->socialNetworks->youtube)}}" target="_blank" rel="noopener noreferrer">
+    <a href="{{$util->socialNetworkUrl('youtube', $footer->socialNetworks->youtube)}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none">
     <img src="{{$util->toImage('local/images/icons', $icon[4])}}" {!!$attributes!!} class="rounded-circle shadow">
     </a>
     @endif

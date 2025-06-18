@@ -13,8 +13,8 @@
     }
 @endphp
 
-<div class="pl-4 p-md-4 {{$border}}">
-<ul class="list-unstyled pt-3 pl-1 pr-2 pr-sm-3 pr-lg-4">
+<div class="m-0 p-0 {{$border}}">
+<ul class="list-unstyled pt-3 px-2 px-xl-0 ps-3 ps-xl-3">
 
     @foreach($coments->items as $key => $item)
     {{--FIRST LEVEL LOPING ===============================================--}}
@@ -68,10 +68,14 @@
         if (!empty($contentbox->comentResponse)){
             $comentResponse = $contentbox->comentResponse;
         }
+
+
+
     @endphp
     {{--@props(['margin', 'photo', 'style', 'name', 'date', 'coment', 'id', 'comentResponse', 'font_family'])--}}
-    <x-laraflex::coment.coment :margin="$margin" :photo="$photo" :style="$style" :name="$name" :date="$date" :coment="$coment" :id="$id" :comentResponse="$comentResponse" :font_family="$font_family" />
+    {{--<x-laraflex::coment.coment :margin="$margin" :photo="$photo" :style="$style" :name="$name" :date="$date" :coment="$coment" :id="$id" :comentResponse="$comentResponse" :font_family="$font_family" />--}}
 
+    @include('laraflex::ComponentParts.coment.coment');
 
     @if(!empty($item->coments))
 
@@ -123,11 +127,13 @@
         }else{
             $id = '';
         }
-        $margin = 'ml-4 ml-lg-5';
+        $margin = 'ms-4 ms-lg-5';
         $comentResponse = false;
     @endphp
         {{--@props(['margin', 'photo', 'style', 'name', 'date', 'coment', 'id', 'comentResponse', 'font_family'])--}}
-        <x-laraflex::coment.coment :margin="$margin" :photo="$photo" :style="$style" :name="$name" :date="$date" :coment="$coment" :id="$id" :comentResponse="$comentResponse" :font_family="$font_family" />
+        {{--<x-laraflex::coment.coment :margin="$margin" :photo="$photo" :style="$style" :name="$name" :date="$date" :coment="$coment" :id="$id" :comentResponse="$comentResponse" :font_family="$font_family" /> --}}
+
+        @include('laraflex::ComponentParts.coment.coment');
 
     @endforeach
     @endif

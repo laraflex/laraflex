@@ -1,20 +1,23 @@
-{{--This component should only be added with PHP include--}}
-<ul class="pr-3x navbar-nav p-0 float-right">
-    <!-- Authentication Links -->
+{{-- INÍCIO DOS ITEMS DE LOGIN E REGISTRO ======================== --}}
+@php
+    $routeLogin = $util->toRoute('login');
+    $routeRegister = $util->toRoute('register');
+@endphp
+<li class="d-flex nav-item dropdown">
     @guest
-    <li class="nav-item dropdown active" >
-    <a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-togglex px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-    {{__('Login')}}<span class="caret"></span>
+    {{-- ================== OPÇÃO DE MENU PARA USUÁRIO NÃO LOGADOS =============================--}}
+    <a class="nav-link dropdown-toggle-xx px-2 py-2 mt-0 me-3 {{$itemNavbarColor}}" style="{{$font_color}}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    {{__('Login')}}
     </a>
-    <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
-    <a id="{{--$item_navbar_id--}}" class="nav-linkx dropdown-item px-3 {{$navbar_item}}" href="{{ route('login') }}">{{ __('Login') }}</a>
-    @if(!empty($navBar->showRegister) && $navBar->showRegister === true)
-    <a id="{{--$item_navbar_id--}}" class="nav-linkx dropdown-item px-3 {{$navbar_item}}" href="{{ route('register') }}">{{ __('Register') }}</a>
-    </div>
-    </li>
-    @endif
-    {{--Fim de controle de register--}}
+    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown" style="min-width:300px;{{$subMenuColor}}">
+        <li><a class="dropdown-item" href="{{$routeLogin}}">{{__('Login')}}</a></li>
+        @if (!empty($navBar->showRegister) && $navBar->showRegister == true)
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{$routeRegister}}">{{__('Register')}}</a></li>
+        @endif
+    </ul>
     @else
+    {{-- =============== OPÇÃO DE MENU PARA USUÁRIO AUTORIZADOS (LOGADOS) ======================--}}
     @php
             if (!empty($navBar->perfil->photoStorage)){
                 $photo = $navBar->perfil->photoStorage;
@@ -27,54 +30,34 @@
             }else{
                 $photo = $util->toImage('local/images/users/perfil1.png');
             }
+            $routePerfil = $util->toRoute('perfil/configure');
+            $routeSettings = $util->toRoute('settings');
     @endphp
-
-    <li class="nav-item dropdown active" >
-    <a id="{{$item_navbar_id}}" class="{{$fontWeight}} nav-link dropdown-togglex px-2 {{$navbar_item}}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-    <img class="mx-auto d-block borderx roundedx rounded-circle" src="{{$photo}}" alt="" style="width:32px; padding:0px;">
-
+    <a class="nav-link dropdown-toggle-xx px-2 py-0 mb-0 me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img class="mx-auto rounded-circle" src="{{$photo}}" alt="" style="width:32px; paddingx:0px;">
     </a>
-    <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
-    {{--Início de perfil----}}
-    <div class="navbar-header dropdown-item bg-white" style="min-width:300px;">
-        <div class="user-pic pt-3">
-            @if (!empty($photo))
-            <img class="mx-auto d-block rounded" src="{{$photo}}" alt="User" style="width:60px;">
-            @else
-            <img class="mx-auto d-block rounded" src="{{$util->toImage('local/images/users/perfil1.png')}}" alt="User" style="width:60px;">
-            @endif
-        </div>
-        <div class="user-info text-center">
-            @if (!empty($navBar->perfil->name))
-            @php
-                $arrayName = explode(" ", $navBar->perfil->name);
-                $num_names = count($arrayName);
-            @endphp
-
-            @if ($num_names > 1)
-            <div class="user-name center-center mt-2">{{reset($arrayName)}}
-            <strong>{{end($arrayName)}}</strong>
-            </div>
-            @else
-            <div class="user-name text-center mt-2">
-            <strong>{{ trim(reset($arrayName) )}}</strong>
-            </div>
-            @endif
-
-            @endif
-            <div class="user-role px-0 mx-0 text-center"><small>{{ trim(date("d/m/Y")) }}</small></div>
-        </div>
-        </div>
-    {{--Fim de perfil-------}}
-    <a class="dropdown-item text-center mt-2" href="{{ route('logout') }}"
-    onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
-    {{ __('Logout') }}
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    <div class="dropdown-menu dropdown-menu-lg-end" style="min-width:250px;">
+    <div class="border rounded m-2 mt-0" style="background-color: #F0FFF0">
+    <img class="mx-auto d-block rounded-circle pt-4 pb-3" src="{{$photo}}" alt="" style="width:60px; paddingx:0px;">
+    @if (!empty($navBar->perfil->name))
+        <div class="text-center w-100 mb-2">{{$navBar->perfil->name}}</div>
+    @endif
+    </div>
+    <div>
+    @if (!empty($navBar->showUserPerfil) && $navBar->showUserPerfil == true)
+    <a class="dropdown-item text-center w-100 my-0" href="{{$routePerfil}}"><small>{{__('Customize Profile')}}</small></a>
+    @endif
+    @if( !empty($navBar->showSetting) && $navBar->showSetting == true)
+    <a class="dropdown-item text-center w-100 my-0" href="{{$routeSettings}}"><small>{{__('Settings')}}</small></a>
+    @endif
+    <div><hr class="dropdown-divider"></div>
+    <form method="post" action="{{route('logout')}}">
     @csrf
+    <input type="submit" class="btn text-center w-100" value="{{ __('Logout') }}">
     </form>
     </div>
-    </li>
+    </div>
     @endguest
-    </ul>
+</li>
+
+{{--- FIM DOS ITENS DE LOGIN E REGISTRO =============================  --}}

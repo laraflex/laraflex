@@ -7,9 +7,11 @@
 @endphp
 
 @if (!empty($contentbox) && !empty($contentbox->showItems) && !empty($contentbox->data))
-<section id="contentbox" class="pb-1 pt-2 pt-md-3">
-<div class="container-xl pl-0 pr-0 pr-sm-0">
-<div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
+
+
+<section id="contentbox" class="pb-1x px-0">
+<div class="container-xl ps-0 pe-0 pe-sm-0">
+<div class="mx-0 mb-0 mx-xl-0">
 @php
 
 if (!empty($contentbox->hiddenBorder) && $contentbox->hiddenBorder == true){
@@ -26,7 +28,6 @@ if (!empty($contentbox->showItems)){
 }
 
 // FONT CONFIG ================================
-
 
 if (!empty($contentbox->fontFamily->title)){
     $font_family_title = 'font-family:'.$contentbox->fontFamily->title;
@@ -156,7 +157,7 @@ if (!empty($contentbox->comentInsert)){
 
 
 @endphp
-<div class="p-3 p-sm-4 p-lg-5 m-0 mt-4 mb-2 {{$border}}">
+<div class="p-3 p-sm-4 p-lg-5 m-0x mt-4 mb-2 mx-2 mx-md-2 mx-xl-0 {{$border}}">
 
     {{--title component ContentBox ==========================================--}}
     @if (in_array('title', $showItems) && !empty($title))
@@ -215,7 +216,7 @@ if (!empty($contentbox->comentInsert)){
     {{--comentButton component ContentBox ==========================================--}}
     @if(!empty($contentbox->comentInsert) && $contentbox->comentInsert === true)
 
-    <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3 mt-3" data-toggle="modal" data-target="#comentModal" data-id="0">
+    <button type="button" class="btn btn-sm btn-light btn-outline-secondary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#comentModal" data-id="0">
     {{__('Make a comment')}}
     </button>
 

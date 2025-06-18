@@ -1,7 +1,7 @@
 @props(['title', 'legend'])
 <div class="pt-2 pb-3 text-left">
     @if (!empty($title))
-    <div class="form-title text-left pt-2 pb-2" style="font-size:calc(1.1em + 0.6vw);line-height:calc(14px + 1.3vw);">
+    <div class="form-title text-left pt-2 pb-2" style="font-size:calc(0.9em + 0.6vw);line-height:calc(14px + 1.3vw);">
     {{$title}}</div>
     @endif
     @if (!empty($legend))

@@ -28,6 +28,8 @@
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 pt-sm-2 px-2 px-lg-3 px-xl-0 pb-3">
 
+
+
    {{--@props(['util','items','border'])--}}
    @php
        if(!empty($slidebar->title)){
@@ -45,6 +47,7 @@
        }else{
            $position = "text-center";
        }
+
    @endphp
     {{--TITLE COMPONENT SLIDEBAR =============================================--}}
     {{--@props(['title','legend','position','font_family_title','font_family' ])--}}
@@ -56,8 +59,10 @@
     @php
         $items = $slidebar->items;
     @endphp
-    {{--@props(['util','items','border'])--}}
+    {{--@props(['util','items','border'])
     <x-laraflex::slidebar.slides :util="$util" :items="$items" :border="$border" />
+    --}}
+    @include('laraflex::ComponentParts.slidebar.slides')
 
     @endif
     <span class="js_prev prev mr-0 pr-0 "><span class="badge badge-pill badge-light" style="background-color:rgb(255,255,255,0.6)">

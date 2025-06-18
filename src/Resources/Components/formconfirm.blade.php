@@ -62,6 +62,7 @@
 </div>
 </div>
 </section>
+
 @else
  {{--messageNull component Blogcardes ==========================================--}}
 <x-laraflex::shared.messagenull />

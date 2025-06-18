@@ -34,6 +34,7 @@
         $font_family = '';
     }
 
+
     if(!empty($form->topAlign) && $form->topAlign == true){
         $labelStyle = 'col-md-12';
         $inputStyle = 'col-md-12';
@@ -259,13 +260,13 @@
     {{--File Component FormEdit =================================--}}
     @elseif($item->type == 'file')
     @if(!empty($form->topAlign) && $form->topAlign === true)
-    <div class="form-group row pb-2 pb-md-3 pl-3 pr-3 pt-2">
+    <div class="form-group row pb-2 pb-md-3 ps-3 pe-3 pt-2">
     @else
-    <div class="form-group row pb-2 pb-md-3 pl-3 pl-md-4 pr-3 pt-2">
+    <div class="form-group row pb-2 pb-md-3 ps-3 ps-md-4 pe-3 pt-2">
     @endif
     {{--@props(['item', 'labelStyle', 'textAlign', 'inputStyle','util'])--}}
     <x-laraflex::formedit.file :util="$util" :item="$item" :labelStyle="$labelStyle" :textAlign="$textAlign" :inputStyle="$inputStyle" />
-    </div>
+
 
     {{--Checkbox Component FormEdit =================================--}}
     @elseif(!empty($item->type) && $item->type == 'checkbox')

@@ -7,20 +7,23 @@
 @foreach ($panelItems as $i => $item)
     {{--Input increment--}}
     @if (!empty($item->type) && $item->type == 'increment')
+
     <div class="d-none d-md-block">
     <a href="#" onclick="decrementaValor(1); return false;" >
-    <span class="pr-1 " style="font-size:20px;color:#000000;">-</span></a>
+    <span class="pe-1 " style="font-size:20px;color:#000000;">-</span></a>
     <a href="#" onclick="incrementaValor(10);return false;">
-    <span class="pl-1 pr-2" style="font-size:16px;color:#000000;">+</span></a>
+    <span class="ps-1 pe-2" style="font-size:16px;color:#000000;">+</span></a>
     </div>
-    <div class="form-groupx plx-2 mb-2 p-0 pr-2">
-    <div class="plx-2 m-0" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
+    <div class="form-groupx plx-2 mb-2 p-0 pe-2">
+    <div class="ps-2 m-0" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
     <input type="text" name="{{$item->name}}" id="increment" value="1" style="width: 45px;" class="form-control m-0">
     </div>
+
+
     @elseif(!empty($item->type) && $item->type == 'select')
-    <div class="form-groupx mb-2 mr-2">
-    <div class="pl-2 text-left" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
-    <select id="{{$item->id}}" class="form-control" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
+    <div class="form-groupx mb-2 me-2">
+    <div class="ps-2 text-left" style="font-size:calc(0.65em + 0.2vw)">{{$item->label}}</div>
+    <select id="{{$item->id}}" class="form-select" name="{{$item->name}}" style="font-size:calc(0.76em + 0.25vw);line-height: 2;" >
     <option value="" style="font-sizex:calc(0.76em + 0.25vw); line-height: 1.5;">{{$item->label}}...</option>
     @if (!empty($item->options))
     @foreach ($item->options as $key => $option)
@@ -69,7 +72,7 @@
     }
 @endphp
 <div class="p-1">
-<button type="submit" class="btn btn-light btn-outline-secondary mb-2 {{$marginTop}}"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
+<button type="submit" class="btn btn-light btn-outline-secondary mb-0 {{$marginTop}}"  style="font-size:calc(0.76em + 0.25vw);line-height:calc(1.1em + 0.28vw);">
 {{$panelButton}}</button>
 </div>
 </form>

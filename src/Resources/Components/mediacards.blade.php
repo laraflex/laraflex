@@ -80,14 +80,39 @@ if (!empty($mediacards->seeMore)){
     @if (!empty($item->url))
     {{--Movies for youtube ------------------}}
     @if(!empty($item->media) && $item->media == 'youtube')
+
+    @php
+        if (!empty($item->codVideo)) {
+            $urlVideo = 'https://www.youtube.com/embed/' . $item->codVideo;
+        }elseif(!empty($item->url)) {
+            $urlArray = explode("=", $item->url);
+            $urlVideo = 'https://www.youtube.com/embed/' . $urlArray[1];
+        }
+    @endphp
+
+
+    <a href="{{$urlVideo}}" data-toggle="lightbox" data-size="lg" data-gallery="media" class=" m-0" style="text-decoration: none;">
+
+
+    {{--
     <a href="{{$item->url}}" data-toggle="lightbox" data-width="1280" data-gallery="media" class=" m-0">
     {{--Movies for Vimeo ---------------------}}
     @elseif(!empty($item->media) && $item->media == 'vimeo')
     @php
-        $codeVimeo = substr($item->url, 18);
+        if (!empty($item->codVideo)) {
+            $codeVimeo = $item->codVideo;
+        }else{
+            $codeVimeo = substr($item->url, 18);
+        }
+
         $player = 'https://player.vimeo.com/video/' . $codeVimeo;
     @endphp
+
+    <a href="{{$player}}" data-toggle="lightbox" data-size="lg" data-gallery="media" class=" m-0" style="text-decoration: none;">
+
+    {{--
     <a href="{{$item->url}}" data-remote="{{$player}}" data-toggle="lightbox" data-width="1280" data-gallery="media" class=" m-0">
+    --}}
     @endif
     @else
     <a>

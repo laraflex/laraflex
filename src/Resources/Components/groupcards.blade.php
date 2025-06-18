@@ -68,18 +68,12 @@
         $seeMore = $util->toRoute($groupCards->seeMore);
         $position = "text-left";
     @endphp
-    {{--SEEMORE COMPONENT GROUPCARDS ============================== --}}
-    {{--@props(['seeMore','title','legend','font_family','font_family_title','position' ])--}}
-    <x-laraflex::groupcards.seemore :seeMore="$seeMore" :title="$title" :legend="$legend" :font_family="$font_family" :font_family_title="$font_family_title" :position="$position"/>
-
+    @include('laraflex::ComponentParts.shared.seemoretop')
     @else
     @php
         $position = "text-center";
     @endphp
-    {{-- TITLE COMPONENT GROUPCARDS ============================== --}}
-    {{--@props(['title','legend','font_family','font_family_title' ])--}}
-    <x-laraflex::groupcards.title :title="$title" :legend="$legend" :font_family="$font_family" :font_family_title="$font_family_title" :position="$position"  />
-
+    @include('laraflex::ComponentParts.shared.title')
     @endif
     <div class="row p-0 m-0 pt-1">
     @php

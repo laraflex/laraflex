@@ -1,7 +1,7 @@
 @props(['name','label','labelStyle','items','subType','currentValue','required','textAlign','inputStyle'])
 
 <fieldset class="form-group">
-    <div class="row">
+    <div class="row py-2">
     <div class="{{$labelStyle}}">
     @if (!empty($label) && !empty($name))
     <legend for="{{$name}}" class="col-form-label {{$textAlign}} w-100">{{$label}}:</legend>

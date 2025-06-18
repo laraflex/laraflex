@@ -12,9 +12,9 @@
     @endphp
 
     @if($key == 0)
-    <a href="{{$image}}" class="stretched-link w-100" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
+    <a href="{{$image}}" class="stretched-link w-100" data-size="lg" data-toggle="lightbox" data-gallery="gallery" style="cursor:zoom-in;">
     </a>
     @else
-    <div data-toggle="lightbox" data-gallery="gallery" data-remote="{{$image}}"></div>
+    <div data-toggle="lightbox" data-size="lg" data-gallery="gallery" data-remote="{{$image}}"></div>
     @endif
 @endforeach

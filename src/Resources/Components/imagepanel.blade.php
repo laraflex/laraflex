@@ -1,32 +1,8 @@
+@if (!empty($objectHeader))
 @php
-if (!empty($objectHeader)){
     $imagePanel = $objectHeader;
-}
-if(!empty($imagePanel->imageClass) && $imagePanel->imageClass == "container"){
-    $imageClass = "container-xl";
-}else{
-    $imageClass = "";
-}
-if(!empty($imagePanel->textAlign)){
-    $textAlign = 'text-' . $imagePanel->textAlign;
-}else{
-    $textAlign = 'text-left';
-}
-@endphp
 
-{{--> Controle de fonte de texto---}}
-@php
-        if (!empty($imagePanel->fontFamily->title)){
-            $font_family_title = 'font-family:'.$imagePanel->fontFamily->title;
-        }else{
-            $font_family_title = '';
-        }
-        if (!empty($imagePanel->fontFamily->shared)){
-            $font_family = 'font-family:'.$imagePanel->fontFamily->shared;
-        }else{
-            $font_family = '';
-        }
-        if (!empty($imagePanel->imageStorage)){
+    if (!empty($imagePanel->imageStorage)){
             $image = $imagePanel->imageStorage;
         }
         elseif (!empty($imagePanel->imagePath)){
@@ -36,70 +12,46 @@ if(!empty($imagePanel->textAlign)){
             $image = $util->toImage($imagePanel->image);
         }
         else{
-            $image = NULL;
+            $image = $util->toImage('local/images/app/imagepanel1.jpg');
         }
 @endphp
-{{-------------------------------}}
-@if(!empty($imagePanel) && !empty($image))
-<div id="ImagePanel" class="{{$imageClass}} px-0 shadow" data-ride="carousel" style="border-bottom:1px solid #cccccc;">
-<div class="carousel-inner pl-0 pr-0 ">
-<div class="carousel-item active">
+<div class="overflow-hidden p-3 p-md-5 mb-0 mb-md-2 text-center bg-secondary" style="background-image:url({{$image}}); background-size:cover;">
+    @php
+        if (!empty($imagePanel->fontColor)) {
 
- {{--Image bacground component Imagepanel ====================================--}}
-    <img src="{{$image}}" class="img-fluid w-100">
+            if ($imagePanel->fontColor == 'white' OR $imagePanel->fontColor == '#FFFFFF'){
+                $fontStyleColor = 'color: #FFFFFF; text-shadow: 2px 2px 2px #272424;';
+                $btnClassStyle = 'btn-light';
+                $btnColor = '';
+            }elseif ($imagePanel->fontColor == 'dark' OR $imagePanel->fontColor == '#000000'){
+                $fontStyleColor = 'color: #000000; text-shadow: 2px 2px 2px #8a8888;';
+                $btnClassStyle = 'btn-dark';
+                $btnColor = '';
+            }else{
+                $fontStyleColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 2px #ecedf1;';
+                $btnClassStyle = 'btn-secondary';
+                $btnColor = 'background-color:' . $imagePanel->fontColor . ';';
+            }
+        }else {
+            $fontStyleColor = 'color: #FFFFFF; text-shadow: 2px 2px 2px #272424;';
+            $btnClassStyle = 'btn-light';
+        }
 
-    <div class="container-xl">
-        @php
-            if(!empty($imagePanel->fontColor) && strtoupper($imagePanel->fontColor) == "#FFFFFF"){
-                $fontColor = 'color:white; text-shadow: 2px 2px 3px #6E6E6E;';
-                $btnColor = 'btn-outline-light';
-                $imagebutton = 'imagebutton';
-            }elseif(!empty($imagePanel->fontColor) && $imagePanel->fontColor == 'white'){
-                $fontColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 3px #6E6E6E;';
-                $btnColor = 'btn-outline-light';
-                $imagebutton = 'imagebutton';
-            }elseif(!empty($imagePanel->fontColor) && $imagePanel->fontColor != 'white'){
-                $fontColor = 'color:' . $imagePanel->fontColor . '; text-shadow: 2px 2px 3px #c0c0c0;';
-                $btnColor = 'btn-outline-dark';
-                $imagebutton = 'imagebutton-dark';
-            }else{
-                $fontColor = 'color:white; text-shadow: 2px 2px 3px #6E6E6E;';
-                $btnColor = 'btn-outline-light';
-                $imagebutton = 'imagebutton';
-            }
-            if (!empty($imagePanel->title)){
-                $title = $imagePanel->title;
-            }else{
-                $title = NULL;
-            }
-            if (!empty($imagePanel->legend)){
-                $legend = $imagePanel->legend;
-            }else{
-                $legend = NULL;
-            }
-            if (!empty($imagePanel->route)){
-                $route = $util->toRoute($imagePanel->route);
-            }else{
-                $route = '#';
-            }
-            if (!empty($imagePanel->btnLabel)){
-                $btnLabel = $imagePanel->btnLabel;
-            }else{
-                $btnLabel = NULL;
-            }
+        $fontSizeTitle = 'line-height:calc(0.96em + 0.9vw); font-size:calc(0.5em + 2.2vw);';
+        $fontSizeLegend = ''; //font-size:calc(0.8em + 0.7vw);';
+        $fontBtn = 'font-size:calc(0.4em + 0.8vw);';
+        if (!empty($imagePanel->fontFamilyTitle)){
+            $fontFamilyTitle = 'font-family:' . $imagePanel->fontFamilyTitle . ';';
+        }else{
+            $fontFamilyTitle = '';
+        }
 
-        @endphp
-        {{--content components Imagepanel ====================================--}}
-        {{--@props(['textAlign', 'title', 'text', 'btnLabel', 'btnColor', 'route', 'imagebutton', 'fontColor', 'font_family', 'font_family_title'])--}}
-        @include('laraflex::ComponentParts.imagepanel.content')
+    @endphp
 
-    </div>
-</div>
-</div>
-</div>
+    @include('laraflex::ComponentParts.imagepanel.content')
 
+  </div>
 @else
  {{--messageNull component Blogcardes ==========================================--}}
 <x-laraflex::shared.messagenull />
-
 @endif

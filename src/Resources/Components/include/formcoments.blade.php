@@ -8,8 +8,8 @@
         <img src="{{url('local/images/icons/message.png')}}" class="mr-2 ml-3" style="width:40px; height:40px;">
         {{$user->name}}</h6>
     @endif
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+    {{--<span aria-hidden="true">&times;</span>--}}
     </button>
     </div>
     <div class="modal-body">
@@ -21,7 +21,12 @@
     </div>
     <input type="hidden" class="article" id="article" name="articleId" value="{{$contentbox->data->id}}">
 
+
+
+
+
     <input type="hidden" class="recipient" id="recipient" name="comentId">
+
     <div class="p-0">
     <button type="submit" class="btn btn-sm btn-light btn-outline-secondary mt-3">{{ __('Save your comment') }}</button>
     </div>
@@ -31,5 +36,6 @@
     </div>
     </div>
 </div>
+
 <!-- End Modal ------------------->
 

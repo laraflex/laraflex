@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
         slideSpeed: 600,
         rewind: true,
         rewindSpeed:300
-        
+
     });
 });
 
 </script>
 @endif
+

@@ -95,9 +95,6 @@
     {{$table->legend}}</div>
     @endif
 
-
-
-
     <table class="table table-sm table-bordered table-responsive-sm mt-0" style="line-height:calc(0.9em + 0.8vw); font-size:calc(0.86em + 0.17vw);">
     @if (!empty($paginate))
     @if ($paginate->lastPage() > 1)
@@ -150,10 +147,9 @@
     @if (!empty($table->link) && $key == $table->link)
     <td  class="{{$td_height}} {{$px}}">
     <a href="{{$util->toRoute($table->route, $item->id)}}" class="table-link"
-    style="font-size:calc(0.75em + 0.20vw); color:{!!$styleTable['lineColor']!!};">
+    style="font-size:calc(0.75em + 0.20vw); color:{!!$styleTable['lineColor']!!}; text-decoration:none">
     <span class="badge badge-pillx px-2x py-2 mx-0 mr-2" style="width:30px; height:30px; background-color: {!!$styleTable['badge']!!}; color:{!!$styleTable['lineColor']!!}; border: 1px solid #A4A4A4;font-size:14px;">
-    {{str_split($fieldValue)[0]}}</span>
-    {{$fieldValue}}
+    {{str_split($fieldValue)[0]}}</span> {{$fieldValue}}
     </a>
     </td>
     @else

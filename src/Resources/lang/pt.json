@@ -1,5 +1,8 @@
 {
     "Logout": "Sair",
+    "Logout of your account": "Faça logout de sua conta",
+    "Customize Profile": "Personalisar Perfil",
+    "Settings": "Configurações",
     "and": "e",
     "or": "ou",
     "No value found for label":"Não foi encontrado um valor para o label",
@@ -38,7 +41,7 @@
     "Abstract": "Resumo",
     "Author": "Autor",
     "Keywords": "Palavras-chave",
-    "Register": "Registre-se",
+    "Register": "Cadastre-se",
     "Community": "Comunidade",
     "Attendance": "Atendimento",
     "Components": "Componentes",

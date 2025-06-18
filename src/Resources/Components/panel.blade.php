@@ -40,9 +40,9 @@
 <x-laraflex::panel.title :title="$title" :font_family_title="$font_family_title" />
 
 @if(!empty($panel->bgColor))
-<div class="row w-100 p-0 m-0 py-2 py-lg-3 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
+<div class="row w-100 p-0 m-0 {{$stylePanel}}" style="background-color:{{$panel->bgColor}}">
 @else
-<div class="row w-100 p-0 m-0 py-2 py-lg-3 {{$stylePanel}}">
+<div class="row w-100 p-0 m-0 pt-2 pt-lg-3 pb-2 pb-md-0 {{$stylePanel}}">
 @endif
 
 @php
@@ -61,11 +61,14 @@
         $lightbox = $panel->lightbox;
     }else{
         $lightbox = NULL;
+
     }if (!empty($panel->images)){
         $images = $panel->images;
     }else{
         $images = NULL;
     }
+
+
     if (!empty($panel->showItems)){
         $showItems = $panel->showItems;
     }else{
@@ -73,6 +76,8 @@
     }
     $data = $panel->data;
 @endphp
+
+
 
 {{-- IMAGE COMPONENT PANEL ============================== --}}
 @if (!empty($bgImage))

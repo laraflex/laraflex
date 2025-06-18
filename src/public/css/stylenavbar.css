@@ -11,9 +11,11 @@
     margin-bottom: 3px;
 }
 
+
+
 #item-navbar-dark:hover{
     /* border-bottom:2px solid #585858; */
-    border-bottom:2px solid rgb(0,0,0,0.3);
+    border-bottom:2px solid rgba(228, 222, 222, 0.3);
     max-width: 250px;
     padding-bottom: 3px;
     margin-bottom: 3px;
@@ -43,8 +45,6 @@
     margin-left:-1px;
     padding-left: 8px;
 }
-
-
 
 #navbar{
     position: absolute;
@@ -87,6 +87,115 @@
 #navbar-btn.btn-integrated-dark:hover{
     background-color: rgba(255,255,255,0.5);
 }
+/*
+* theme navbar white
+*/
+
+.navbar-light-color:link{
+    color: #1f1e1e;
+}
+
+.navbar-white-color:hover{
+
+    background-color: rgb(248, 249, 250);
+    border:1px solid #d1d2d3;
+    border-radius: 0.2em;
+    margin-bottom: -1px;
+    margin-top: -1px;
+    margin-right: -1px;
+    margin-left:-1px;
+    padding-left: 8px;
+}
+
+.navbar-white-color:visited{
+    color: #FFFFFF;
+}
+
+.navbar-white-color:active{
+    color: #FFFFFF;
+}
+
+/*
+* theme navbar light
+*/
+
+.navbar-light-color:hover{
+    background-color: rgb(129, 131, 134);
+    border:1px solid #726d6d;
+    border-radius: 0.2em;
+    margin-bottom: -1px;
+    margin-top: -1px;
+    margin-right: -1px;
+    margin-left:-1px;
+    padding-left: 8px;
+}
+
+.navbar-light-color:visited{
+    color: #FFFFFF;
+}
+
+.navbar-light-color:active{
+    color: #FFFFFF;
+}
+
+/*
+* theme navbar dark
+*/
+
+.navbar-dark-color:link{
+    color: #aaa8a8;
+}
+
+.navbar-dark-color:hover{
+    color: #c0c0c0;
+    background-color: rgb(76, 77, 78);
+    border:1px solid #6d6b6b;
+    border-radius: 0.2em;
+    margin-bottom: -1px;
+    margin-top: -1px;
+    margin-right: -1px;
+    margin-left:-1px;
+    padding-left: 8px;
+}
+
+.navbar-dark-color:visited{
+    color: #FFFFFF;
+}
+
+.navbar-dark-color:active{
+    color: #FFFFFF;
+}
+
+/*
+* theme navbar nave
+*/
+.navbar-nave-color:link{
+    color: #cccccc;
+}
+
+.navbar-nave-color:hover{
+    color: #c0c0c0;
+    background-color: rgb(110, 109, 114);
+    border:1px solid #969393;
+    border-radius: 0.2em;
+    margin-bottom: -1px;
+    margin-top: -1px;
+    margin-right: -1px;
+    margin-left:-1px;
+    padding-left: 8px;
+}
+
+.navbar-nave-color:visited{
+    color: #FFFFFF;
+}
+
+.navbar-nave-color:active{
+    color: #FFFFFF;
+}
+
+
+
+
 
 /**
 * fim de bloco de navbar -----------------------------------------------

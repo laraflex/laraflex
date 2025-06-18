@@ -1,6 +1,6 @@
 @php
     $bootstrapCss = $defaultConfig['bootstrapcss'];
-@endphp]
+@endphp
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -10,10 +10,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="google" content="notranslate">
     @yield('meta')
-    <link rel="icon" sizes="16x16" href="favicon.png">
-    <link rel="shortcut icon" type="image/png" sizes="16x16" href="favicon.png">
+    @php
+    $linkRel = $util->toRoute("local/images/icons/coruja.png");
+    @endphp
+    <link rel="icon" sizes="20x20" href="{{$linkRel}}">
+    <link rel="shortcut icon" type="image/png" sizes="20x20" href="coruja.png">
     <!--Configuração Bootstrap arquivo config-->
-    <link rel="stylesheet" href= {!! $bootstrapCss !!}>
+    <link rel="stylesheet" href= "{!! $bootstrapCss !!}">
     <link href="{{$util->toRoute('css/contentFlex.css')}}" rel="stylesheet">
     @yield('head')
 <style type="text/css">
@@ -26,18 +29,17 @@
     </head>
 <body class="bg-white">
 @yield('header')
+@yield('blog')
 @yield('content')
 @yield('footer')
-<!-- JavaScript ------------------------------------- -->
+
 @php
-    $jquery = $defaultConfig['jquery'];
     $pooperJs = $defaultConfig['pooperjs'];
     $bootstrapJs = $defaultConfig['bootstrapjs'];
 @endphp
 <!-- JavaScript ------------------------------------- -->
-<script src= {!! $jquery !!}></script>
-<script src= {!! $pooperJs !!}></script>
-<script src= {!! $bootstrapJs !!}></script>
+<script src= "{!! $pooperJs !!}"></script>
+<script src= "{!! $bootstrapJs !!}"></script>
 
 @yield('scriptjs')
 </body>

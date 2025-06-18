@@ -3,23 +3,22 @@ namespace laraflex\ViewHelpers\Dependencies;
 
 use laraflex\Contracts\Dependencies;
 
-class PanelnavModalDependencies extends Dependencies
+class BloglistDependencies extends Dependencies
 {
     public function toArray($data = NULL, array $config = NULL)
     {
         $var = [
             [
                 'component' => 'NULL',
-                'type' => 'link',
-                'link' => 'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+                'type' => 'local',
+                'link' => 'css/bloglist.css',
             ],
+
         ];
         return $var;
     }
 
-
     static public function create(){
-        return new PanelnavModalDependencies();
+        return new BloglistDependencies();
     }
 }
-

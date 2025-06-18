@@ -49,8 +49,8 @@ if (!empty($blogcards->fontFamily->shared)){
 @endif
 {{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
 
-<div class="container-xl pl-0 pr-0 pr-sm-0 mb-2">
-<div class="mx-0 mb-0 mt-1 px-2 px-md-3 px-xl-0">
+<div class="container-xl ps-0 pe-0 pe-sm-0 mb-2">
+<div class="mx-0 mb-0 mt-1 px-2 px-md-2 px-xl-0">
 {{--INICIO DE BLOCO DE COMPONENTE--}}
 @php
     if (!empty($imagecontrolpanel->title)){

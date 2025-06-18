@@ -7,9 +7,9 @@ $iconKey = 0;
         @if (!property_exists($item, "permission") OR $item->permission === true)
         @if (property_exists($item, "subItems"))
         @if ($key == 0)
-        <li class="sidebar-dropdown border-top border-bottom">
+        <li class="sidebar-dropdown {{$border_top}} {{$border_bottom}}">
         @else
-        <li class="sidebar-dropdown border-bottom">
+        <li class="sidebar-dropdown {{$border_bottom}}">
         @endif
         {{--<li class="sidebar-dropdown">--}}
         <a href="#" >
@@ -37,9 +37,9 @@ $iconKey = 0;
         </li>
         @else
         @if ($key == 0)
-        <li class="border-top border-bottom">
+        <li class="{{$border_top}} {{$border_bottom}}">
         @else
-        <li class="border-bottom">
+        <li class="{{$border_bottom}}">
         @endif
         @if (!empty($item->vueAction))
         <a href="#" v-on:click="{{$item->vueAction}}">

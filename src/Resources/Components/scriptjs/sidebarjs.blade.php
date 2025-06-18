@@ -31,5 +31,16 @@ $("#show-sidebar").click(function () {
 
 });
 
+const mButton = document.getElementById("show-sidebar");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 60) {
+                mButton.style.backgroundColor = "#666666"; // Muda para vermelho quando rolar mais de 100px
+                mButton.style.color = "#FFFFFF";
+            } else {
+                mButton.style.backgroundColor = ""; // Volta a ser azul quando rolar menos de 100px
+                mButton.style.color = "";
+            }
+        });
+
 </script>
 @endif

@@ -10,9 +10,9 @@
 
 {{--adiciona regras regras de validação--}}
 @if (!empty($required) && $required === true)
-<select id="{{$id}}" class="custom-select  {{$itemname}}" name="{{$itemname}}" required>
+<select id="{{$id}}" class="form-select  {{$itemname}}" name="{{$itemname}}" required>
 @else
-<select id="{{$itemid}}" class="form-control {{$itemname}}" name="{{$itemname}}">
+<select id="{{$itemid}}" class="form-select {{$itemname}}" name="{{$itemname}}">
 @endif
 {{---------------------------------------}}
 @if (!empty($legendoption))

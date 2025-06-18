@@ -8,15 +8,20 @@ if(!empty($objectConfig)){
     }else{
         $border = NULL;
     }
+
+    $contentClass = config('laraflex.contentClass');
+
 @endphp
+{{--INICIO DO BLOCO DE CONTENT--}}
+@if (!empty($objetoConfig->components))
 
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <main id="content" class="pt-3 pt-sm-4" style="min-height:calc(52vh);">
 @else
 <main id="content" class="pt-3 pt-sm-2" style="min-height:calc(52vh);">
 @endif
-@if (!empty($objetoConfig->contentClass) && $objetoConfig->contentClass != 'container')
-<div class="w-100" style="min-height:calc(43vh);">
+@if (!empty($contentClass) && $contentClass == 'container-fluid')
+<div class="container-fluid" style="min-height:calc(43vh);">
 @else
 <div class="container-xl px-0" style="min-height:calc(43vh);">
 @endif
@@ -84,8 +89,7 @@ if(!empty($objectConfig)){
 @endif
 {{--Fim bloco de mensagem e alerta--------------------------}}
 
-
-@if (!empty($objetoConfig->components))
+{{--@if (!empty($objetoConfig->components))
 {{-- Início do bloco lógico -------------------------------}}
     @foreach ($objetoConfig->components as $object)
         @if (!empty($object))
@@ -108,7 +112,10 @@ if(!empty($objectConfig)){
 {{-- fim do bloco lógico ----------------------------------}}
 
 
-@endif
+{{--@endif--}}
+
+
+
 </div>
 @if (!empty($objetoConfig->onePage) && $objetoConfig->onePage === true)
 <div class="p-sm-2"></div>
@@ -122,4 +129,4 @@ if(!empty($objectConfig)){
 @endif
 </main>
 
-
+@endif

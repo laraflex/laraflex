@@ -29,6 +29,8 @@
                 $endStyleFont = '</' . $arrayOptions[0] . '>';
             }
         if(!empty($arrayOptions[1])){
+
+
             if (strtolower($arrayOptions[1]) == 'large'){
                 $style_font = 'font-size:calc(0.8em + 0.9vw);line-height:calc(1.1em + 0.28vw);';
             }elseif (strtolower($arrayOptions[1]) == 'x-large'){
@@ -42,6 +44,7 @@
             }
         }
     }
+
 @endphp
 {{--End de codificaçãode de fonte -----------------------------------------}}
 <p class="m-0 p-0 mb-1 mb-sm-2" style="{{$style_font}}{{$font_color}}{{$font_family}}">

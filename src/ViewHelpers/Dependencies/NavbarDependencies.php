@@ -13,6 +13,7 @@ class NavbarDependencies extends Dependencies
                 'type' => 'local',
                 'link' => 'css/stylenavbar.css',
             ],
+
             [
                 'component' => 'navbarjs',
                 'type' => 'scriptjs',

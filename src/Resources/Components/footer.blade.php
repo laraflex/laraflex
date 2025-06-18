@@ -123,16 +123,16 @@ $num_items = 0;
     @foreach($footer->items as $key => $item)
 
     <div class="col-sm">
-        <div class="navx mb-2 {{$arrayAlign}}" style="font-size:calc(14px + 0.21vw);font-weight:bold;">{{__($key)}}</div>
+        <div class="nav mb-2 {{$arrayAlign}}" style="font-size:calc(14px + 0.21vw);font-weight:bold;">{{__($key)}}</div>
         <ul class="navbar-nav mr-autox {{$arrayAlign}}">
         @foreach($item as $listItem)
-        @if(!empty($listItem->route) && $listItem->route == '#')
-        <li class=""><a href="#" style="{{$fontColor}} font-size:calc(14px + 0.12vw);">{{$listItem->label}}</a></li>
+        @if(empty($listItem->route) OR $listItem->route == '#')
+        <li class="nav-item"><a href="#" style="{{$fontColor}} font-size:calc(14px + 0.12vw); text-decoration:none;">{{$listItem->label}}</a></li>
         @elseif(!empty($listItem->route))
         @php
         $route = $util->toRoute($util->slug($key, '-'), $listItem->route);
         @endphp
-        <li class=""><a href="{{$route}}" style="{{$fontColor}} font-size:calc(14px + 0.12vw);">{{$listItem->label}}</a></li>
+        <li class=""><a href="{{$route}}" style="{{$fontColor}} font-size:calc(14px + 0.12vw); text-decoration:none;">{{$listItem->label}}</a></li>
         @endif
         @endforeach
         </ul>

@@ -43,7 +43,7 @@
             <!--span class="user-role px-0 mx-0 text-center">{{-- trim(date("d/m/Y"))--}} </span>-->
 
             <div>
-            <a class="tooltip-dx btn" data-tooltip="Desconectar" href="{{ route('logout') }}"
+            <a class="tooltip-dx btn" data-bs-toggle="tooltip" data-bs-placement="top" data-tooltip="Desconectar" title="Desconectar" href="{{ route('logout') }}"
             onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">
             <span class="user-status text-center">

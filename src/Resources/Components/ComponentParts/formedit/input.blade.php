@@ -1,5 +1,5 @@
 @props(['item', 'labelStyle', 'textAlign', 'inputStyle','util'])
-<div class="form-group row">
+<div class="form-group row py-2">
     <div class="{{$labelStyle}}">
     @if (!empty($item->label) && !empty($item->name))
     <label for="{{$item->name}}" class="col-form-label {{$textAlign}} w-100">{{$item->label}}:</label>

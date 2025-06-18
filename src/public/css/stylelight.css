@@ -112,7 +112,9 @@
 
   #show-sidebar.show-sidebar-light:hover{
       background-color: rgb(255,255,255,0.3);
+
       border:1px solid rgb(255,255,255,0.4);
+
   }
 
   #show-sidebar.show-sidebar-dark{
@@ -519,7 +521,9 @@
   .chiller-theme .sidebar-wrapper .sidebar-search,
   .chiller-theme .sidebar-wrapper .sidebar-menu {
 
-      border-top: 1px solid #ccc;
+    border-top: 0px solid #FFF;
+
+
   }
 
   .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
@@ -593,8 +597,10 @@
   }
   .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div{
       background-color:#FFFFFF;
+
       border-top:1px solid #ccc;
       border-bottom:1px solid #ccc;
+
       padding-bottom:5px;
   }
   .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
@@ -618,7 +624,9 @@
       */
       background-color:#FAFAFA;
       box-shadow: 0px -1px 5px #282c33;
+
       border-top: 1px solid #464a52;
+
   }
 
   .chiller-theme .sidebar-footer>a:first-child {
@@ -628,3 +636,5 @@
   .chiller-theme .sidebar-footer>a:last-child {
       border-right: none;
   }
+
+

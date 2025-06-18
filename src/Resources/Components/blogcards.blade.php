@@ -21,18 +21,13 @@
             $font_family = '';
         }
         // HEADERS COMPONENTS ============================================
-        if (!empty($blogcards->seeMore)){
-            $seeMore = $blogcards->seeMore;
-            $route = $util->toRoute($seeMore);
-        }else{
-            $seeMore = NULL;
-            $route = '';
-        }
         if (!empty($blogcards->title)){
             $title = $blogcards->title;
         }else{
             $title = NULL;
         }
+
+        $title = $blogcards->title;
         if (!empty($blogcards->legend)){
             $legend = $blogcards->legend;
         }else{
@@ -41,8 +36,22 @@
         // Classes de estilo de título e legenda =========================
         $objectClass = 'blogcards-title';
         $sharedClass = 'blogcards-shared';
+
+        //=======================================
+        if(!empty($blogcards->seeMore)){
+            $seeMore = $util->toRoute($blogcards->seeMore);
+            $paginate = NULL;
+            $numPage = NULL;
+        }elseif(!empty($blogcards->paginate)){
+            $paginate = $blogcards->paginate;
+            $paginates = $blogcards->paginate->links('components.bootstrap');
+            $seeMore = NULL;
+            $numPage = $paginate->currentPage();
+        }
+        $page = !empty($blogcards->page)?$blogcards->page:$page = NULL;
+
     @endphp
-<section id="blogcards" class="pb-1 pt-3 pt-md-4">
+<section id="blogcards" class="pb-1 pt-0 pt-md-0">
 
 {{--BLOCO PARA COMPONENTES VUEJS--
 @if (!empty($blogcards->vuejsComponents))
@@ -54,15 +63,29 @@
 @endif
 {{--FIM DE BLOCO PARA COMPONENTES VUEJS--}}
 
+
 <div class="container-xl px-0">
 <div class="mx-0 mb-0 mt-1 px-2 px-lg-3 px-xl-0">
+    <div class=" pb-0 mb-0">
 
-    <div class="d-block d-sm-block pb-0 mb-0">
-    {{--HEADER BLOCK title, legend, seeMore ======================================= --}}
-    {{--@props(['seeMore','route', 'title','legend','objectClass','sharedClass', 'font_family', 'font_family_title'])--}}
-    <x-laraflex::header :seeMore="$seeMore" :route="$route" :title="$title" :legend="$legend" :objectClass="$objectClass" :sharedClass="$sharedClass" :font_family="$font_family" :font_family_title="$font_family_title" />
 
-    <div class="row p-2">
+
+
+
+    {{--BLOCO DE SEEMORE TOP BUTTON ============================--}}
+    @if (!empty($seeMore))
+    @php
+        $position = "text-start";
+    @endphp
+    @include('laraflex::ComponentParts.shared.seemoretop')
+    @elseif (!empty($title))
+    @php
+        $position = "text-center";
+    @endphp
+    @include('laraflex::ComponentParts.shared.title')
+    @endif
+    {{--==========================================================--}}
+    <div class="row px-2 px-lg-0 pt-2">
         {{--Início linha linha ==== --}}
     @php
     $column = 'col-6 col-sm-6 col-md-4 col-lg-3';
@@ -71,6 +94,8 @@
     $fontAbstract = 'font-size:calc(0.68em + 0.15vw);';
     $visibility = ['d-block', 'd-block', 'd-block', 'd-md-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block', 'd-none d-lg-block'];
     $num_limit = 4;
+
+
     @endphp
 
     {{--CARDS - ADDING BLOGCARDS ITEMS--}}
@@ -81,11 +106,11 @@
     break;
     }
     @endphp
-    <div class="{{$column}} p-0 pb-2 pb-lg-2 {{$visibility[$key]}}">
+    <div class="{{$column}} p-1 p-sm-0 pb-2 pb-lg-2 {{$visibility[$key]}}">
     @else
-    <div class="{{$column}} p-0 pb-2 pb-lg-2">
+    <div class="{{$column}} p-1 p-sm-0 pb-2 pb-lg-2">
     @endif
-    <article class= "mx-sm-1 mx-lg-2 h-100 {{$border}}">
+    <article class= "mx-sm-1 mx-xl-1 h-100 {{$border}}">
     <header class="p-3 p-sm-3 p-md-3">
     @php
         // TITLE CONFIGURATION ==================
@@ -147,18 +172,7 @@
             $icon = '';
             $smallIicon = '';
         }
-        //=======================================
-        if(!empty($blogcards->seeMore)){
-            $seeMore = $util->toRoute($blogcards->seeMore);
-            $paginate = NULL;
-            $numPage = NULL;
-        }elseif(!empty($blogcards->paginate)){
-            $paginate = $blogcards->paginate;
-            $paginates = $blogcards->paginate->links('components.bootstrap');
-            $seeMore = NULL;
-            $numPage = $paginate->currentPage();
-        }
-        $page = !empty($blogcards->page)?$blogcards->page:$page = NULL;
+
 
         //BUTTONS CONFIGURATION ============================
         if (!empty($blogcards->vueAction) && !empty($blogcards->vuejsComponents)){
@@ -184,17 +198,8 @@
         }else{
             $route = NULL;
         }
-        /*
-        if(!empty($blogcards->seeMore)){
-            $seeMore = $util->toRoute($blogcards->seeMore);
-            $paginate = NULL;
-            $page = NULL;
-        }elseif(!empty($blogcards->paginate)){
-            $paginate = $blogcards->paginate;
-            $paginates = $blogcards->paginate->links('components.bootstrap');
-            $seeMore = NULL;
-        }
-        */
+
+
     @endphp
 
     {{--title component blogcards ====================================--}}

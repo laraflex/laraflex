@@ -25,6 +25,8 @@ elseif(!empty($panelnav->logo)){
 }
 @endphp
 
+
+
 @if (!empty($panelnav))
 <section id="panelnavmodal" class="m-0 p-0">
 <div style=" class="m-0 p-0"></div>
@@ -65,11 +67,11 @@ elseif(!empty($panelnav->logo)){
             $btnLabel = 'Summary';
         }
         @endphp
-        <button type="button" class="btn btn-outline-lightx btn-light d-none d-md-block" data-toggle="modal" data-target="#panelnavModal">
+        <button type="button" class="btn btn-outline-lightx btn-light d-none d-md-block" data-bs-toggle="modal" data-bs-target="#panelnavModal">
         <span class="ml-2 mr-2" translate="no">{{__($btnLabel)}}</span>
         <i class="fas fa-bars"></i>
         </button>
-        <button type="button" class="btn btn-sm btn-outline-lightx btn-light d-block d-md-none" data-toggle="modal" data-target="#panelnavModal">
+        <button type="button" class="btn btn-sm btn-outline-lightx btn-light d-block d-md-none" data-bs-toggle="modal" data-bs-target="#panelnavModal">
         <span class="ml-2 mr-2" translate="no">{{__($btnLabel)}}</span>
         <i class="fas fa-bars"></i>
         </button>
@@ -85,63 +87,20 @@ elseif(!empty($panelnav->logo)){
       <div class="modal-content" style="min-width:340px;">
         <div class="modal-header p-2">
            <img src="{{$util->toImage('local/images/app/etiqueta.jpg')}}" style="width: 60%;">
+           {{--
            <h4 class="" style="position:absolute; left:20px; top:15px;font-family:verdana; color: #FFFFFF;text-shadow: 2px 2px 3px #6E6E6E;">
             {{__($btnLabel)}}</h4>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
+            --}}
+           <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close">
+           {{--<span aria-hidden="true">&times;</span>--}}
            </button>
         </div>
-        <div class="modal-body p-2 border">
+        <div class="modal-body p-2 border w-100">
         @if(!empty($panelnav->items) && !empty($panelnav->route))
         <div class="accordion" id="navmodal">
             @foreach($panelnav->items as $i => $item)
             @if (!empty($item->label))
-            @if (property_exists($item, 'subItems'))
-            {{-------------------------------}}
-            <div class="cardx">
-                <div class="card-headerx" id="{{'heading' . $i}}">
-                   <div class="" style="margin-bottom:1px;">
-                     <a class="btn list-group-item btn p-2 text-left" type="button" data-toggle="collapse" data-target="#{{'collapse' . $i}}" aria-expanded="true" aria-controls="#{{'collapse' . $i}}">
-                         <i class="fas fa-archive fa-border mx-1" aria-hidden="true"></i>
-                         <span class="mr-3" style="font-size:calc(13px + 0.10vw);">{{$item->label}}</span>
-                         <i class="fas fa-plus mr-2" style="float: right; margin: 5px 20px 0px 0px;"></i>
-                     </a>
-                   </div>
-                 </div>
-               <div id="{{'collapse' . $i}}" class="collapse " aria-labelledby="headingOne" data-parent="#navmodal">
-                 <div class="ml-3">
-                     @foreach($item->subItems as $key => $subItem)
 
-                     @if (!empty($subItem->label))
-                     @php
-                     if (!empty($subItem->id)){
-                         $route = $util->toRoute($panelnav->route, $subItem->id);
-                     }elseif(!empty($subItem->route)){
-                        $route = $util->toRoute($panelnav->route, $subItem->route);
-                     }else{
-                         $route = '';
-                     }
-                     @endphp
-                     @if ($key == 0)
-                     <a class="nav-link btn active p-2 text-left" type="button" href="{{$route}}" style="border-topx: 1px #ccc dashed;border-bottomx: 1px #ccc dashed">
-                     @else
-                     <a class="nav-link btn active p-2 text-left" type="button" href="{{$route}}" style="border-top: 1px #ccc dashed;">
-                     @endif
-                         <div class="" >
-                         <i class="fas fa-genderless mr-2" aria-hidden="true"></i>
-                         <span style="font-size:calc(13px + 0.10vw);">
-                         {{$subItem->label}}
-                         </span>
-                         </div>
-                     </a>
-                     @endif
-                     @endforeach
-                 </div>
-               </div>
-
-             </div>
-            {{---------------------------------------------}}
-            @else
             @php
             if (!empty($item->id)){
                 $routeLabel = $util->toRoute($panelnav->route, $item->id);
@@ -151,16 +110,17 @@ elseif(!empty($panelnav->logo)){
                 $routeLabel = NULL;
             }
             @endphp
-            <div class="cardx list-group">
+            <div class="cardx list-group d-fle align-items-start">
                 <div class="card-headerx" id="{{'heading' . $i}}">
                   <div class="" style="margin-bottom:1px;">
-                    <a class="list-group-item btn p-2 text-left" href="{{$routeLabel}}" style="border-bottomxx: 1px #ccc dashed">
+                    <a class="list-group-itemx btn p-2 text-left" href="{{$routeLabel}}" style="border-bottomxx: 1px #ccc dashed">
                     <div class="" >
                     @php
                     $tag = str_split($item->label);
+
                     @endphp
-                    <span class="badge badge-light border mx-1" style="font-family:TimesNews;font-size:1em">{{$tag[0]}}</span>
-                    <span style="font-size:calc(13px + 0.10vw);">
+                    <span class="badge text-bg-light border mx-1" style="font-family:TimesNews;font-size:0.9em">{{$tag[0]}}</span>
+                    <span class="" style="font-size:calc(13px + 0.10vw);">
                     {{$item->label}}
                     </span>
                     </div>
@@ -169,7 +129,7 @@ elseif(!empty($panelnav->logo)){
                 </div>
             </div>
             @endif
-            @endif
+            {{--@endif--}}
             @endforeach
         </div>
         @endif

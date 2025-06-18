@@ -25,6 +25,35 @@
     }else{
         $background = 'background-color: #000000;';
     }
+    $height = 'min-height:calc(23px + 2.6vw);';
+    $logoPosition = 'pt-2 pb-3 pb-md-0';
+    if (!empty($sidebar->model)){
+        if ($sidebar->model == 'wide'){
+            $logoPosition = 'pt-2 pt-md-3 ';
+            $height = 'min-height:calc(53px + 3vw);';
+        }elseif ($sidebar->model == 'full'){
+            $height = 'min-height:calc(43px + 4.8vw);';
+            $logoPosition = 'pt-2 pt-sm-3 pt-lg-4 pb-3';
+        }
+    }
+    //Configuração de bordas ===============================
+    $styleBorder = config('laraflex.sideBarstyle');
+    if ($styleBorder == 'dark'){
+        $border = 'border border-secondary';
+        $border_top = 'border-top border-secondary';
+        $border_bottom = 'border-bottom border-secondary';
+    }else{
+        $border = 'border';
+        $border_top = 'border-top';
+        $border_bottom = 'border-bottom';
+    }
+
+    if (!empty($sidebar->btnFixed) && $sidebar->btnFixed == true){
+        $position = 'position: fixed;bottom: 10;right: 10;z-index:900';
+    }else{
+        $position = "";
+    }
+
 
     $arrayIcon = ['address-card', 'archive', 'building', 'clipboard-list', 'copy', 'donate', 'fax',  'file-image', 'id-card',
     'weight', 'volleyball-ball', 'users-cog', 'truck-loading', 'store', 'pallet', 'basketball-ball',  'film', 'file-archive',
@@ -38,7 +67,25 @@
         $show_style = 'show-sidebar-dark-out';
         @endphp
     @elseif (!empty($sidebar->showBar) && $sidebar->showBar === true)
-        <div class="w-100 text-center py-2 mb-0 border-bottom" style="min-height:65px;{{$background}}">
+        @php
+        if (!empty($sidebar->bgImageStorage)){
+            $image = $sidebar->bgImageStorage;
+        }
+        elseif (!empty($sidebar->bgImagePath)){
+            $image = $util->toImage($sidebar->bgImagePath);
+        }
+        elseif (!empty($sidebar->bgImage)){
+            $image = $util->toImage($sidebar->bgImage);
+        }
+        else{
+            //$image = $util->toImage('local/images/app/imageBar1.jpg');
+            $image = "";
+        }
+
+        @endphp
+
+        <div class="w-100 border-bottom" style=" {{$background}} background-image:url({{$image}}); background-size:cover;">
+        <div class="container-xl text-center py-0 mb-0 {{$logoPosition}}" style="{{$height}}{{$background}} background-image:url({{$image}}); background-size:cover;">
         @php
         if (!empty($sidebar->logoStorage)){
             $logo = $sidebar->logoStorage;
@@ -56,12 +103,20 @@
         @else
         <a href="{{$util->toRoute('home')}}">
         @endif
-        <img src="{{$logo}}" class="mt-1 mt-md-0 mb-0 mb-md-1" style="width:calc(160px + 3.5vw); height:calc(35px + 0.7vw); "/>
+        <img src="{{$logo}}" class="mt-2 mt-md-1 mb-0 mb-md-1" style="width:calc(90px + 10vw); height:calc(30px + 0.9vw);z-index:300"/>
         </a>
         @endif
         </div>
+        </div>
         @php
-            $btnStyle = '';
+            //$btnStyle = '';
+        if (!empty($sidebar->styleButton) && $sidebar->styleButton == 'dark'){
+            $btnStyle = 'btn-outline-secondary';
+            $show_style = 'show-sidebar-dark-out';
+        }else{
+            $btnStyle = 'btn-outline-light';
+            $show_style = 'show-sidebar-light-out';
+        }
         @endphp
     @else
         @php
@@ -121,10 +176,10 @@
 </div>
 @else
     @guest
-    @if (!empty($sidebar->hiddenConect) && $sidebar->hiddenConect === true)
+    @if (!empty($sidebar->hiddenConect) && $sidebar->hiddenConect == true)
     <a id="show-sidebar" class="dropdown btn {{$show_style}} {{$btnStyle}}" id="dropdownLogin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-pressed="true">
-        <div class="d-none d-md-block ml-2 mr-2">
-        <span class="mr-2" translate="no">{{ __('connect') }}</span>
+        <div class="d-none d-md-block ms-2 me-2">
+        <span class="me-2" translate="no">{{ __('connect') }}</span>
         <i class="fas fa-bars"></i>
         </div>
         <div class="d-block d-md-none">
@@ -133,14 +188,14 @@
     </a>
     @else
     <div class="dropdown-menu sidebar-menu shadow" aria-labelledby="dropdownLogin" style="width: 250px;background-color:#F2F2F2;">
-        <a class="dropdown-item pl-3" href="{{ route('login') }}">
+        <a class="dropdown-item ps-3" href="{{ route('login') }}">
         <i class="fas fa-user-lock border rounded p-2" style="font-size:12px; background-color:#CCCCCC;"></i>
-        <span class="ml-2" translate="no">{{ __('Login') }}</span>
+        <span class="ms-2" translate="no">{{ __('Login') }}</span>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item pl-3" href="{{ route('register') }}">
+        <a class="dropdown-item ps-3" href="{{ route('register') }}">
         <i class="fas fa-address-card border rounded p-2" style="font-size:12px; background-color:#CCCCCC;"></i>
-        <span class="ml-2" translate="no">{{ __('Register') }}</span>
+        <span class="ms-2" translate="no">{{ __('Register') }}</span>
         </a>
     </div>
     @endif
