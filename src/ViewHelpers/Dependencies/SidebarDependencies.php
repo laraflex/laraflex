@@ -7,7 +7,19 @@ class SidebarDependencies extends Dependencies
 {
     public function toArray($data = NULL, array $config = NULL)
     {
+
+        $styleTheme = config('laraflex.sideBarstyle');
+        if ($styleTheme == 'dark'){
+            $linkStyle = 'css/styleblack.css';
+        }else{
+            $linkStyle = 'css/stylelight.css';
+        }
         $var = [
+            [
+                'component' => NULL,
+                'type' => 'scriptjs',
+                'lib' => config('laraflex.defaultconfig.jquery'),
+            ],
             [
                 'component' => 'NULL',
                 'type' => 'link',
@@ -16,7 +28,7 @@ class SidebarDependencies extends Dependencies
             [
                 'component' => 'NULL',
                 'type' => 'local',
-                'link' => 'css/stylelight.css',
+                'link' => $linkStyle,
             ],
             [
                 'component' => 'sidebarjs',

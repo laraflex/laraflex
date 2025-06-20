@@ -1,5 +1,6 @@
 {
     "Logout": "Sair",
+    "Log out": "Sair",
     "Logout of your account": "Faça logout de sua conta",
     "Customize Profile": "Personalisar Perfil",
     "Settings": "Configurações",
@@ -8,6 +9,7 @@
     "No value found for label":"Não foi encontrado um valor para o label",
     "and subtype": "e subtipo",
     "Login": "Entrar",
+    "Log in": "Entrar",
     "Alert": "Alerta",
     "Close": "Fechar",
     "Summary": "Sumário",

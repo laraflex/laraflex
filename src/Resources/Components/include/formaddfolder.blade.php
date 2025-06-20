@@ -5,8 +5,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="addFolderModal">{{ __('Add a folder') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
                 </button>
                 </div>
             <div class="modal-body">
@@ -25,7 +25,7 @@
                 @endif
                 <div class="p-2">
                 <button type="submit" class="btn btn-sm px-4 btn-light btn-outline-secondary mt-3">{{ __('Submit') }}</button>
-                <button type="button" class="btn btn-sm btn-secondary mt-3" data-dismiss="modal">{{__('Cancel')}}</button>
+                <button type="button" class="btn btn-sm btn-secondary mt-3" data-bs-dismiss="modal">{{__('Cancel')}}</button>
                 </div>
             </form>
             </div>

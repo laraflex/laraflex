@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="addFileModal">{{ __('Add a file') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
             </button>
             </div>
         <div class="modal-body">
@@ -13,10 +13,10 @@
         <form action="{{$util->toRoute($routeAddFile)}}" method="post" enctype="multipart/form-data" id="addfile">
         @csrf
             <div class="p-2">
-            <input class="form-control" type="text" placeholder="{{__('File Name')}}" name="filename" id="fileName">
+            <input class="form-control" type="text" placeholder="{{__('File Name')}}" name="filename" id="fileName" required>
             </div>
             <div class="p-2">
-            <input type="file" class="form-control-file" id="file" class="file" name="file" required>
+            <input type="file" class="form-control-file" id="fileStorage" class="file" name="file" accept=".pdf, .doc,.docx, .jpg, .jpeg, .png, .webp, .mp4" required>
             </div>
             <input type="hidden" class="path" id="path" name="path" value="{{$storageManager->filesystem->path}}">
             @if (!empty($storageManager->filesystem->disk))
@@ -27,7 +27,7 @@
             @endif
             <div class="p-2">
             <button type="submit" class="btn btn-sm px-4 btn-light btn-outline-secondary mt-3">{{ __('Submit') }}</button>
-            <button type="button" class="btn btn-sm btn-secondary mt-3" data-dismiss="modal">{{__('Cancel')}}</button>
+            <button type="button" class="btn btn-sm btn-secondary mt-3" data-bs-dismiss="modal">{{__('Cancel')}}</button>
             </div>
         </form>
         </div>
@@ -35,5 +35,6 @@
         </div>
     </div>
 </div>
+
 
 <!-- End Modal ------------------->

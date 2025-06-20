@@ -32,6 +32,7 @@ return [
         'bootstrapjs' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">',
         'jquery' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js',
         'transparentTheme' => true,
+        'fileSizeUpload' => 50, // 50 MB
     ],
 
     'sideBarstyle' => 'light', //options: dark, light
