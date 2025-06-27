@@ -10,13 +10,11 @@ class NavBarDefaultPresenter extends Presenter
     public function toArray($data = NULL, array $config = NULL)
     {
 
-
-
         $var = [
             'component' => 'navbar',
             'type' => 'header',
             //'logoPath' => 'local/images/app/logo-option1.png',
-            'logoPath' => 'local/images/app/logo-b.png',
+            'logoPath' => 'local/images/app/logo.png',
             //'logoPath' => 'local/images/app/logo.png',
             'altLogo' => 'LaraFlex',
             'route' => 'home',
@@ -32,7 +30,7 @@ class NavBarDefaultPresenter extends Presenter
             'items' => [
                 [
                     'label' => 'home',
-                    'route' => 'home',
+                    'route' => '/',
                 ],
 
             ],
