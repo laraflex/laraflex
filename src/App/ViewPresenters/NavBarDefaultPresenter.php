@@ -29,16 +29,20 @@ class NavBarDefaultPresenter extends Presenter
         $var = [
             'component' => 'navbar',
             'type' => 'header',
-            'logoPath' => 'local/images/app/logo-option1.png',
-            'label' => 'LaraFlex',
+            //'logoPath' => 'local/images/app/logo-option1.png',
+            'logoPath' => 'local/images/app/logo-b.png',
+            //'logoPath' => 'local/images/app/logo.png',
+            'altLogo' => 'LaraFlex',
             'route' => 'home',
             'showLogin' => true,
             'showRegister' => true,
-            'bgColor' => 'black', //'black', //'bordeaux', //'white', //'navyBlue',
-            'fixedmenu' => $fixedmenu,
-            'transparent' => $transparent,
-            'fadeTransparency' => $fadeTransparency,
-            'menuEffect' => $menuEffect,
+            'showUserPerfil' => true,
+            'showSetting' => true,
+            'theme' => 'dark', //dark,light,nave, white
+            'showSearch' => true,
+            'routerSearch' => 'search',
+            'transparent' => true,
+            'container' => true,
             'items' => [
                 [
                     'label' => 'home',

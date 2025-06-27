@@ -56,12 +56,12 @@ class BlogcardsExemplePresenter extends Presenter
 
         $var = [
             'component' => 'blogcards',
-                'type' => 'content',
-                'title' => 'Últimas postagens no blog',
-                'showItems' => ['image', 'title', 'date', 'abstract'],
-                //'route' =>'artigo/show',
-                //'readMore' => ['label' => 'Acesse todas as postagens do blog', 'route' => '#'],
-                'items' => $artigos,
+            'type' => 'content',
+            'title' => 'Últimas postagens no blog',
+            'showItems' => ['image', 'title', 'date', 'abstract'],
+            'route' =>'show/artigo',
+            'seeMore' => 'seemore/blogcards',
+            'items' => $artigos,
 
         ];
         return $var;

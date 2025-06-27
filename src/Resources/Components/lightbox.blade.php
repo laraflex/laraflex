@@ -180,8 +180,13 @@
     }elseif (!empty($item->image)) {
         $imagePath = $util->toPath($item->image);
         $image = $util->toImage($item->image);
+        //$image = asset($item->image); // Método usdado do Helpers do Laravel
     }
+
     @endphp
+
+
+
 
     @if (!empty($image))
         @if (!empty($item->codVideo) OR !empty($item->url))

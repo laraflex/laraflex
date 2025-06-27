@@ -11,7 +11,7 @@ class ImageBarPresenter extends Presenter
             'component' => 'imagebar',
             'type' => 'header',
             'route' => 'promocoes',
-            'height' => '220px',
+            'height' => '150px',
             'imagePath' => 'local/images/app/imagebar2.jpg',
             'title' => 'Torne-se um especialista em Laraflex',
             'text' => 'Matricula-se já e garanta seu futuro.',

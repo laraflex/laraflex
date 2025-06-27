@@ -11,8 +11,6 @@
     margin-bottom: 3px;
 }
 
-
-
 #item-navbar-dark:hover{
     /* border-bottom:2px solid #585858; */
     border-bottom:2px solid rgba(228, 222, 222, 0.3);
@@ -192,10 +190,6 @@
 .navbar-nave-color:active{
     color: #FFFFFF;
 }
-
-
-
-
 
 /**
 * fim de bloco de navbar -----------------------------------------------

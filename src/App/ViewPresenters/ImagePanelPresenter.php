@@ -11,15 +11,18 @@ class ImagePanelPresenter extends Presenter
         $var = [
             'component' => 'imagepanel',
             'type' => 'header',
-            'textAlign' => 'right',
-            'title' => 'General Title of Component',
-            'imagePath' => 'local/images/app/imagepanel1.jpg',
-            'title' => 'Laraflex view package',
-            'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.',
+            'title' => 'Venha para o paraíso',
+            'imagePath' => 'local/images/app/imagepanel6.jpg',
+            //'imagePath' => 'local/images/app/imagepanel15.png',
+            'legend' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.',
             'btnLabel' => 'Saiba mais',
             'route' => 'saibamais',
-            'fontColor' => 'white',
-            'imageClass' => 'none',
+            //'fontColor' => 'white',
+            //'fontColor' => '#030c39',
+            'fontColor' => '#000000',
+            //'fontFamilyTitle' => 'Time new Roman',
+            'extend' => true,
+            //'imageClass' => 'none', //options 'container' and 'none' or 'NULL'
         ];
         return $var;
     }
