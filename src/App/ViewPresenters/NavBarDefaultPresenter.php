@@ -10,21 +10,7 @@ class NavBarDefaultPresenter extends Presenter
     public function toArray($data = NULL, array $config = NULL)
     {
 
-        $fixedMenu = !empty($config['fixedMenu'])?$config['fixedMenu']:false;
-        $transparent = !empty($config['transparent'])?$config['transparent']:false;
-        $fadeTransparency = !empty($config['fadeTransparent'])?$config['fadeTransparent']:false;
-        $menuEffect = !empty($config['menuEffect'])?$config['menuEffect']:false;
-        $bgColor = 'black'; //'black', //'bordeaux', //'white', //'navyBlue',
 
-
-        if (!empty($config['page'])){
-            if ($config['page'] == 'home'){
-                $fixedmenu = true;
-                $transparent = true;
-                $fadeTransparency = true;
-                $menuEffect = false;
-            }
-        }
 
         $var = [
             'component' => 'navbar',
